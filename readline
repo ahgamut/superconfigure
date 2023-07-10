@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+./configure --disable-shared --enable-static\
+    --enable-multibyte --prefix=$COSMOS\
+    --with-curses\
+    CFLAGS="-Os"

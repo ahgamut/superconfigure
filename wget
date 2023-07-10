@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+export OPENSSL_CFLAGS=""
+export OPENSSL_LIBS="-lssl -lcrypto"
+
+./configure --prefix="$COSMOS"\
+    --with-ssl=openssl\
+    --with-openssl=yes --disable-ipv6\
+    --without-pic --with-gnu-ld\
+    --disable-shared --enable-static\
+    --enable-threads=posix --disable-rpath\
+    --disable-xattr --disable-nls\
+    --without-plugin-support\
+    CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbz2 -lz -llzma"

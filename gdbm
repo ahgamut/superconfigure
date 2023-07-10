@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
+
+./configure --prefix="$COSMOS"\
+    --disable-memory-mapped-io --enable-libgdbm-compat\
+    --disable-shared --enable-static\
+    --disable-nls --disable-rpath\
+    --without-pic --with-gnu-ld --without-readline\
+    CFLAGS="-Os"

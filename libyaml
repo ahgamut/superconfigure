@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+./configure --without-pic --with-gnu-ld\
+    --disable-shared --enable-static\
+    --prefix=$COSMOS\
+    CFLAGS="-Os"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+./configure --without-libtool --without-shared\
+    --without-ada --without-cxx --without-cxx-binding\
+    --without-tests --with-termlib --with-ticlib\
+    --without-dlsym --without-pcre2 --without-sysmouse\
+    --with-curses-h\
+    --prefix=$COSMOS\
+    CFLAGS="-Os"

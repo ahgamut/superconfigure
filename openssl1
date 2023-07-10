@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+
+# OpenSSL 1.1.1u
+
+CFLAGS="-Os" ./Configure no-shared no-zlib no-asm\
+    no-dso no-dynamic-engine no-engine no-pic\
+    no-rdrand --prefix=$COSMOS linux-x86_64

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+./configure --prefix="$COSMOS"\
+    --enable-shared=no --enable-static=yes\
+    --enable-pthreads --with-openssl=$COSMOS\
+    --without-pic --with-gnu-ld\
+    CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc"

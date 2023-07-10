@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+./configure --prefix="$COSMOS"\
+    --enable-shared=no --enable-static=yes\
+    --disable-nls --disable-rpath\
+    --without-pic --with-gnu-ld\
+    --enable-sandbox=no\
+    CFLAGS="-Os -std=gnu99"
