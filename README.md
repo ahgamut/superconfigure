@@ -47,7 +47,15 @@ cp $COSMO/o/third_party/sqlite3/libsqlite3.a $COSMOS/lib/libsqlite3.a
   * `enum`s that fail compilation should be rewritten as `#define`s (I think
     `emacs` has an `enum` like this)
 
-* repeat for all other libs
+* repeat for all other libraries
+
+* if you built an executable and want to convert it into an Actually Portable
+  Executable, run
+
+```sh
+objcopy -SO binary your-software your-software.com
+$COSMO/o/tool/scripts/zipcopy.com your-software your-software.com
+```
 
 I'd recommend building `ncurses` first, then `bash`, then `readline` and the
 rest. Most of the scripts here are because I wanted [a CPython3.11 Actually
@@ -59,4 +67,4 @@ I currently don't have a computer running Windows.
 [cosmo]: https://github.com/jart/cosmopolitan
 [patch]: https://github.com/ahgamut/gcc/tree/portcosmo-11.2
 [buildpatch]: https://github.com/ahgamut/musl-cross-make
-[cpy311]: https://github.com/ahgamut/cpython/portcosmo
+[cpy311]: https://github.com/ahgamut/cpython/tree/portcosmo
