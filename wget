@@ -3,6 +3,9 @@
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
+# disable all the checks in fseeko.c, and just call cosmo's fseeko
+# remove the FALLTHROUGH macro if there is a complaint
+
 ./configure --prefix="$COSMOS"\
     --with-ssl=openssl\
     --with-openssl=yes --disable-ipv6\

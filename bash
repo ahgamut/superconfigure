@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# bash 5.2 uses readline8.2 implicitly
+
 ./configure --prefix="$COSMOS"\
     --without-bash-malloc --enable-static-link\
     --disable-rpath\

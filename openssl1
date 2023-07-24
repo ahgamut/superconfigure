@@ -2,7 +2,15 @@
 #
 
 # OpenSSL 1.1.1u
+#
+# have to change two lines in crypto/rand/rand_unix.c, to
+#
+# - force an ifdef enabling use of getrandom
+# - use the getrandom() function instead of the syscall
 
-CFLAGS="-Os" ./Configure no-shared no-zlib no-asm\
+./Configure no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\
-    no-rdrand --prefix=$COSMOS linux-x86_64
+    no-autoalginit no-autoerrinit\
+    --with-rand-seed=getrandom\
+    CFLAGS="-Os"\
+    --prefix=$COSMOS linux-x86_64
