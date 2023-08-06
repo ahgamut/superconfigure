@@ -1,5 +1,26 @@
 #!/usr/bin/env bash
+set -e
 
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+# download the source code
+wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz -O sources.tar.gz
+tar -xzf sources.tar.gz
+
+# apply patches if any
+# patch -p0 -i
+
+# go into the source folder, configure
+cd ncurses-6.4
 ./configure --without-libtool --without-shared\
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\
@@ -7,3 +28,9 @@
     --with-curses-h\
     --prefix=$COSMOS\
     CFLAGS="-Os"
+
+# run make and/or make install
+make -j2
+make install -j2
+
+echo "DONE."

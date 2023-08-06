@@ -1,0 +1,15 @@
+diff -x '*.[od]' -ruN ./openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c ../openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c
+--- ./openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c	2023-05-30 12:42:39.000000000 +0000
++++ ../openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c	2023-07-14 22:57:56.217051879 +0000
+@@ -401,8 +401,9 @@
+ #  endif
+ 
+     /* Linux supports this since version 3.17 */
+-#  if defined(__linux) && defined(__NR_getrandom)
+-    return syscall(__NR_getrandom, buf, buflen, 0);
++#  if 1 || defined(__linux) && defined(__NR_getrandom)
++#pragma message "using getrandom function"
++    return getrandom(buf, buflen, 0);
+ #  elif (defined(__FreeBSD__) || defined(__NetBSD__)) && defined(KERN_ARND)
+     return sysctl_random(buf, buflen);
+ #  else

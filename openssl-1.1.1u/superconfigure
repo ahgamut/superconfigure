@@ -1,16 +1,41 @@
 #!/usr/bin/env bash
-#
+set -e
 
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+# download the source code
+wget https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1u.tar.gz -O sources.tar.gz
+tar -xzf sources.tar.gz
+
+# apply patches if any
 # OpenSSL 1.1.1u
 #
 # have to change two lines in crypto/rand/rand_unix.c, to
 #
 # - force an ifdef enabling use of getrandom
 # - use the getrandom() function instead of the syscall
+patch -p0 -i minimal.diff
 
+# go into the source folder, configure
+cd openssl-1*/
 ./Configure no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\
     no-autoalginit no-autoerrinit\
     --with-rand-seed=getrandom\
     CFLAGS="-Os"\
     --prefix=$COSMOS linux-x86_64
+
+# run make and/or make install
+make -j2
+make install -j2
+
+echo "DONE."
