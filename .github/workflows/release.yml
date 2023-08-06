@@ -1,0 +1,27 @@
+on:
+  release:
+    types: [created]
+name: Handle Release
+jobs:
+  generate:
+    name: Create release-artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@master
+      - name: Checkout cosmo repo
+        run: git clone https://github.com/jart/cosmopolitan --depth=1
+      - name: support ape bins and SSL things
+        run: sudo bash ./.github/scripts/setup
+      - name: build cosmo repo
+        run: bash ./.github/scripts/cosmo
+      - name: build executables
+        run: bash ./.github/scripts/build
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: "results*.zip"
+          overwrite: true
+          body: "Actually Portable Executables"

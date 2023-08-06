@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# set -eux
+
+echo "Initial Setup"
+export BASELOC=$PWD
+export COSMO=$BASELOC/cosmopolitan
+export RESULTS=$BASELOC/bin
+
+echo "Compiling Cosmopolitan Libc"
+# https://github.com/ahgamut/cosmopolitan/tree/gccbuild
+# 455c9c89f7e6595ed26b96c1c0175e37f9ad3f9f
+# git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=gccbuild
+
+cd $COSMO
+make -j2 V=0 MODE="" toolchain
+make -j2 V=0 MODE="" o//third_party/zlib
+make -j2 V=0 MODE="" o//third_party/zlib/gz
+make -j2 V=0 MODE="" o//third_party/zstd
+make -j2 V=0 MODE="" o//third_party/sqlite3
+make -j2 V=0 MODE="" o//third_party/sqlite3/libsqlite3.a
+make -j2 V=0 MODE="" o//third_party/bzip2
+
+make -j2 V=0 MODE="" o//tool/build/zipcopy.com

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo apt-get install -y ca-certificates libssl-dev
+
+# cosmo
+sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
+sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
