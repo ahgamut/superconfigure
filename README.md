@@ -39,7 +39,7 @@ cp $COSMO/o/third_party/sqlite3/libsqlite3.a $COSMOS/lib/libsqlite3.a
 
 * Let's take `ncurses` as an example -- download the `ncurses` source,
   copy the `ncurses` shell script as `superconfigure` into the folder containing
-  the `configure` script. 
+  the `configure` script. (**Edit:** I think this can be done automatically.)
 
 * `./superconfigure; make; make install`. You might have to change a bit of code
   occasionally:
