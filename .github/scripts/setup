@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+# ssl certs
 sudo apt-get install -y ca-certificates libssl-dev
+ls -al /usr/lib/ssl/certs
+ls -al /etc/ssl/certs
+
 
 # cosmo
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
