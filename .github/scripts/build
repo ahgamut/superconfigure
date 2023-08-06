@@ -36,7 +36,7 @@ cp $COSMO/o/third_party/zstd/zstd.a ./lib/libzstd.a
 echo '#include "third_party/zstd/zstd.h"' >> ./include/zstd.h
 
 cp $COSMO/o/third_party/bzip2/bzip2.a ./lib/libbz2.a
-echo '#include "third_party/bzip2/bzip2.h"' >> ./include/bzlib.h
+echo '#include "third_party/bzip2/bzlib.h"' >> ./include/bzlib.h
 
 cp $COSMO/o/third_party/sqlite3/libsqlite3.a ./lib/libsqlite3.a
 echo '#include "third_party/sqlite3/sqlite3.h"' >> ./include/sqlite3.h
