@@ -27,7 +27,7 @@ cd brotli*/
     CFLAGS="-Os"
 
 # run make and/or make install
-make -j2
-make install -j2
+make -i -j2
+make install -i -j2
 
 echo "DONE."
