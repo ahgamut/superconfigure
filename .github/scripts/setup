@@ -2,10 +2,12 @@
 
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev
-ls -al /usr/lib/ssl/certs
 ls -al /etc/ssl/certs
-
 
 # cosmo
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+
+# cosmos
+export COSMOS=$(realpath ./cosmos)
+sudo ln -sf $COSMOS /zip
