@@ -17,7 +17,7 @@ wget https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/downloa
 tar -xzf sources.tar.gz
 
 # apply patches if any
-# patch -p0 -i
+patch -p0 -i ./minimal.diff
 
 # go into the source folder, configure
 cd libuuid*/

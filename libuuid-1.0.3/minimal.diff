@@ -1,0 +1,37 @@
+diff -ruN ./libuuid-1.0.3/gen_uuid.c ../libuuid-1.0.3/gen_uuid.c
+--- ./libuuid-1.0.3/gen_uuid.c	2014-08-12 08:07:18.000000000 +0000
++++ ../libuuid-1.0.3/gen_uuid.c	2023-07-04 05:04:19.423498125 +0000
+@@ -100,13 +100,13 @@
+ #endif
+ 
+ #ifndef LOCK_EX
+-/* flock() replacement */
++/* flock2() replacement */
+ #define LOCK_EX 1
+ #define LOCK_SH 2
+ #define LOCK_UN 3
+ #define LOCK_NB 4
+ 
+-static int flock(int fd, int op)
++static int flock2(int fd, int op)
+ {
+     int rc = 0;
+ 
+@@ -294,7 +294,7 @@
+ 	}
+ 	if (state_fd >= 0) {
+ 		rewind(state_f);
+-		while (flock(state_fd, LOCK_EX) < 0) {
++		while (flock2(state_fd, LOCK_EX) < 0) {
+ 			if ((errno == EAGAIN) || (errno == EINTR))
+ 				continue;
+ 			fclose(state_f);
+@@ -366,7 +366,7 @@
+ 			fflush(state_f);
+ 		}
+ 		rewind(state_f);
+-		flock(state_fd, LOCK_UN);
++		flock2(state_fd, LOCK_UN);
+ 	}
+ 
+ 	*clock_high = clock_reg >> 32;
