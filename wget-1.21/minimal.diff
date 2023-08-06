@@ -1,0 +1,30 @@
+diff -ruN ../wget-1.21/lib/canonicalize.c ./wget-1.21/lib/canonicalize.c
+--- ../wget-1.21/lib/canonicalize.c	2023-07-23 16:11:33.518248672 +0000
++++ ./wget-1.21/lib/canonicalize.c	2020-12-31 15:53:23.000000000 +0000
+@@ -238,7 +238,7 @@
+             case ERANGE:
+               if (scratch_buffer_grow (rname_buf))
+                 break;
+-              // FALLTHROUGH;
++              FALLTHROUGH;
+             case ENOMEM:
+               xalloc_die ();
+ 
+diff -ruN ../wget-1.21/lib/fseeko.c ./wget-1.21/lib/fseeko.c
+--- ../wget-1.21/lib/fseeko.c	2023-07-23 16:12:15.310491602 +0000
++++ ./wget-1.21/lib/fseeko.c	2020-12-31 15:53:24.000000000 +0000
+@@ -46,7 +46,6 @@
+     return EOF;
+ #endif
+ 
+-#if 0
+   /* These tests are based on fpurge.c.  */
+ #if defined _IO_EOF_SEEN || defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1
+   /* GNU libc, BeOS, Haiku, Linux libc5 */
+@@ -161,6 +160,5 @@
+ #endif
+       return 0;
+     }
+-#endif
+   return fseeko (fp, offset, whence);
+ }

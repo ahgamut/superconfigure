@@ -1,17 +1,44 @@
 #!/usr/bin/env bash
+set -e
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+# download the source code
+wget https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz -O sources.tar.gz
+tar -xzf sources.tar.gz
+
+# apply patches if any
+# disable all the checks in fseeko.c, and just call cosmo's fseeko
+# remove the FALLTHROUGH macro if there is a complaint
+patch -p0 -i minimal.diff
+
+# go into the source folder, configure
+cd wget*/
 
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
-# disable all the checks in fseeko.c, and just call cosmo's fseeko
-# remove the FALLTHROUGH macro if there is a complaint
-
 ./configure --prefix="$COSMOS"\
-    --with-ssl=openssl\
-    --with-openssl=yes --disable-ipv6\
+    --with-ssl=openssl --with-openssl=yes\
     --without-pic --with-gnu-ld\
     --disable-shared --enable-static\
     --enable-threads=posix --disable-rpath\
     --disable-xattr --disable-nls\
     --without-plugin-support\
+    --sysconfdir=/zip\
     CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbz2 -lz -llzma"
+
+# run make and/or make install
+make -j2
+make install -j2
+
+echo "DONE."

@@ -1,8 +1,35 @@
 #!/usr/bin/env bash
+set -e
 
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+# download the source code
+wget https://sourceforge.net/projects/lzmautils/files/xz-5.4.3.tar.gz/download -O sources.tar.gz
+tar -xzf sources.tar.gz
+
+# apply patches if any
+# patch -p0 -i
+
+# go into the source folder, configure
+cd xz-5.4.3/
 ./configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld\
     --enable-sandbox=no\
     CFLAGS="-Os -std=gnu99"
+
+# run make and/or make install
+make -j2
+make install -j2
+
+echo "DONE."

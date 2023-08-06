@@ -1,5 +1,26 @@
 #!/usr/bin/env bash
+set -e
 
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+# download the source code
+wget https://ftp.gnu.org/gnu/gdbm/gdbm-1.23.tar.gz -O sources.tar.gz
+tar -xzf sources.tar.gz
+
+# apply patches if any
+# patch -p0 -i
+
+# go into the source folder, configure
+cd gdbm-1.23/
 export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
 
 ./configure --prefix="$COSMOS"\
@@ -8,3 +29,9 @@ export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld --without-readline\
     CFLAGS="-Os"
+
+# run make and/or make install
+make -j2
+make install -j2
+
+echo "DONE."
