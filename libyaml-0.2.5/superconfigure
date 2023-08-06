@@ -21,6 +21,8 @@ tar -xzf sources.tar.gz
 
 # go into the source folder, configure
 cd libyaml*/
+ls -al
+autoreconf -fvi
 ./configure --without-pic --with-gnu-ld\
     --disable-shared --enable-static\
     --prefix=$COSMOS\
