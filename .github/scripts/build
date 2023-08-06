@@ -2,7 +2,7 @@
 set -e
 
 echo "Initial Setup"
-export BASELOC=$PWD
+export BASELOC=$(realpath $PWD)
 export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos
 export RESULTS=$BASELOC/bin
@@ -46,7 +46,7 @@ cd $BASELOC
 
 # order of PKGS matters
 # brotli is crashing, so we disable it for now
-PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "wget-1.21" "cpy311-datasette")
+PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "cpy311-datasette" "wget-1.21")
 
 for PKG in ${PKGS[@]}; do
     cd "./$PKG"
