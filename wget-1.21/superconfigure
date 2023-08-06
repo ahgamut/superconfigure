@@ -35,7 +35,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --disable-xattr --disable-nls\
     --without-plugin-support\
     --sysconfdir=/zip\
-    CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbz2 -lz -llzma"
+    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
 # run make and/or make install
 make -j2

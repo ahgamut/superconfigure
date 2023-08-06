@@ -45,7 +45,8 @@ echo "building other packages"
 cd $BASELOC
 
 # order of PKGS matters
-PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "brotli-1.0.9" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "wget-1.21" "cpy311-datasette")
+# brotli is crashing, so we disable it for now
+PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "wget-1.21" "cpy311-datasette")
 
 for PKG in ${PKGS[@]}; do
     cd "./$PKG"
