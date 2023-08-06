@@ -26,7 +26,7 @@ tar -xzf sources.tar.gz
 patch -p0 -i minimal.diff
 
 # go into the source folder, configure
-cd openssl-1*/
+cd openssl*/
 ./Configure no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\
     no-autoalginit no-autoerrinit\
