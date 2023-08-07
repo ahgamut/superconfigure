@@ -83,8 +83,9 @@ echo "attempting to copy wget certs"
 cd $BASELOC
 
 mkdir -p ./usr/share/ssl/root
-ls -al /etc/ssl/certs/
 cp /etc/ssl/certs/*.0 ./usr/share/ssl/root
+cp wget-1.21/wgetrc ./
+zip $RESULTS/wget.com wgetrc
 zip -qr $RESULTS/wget.com usr/share/ssl/root
 
 # FINISH
