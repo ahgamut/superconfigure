@@ -28,6 +28,9 @@ $CC sample.c -o sample.com
 echo "Setting up libz and libzstd in $COSMOS"
 cd $COSMOS
 
+# 
+cp ./lib/libpthread.a ./lib/libcrypt.a
+
 cp $COSMO/o/third_party/zlib/zlib.a ./lib/libz.a
 $AR rc ./lib/libz.a $COSMO/o/third_party/zlib/gz/*.o
 echo '#include "third_party/zlib/zlib.h"' >> ./include/zlib.h
