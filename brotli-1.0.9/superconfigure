@@ -13,7 +13,7 @@ if [ -z ${COSMOS+x} ]; then
 fi
 
 # download the source code
-wget https://github.com/google/brotli/archive/refs/tags/v1.0.9.tar.gz -O sources.tar.gz
+wget -q https://github.com/google/brotli/archive/refs/tags/v1.0.9.tar.gz -O sources.tar.gz
 tar -xzf sources.tar.gz
 
 # apply patches if any
@@ -27,7 +27,7 @@ cd brotli*/
     CFLAGS="-Os"
 
 # run make and/or make install
-make -i -j2
-make install -i -j2
+make -i -s -j2
+make install -i -s -j2
 
 echo "DONE."

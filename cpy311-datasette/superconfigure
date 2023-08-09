@@ -29,7 +29,7 @@ cd datasette
     CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make -j2
+make -s -j2
 
 echo "DONE."
 

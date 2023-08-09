@@ -13,7 +13,7 @@ if [ -z ${COSMOS+x} ]; then
 fi
 
 # download the source code
-wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz -O sources.tar.gz
+wget -q https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz -O sources.tar.gz
 tar -xzf sources.tar.gz
 
 # apply patches if any
@@ -30,7 +30,7 @@ cd ncurses-6.4
     CFLAGS="-Os"
 
 # run make and/or make install
-make -j2
-make install -j2
+make -s -j2
+make install -s -j2
 
 echo "DONE."

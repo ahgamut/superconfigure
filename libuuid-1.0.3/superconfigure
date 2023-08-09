@@ -13,7 +13,7 @@ if [ -z ${COSMOS+x} ]; then
 fi
 
 # download the source code
-wget https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/download -O sources.tar.gz
+wget -q https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/download -O sources.tar.gz
 tar -xzf sources.tar.gz
 
 # apply patches if any
@@ -27,7 +27,7 @@ cd libuuid*/
     CFLAGS="-Os"
 
 # run make and/or make install
-make -j2
-make install -j2
+make -s -j2
+make install -s -j2
 
 echo "DONE."

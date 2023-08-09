@@ -13,7 +13,7 @@ if [ -z ${COSMOS+x} ]; then
 fi
 
 # download the source code
-wget https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz -O sources.tar.gz
+wget -q https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz -O sources.tar.gz
 tar -xzf sources.tar.gz
 
 # apply patches if any
@@ -29,7 +29,7 @@ autoreconf -fvi
     CFLAGS="-Os"
 
 # run make and/or make install
-make -j2
-make install -j2
+make -s -j2
+make install -s -j2
 
 echo "DONE."
