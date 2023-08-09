@@ -20,7 +20,7 @@ git clone --depth=1 --branch=pypack1 https://github.com/ahgamut/cpython pypack1
 # patch -p0 -i
 
 # go into the source folder, configure
-cd datasette
+cd pypack1
 ./configure --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
     --with-pymalloc --with-openssl=$COSMOS/ssl\
