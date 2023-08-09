@@ -49,7 +49,7 @@ cd $BASELOC
 
 # order of PKGS matters
 # brotli is crashing, so we disable it for now
-PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "cpy311-datasette" "wget-1.21")
+PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" "libyaml-0.2.5" "xz-5.4.3" "cpy311-datasette" "cpy311-pypack1" "wget-1.21")
 
 for PKG in ${PKGS[@]}; do
     cd "./$PKG"
@@ -69,6 +69,7 @@ dbgcopy () {
 mkdir -p $RESULTS
 dbgcopy $COSMOS/bin/wget
 dbgcopy $BASELOC/cpy311-datasette/datasette/datasette
+dbgcopy $BASELOC/cpy311-pypack1/pypack1/python
 
 cd $RESULTS
 for FILE in $(ls ./*.com.dbg); do
@@ -78,6 +79,7 @@ for FILE in $(ls ./*.com.dbg); do
 done
 
 cp $BASELOC/cpy311-datasette/datasette/datasette.com $RESULTS
+cp $BASELOC/cpy311-pypack1/pypack1/python.com $RESULTS
 
 echo "attempting to copy wget certs"
 cd $BASELOC
