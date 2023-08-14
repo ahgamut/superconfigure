@@ -10,6 +10,7 @@ export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/bin
 
 # cosmos
+sudo rm -f /zip
 sudo ln -sf $COSMOS /zip
 
 # build cosmo toolchain
