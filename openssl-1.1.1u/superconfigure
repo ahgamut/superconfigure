@@ -12,11 +12,9 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-FOLDER="openssl*"
-
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd $FOLDER
+    cd openssl*
     make -s -i clean
     cd ..
 else
@@ -35,7 +33,7 @@ else
 fi
 
 # go into the source folder, configure
-cd "$FOLDER"
+cd openssl*
 ARCH="${ARCH:-x86_64}"
 ./Configure no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\

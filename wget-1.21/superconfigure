@@ -16,7 +16,7 @@ FOLDER="wget*"
 
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd $FOLDER
+    cd wget*
     make -s -i clean
     cd ..
 else
@@ -31,7 +31,7 @@ else
 fi
 
 # go into the source folder, configure
-cd "$FOLDER"
+cd wget*
 
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"

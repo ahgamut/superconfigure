@@ -12,11 +12,11 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-FOLDER="libyaml*"
+FOLDER="libyaml-0.2.5"
 
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd $FOLDER
+    cd libyaml*
     make -s -i clean
     cd ..
 else
@@ -29,7 +29,7 @@ else
 fi
 
 # go into the source folder, configure
-cd "$FOLDER*"
+cd libyaml*
 ls -al
 autoreconf -fvi
 ./configure --without-pic --with-gnu-ld\
