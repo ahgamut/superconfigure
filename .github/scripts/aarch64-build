@@ -9,6 +9,9 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/bin
 
+# cosmos
+sudo ln -sf $COSMOS /zip
+
 # build cosmo toolchain
 cd $COSMO
 make -s -j2 V=0 MODE="$MODE" toolchain
