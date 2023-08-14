@@ -9,10 +9,6 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/bin
 
-# cosmos
-sudo rm -f /zip
-sudo ln -sf $COSMOS /zip
-
 # build cosmo toolchain
 cd $COSMO
 make -s -j2 V=0 MODE="" toolchain
@@ -28,6 +24,8 @@ cd $BASELOC
 
 # create the COSMOS folder
 mkdir -p $COSMOS
+sudo rm -f /zip
+sudo ln -sf $COSMOS /zip
 cd $COSMOS
 mkdir -p include bin lib libexec share
 cd $BASELOC
@@ -67,6 +65,9 @@ echo '#include "third_party/bzip2/bzlib.h"' >> ./include/bzlib.h
 
 cp $COSMO/o/$MODE/third_party/sqlite3/libsqlite3.a ./lib/libsqlite3.a
 echo '#include "third_party/sqlite3/sqlite3.h"' >> ./include/sqlite3.h
+
+ls $COSMOS/lib -al
+ls $COSMOS/include -al
 
 echo "building other packages"
 cd $BASELOC
