@@ -40,6 +40,7 @@ export CXX=$PREFIX-c++
 export LD=$PREFIX-cc
 export OBJCOPY=$PREFIX-objcopy
 export AR=$PREFIX-ar
+export STRIP=$PREFIX-strip
 export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
 
 $CC --update
