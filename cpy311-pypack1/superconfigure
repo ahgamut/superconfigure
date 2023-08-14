@@ -37,7 +37,7 @@ cd $FOLDER
     --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"\
     LDFLAGS="-L$COSMOS/lib"\
-    LIBS="-lz"
+    LIBS="$COSMOS/lib/libz.a"
 
 # run make and/or make install
 make -j2

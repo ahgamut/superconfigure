@@ -45,7 +45,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --without-plugin-support\
     --disable-pcre --disable-pcre2\
     --sysconfdir=/zip\
-    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
+    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma $COSMOS/lib/libz.a"
 
 # run make and/or make install
 make -s -j2
