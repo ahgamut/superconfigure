@@ -15,13 +15,13 @@ sudo ln -sf $COSMOS /zip
 # build cosmo toolchain
 cd $COSMO
 make -s -j2 V=0 MODE="$MODE" toolchain
-make -s -j2 V=0 MODE="$MODE" o//third_party/zlib
-make -s -j2 V=0 MODE="$MODE" o//third_party/zlib/gz
-make -s -j2 V=0 MODE="$MODE" o//third_party/zstd
-make -s -j2 V=0 MODE="$MODE" o//third_party/sqlite3
-make -s -j2 V=0 MODE="$MODE" o//third_party/sqlite3/libsqlite3.a
-make -s -j2 V=0 MODE="$MODE" o//third_party/bzip2
-make -s -j2 V=0 MODE="$MODE" o//tool/build/zipcopy.com
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/zlib
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/zlib/gz
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/zstd
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/sqlite3
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/sqlite3/libsqlite3.a
+make -s -j2 V=0 MODE="$MODE" o/$MODE/third_party/bzip2
+make -s -j2 V=0 MODE="$MODE" o/$MODE/tool/build/zipcopy.com
 cd $BASELOC
 
 # create the COSMOS folder
