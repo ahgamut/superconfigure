@@ -40,6 +40,8 @@ export OBJCOPY=$PREFIX-objcopy
 export AR=$PREFIX-ar
 export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
 
+$CC --update
+
 cd $BASELOC
 $CC sample.c -o sample.com
 ./sample.com
