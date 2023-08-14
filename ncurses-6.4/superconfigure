@@ -37,7 +37,7 @@ cd $FOLDER
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\
     --without-dlsym --without-pcre2 --without-sysmouse\
-    --with-curses-h\
+    --with-curses-h --disable-stripping \
     --prefix=$COSMOS\
     CFLAGS="-Os"
 

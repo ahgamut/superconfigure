@@ -58,3 +58,11 @@ zip -qr $RESULTS/python.com Lib/
 zip -qr $RESULTS/python.com build/
 rm -rf ./*
 cd $BASELOC
+
+
+# zip them up
+
+echo "zip file with actually portable executables"
+cd $BASELOC
+ZFILE=results.zip
+find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
