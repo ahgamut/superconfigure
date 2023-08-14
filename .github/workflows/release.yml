@@ -13,10 +13,12 @@ jobs:
         run: git clone https://github.com/jart/cosmopolitan --depth=1
       - name: support ape bins and SSL things
         run: sudo bash ./.github/scripts/setup
-      - name: build cosmo repo
-        run: bash ./.github/scripts/cosmo
-      - name: build executables
-        run: bash ./.github/scripts/build
+      - name: build x86_64
+        run: bash ./.github/scripts/x86-build
+      - name: build aarch64
+        run: bash ./.github/scripts/aarch64-build
+      - name: combine
+        run: bash ./.github/scripts/combine
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -24,4 +26,3 @@ jobs:
           file_glob: true
           file: "results*.zip"
           overwrite: true
-          body: "Actually Portable Executables"

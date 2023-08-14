@@ -2,7 +2,7 @@
 
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev
-ls -al /etc/ssl/certs
+sudo apt-get install -y qemu qemu-utils qemu-user-static
 
 # cosmo
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
