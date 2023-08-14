@@ -12,15 +12,25 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="readline-8.2"
 
-# apply patches if any
-# patch -p0 -i
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # disable using pselect or FIONREAD when typing text
+    patch -p0 -i minimal.diff
+fi
 
 # go into the source folder, configure
-cd readline-8.2/
+cd $FOLDER
 ./configure --disable-shared --enable-static\
     --enable-multibyte --prefix=$COSMOS\
     --with-curses\

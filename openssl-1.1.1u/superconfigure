@@ -12,27 +12,37 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1u.tar.gz -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="openssl*"
 
-# apply patches if any
-# OpenSSL 1.1.1u
-#
-# have to change two lines in crypto/rand/rand_unix.c, to
-#
-# - force an ifdef enabling use of getrandom
-# - use the getrandom() function instead of the syscall
-patch -p0 -i minimal.diff
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1u.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # OpenSSL 1.1.1u
+    #
+    # have to change two lines in crypto/rand/rand_unix.c, to
+    #
+    # - force an ifdef enabling use of getrandom
+    # - use the getrandom() function instead of the syscall
+    patch -p0 -i minimal.diff
+fi
 
 # go into the source folder, configure
-cd openssl*/
+cd "$FOLDER"
+ARCH="${ARCH:-x86_64}"
 ./Configure no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\
     no-autoalginit no-autoerrinit\
     --with-rand-seed=getrandom\
     CFLAGS="-Os"\
-    --prefix=$COSMOS linux-x86_64
+    --prefix=$COSMOS linux-$ARCH
 
 # run make and/or make install
 make -s -j2

@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/download -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="libuuid*"
 
-# apply patches if any
-patch -p0 -i ./minimal.diff
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/download -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    patch -p0 -i ./minimal.diff
+fi
 
 # go into the source folder, configure
-cd libuuid*/
+cd "$FOLDER"
 ./configure --enable-static --disable-shared\
     --without-pic --with-gnu-ld\
     --prefix="$COSMOS"\

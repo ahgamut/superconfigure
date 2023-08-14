@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://sourceforge.net/projects/lzmautils/files/xz-5.4.3.tar.gz/download -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="xz-5.4.3"
 
-# apply patches if any
-# patch -p0 -i
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://sourceforge.net/projects/lzmautils/files/xz-5.4.3.tar.gz/download -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i
+fi
 
 # go into the source folder, configure
-cd xz-5.4.3/
+cd "$FOLDER"
 ./configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --disable-nls --disable-rpath\

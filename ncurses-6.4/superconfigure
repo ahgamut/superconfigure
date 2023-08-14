@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="ncurses-6.4"
 
-# apply patches if any
-# patch -p0 -i
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i
+fi
 
 # go into the source folder, configure
-cd ncurses-6.4
+cd $FOLDER
 ./configure --without-libtool --without-shared\
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\

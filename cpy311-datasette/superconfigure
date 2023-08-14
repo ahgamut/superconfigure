@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-git clone --depth=1 --branch=datasette https://github.com/ahgamut/cpython datasette
-# tar
+FOLDER="datasette"
 
-# apply patches if any
-# patch -p0 -i
+if [ -d "$FOLDER" ]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    git clone --depth=1 --branch=datasette https://github.com/ahgamut/cpython datasette
+    # tar
+
+    # apply patches if any
+    # patch -p0 -i
+fi
 
 # go into the source folder, configure
-cd datasette
+cd "$FOLDER"
 ./configure --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
     --with-pymalloc --with-openssl=$COSMOS/ssl\
@@ -30,6 +39,6 @@ cd datasette
 
 # run make and/or make install
 make -s -j2
+cp ./datasette $COSMOS/bin
 
 echo "DONE."
-

@@ -12,17 +12,26 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="wget*"
 
-# apply patches if any
-# disable all the checks in fseeko.c, and just call cosmo's fseeko
-# remove the FALLTHROUGH macro if there is a complaint
-patch -p0 -i minimal.diff
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # disable all the checks in fseeko.c, and just call cosmo's fseeko
+    # remove the FALLTHROUGH macro if there is a complaint
+    patch -p0 -i minimal.diff
+fi
 
 # go into the source folder, configure
-cd wget*/
+cd "$FOLDER"
 
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"

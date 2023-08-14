@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-wget -q https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz -O sources.tar.gz
-tar -xzf sources.tar.gz
+FOLDER="libyaml*"
 
-# apply patches if any
-# patch -p0 -i
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    wget -q https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i
+fi
 
 # go into the source folder, configure
-cd libyaml*/
+cd "$FOLDER*"
 ls -al
 autoreconf -fvi
 ./configure --without-pic --with-gnu-ld\

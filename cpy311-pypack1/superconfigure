@@ -12,15 +12,24 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-# download the source code
-git clone --depth=1 --branch=pypack1 https://github.com/ahgamut/cpython pypack1
-# tar
+FOLDER="pypack1"
 
-# apply patches if any
-# patch -p0 -i
+if [ -d "$FOLDER" ]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    git clone --depth=1 --branch=pypack1 https://github.com/ahgamut/cpython pypack1
+    # tar
+
+    # apply patches if any
+    # patch -p0 -i
+fi
 
 # go into the source folder, configure
-cd pypack1
+cd $FOLDER
 ./configure --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
     --with-pymalloc --with-openssl=$COSMOS/ssl\
@@ -30,6 +39,7 @@ cd pypack1
 
 # run make and/or make install
 make -s -j2
+cp ./python $COSMOS/bin
 
 echo "DONE."
 
