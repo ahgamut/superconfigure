@@ -32,7 +32,7 @@ cd $BASELOC
 
 echo "Setting up cosmocc"
 
-PREFIX="$COSMO/bin/x86_64-unknown-cosmo"
+PREFIX="$COSMO/bin/aarch64-unknown-cosmo"
 export CC=$PREFIX-cc
 export CXX=$PREFIX-c++
 export LD=$PREFIX-cc
