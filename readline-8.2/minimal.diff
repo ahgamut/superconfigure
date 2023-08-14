@@ -1,0 +1,20 @@
+diff -ruN ./readline-8.2/input.c ../readline-8.2/input.c
+--- ./readline-8.2/input.c	2022-04-08 19:43:24.000000000 +0000
++++ ../readline-8.2/input.c	2023-08-14 05:19:51.437189243 +0000
+@@ -382,6 +382,7 @@
+ 
+   tty = fileno (rl_instream);
+ 
++#if 0
+ #if defined (HAVE_PSELECT) || defined (HAVE_SELECT)
+   FD_ZERO (&readfds);
+   FD_ZERO (&exceptfds);
+@@ -406,7 +407,7 @@
+   if (isatty (tty))
+     return (_kbhit ());
+ #endif
+-
++#endif
+   return 0;
+ }
+ 
