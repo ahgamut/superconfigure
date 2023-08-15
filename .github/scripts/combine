@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eux
 
 export MODE=
 export MODE_AARCH64=aarch64
@@ -17,8 +17,7 @@ apelinkpls () {
     OUTPUT="$1"
     OUTPUT_X86_64="$2"
     OUTPUT_AARCH64="$3"
-    "$APELINK"\
-        -l "$COSMO/o/$MODE/ape/ape.elf" \
+    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
         -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
@@ -28,6 +27,7 @@ apelinkpls () {
 
 echo "creating fat APEs"
 mkdir -p "$CONFIGDIR"
+mkdir -p "$RESULTS"
 
 # wget
 apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
