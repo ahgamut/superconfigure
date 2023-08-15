@@ -41,7 +41,7 @@ export AR=$PREFIX-ar
 export STRIP=$PREFIX-strip
 export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
 
-$CC --update
+$CC --update >/dev/null
 
 cd $BASELOC
 $CC sample.c -o sample.com
@@ -79,6 +79,6 @@ PKGS=("ncurses-6.4" "readline-8.2" "openssl-1.1.1u" "gdbm-1.23" "libuuid-1.0.3" 
 for PKG in ${PKGS[@]}; do
     cd "./$PKG"
     chmod +x ./superconfigure
-    ./superconfigure
+    ./superconfigure >/dev/null
     cd $BASELOC
 done
