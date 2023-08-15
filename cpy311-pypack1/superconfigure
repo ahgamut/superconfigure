@@ -35,12 +35,10 @@ cd $FOLDER
     --with-pymalloc --with-openssl=$COSMOS/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
     --prefix=$COSMOS\
-    CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"\
-    LDFLAGS="-L$COSMOS/lib"\
-    LIBS="$COSMOS/lib/libz.a"
+    CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make -j2
+make -s -j2
 cp ./python $COSMOS/bin
 
 echo "DONE."

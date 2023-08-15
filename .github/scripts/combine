@@ -60,6 +60,9 @@ rm -rf ./*
 cd $BASELOC
 
 
+# done?
+ls -al $RESULTS
+
 # zip them up
 
 echo "zip file with actually portable executables"

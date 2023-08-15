@@ -12,11 +12,11 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-FOLDER="wget*"
+FOLDER="wget-1.21"
 
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd wget*
+    cd $FOLDER
     make -s -i clean
     cd ..
 else
@@ -31,7 +31,7 @@ else
 fi
 
 # go into the source folder, configure
-cd wget*
+cd $FOLDER
 
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
@@ -45,7 +45,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --without-plugin-support\
     --disable-pcre --disable-pcre2\
     --sysconfdir=/zip\
-    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma $COSMOS/lib/libz.a"
+    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
 # run make and/or make install
 make -s -j2
