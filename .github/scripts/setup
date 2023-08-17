@@ -5,6 +5,8 @@ sudo apt-get install -y ca-certificates libssl-dev
 sudo apt-get install -y qemu qemu-utils qemu-user-static
 
 # cosmo
+git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan
+
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
 

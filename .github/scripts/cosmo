@@ -8,9 +8,7 @@ export COSMO=$BASELOC/cosmopolitan
 export RESULTS=$BASELOC/bin
 
 echo "Compiling Cosmopolitan Libc"
-# https://github.com/ahgamut/cosmopolitan/tree/gccbuild
-# 455c9c89f7e6595ed26b96c1c0175e37f9ad3f9f
-# git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=gccbuild
+cd $BASELOC
 
 cd $COSMO
 make -s -j2 V=0 MODE="" toolchain
@@ -21,3 +19,13 @@ make -s -j2 V=0 MODE="" o//third_party/sqlite3
 make -s -j2 V=0 MODE="" o//third_party/sqlite3/libsqlite3.a
 make -s -j2 V=0 MODE="" o//third_party/bzip2
 make -s -j2 V=0 MODE="" o//tool/build/zipcopy.com
+
+cd $COSMO
+make -s -j2 V=0 MODE="aarch64" toolchain
+make -s -j2 V=0 MODE="aarch64" o//third_party/zlib
+make -s -j2 V=0 MODE="aarch64" o//third_party/zlib/gz
+make -s -j2 V=0 MODE="aarch64" o//third_party/zstd
+make -s -j2 V=0 MODE="aarch64" o//third_party/sqlite3
+make -s -j2 V=0 MODE="aarch64" o//third_party/sqlite3/libsqlite3.a
+make -s -j2 V=0 MODE="aarch64" o//third_party/bzip2
+make -s -j2 V=0 MODE="aarch64" o//tool/build/zipcopy.com
