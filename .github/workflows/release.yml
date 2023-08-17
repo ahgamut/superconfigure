@@ -10,7 +10,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@master
       - name: support ape bins and SSL things
-        run: sudo bash ./.github/scripts/setup
+        run: bash ./.github/scripts/setup
       - name: build Cosmo
         run: bash ./.github/scripts/cosmo
       - name: build aarch64
