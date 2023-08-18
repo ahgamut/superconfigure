@@ -39,7 +39,7 @@ cd "$FOLDER"
 
 # run make and/or make install
 make -s -j2
-mkdir dummy
+mkdir -p dummy
 cp -r build/lib* ./dummy
 cp ./datasette $COSMOS/bin
 
