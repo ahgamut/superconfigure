@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+export ARCH=aarch64
+export MODE=aarch64
+export BASELOC=$(realpath $PWD)
+export COSMO=$BASELOC/cosmopolitan
+export COSMOS=$BASELOC/cosmos/$ARCH
+export RESULTS=$BASELOC/bin
+export DIRCONFIG=$BASELOC/cosmos/config
+
+PREFIX="$COSMO/bin/aarch64-unknown-cosmo"
+export CC=$PREFIX-cc
+export CXX=$PREFIX-c++
+export LD=$PREFIX-cc
+export OBJCOPY=$PREFIX-objcopy
+export AR=$PREFIX-ar
+export STRIP=$PREFIX-strip
+export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
