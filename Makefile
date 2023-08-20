@@ -23,13 +23,15 @@ cpy311-datasette.built: ncurses-6.4.built readline-8.2.built\
 	openssl-1.1.1u.built gdbm-1.23.built libuuid-1.0.3.built\
 	libyaml-0.2.5.built xz-5.4.3.built
 
-cpy311-pypack.built: ncurses-6.4.built readline-8.2.built\
+cpy311-pypack1.built: ncurses-6.4.built readline-8.2.built\
 	openssl-1.1.1u.built gdbm-1.23.built libuuid-1.0.3.built\
 	libyaml-0.2.5.built xz-5.4.3.built
 
 cli: wget-1.21.built
+pypack1: cpy311-pypack1.built
+datasette: cpy311-datasette.built
 
-python: cpy311-datasette.built cpy311-pypack1.built
+python: pypack1 datasette
 
 all: python cli
 
@@ -40,4 +42,4 @@ clean:
 distclean:
 	git clean -f -d -x
 
-.PHONY: all python cli clean distclean
+.PHONY: all python cli clean distclean pypack1 datasette

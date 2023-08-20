@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -eux
 
+make ARCH=x86_64 pypack1
+make ARCH=aarch64 pypack1
+
 export MODE=
 export MODE_AARCH64=aarch64
 export BASELOC=$(realpath $PWD)
@@ -29,21 +32,10 @@ echo "creating fat APEs"
 mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
 
-# wget
-apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
-cd $CONFIGDIR
-cp $BASELOC/wget*/wgetrc ./
-mkdir -p ./usr/share/ssl/root
-cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
-zip $RESULTS/wget.com wgetrc
-zip -qr $RESULTS/wget.com usr/
-cd "$BASELOC"
-rm -rf "$CONFIGDIR"
-mkdir -p "$CONFIGDIR"
-
-
 # pypack1
 apelinkpls $RESULTS/python.com $COSMOS_X86/bin/python $COSMOS_AARCH64/bin/python
+cp $COSMOS_X86/bin/python $RESULTS/python.x86_64 
+cp $COSMOS_AARCH64/bin/python $RESULTS/python.aarch64
 cd $CONFIGDIR
 unzip -q $BASELOC/cpy311-pypack1/pypack1/python.com || true
 cp -r $BASELOC/cpy311-pypack1/pypack1/dummy/lib* ./build
@@ -54,13 +46,14 @@ cd "$BASELOC"
 rm -rf "$CONFIGDIR"
 mkdir -p "$CONFIGDIR"
 
-
 # done?
 ls -al $RESULTS
 
 # zip them up
-
 echo "zip file with actually portable executables"
 cd $BASELOC
-ZFILE=results.zip
+ZFILE="${ZFILENAME:-python}.zip"
 find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
+
+ZFILE="${ZFILENAME:-python}-dbg.zip"
+find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
