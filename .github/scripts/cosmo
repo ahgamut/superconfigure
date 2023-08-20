@@ -19,13 +19,13 @@ make -s -j2 V=0 MODE="" o//third_party/sqlite3
 make -s -j2 V=0 MODE="" o//third_party/sqlite3/libsqlite3.a
 make -s -j2 V=0 MODE="" o//third_party/bzip2
 make -s -j2 V=0 MODE="" o//tool/build/zipcopy.com
+make -s -j2 V=0 MODE="" o//tool/build/apelink.com
 
 cd $COSMO
 make -s -j2 V=0 MODE="aarch64" toolchain
-make -s -j2 V=0 MODE="aarch64" o//third_party/zlib
-make -s -j2 V=0 MODE="aarch64" o//third_party/zlib/gz
-make -s -j2 V=0 MODE="aarch64" o//third_party/zstd
-make -s -j2 V=0 MODE="aarch64" o//third_party/sqlite3
-make -s -j2 V=0 MODE="aarch64" o//third_party/sqlite3/libsqlite3.a
-make -s -j2 V=0 MODE="aarch64" o//third_party/bzip2
-make -s -j2 V=0 MODE="aarch64" o//tool/build/zipcopy.com
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zlib
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zlib/gz
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zstd
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/sqlite3
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/sqlite3/libsqlite3.a
+make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/bzip2
