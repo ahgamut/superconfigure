@@ -1,10 +1,14 @@
 on:
+  create:
   release:
     types: [created]
 name: Handle Release
 jobs:
   generate:
-    name: Create release-artifacts
+    strategy:
+      matrix:
+        result: [cli, datasette, pypack1]
+    name: Create release artifacts for ${{ matrix.result }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -13,16 +17,14 @@ jobs:
         run: bash ./.github/scripts/setup
       - name: build Cosmo
         run: bash ./.github/scripts/cosmo
-      - name: build aarch64
-        run: bash ./.github/scripts/aarch64-build
-      - name: build x86_64
-        run: bash ./.github/scripts/x86-build
-      - name: combine
-        run: bash ./.github/scripts/combine
+      - name: build ${{ matrix.result }}
+        env:
+          ZFILENAME: ${{ matrix.result }}
+        run: bash ./.github/scripts/${{ matrix.result }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: "results*.zip"
+          file: "${{ matrix.result }}*.zip"
           overwrite: true
