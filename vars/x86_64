@@ -2,7 +2,7 @@
 set -e
 
 export ARCH=x86_64
-export MODE=
+export MODE=""
 export BASELOC=$(realpath $PWD)
 export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH

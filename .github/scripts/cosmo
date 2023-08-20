@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# set -eux
+set -eux
 
 echo "Initial Setup"
 export BASELOC=$PWD
