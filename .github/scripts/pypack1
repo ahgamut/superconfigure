@@ -2,6 +2,7 @@
 set -eux
 
 make ARCH=x86_64 pypack1
+make clean
 make ARCH=aarch64 pypack1
 
 export MODE=
