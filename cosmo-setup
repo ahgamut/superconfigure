@@ -16,11 +16,13 @@ cd $BASELOC
 echo "Setting up cosmocc"
 # $CC --update >/dev/null
 cd $BASELOC
+rm -f sample.com sample.com.dbg
 $CC sample.c -o sample.com
 ./sample.com
 
 echo "Setting up libz and libzstd in $COSMOS"
 cd $COSMOS
+ls $COSMOS/lib
 # 
 cp ./lib/libpthread.a ./lib/libcrypt.a
 
