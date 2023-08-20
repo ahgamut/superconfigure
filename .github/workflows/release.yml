@@ -2,14 +2,16 @@ on:
   create:
   release:
     types: [created]
+
 name: Handle Release
 jobs:
   generate:
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         result: [cli, datasette, pypack1]
-    name: Create release artifacts for ${{ matrix.result }}
-    runs-on: ubuntu-latest
+    name: ${{ matrix.result }} artifacts
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master

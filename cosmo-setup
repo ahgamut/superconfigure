@@ -14,7 +14,7 @@ mkdir -p include bin lib libexec share
 cd $BASELOC
 
 echo "Setting up cosmocc"
-# $CC --update >/dev/null # we have a separate script to do this
+$CC --update >/dev/null
 cd $BASELOC
 $CC sample.c -o sample.com
 ./sample.com
