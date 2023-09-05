@@ -25,7 +25,7 @@ cpy311-datasette.built: ncurses-6.4.built readline-8.2.built\
 
 cpy311-pypack1.built: ncurses-6.4.built readline-8.2.built\
 	openssl-1.1.1u.built gdbm-1.23.built libuuid-1.0.3.built\
-	libyaml-0.2.5.built xz-5.4.3.built
+	xz-5.4.3.built
 
 cli: wget-1.21.built
 pypack1: cpy311-pypack1.built
