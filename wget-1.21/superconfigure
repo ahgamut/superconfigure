@@ -38,14 +38,14 @@ export OPENSSL_LIBS="-lssl -lcrypto"
 
 ./configure --prefix="$COSMOS"\
     --with-ssl=openssl --with-openssl=yes\
-    --without-pic --with-gnu-ld\
-    --disable-shared --enable-static\
+    --with-gnu-ld=yes\
     --enable-threads=posix --disable-rpath\
     --disable-xattr --disable-nls\
-    --without-plugin-support\
     --disable-pcre --disable-pcre2\
-    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
+    --sysconfdir=/zip\ 
     CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
+
+cat config.log
 
 # run make and/or make install
 make -s -j2
