@@ -37,6 +37,7 @@ export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
     --disable-shared --enable-static\
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld --without-readline\
+    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
     CFLAGS="-Os"
 
 # run make and/or make install

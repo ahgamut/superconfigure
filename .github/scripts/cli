@@ -47,6 +47,28 @@ cd "$BASELOC"
 rm -rf "$CONFIGDIR"
 mkdir -p "$CONFIGDIR"
 
+# emacs
+cd "$BASELOC"
+apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
+cd /zip
+zip -r $RESULTS/emacs.com \
+    aarch64/libexec \
+    x86_64/libexec \
+    share/terminfo \
+    $(find share/emacs -type f |
+    grep -v '\.el.gz$' |
+    grep -v refcards |
+    grep -v images)
+
+# vim
+cd "$BASELOC"
+apelinkpls $RESULTS/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
+cd /zip
+zip -r $RESULTS/vim.com \
+    share/terminfo \
+    share/vim
+
+
 # zip them up
 echo "zip file with actually portable executables"
 cd $BASELOC

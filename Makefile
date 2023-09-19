@@ -17,6 +17,10 @@ cosmo.setup:
 
 readline-8.2.built: ncurses-6.4.built
 
+emacs-28.2.built: ncurses-6.4.built
+
+vim-9.0.1670.built: ncurses-6.4.built readline-8.2.built
+
 wget-1.21.built: openssl-1.1.1u.built libuuid-1.0.3.built xz-5.4.3.built
 
 cpy311-datasette.built: ncurses-6.4.built readline-8.2.built\
@@ -27,7 +31,7 @@ cpy311-pypack1.built: ncurses-6.4.built readline-8.2.built\
 	openssl-1.1.1u.built gdbm-1.23.built libuuid-1.0.3.built\
 	xz-5.4.3.built
 
-cli: wget-1.21.built
+cli: wget-1.21.built emacs-28.2.built vim-9.0.1670.built
 pypack1: cpy311-pypack1.built
 datasette: cpy311-datasette.built
 

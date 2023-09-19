@@ -33,6 +33,7 @@ cd libuuid*
 ./configure --enable-static --disable-shared\
     --without-pic --with-gnu-ld\
     --prefix="$COSMOS"\
+    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
     CFLAGS="-Os"
 
 # run make and/or make install

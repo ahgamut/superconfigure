@@ -44,7 +44,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --disable-xattr --disable-nls\
     --without-plugin-support\
     --disable-pcre --disable-pcre2\
-    --sysconfdir=/zip\
+    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
     CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
 # run make and/or make install

@@ -35,6 +35,7 @@ cd "$FOLDER"
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld\
     --enable-sandbox=no\
+    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
     CFLAGS="-Os -std=gnu99"
 
 # run make and/or make install
