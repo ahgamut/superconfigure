@@ -12,6 +12,10 @@ sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/regis
 
 # the zip folder
 mkdir tempconfig
+touch tempconfig/sample.txt
+
 sudo ln -sf ./tempconfig /zip
+ls -al /zip
+ls -al ./
 
 ls /proc/sys/fs/binfmt_misc/

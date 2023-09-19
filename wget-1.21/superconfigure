@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eux
 
 # check for cosmo dirs
 if [ -z ${COSMO+x} ]; then 
