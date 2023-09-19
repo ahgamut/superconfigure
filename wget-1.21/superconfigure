@@ -46,7 +46,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
 # run make and/or make install
-make -s -j2
+make V=1 -s -j2
 make install -s -j2
 
 echo "DONE."

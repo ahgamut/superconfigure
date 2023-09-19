@@ -38,7 +38,7 @@ cd $FOLDER
     --disable-acl --with-threads\
     --with-sound=no --with-unexec=no\
     --without-gpm --without-modules --without-libgmp\
-    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
+    --sysconfdir=/zip --datarootdir=/zip/share\
     --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 

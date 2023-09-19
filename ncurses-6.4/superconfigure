@@ -39,7 +39,7 @@ cd $FOLDER
     --without-dlsym --without-pcre2 --without-sysmouse\
     --with-curses-h --disable-stripping \
     --prefix=$COSMOS\
-    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
+    --sysconfdir=/zip --datarootdir=/zip/share\
     CFLAGS="-Os"
 
 # run make and/or make install

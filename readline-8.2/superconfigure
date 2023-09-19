@@ -34,7 +34,7 @@ cd $FOLDER
 ./configure --disable-shared --enable-static\
     --enable-multibyte --prefix=$COSMOS\
     --with-curses\
-    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
+    --sysconfdir=/zip --datarootdir=/zip/share\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install
