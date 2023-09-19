@@ -2,6 +2,8 @@
 set -e
 shopt -s expand_aliases
 
+export STRIP="/bin/true"
+
 # check for cosmo dirs
 if [ -z ${COSMO+x} ]; then 
     echo "could not find COSMO source directory!";
@@ -20,7 +22,7 @@ FOLDER="vim-9.0.1670"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i clean
+    make -s -i distclean
     cd ..
 else
     # download the source code
@@ -31,6 +33,7 @@ else
     # patch -p0 -i minimal.diff
 fi
 
+cd $FOLDER
 # go into the source folder, configure
 ./configure --disable-darwin --disable-smack --disable-selinux\
     --disable-xsmp --enable-luainterp=no --enable-perlinterp=no\

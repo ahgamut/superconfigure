@@ -12,7 +12,7 @@ cosmo.setup:
 
 %.built: % cosmo.setup
 	cd $< && chmod +x superconfigure
-	source $(BASELOC)/vars/$(ARCH) && cd $< && ./superconfigure
+	source $(BASELOC)/vars/$(ARCH) && cd $< && ./superconfigure >/dev/null
 	touch $@
 
 readline-8.2.built: ncurses-6.4.built
