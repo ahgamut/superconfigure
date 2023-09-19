@@ -38,15 +38,14 @@ export OPENSSL_LIBS="-lssl -lcrypto"
 
 ./configure --prefix="$COSMOS"\
     --with-ssl=openssl --with-openssl=yes\
-    --with-gnu-ld=yes\
+    --sysconfdir=/zip --with-gnu-ld=yes\
     --enable-threads=posix --disable-rpath\
     --disable-xattr --disable-nls\
     --disable-pcre --disable-pcre2\
-    --sysconfdir=/zip\ 
     CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
 # run make and/or make install
-make V=1 -s -j2
-make install -s -j2
+make V=1 -s -j6
+make install -s -j6
 
 echo "DONE."
