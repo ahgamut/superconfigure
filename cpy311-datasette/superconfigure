@@ -35,7 +35,6 @@ cd "$FOLDER"
     --with-pymalloc --with-openssl=$COSMOS/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
     --prefix=$COSMOS\
-    --sysconfdir=/zip --datarootdir=/zip/share --exec-prefix=/zip/$ARCH\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install

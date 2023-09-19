@@ -45,8 +45,6 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --sysconfdir=/zip\ 
     CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"
 
-cat config.log
-
 # run make and/or make install
 make -s -j2
 make install -s -j2

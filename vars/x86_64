@@ -8,7 +8,6 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/bin
 export DIRCONFIG=$BASELOC/cosmos/config
-export COSMOPOLITAN_DISABLE_ZIPOS=1
 
 PREFIX="$COSMO/bin/$ARCH-unknown-cosmo"
 export CC=$PREFIX-cc
