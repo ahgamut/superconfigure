@@ -34,6 +34,9 @@ fi
 
 # go into the source folder, configure
 cd $FOLDER
+export GOBJECT_LIBS=""
+export PKG_CONFIG=""
+
 ./configure --without-x --without-gnutls\
     --disable-acl --with-threads\
     --with-sound=no --with-unexec=no\
