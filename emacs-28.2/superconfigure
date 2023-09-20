@@ -42,6 +42,10 @@ cd $FOLDER
     --without-png --without-gif --without-tiff\
     --without-rsvg --without-libsystemd\
     --without-kerberos --without-kerberos5\
+    --without-xft --without-harfbuzz\
+    --without-gsettings --without-gconf\
+    --without-cairo --without-xml2\
+    --without-tiff --without-dbus --without-selinux\
     --sysconfdir=/zip --datarootdir=/zip/share\
     --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
