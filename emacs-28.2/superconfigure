@@ -38,6 +38,10 @@ cd $FOLDER
     --disable-acl --with-threads\
     --with-sound=no --with-unexec=no\
     --without-gpm --without-modules --without-libgmp\
+    --without-lcms2 --without-xpm --without-jpeg\
+    --without-png --without-gif --without-tiff\
+    --without-rsvg --without-libsystemd\
+    --without-kerberos --without-kerberos5\
     --sysconfdir=/zip --datarootdir=/zip/share\
     --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
