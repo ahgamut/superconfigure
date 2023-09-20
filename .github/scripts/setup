@@ -10,12 +10,4 @@ git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf c
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
 
-# the zip folder
-mkdir tempconfig
-touch tempconfig/sample.txt
-
-sudo ln -sf ./tempconfig /zip
-ls -al /zip
-ls -al ./
-
 ls /proc/sys/fs/binfmt_misc/
