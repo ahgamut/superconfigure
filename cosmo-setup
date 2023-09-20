@@ -25,6 +25,7 @@ $CC sample.c -o sample.com
 
 echo "Setting up libz and libzstd in $COSMOS"
 cd $COSMOS/$ARCH
+mv $COSMOS/lib/*.a $COSMOS/$ARCH/lib/
 ls $COSMOS/$ARCH/lib
 # 
 cp ./lib/libpthread.a ./lib/libcrypt.a
