@@ -46,7 +46,7 @@ cd $FOLDER
     --without-x --with-tlib=tinfo\
     --with-local-dir=$COSMOS/lib\
     --sysconfdir=/zip --datarootdir=/zip/share\
-    --prefix=$COSMOS\
+    --prefix=$COSMOS --exec-prefix=$COSMOS/$ARCH\
     CFLAGS="-Os -I$COSMOS/include" LDFLAGS="-L$COSMOS/lib" 
 
 # run make and/or make install
