@@ -1,70 +1,51 @@
 # `superconfigure`
 
 this repo contains shell scripts that wrap `./configure` to build software with
-[Cosmopolitan Libc][cosmo]. Here's how you use these scripts:
+[Cosmopolitan Libc][cosmo]. The executables that build on this are [fat APE
+binaries](https://github.com/jart/cosmopolitan#amd64--arm64-fat-ape-binaries).
 
-* Setup the `/opt/cosmo` and `/opt/cosmos` variables from the Cosmopolitan Libc
-  README
-* export necessary environment variables and libraries
+Currently available: `wget-1.21`, `vim-9.0.1670`, `emacs-28.2`, CPython3.11.4.
 
-```
-export COSMO=/opt/cosmo
-cd $COSMO
-make toolchain
-make o//third_party/zlib
-make o//third_party/bzip2
-make o//third_party/zstd
-# edit sqlite.mk and remove OMIT_SHARED_CACHE
-make o//third_party/sqlite3/libsqlite3.a
+# How can I get these?
 
-export COSMOS=/opt/cosmos
-mkdir -p /opt/cosmos/bin
-cp $COSMO/tool/scripts/cosmocc $COSMOS/bin/
-cp $COSMO/tool/scripts/cosmoc++ $COSMOS/bin/
-export CC=$COSMOS/bin/cosmocc
-export CXX=$COSMOS/bin/cosmoc++
-export LD=$COSMOS/bin/cosmoc++
+The  [`Releases` page](https://github.com/ahgamut/superconfigure/releases)
+should have the most recent builds of executables in this repo, built via Github
+Actions. If you'd like to build these executables yourself, here's how:
 
-mkdir /opt/cosmos/lib
-cp $COSMO/o/third_party/zlib/zlib.a $COSMOS/lib/libz.a
-cp $COSMO/o/third_party/zstd/zstd.a $COSMOS/lib/libzstd.a
-cp $COSMO/o/third_party/bzip2/bzip2.a $COSMOS/lib/libbz2.a
-cp $COSMO/o/third_party/sqlite3/libsqlite3.a $COSMOS/lib/libsqlite3.a
-```
+* Clone this repository
+* install necessary build dependencies (most notably `qemu` and SSL certs) -- see
+  `./.github/scripts/setup` for details
+* build the [Cosmopolitan Libc repository][cosmo] for `MODE=` and `MODE=aarch64`
+  -- see `.github/scripts/cosmo`
+* to build `vim`, `emacs`, and `wget` run `./.github/scripts/cli`
+* to build CPython3.11.4 [`datasette` 1.0.0a6][datasette] run `./.github/scripts/datasette`
+* to build CPython3.11.4 with CLI utilities like `black` and `cookiecutter` run `./.github/scripts/pypack1`
 
-* _(Optional)_: here are my forks of [`gcc`][patch] and
-   [`musl-cross-make`][buildpatch], which you can use to build `gcc` with the
-   latest version of my patch. If you do this, remember to edit `cosmocc` and
-   `cosmoc++` accordingly.
+The build scripts assume `bash`/Debian/Ubuntu, if you'd like to expand them,
+submit a PR!
 
-* Let's take `ncurses` as an example -- download the `ncurses` source,
-  copy the `ncurses` shell script as `superconfigure` into the folder containing
-  the `configure` script. (**Edit:** I think this can be done automatically.)
+## Adding to the ZIP Store
 
-* `./superconfigure; make; make install`. You might have to change a bit of code
-  occasionally:
-
-  * `enum`s that fail compilation should be rewritten as `#define`s (I think
-    `emacs` has an `enum` like this)
-
-* repeat for all other libraries
-
-* if you built an executable and want to convert it into an Actually Portable
-  Executable, run
+If you'd like to add new Python scripts or pure-Python packages to the `python`
+executables:
 
 ```sh
-objcopy -SO binary your-software your-software.com
-$COSMO/o/tool/scripts/zipcopy.com your-software your-software.com
+mkdir -p ./Lib/site-packages
+cd Lib/site-packages
+# add your code
+cp -r your_script.py
+unzip your_lib.whl
+cd ../../
+zip -r ./python.com Lib/
+# test if the package loads
+./python.com -c "import your_lib"
 ```
 
-I'd recommend building `ncurses` first, then `bash`, then `readline` and the
-rest. Most of the scripts here are because I wanted [a CPython3.11 Actually
-Portable Executable][cpy311] with as much of the stdlib as possible.
-
-**Note:** I have not tried running the built executables on Windows yet, because
-I currently don't have a computer running Windows.
+A similar process can be followed to add your own `vimrc`, `wgetrc`, or emacs
+config to the respective binaries.
 
 [cosmo]: https://github.com/jart/cosmopolitan
+[datasette]: https://github.com/simonw/datasette
 [patch]: https://github.com/ahgamut/gcc/tree/portcosmo-11.2
 [buildpatch]: https://github.com/ahgamut/musl-cross-make
 [cpy311]: https://github.com/ahgamut/cpython/tree/portcosmo
