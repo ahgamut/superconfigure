@@ -50,7 +50,7 @@ mkdir -p "$CONFIGDIR"
 # emacs
 cd "$BASELOC"
 cd /zip
-apelinkpls $RESULTS/emacs.com ./bin/x86_64/emacs ./bin/aarch64/emacs
+apelinkpls $RESULTS/emacs.com ./x86_64/bin/emacs ./aarch64/bin/emacs
 zip -r $RESULTS/emacs.com \
     aarch64/libexec \
     x86_64/libexec \
