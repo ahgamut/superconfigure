@@ -48,7 +48,7 @@ cd $BASELOC
 ls -al ./
 
 # bash
-apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
+apelinkpls $RESULTS/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
 cp $COSMOS_X86/bin/bash $RESULTS/bash.x86_64 
 cp $COSMOS_AARCH64/bin/bash $RESULTS/bash.aarch64
 cd /zip
