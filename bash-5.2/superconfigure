@@ -19,7 +19,7 @@ FOLDER="bash-bash-5.2"
 
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd $FOLDER
+    cd bash*/
     make -s -i distclean
     cd ..
 else
