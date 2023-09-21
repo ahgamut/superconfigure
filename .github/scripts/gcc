@@ -21,8 +21,8 @@ apelinkpls () {
     OUTPUT="$1"
     OUTPUT_X86_64="$2"
     OUTPUT_AARCH64="$3"
-    OLDNAME_X86_64="$(basename -- OUTPUT_X86_64)"
-    OLDNAME_AARCH64="$(basename -- OUTPUT_AARCH64)"
+    OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
+    OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
     TARG_FOLD="$(dirname $OUTPUT)"
     "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
         -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
