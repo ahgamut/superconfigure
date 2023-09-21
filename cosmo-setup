@@ -10,7 +10,7 @@ mkdir -p $RESULTS
 sudo rm -f /zip
 sudo ln -sf $COSMOS /zip
 cd $COSMOS
-mkdir -p include bin lib libexec share
+mkdir -p include bin lib libexec share $ARCH
 cd $BASELOC
 
 echo "Setting up cosmocc"
