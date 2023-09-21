@@ -69,7 +69,3 @@ apelinkpls $RESULTS/collect2\
 apelinkpls $RESULTS/lto-wrapper\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper
-
-apelinkpls $RESULTS/g++-mapper-server\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server
