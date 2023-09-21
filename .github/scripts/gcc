@@ -42,7 +42,7 @@ cd $BASELOC
 ls -al ./
 
 # from bin
-for EXE in $(find $COSMOS_X86/bin -type f | grep -v '^x86_64'); do
+for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'x86_64-'); do
     baseEXE="$(basename -- $EXE)"
     apelinkpls $RESULTS/$baseEXE.com\
         $COSMOS_X86/bin/$baseEXE\
