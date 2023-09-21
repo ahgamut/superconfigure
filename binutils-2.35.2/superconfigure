@@ -41,8 +41,9 @@ export PKG_CONFIG=""
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
-    --disable-bootstrap --disable-libada --build=$ARCH-pc-linux-gnu \
-    --target=x86_64-pc-linux-gnu
+    --program-prefix="" \
+    --disable-bootstrap --disable-libada --build=$ARCH-linux-gnu \
+    --target=x86_64-linux-gnu
 
 # run make and/or make install
 make -s -j2

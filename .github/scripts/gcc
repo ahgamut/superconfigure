@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -eux
 
-make ARCH=x86_64 cli
+make ARCH=x86_64 gcc
 make clean
-make ARCH=aarch64 cli
+make ARCH=aarch64 gcc
 
 export MODE=
 export MODE_AARCH64=aarch64
