@@ -47,12 +47,18 @@ ls -al /zip
 cd $BASELOC
 ls -al ./
 
+# bash
+apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
+cp $COSMOS_X86/bin/bash $RESULTS/bash.x86_64 
+cp $COSMOS_AARCH64/bin/bash $RESULTS/bash.aarch64
+cd /zip
+zip -r $RESULTS/bash.com share/terminfo
 
 # wget
 apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cp $COSMOS_X86/bin/wget $RESULTS/wget.x86_64 
 cp $COSMOS_AARCH64/bin/wget $RESULTS/wget.aarch64
-cd $CONFIGDIR
+cd /zip
 cp $BASELOC/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
 cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
