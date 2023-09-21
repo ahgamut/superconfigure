@@ -29,7 +29,7 @@ else
 
     # apply patches if any
     sed -i -e 's!memset (opthdr + opt_hdr_size!memset ((char *)opthdr + opt_hdr_size!' binutils*/bfd/peicode.h
-    patch -p0 -i minimal.diff
+    # patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
