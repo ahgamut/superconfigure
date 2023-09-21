@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.bz ]]; then
+    # we already downloaded it
+    cd isl*
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.18.tar.bz2 -O sources.tar.bz2
+    tar -xf sources.tar.bz2
+
+    # apply patches if any
+    # patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd isl*
+export PKG_CONFIG=""
+
+./configure --prefix=$COSMOS\
+    --disable-shared --disable-dependency-tracking --disable-silent-rules\
+    --enable-portable-binary
+
+# run make and/or make install
+make -s -j2
+make install -s -j2
+
+echo "DONE."

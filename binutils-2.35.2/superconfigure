@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd binutils*
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://ftp.gnu.org/gnu/binutils/binutils-2.35.2.tar.gz -O sources.tar.gz
+    tar -xf sources.tar.gz
+
+    # apply patches if any
+    sed -i -e 's!memset (opthdr + opt_hdr_size!memset ((char *)opthdr + opt_hdr_size!' binutils*/bfd/peicode.h
+    # patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd binutils*
+export PKG_CONFIG=""
+
+./configure --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
+    --disable-silent-rules --disable-libstdcxx --disable-werror --disable-multilib \
+    --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
+    --disable-lto --with-system-zlib --with-static-standard-libraries \
+    --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
+    --disable-bootstrap --disable-libada --build=x86_64-pc-linux-cosmo \
+    --host=x86_64-pc-linux-cosmo --target=x86_64-pc-linux-cosmo
+
+# run make and/or make install
+make -s -j2
+make install -s -j2
+
+echo "DONE."

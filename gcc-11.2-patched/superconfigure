@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -e
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+FOLDER="gcc"
+
+if [ -d "$FOLDER" ]; then
+    # we already downloaded it
+    mkdir -p $FOLDER/build
+    cd $FOLDER/build
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ../../
+else
+    # download the source code
+    git clone --depth=1 --branch=portcosmo-11.2 https://github.com/ahgamut/gcc $FOLDER
+    mkdir -p $FOLDER/build
+    # tar
+
+    # apply patches if any
+    # patch -p0 -i
+fi
+
+# go into the source folder, configure
+cd "$FOLDER"/build
+../configure --prefix=$COSMOS --with-sysroot= \
+    --with-system-zlib --disable-shared --enable-static --disable-libquadmath \
+    --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
+    --with-static-standard-libraries --disable-libada --disable-libssp \
+    --disable-host-shared --disable-objc-gc --enable-languages=c,c++ --disable-bootstrap \
+    --disable-assembly --disable-werror --disable-multilib --enable-tls \
+    --disable-libmudflap --disable-libsanitizer --disable-gnu-indirect-function \
+    --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
+    --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
+    --with-gnu-as=yes --with-gnu-ld=yes --build=x86_64-pc-linux-cosmo \
+    --host=x86_64-pc-linux-cosmo --target=x86_64-pc-linux-cosmo \
+    --disable-libgomp --disable-libatomic
+
+# run make and/or make install
+make -s -j2
+make -s -j2 install
+
+echo "DONE."
