@@ -4,7 +4,7 @@ this repo contains shell scripts that wrap `./configure` to build software with
 [Cosmopolitan Libc][cosmo]. The executables that build on this are [fat APE
 binaries](https://github.com/jart/cosmopolitan#amd64--arm64-fat-ape-binaries).
 
-Currently available: `wget-1.21`, `vim-9.0.1670`, `emacs-28.2`, CPython3.11.4.
+Currently available: `bash-5.2`, `wget-1.21`, `vim-9.0.1670`, `emacs-28.2`, CPython3.11.4.
 
 # How can I get these?
 
@@ -17,7 +17,7 @@ Actions. If you'd like to build these executables yourself, here's how:
   `./.github/scripts/setup` for details
 * build the [Cosmopolitan Libc repository][cosmo] for `MODE=` and `MODE=aarch64`
   -- see `.github/scripts/cosmo`
-* to build `vim`, `emacs`, and `wget` run `./.github/scripts/cli`
+* to build `bash`, `vim`, `emacs`, and `wget` run `./.github/scripts/cli`
 * to build CPython3.11.4 [`datasette` 1.0.0a6][datasette] run `./.github/scripts/datasette`
 * to build CPython3.11.4 with CLI utilities like `black` and `cookiecutter` run `./.github/scripts/pypack1`
 
