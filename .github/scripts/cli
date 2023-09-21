@@ -37,9 +37,9 @@ mkdir -p "$RESULTS"
 sudo rm -f /zip
 sudo ln -sf "$CONFIGDIR" /zip
 cd /zip
-mkdir -p x86_64 aarch64 share
-cp -r $COSMOS_X86/x86_64/libexec ./x86_64
-cp -r $COSMOS_AARCH64/aarch64/libexec ./aarch64
+mkdir -p share
+cp -r $COSMOS_X86/x86_64 ./
+cp -r $COSMOS_AARCH64/aarch64 ./
 cp -r $COSMOS_X86/share/terminfo ./share
 cp -r $COSMOS_X86/share/vim ./share
 cp -r $COSMOS_X86/share/emacs ./share
