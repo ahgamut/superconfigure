@@ -14,7 +14,7 @@ export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
 export RESULTS=$BASELOC/bin
 
-APELINK=$COSMO/o//tool/build/apelink.com
+APELINK=$COSMO/o//tool/build/apelink
 APELINKFLAGS=
 
 apelinkpls () {
@@ -51,16 +51,16 @@ cd $BASELOC
 ls -al ./
 
 # bash
-apelinkpls $RESULTS/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
+apelinkpls $RESULTS/bash $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
 cd /zip
-zip -r $RESULTS/bash.com share/terminfo
+zip -r $RESULTS/bash share/terminfo
 
 # wget
-apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
+apelinkpls $RESULTS/wget $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cd /zip
 cp $BASELOC/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
 cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
-zip $RESULTS/wget.com wgetrc
-zip -qr $RESULTS/wget.com usr/
+zip $RESULTS/wget wgetrc
+zip -qr $RESULTS/wget usr/
 cd "$BASELOC"

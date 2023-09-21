@@ -14,7 +14,7 @@ export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
 export RESULTS=$BASELOC/bin
 
-APELINK=$COSMO/o//tool/build/apelink.com
+APELINK=$COSMO/o//tool/build/apelink
 APELINKFLAGS=
 
 apelinkpls () {
@@ -44,32 +44,32 @@ ls -al ./
 # from bin
 for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'x86_64-'); do
     baseEXE="$(basename -- $EXE)"
-    apelinkpls $RESULTS/$baseEXE.com\
+    apelinkpls $RESULTS/$baseEXE\
         $COSMOS_X86/bin/$baseEXE\
         $COSMOS_AARCH64/bin/$baseEXE
 done
 
 # from libexec
-apelinkpls $RESULTS/fixincl.com\
+apelinkpls $RESULTS/fixincl\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl
 
-apelinkpls $RESULTS/cc1.com\
+apelinkpls $RESULTS/cc1\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1
 
-apelinkpls $RESULTS/cc1plus.com\
+apelinkpls $RESULTS/cc1plus\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus
 
-apelinkpls $RESULTS/collect2.com\
+apelinkpls $RESULTS/collect2\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2
 
-apelinkpls $RESULTS/lto-wrapper.com\
+apelinkpls $RESULTS/lto-wrapper\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper
 
-apelinkpls $RESULTS/g++-mapper-server.com\
+apelinkpls $RESULTS/g++-mapper-server\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server
