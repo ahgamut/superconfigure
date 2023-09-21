@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eux
+
+echo "Initial Setup"
+export BASELOC=$PWD
+export COSMO=$BASELOC/cosmopolitan
+export RESULTS=$BASELOC/bin
+
+# zip them up
+echo "zip file with actually portable executables"
+cd $BASELOC
+ZFILE="${ZFILENAME:-extras}.zip"
+zip "$ZFILE" $(find ./bin -maxdepth 1 -name '*" | grep -v "\.x86" | grep -v "\.aarch64")
+
+ZFILE="${ZFILENAME:-extras}-dbg.zip"
+find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"

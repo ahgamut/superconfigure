@@ -52,12 +52,3 @@ mkdir -p "$CONFIGDIR"
 
 # done?
 ls -al $RESULTS
-
-# zip them up
-echo "zip file with actually portable executables"
-cd $BASELOC
-ZFILE="${ZFILENAME:-python}.zip"
-find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
-
-ZFILE="${ZFILENAME:-python}-dbg.zip"
-find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"

@@ -21,9 +21,11 @@ jobs:
       - name: build Cosmo
         run: bash ./.github/scripts/cosmo
       - name: build ${{ matrix.result }}
+        run: bash ./.github/scripts/build/${{ matrix.result }}
+      - name: collect into zip
         env:
           ZFILENAME: ${{ matrix.result }}
-        run: bash ./.github/scripts/${{ matrix.result }}
+        run: bash ./.github/scripts/collectzip
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:

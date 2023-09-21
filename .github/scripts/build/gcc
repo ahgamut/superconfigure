@@ -73,12 +73,3 @@ apelinkpls $RESULTS/lto-wrapper.com\
 apelinkpls $RESULTS/g++-mapper-server.com\
     $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server\
     $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server
-
-# zip them up
-echo "zip file with actually portable executables"
-cd $BASELOC
-ZFILE="${ZFILENAME:-x86_64-gcc-11.2}.zip"
-find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
-
-ZFILE="${ZFILENAME:-x86_64-gcc-11.2}-dbg.zip"
-find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
