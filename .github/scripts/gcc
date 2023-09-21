@@ -42,7 +42,7 @@ cd $BASELOC
 ls -al ./
 
 # from bin
-for EXE in $(find $COSMOS_X86/bin -type f -depth 1 | grep -v '^x86_64'); do
+for EXE in $(find $COSMOS_X86/bin -type f | grep -v '^x86_64'); do
     baseEXE="$(basename -- $EXE)"
     apelinkpls $RESULTS/$baseEXE.com\
         $COSMOS_X86/bin/$baseEXE\
@@ -51,28 +51,28 @@ done
 
 # from libexec
 apelinkpls $RESULTS/fixincl.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/install-tools/fixincl\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/install-tools/fixincl
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl
 
 apelinkpls $RESULTS/cc1.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/cc1\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/cc1
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1
 
 apelinkpls $RESULTS/cc1plus.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/cc1plus\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/cc1plus
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus
 
 apelinkpls $RESULTS/collect2.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/collect2\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/collect2
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2
 
 apelinkpls $RESULTS/lto-wrapper.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/lto-wrapper\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/lto-wrapper
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper
 
 apelinkpls $RESULTS/g++-mapper-server.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/g++-mapper-server\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/g++-mapper-server
+    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server\
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/g++-mapper-server
 
 # zip them up
 echo "zip file with actually portable executables"
