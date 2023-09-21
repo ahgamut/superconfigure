@@ -49,6 +49,6 @@ cd "$FOLDER"/build
 
 # run make and/or make install
 make -s -j2
-make -s -j2 install
+make -i -s -j2 install
 
 echo "DONE."
