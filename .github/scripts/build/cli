@@ -14,7 +14,7 @@ export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
 export RESULTS=$BASELOC/bin
 
-APELINK=$COSMO/o//tool/build/apelink
+APELINK=$COSMO/o//tool/build/apelink.com
 APELINKFLAGS=
 
 apelinkpls () {
