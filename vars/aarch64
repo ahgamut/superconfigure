@@ -5,7 +5,7 @@ export ARCH=aarch64
 export MODE=aarch64
 export BASELOC=$(realpath $PWD)
 export COSMO=$BASELOC/cosmopolitan
-export COSMOS=$BASELOC/cosmos
+export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/bin
 export DIRCONFIG=$BASELOC/cosmos/config
 

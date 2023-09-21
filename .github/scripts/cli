@@ -9,14 +9,10 @@ export MODE=
 export MODE_AARCH64=aarch64
 export BASELOC=$(realpath $PWD)
 export COSMO=$BASELOC/cosmopolitan
-export COSMOS=$BASELOC/cosmos
 export COSMOS_X86=$BASELOC/cosmos/x86_64
 export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
 export RESULTS=$BASELOC/bin
-
-sudo rm -f /zip
-sudo ln -sf $COSMOS /zip
 
 APELINK=$COSMO/o//tool/build/apelink.com
 APELINKFLAGS=
@@ -37,6 +33,21 @@ echo "creating fat APEs"
 mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
 
+# the zip folder
+sudo rm -f /zip
+sudo ln -sf "$CONFIGDIR" /zip
+cd /zip
+mkdir -p x86_64 aarch64 share
+cp -r $COSMOS_X86/libexec ./x86_64
+cp -r $COSMOS_AARCH64/libexec ./aarch64
+cp -r $COSMOS_X86/share/terminfo ./share
+ls -al /zip
+
+
+cd $BASELOC
+ls -al ./
+
+
 # wget
 apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cp $COSMOS_X86/bin/wget $RESULTS/wget.x86_64 
@@ -48,17 +59,15 @@ cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
 zip $RESULTS/wget.com wgetrc
 zip -qr $RESULTS/wget.com usr/
 cd "$BASELOC"
-rm -rf "$CONFIGDIR"
-mkdir -p "$CONFIGDIR"
 
 # emacs
 cd "$BASELOC"
-cd /zip
 apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
+cd /zip
 zip -r $RESULTS/emacs.com \
-    aarch64/libexec \
-    x86_64/libexec \
     share/terminfo \
+    $(find x86_64/libexec -type f | grep 'emacs\.pdmp') \
+    $(find aarch64/libexec -type f | grep 'emacs\.pdmp') \
     $(find share/emacs -type f |
     grep -v '\.el.gz$' |
     grep -v refcards |

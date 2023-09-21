@@ -5,14 +5,11 @@ cd $BASELOC
 
 # create the COSMOS and related folders
 mkdir -p $COSMOS
-mkdir -p $COSMOS/$ARCH
 mkdir -p $DIRCONFIG
 mkdir -p $RESULTS
 sudo rm -f /zip
 sudo ln -sf $COSMOS /zip
 cd $COSMOS
-mkdir -p include bin lib libexec share
-cd $COSMOS/$ARCH
 mkdir -p include bin lib libexec share
 cd $BASELOC
 
@@ -24,9 +21,8 @@ $CC sample.c -o sample.com
 ./sample.com
 
 echo "Setting up libz and libzstd in $COSMOS"
-cd $COSMOS/$ARCH
-mv $COSMOS/lib/*.a $COSMOS/$ARCH/lib/
-ls $COSMOS/$ARCH/lib
+cd $COSMOS
+ls $COSMOS/lib
 # 
 cp ./lib/libpthread.a ./lib/libcrypt.a
 cp ./lib/libpthread.a ./lib/libgio-2.0.a

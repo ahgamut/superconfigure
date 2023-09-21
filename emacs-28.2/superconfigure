@@ -50,7 +50,7 @@ export PKG_CONFIG=""
     --without-cairo --without-xml2\
     --without-tiff --without-dbus --without-selinux\
     --sysconfdir=/zip --datarootdir=/zip/share\
-    --prefix=$COSMOS --exec-prefix=/zip/$ARCH\
+    --exec-prefix=/zip --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install
