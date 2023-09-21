@@ -37,10 +37,11 @@ mkdir -p "$RESULTS"
 sudo rm -f /zip
 sudo ln -sf "$CONFIGDIR" /zip
 cd /zip
-mkdir -p x86_64 aarch64 share
-cp -r $COSMOS_X86/libexec ./x86_64
-cp -r $COSMOS_AARCH64/libexec ./aarch64
+mkdir -p libexec share
+cp -r $COSMOS_X86/libexec/emacs ./libexec
+cp -r $COSMOS_AARCH64/libexec/emacs ./libexecc
 cp -r $COSMOS_X86/share/terminfo ./share
+cp -r $COSMOS_X86/share/vim ./share
 ls -al /zip
 
 
@@ -72,8 +73,7 @@ apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
 cd /zip
 zip -r $RESULTS/emacs.com \
     share/terminfo \
-    $(find x86_64/libexec -type f | grep 'emacs\.pdmp') \
-    $(find aarch64/libexec -type f | grep 'emacs\.pdmp') \
+    $(find libexec -type f | grep 'emacs\.pdmp') \
     $(find share/emacs -type f |
     grep -v '\.el.gz$' |
     grep -v refcards |
