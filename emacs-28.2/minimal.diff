@@ -30,14 +30,4 @@
  
  /* Rename OLD to NEW.  If FORCE, replace any existing NEW.
     It is OK if there are temporarily two hard links to OLD.
---- emacs-28.2/src/pdumper.c	2023-09-21 07:01:19.498992204 +0000
-+++ emacs-28.2/src/pdumper.c.new	2023-09-21 07:01:41.821247349 +0000
-@@ -5595,7 +5595,7 @@
-   unsigned char desired[sizeof fingerprint];
-   for (int i = 0; i < sizeof fingerprint; i++)
-     desired[i] = fingerprint[i];
--  if (memcmp (header->fingerprint, desired, sizeof desired) != 0)
-+  if (0 && memcmp (header->fingerprint, desired, sizeof desired) != 0)
-     {
-       dump_fingerprint ("desired fingerprint", desired);
-       dump_fingerprint ("found fingerprint", header->fingerprint);
+
