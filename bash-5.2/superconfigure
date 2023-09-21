@@ -32,7 +32,7 @@ else
 fi
 
 # go into the source folder, configure
-cd $FOLDER
+cd bash*/
 ./configure --prefix="$COSMOS"\
     --without-bash-malloc --enable-static-link\
     --disable-rpath --with-installed-readline\
