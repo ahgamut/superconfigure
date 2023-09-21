@@ -39,7 +39,7 @@ sudo ln -sf "$CONFIGDIR" /zip
 cd /zip
 mkdir -p libexec share
 cp -r $COSMOS_X86/libexec/emacs ./libexec
-cp -r $COSMOS_AARCH64/libexec/emacs ./libexecc
+cp -r $COSMOS_AARCH64/libexec/emacs ./libexec
 cp -r $COSMOS_X86/share/terminfo ./share
 cp -r $COSMOS_X86/share/vim ./share
 ls -al /zip
