@@ -1,0 +1,11 @@
+--- binutils-2.35.2/binutils-2.35.2/opcodes/sysdep.h	2023-09-21 16:36:33.171991187 +0000
++++ binutils-2.35.2/binutils-2.35.2/opcodes/sysdep.h.new	2023-09-21 16:36:03.004941735 +0000
+@@ -62,7 +62,7 @@
+    It is faster than setjmp/longjmp on systems where the signal mask is
+    saved.  */
+ 
+-#if defined(HAVE_SIGSETJMP)
++#if 0 && defined(HAVE_SIGSETJMP)
+ #define OPCODES_SIGJMP_BUF		sigjmp_buf
+ #define OPCODES_SIGSETJMP(buf)		sigsetjmp((buf), 0)
+ #define OPCODES_SIGLONGJMP(buf,val)	siglongjmp((buf), (val))

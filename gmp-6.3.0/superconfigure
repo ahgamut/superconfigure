@@ -37,7 +37,8 @@ export PKG_CONFIG=""
 
 ./configure --prefix=$COSMOS\
     --disable-shared --disable-dependency-tracking\
-    --disable-silent-rules --enable-fat
+    --disable-silent-rules --enable-fat\
+    --build=$ARCH-pc-linux-gnu
 
 # run make and/or make install
 make -s -j2

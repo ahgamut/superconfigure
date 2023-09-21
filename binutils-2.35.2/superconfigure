@@ -29,7 +29,7 @@ else
 
     # apply patches if any
     sed -i -e 's!memset (opthdr + opt_hdr_size!memset ((char *)opthdr + opt_hdr_size!' binutils*/bfd/peicode.h
-    # patch -p0 -i minimal.diff
+    patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
@@ -41,8 +41,8 @@ export PKG_CONFIG=""
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
-    --disable-bootstrap --disable-libada --build=x86_64-pc-linux-cosmo \
-    --host=x86_64-pc-linux-cosmo --target=x86_64-pc-linux-cosmo
+    --disable-bootstrap --disable-libada --build=$ARCH-pc-linux-gnu \
+    --target=x86_64-pc-linux-gnu
 
 # run make and/or make install
 make -s -j2

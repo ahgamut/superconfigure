@@ -24,7 +24,7 @@ if [[ -f sources.tar.xz ]]; then
     cd ..
 else
     # download the source code
-    wget -q https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.xz -O sources.tar.xz
+    wget -q https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.0.tar.xz -O sources.tar.xz
     tar -xf sources.tar.xz
 
     # apply patches if any

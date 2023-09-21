@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+set -eux
+
+make ARCH=x86_64 cli
+make clean
+make ARCH=aarch64 cli
+
+export MODE=
+export MODE_AARCH64=aarch64
+export BASELOC=$(realpath $PWD)
+export COSMO=$BASELOC/cosmopolitan
+export COSMOS_X86=$BASELOC/cosmos/x86_64
+export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
+export CONFIGDIR=$BASELOC/dummy
+export RESULTS=$BASELOC/bin
+
+APELINK=$COSMO/o//tool/build/apelink.com
+APELINKFLAGS=
+
+apelinkpls () {
+    OUTPUT="$1"
+    OUTPUT_X86_64="$2"
+    OUTPUT_AARCH64="$3"
+    OLDNAME_X86_64="$(basename -- OUTPUT_X86_64)"
+    OLDNAME_AARCH64="$(basename -- OUTPUT_AARCH64)"
+    TARG_FOLD="$(dirname $OUTPUT)"
+    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
+        -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$OUTPUT_X86_64" \
+        "$OUTPUT_AARCH64"
+    cp "$OUTPUT_X86_64" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$OUTPUT_AARCH64" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+echo "creating fat APEs"
+mkdir -p "$CONFIGDIR"
+mkdir -p "$RESULTS"
+
+# the zip folder
+sudo rm -f /zip
+sudo ln -sf "$CONFIGDIR" /zip
+cd /zip
+mkdir -p share
+ls -al /zip
+
+
+cd $BASELOC
+ls -al ./
+
+# from bin
+
+# from libexec
+apelinkpls $RESULTS/fixincl.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/install-tools/fixincl
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/install-tools/fixincl
+
+apelinkpls $RESULTS/cc1.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/cc1
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/cc1
+
+apelinkpls $RESULTS/cc1plus.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/cc1plus
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/cc1plus
+
+apelinkpls $RESULTS/collect2.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/collect2
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/collect2
+
+apelinkpls $RESULTS/lto-wrapper.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/lto-wrapper
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/lto-wrapper
+
+apelinkpls $RESULTS/g++-mapper-server.com\
+    $COSMOS_X86/libexec/gcc/x86_64-linux-musl/11.2.0/g++-mapper-server
+    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-musl/11.2.0/g++-mapper-server
+
+# zip them up
+echo "zip file with actually portable executables"
+cd $BASELOC
+ZFILE="${ZFILENAME:-x86_64-gcc-11.2}.zip"
+find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
+
+ZFILE="${ZFILENAME:-x86_64-gcc-11.2}-dbg.zip"
+find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"

@@ -42,8 +42,8 @@ cd "$FOLDER"/build
     --disable-libmudflap --disable-libsanitizer --disable-gnu-indirect-function \
     --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
     --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
-    --with-gnu-as=yes --with-gnu-ld=yes --build=x86_64-pc-linux-cosmo \
-    --host=x86_64-pc-linux-cosmo --target=x86_64-pc-linux-cosmo \
+    --with-gnu-as=yes --with-gnu-ld=yes --build=$ARCH-pc-linux-gnu \
+    --target=x86_64-pc-linux-gnu \
     --disable-libgomp --disable-libatomic
 
 # run make and/or make install
