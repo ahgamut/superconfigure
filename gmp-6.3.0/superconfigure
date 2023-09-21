@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eux
 shopt -s expand_aliases
 
 # check for cosmo dirs
