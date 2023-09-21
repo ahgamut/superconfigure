@@ -16,11 +16,8 @@ FOLDER="gcc"
 
 if [ -d "$FOLDER" ]; then
     # we already downloaded it
+    rm -rf $FOLDER/build
     mkdir -p $FOLDER/build
-    cd $FOLDER/build
-    make -s -i clean || true
-    make -s -i distclean || true
-    cd ../../
 else
     # download the source code
     git clone --depth=1 --branch=portcosmo-11.2 https://github.com/ahgamut/gcc $FOLDER
