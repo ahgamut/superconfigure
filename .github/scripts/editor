@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -eux
 
-make ARCH=x86_64 cli
+make ARCH=x86_64 editor
 make clean
-make ARCH=aarch64 cli
+make ARCH=aarch64 editor
 
 export MODE=
 export MODE_AARCH64=aarch64
@@ -38,37 +38,44 @@ sudo rm -f /zip
 sudo ln -sf "$CONFIGDIR" /zip
 cd /zip
 mkdir -p share
+cp -r $COSMOS_X86/x86_64 ./
+cp -r $COSMOS_AARCH64/aarch64 ./
 cp -r $COSMOS_X86/share/terminfo ./share
+cp -r $COSMOS_X86/share/vim ./share
+cp -r $COSMOS_X86/share/emacs ./share
 ls -al /zip
 
 
 cd $BASELOC
 ls -al ./
 
-# bash
-apelinkpls $RESULTS/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
-cp $COSMOS_X86/bin/bash $RESULTS/bash.x86_64 
-cp $COSMOS_AARCH64/bin/bash $RESULTS/bash.aarch64
-cd /zip
-zip -r $RESULTS/bash.com share/terminfo
-
-# wget
-apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
-cp $COSMOS_X86/bin/wget $RESULTS/wget.x86_64 
-cp $COSMOS_AARCH64/bin/wget $RESULTS/wget.aarch64
-cd /zip
-cp $BASELOC/wget*/wgetrc ./
-mkdir -p ./usr/share/ssl/root
-cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
-zip $RESULTS/wget.com wgetrc
-zip -qr $RESULTS/wget.com usr/
+# emacs
 cd "$BASELOC"
+apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
+cd /zip
+zip -r $RESULTS/emacs.com \
+    share/terminfo \
+    $(find x86_64 -type f | grep 'emacs\.pdmp') \
+    $(find aarch64 -type f | grep 'emacs\.pdmp') \
+    $(find share/emacs -type f |
+    grep -v '\.el.gz$' |
+    grep -v refcards |
+    grep -v images)
+
+# vim
+cd "$BASELOC"
+apelinkpls $RESULTS/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
+cd /zip
+zip -r $RESULTS/vim.com \
+    share/terminfo \
+    share/vim
+
 
 # zip them up
 echo "zip file with actually portable executables"
 cd $BASELOC
-ZFILE="${ZFILENAME:-cli}.zip"
+ZFILE="${ZFILENAME:-editor}.zip"
 find ./bin -maxdepth 1 -name '*.com' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"
 
-ZFILE="${ZFILENAME:-cli}-dbg.zip"
+ZFILE="${ZFILENAME:-editor}-dbg.zip"
 find ./bin -maxdepth 1 -name '*' -print0 | tee /dev/tty | xargs -0 zip "$ZFILE"

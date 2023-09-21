@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        result: [cli, datasette, pypack1]
+        result: [cli, datasette, pypack1, editor]
     name: ${{ matrix.result }} artifacts
     steps:
       - name: Checkout the repository
