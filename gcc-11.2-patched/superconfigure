@@ -16,12 +16,12 @@ FOLDER="gcc"
 
 if [ -d "$FOLDER" ]; then
     # we already downloaded it
-    rm -rf $FOLDER/build
-    mkdir -p $FOLDER/build
+    rm -rf build
+    mkdir -p $build
 else
     # download the source code
     git clone --depth=1 --branch=portcosmo-11.2 https://github.com/ahgamut/gcc $FOLDER
-    mkdir -p $FOLDER/build
+    mkdir -p build
     # tar
 
     # apply patches if any
@@ -29,8 +29,8 @@ else
 fi
 
 # go into the source folder, configure
-cd "$FOLDER"/build
-../configure --prefix=$COSMOS --with-sysroot= \
+cd build
+../$FOLDER/configure --prefix=$COSMOS --with-sysroot= \
     --with-system-zlib --disable-shared --enable-static --disable-libquadmath \
     --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
     --with-static-standard-libraries --disable-libada --disable-libssp \
