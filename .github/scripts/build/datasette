@@ -41,7 +41,7 @@ mkdir -p "$RESULTS"
 # datasette
 apelinkpls $RESULTS/datasette $COSMOS_X86/bin/datasette $COSMOS_AARCH64/bin/datasette
 cd $CONFIGDIR
-unzip -q $BASELOC/cpy311-datasette/datasette/datasette || true
+unzip -q $BASELOC/cpy311-datasette/datasette/datasette.com || true
 ls -al
 mkdir -p build
 cp -r $BASELOC/cpy311-datasette/datasette/dummy/lib*aarch64* ./build || true

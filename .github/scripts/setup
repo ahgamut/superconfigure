@@ -3,6 +3,7 @@
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev
 sudo apt-get install -y qemu qemu-utils qemu-user-static
+sudo apt-get install -y texinfo
 
 # cosmo
 git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan

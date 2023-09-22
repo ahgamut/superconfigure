@@ -41,7 +41,7 @@ mkdir -p "$RESULTS"
 # pypack1
 apelinkpls $RESULTS/python $COSMOS_X86/bin/python $COSMOS_AARCH64/bin/python
 cd $CONFIGDIR
-unzip -q $BASELOC/cpy311-pypack1/pypack1/python || true
+unzip -q $BASELOC/cpy311-pypack1/pypack1/python.com || true
 ls -al
 mkdir -p build
 cp -r $BASELOC/cpy311-pypack1/pypack1/dummy/lib*aarch64* ./build || true 
