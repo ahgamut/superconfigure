@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        result: [gcc, cli, datasette, pypack1, editor]
-    name: ${{ matrix.result }} artifacts
+        result: [aarch64-gcc, x86_64-gcc, cli, datasette, pypack1, editor]
+    name: ${{ matrix.result }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+
 # check for cosmo dirs
 if [ -z ${COSMO+x} ]; then 
     echo "could not find COSMO source directory!";
@@ -41,7 +43,7 @@ cd build
     --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
     --program-prefix="" \
     --with-gnu-as=yes --with-gnu-ld=yes --build=$ARCH-linux-gnu \
-    --target=x86_64-linux-gnu \
+    --target=$TARGET_ARCH-linux-gnu \
     --disable-libgomp --disable-libatomic
 
 # run make and/or make install

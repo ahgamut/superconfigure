@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eux
 
+export TARGET_ARCH=aarch64
+
 make ARCH=x86_64 gcc
 make clean
 make ARCH=aarch64 gcc
@@ -42,7 +44,7 @@ cd $BASELOC
 ls -al ./
 
 # from bin
-for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'x86_64-'); do
+for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'aarch64-'); do
     baseEXE="$(basename -- $EXE)"
     apelinkpls $RESULTS/$baseEXE\
         $COSMOS_X86/bin/$baseEXE\
@@ -51,21 +53,21 @@ done
 
 # from libexec
 apelinkpls $RESULTS/fixincl\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/install-tools/fixincl
+    $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/install-tools/fixincl\
+    $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/install-tools/fixincl
 
 apelinkpls $RESULTS/cc1\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1
+    $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1\
+    $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1
 
 apelinkpls $RESULTS/cc1plus\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/cc1plus
+    $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1plus\
+    $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1plus
 
 apelinkpls $RESULTS/collect2\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/collect2
+    $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/collect2\
+    $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/collect2
 
 apelinkpls $RESULTS/lto-wrapper\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-gnu/11.2.0/lto-wrapper
+    $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/lto-wrapper\
+    $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/lto-wrapper
