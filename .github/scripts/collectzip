@@ -9,6 +9,13 @@ export RESULTS=$BASELOC/bin
 # zip them up
 echo "zip file with actually portable executables"
 cd $BASELOC
+
+# rename to remove .com extension
+for COMFILE in $(find ./bin -maxdepth 1 -name "*.com") do
+    NEWFILE="${COMFILE%.*}"
+    mv $COMFILE $NEWFILE
+done
+
 ZFILE="${ZFILENAME:-extras}.zip"
 zip "$ZFILE" $(find ./bin -maxdepth 1 -name "*" | grep -v "\.x86" | grep -v "\.aarch64")
 

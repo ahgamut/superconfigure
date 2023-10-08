@@ -46,28 +46,28 @@ ls -al ./
 # from bin
 for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'aarch64-'); do
     baseEXE="$(basename -- $EXE)"
-    apelinkpls $RESULTS/$baseEXE\
+    apelinkpls $RESULTS/$baseEXE.com\
         $COSMOS_X86/bin/$baseEXE\
         $COSMOS_AARCH64/bin/$baseEXE
 done
 
 # from libexec
-apelinkpls $RESULTS/fixincl\
+apelinkpls $RESULTS/fixincl.com\
     $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/install-tools/fixincl\
     $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/install-tools/fixincl
 
-apelinkpls $RESULTS/cc1\
+apelinkpls $RESULTS/cc1.com\
     $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1\
     $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1
 
-apelinkpls $RESULTS/cc1plus\
+apelinkpls $RESULTS/cc1plus.com\
     $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1plus\
     $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/cc1plus
 
-apelinkpls $RESULTS/collect2\
+apelinkpls $RESULTS/collect2.com\
     $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/collect2\
     $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/collect2
 
-apelinkpls $RESULTS/lto-wrapper\
+apelinkpls $RESULTS/lto-wrapper.com\
     $COSMOS_X86/libexec/gcc/aarch64-linux-gnu/11.2.0/lto-wrapper\
     $COSMOS_AARCH64/libexec/gcc/aarch64-linux-gnu/11.2.0/lto-wrapper

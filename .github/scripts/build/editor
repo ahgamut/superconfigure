@@ -56,9 +56,9 @@ ls -al ./
 
 # emacs
 cd "$BASELOC"
-apelinkpls $RESULTS/emacs $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
+apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
 cd /zip
-zip -r $RESULTS/emacs \
+zip -r $RESULTS/emacs.com \
     share/terminfo \
     $(find x86_64 -type f | grep 'emacs\.pdmp') \
     $(find aarch64 -type f | grep 'emacs\.pdmp') \
@@ -69,8 +69,8 @@ zip -r $RESULTS/emacs \
 
 # vim
 cd "$BASELOC"
-apelinkpls $RESULTS/vim $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
+apelinkpls $RESULTS/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
 cd /zip
-zip -r $RESULTS/vim \
+zip -r $RESULTS/vim.com \
     share/terminfo \
     share/vim

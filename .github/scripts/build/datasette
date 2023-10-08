@@ -39,7 +39,7 @@ mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
 
 # datasette
-apelinkpls $RESULTS/datasette $COSMOS_X86/bin/datasette $COSMOS_AARCH64/bin/datasette
+apelinkpls $RESULTS/datasette.com $COSMOS_X86/bin/datasette $COSMOS_AARCH64/bin/datasette
 cd $CONFIGDIR
 unzip -q $BASELOC/cpy311-datasette/datasette/datasette.com || true
 ls -al
@@ -47,8 +47,8 @@ mkdir -p build
 cp -r $BASELOC/cpy311-datasette/datasette/dummy/lib*aarch64* ./build || true
 cp -r $BASELOC/cpy311-datasette/datasette/dummy/lib*x86_64* ./build || true
 ls -al build/
-zip -qr $RESULTS/datasette Lib/
-zip -qr $RESULTS/datasette build/
+zip -qr $RESULTS/datasette.com Lib/
+zip -qr $RESULTS/datasette.com build/
 cd "$BASELOC"
 rm -rf "$CONFIGDIR"
 mkdir -p "$CONFIGDIR"
