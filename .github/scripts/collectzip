@@ -11,7 +11,7 @@ echo "zip file with actually portable executables"
 cd $BASELOC
 
 # rename to remove .com extension
-for COMFILE in $(find ./bin -maxdepth 1 -name "*.com") do
+for COMFILE in $(find ./bin -maxdepth 1 -name "*.com"); do
     NEWFILE="${COMFILE%.*}"
     mv $COMFILE $NEWFILE
 done
