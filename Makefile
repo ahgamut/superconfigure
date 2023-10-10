@@ -42,7 +42,7 @@ binutils-2.35.2.built: gmp-6.3.0.built mpc-1.3.1.built mpfr-4.2.0.built isl-0.18
 gcc-11.2-patched.built: binutils-2.35.2.built
 
 
-cli: bash-5.2.built wget-1.21.built 
+cli: bash-5.2.built xz-5.4.3.built wget-1.21.built 
 editor: emacs-28.2.built vim-9.0.1670.built
 pypack1: cpy311-pypack1.built
 datasette: cpy311-datasette.built

@@ -50,10 +50,15 @@ ls -al /zip
 cd $BASELOC
 ls -al ./
 
+# xz
+apelinkpls $RESULTS/xz.com $COSMOS_X86/xz $COSMOS_AARCH64/xz
+cd "$BASELOC"
+
 # bash
 apelinkpls $RESULTS/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
 cd /zip
 zip -r $RESULTS/bash.com share/terminfo
+cd "$BASELOC"
 
 # wget
 apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
