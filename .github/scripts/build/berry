@@ -3,9 +3,8 @@ set -eux
 
 make clean
 make ARCH=x86_64 berry
-rm -rf berry-berry/berry
 make clean
-make ARCH=aarch64 MODE=aarch64 berry
+make ARCH=aarch64 berry
 
 export MODE=
 export MODE_AARCH64=aarch64
