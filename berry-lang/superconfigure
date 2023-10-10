@@ -34,6 +34,12 @@ cd "$FOLDER"
 
 # run make and/or make install
 make -s -j
+
+# test berry
+./berry -e "1+1"
+./berry testall.be
+
+# no make install, so just copy
 cp ./berry $COSMOS/bin
 
 echo "DONE."

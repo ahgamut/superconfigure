@@ -15,7 +15,7 @@ index a84af6b..382c974 100755
  MKDIR       = mkdir
 -LFLAGS      =
 -PREFIX      = /usr/local
-+LFLAGS      = -L$COSMOS/lib
++LFLAGS      = -L$(COSMOS)/lib
 +PREFIX      = $(COSMOS)
  BINDIR      = $(PREFIX)/bin
  

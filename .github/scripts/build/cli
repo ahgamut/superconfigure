@@ -69,3 +69,9 @@ cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
 zip $RESULTS/wget.com wgetrc
 zip -qr $RESULTS/wget.com usr/
 cd "$BASELOC"
+
+# berry
+apelinkpls $RESULTS/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
+cd /zip
+zip -r $RESULTS/berry.com share/terminfo
+cd "$BASELOC"
