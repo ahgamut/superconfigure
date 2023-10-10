@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -eux
 
-make clean
 make ARCH=x86_64 berry
 make clean
 make ARCH=aarch64 berry
@@ -42,10 +41,12 @@ mkdir -p "$RESULTS"
 # berry
 apelinkpls $RESULTS/berry $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
 
-# done?
-ls -al $RESULTS
-
+# test
 pushd berry-lang/berry
 $RESULTS/berry testall.be
 $RESULTS/berry -e "1+1"
+
+# done?
+ls -al $RESULTS
+
 
