@@ -1,0 +1,11 @@
+--- bash-5.2/lib/sh/oslib.c	2022-04-14 20:01:47.000000000 +0000
++++ bash-5.2/lib/sh/oslib2.c	2023-10-10 11:27:29.965380857 +0000
+@@ -239,7 +239,7 @@
+      char *path;
+      mode_t mode;
+ {
+-#if defined (S_IFIFO)
++#if 0 && defined (S_IFIFO)
+   return (mknod (path, (mode | S_IFIFO), 0));
+ #else /* !S_IFIFO */
+   return (-1);
