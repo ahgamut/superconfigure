@@ -47,7 +47,7 @@ cd build
     --disable-libgomp --disable-libatomic
 
 # run make and/or make install
-make -s -j2 all-gcc
-make -i -s -j2 install
+make -s -j all-gcc
+make -i -s -j install
 
 echo "DONE."

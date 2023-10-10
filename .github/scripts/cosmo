@@ -11,24 +11,24 @@ cd $BASELOC
 
 cd $COSMO
 export MODE=""
-make -s -j2 V=0 MODE="" toolchain
-make -s -j2 V=0 MODE="" o//third_party/zlib
-make -s -j2 V=0 MODE="" o//third_party/zlib/gz
-make -s -j2 V=0 MODE="" o//third_party/zstd
-make -s -j2 V=0 MODE="" o//third_party/sqlite3
-make -s -j2 V=0 MODE="" o//third_party/sqlite3/libsqlite3.a
-make -s -j2 V=0 MODE="" o//third_party/bzip2
-make -s -j2 V=0 MODE="" o//tool/build/zipcopy.com
-make -s -j2 V=0 MODE="" o//tool/build/apelink.com
+make -s -j V=0 MODE="" toolchain
+make -s -j V=0 MODE="" o//third_party/zlib
+make -s -j V=0 MODE="" o//third_party/zlib/gz
+make -s -j V=0 MODE="" o//third_party/zstd
+make -s -j V=0 MODE="" o//third_party/sqlite3
+make -s -j V=0 MODE="" o//third_party/sqlite3/libsqlite3.a
+make -s -j V=0 MODE="" o//third_party/bzip2
+make -s -j V=0 MODE="" o//tool/build/zipcopy.com
+make -s -j V=0 MODE="" o//tool/build/apelink.com
 $COSMO/bin/x86_64-unknown-cosmo-cc --update
 
 cd $COSMO
 export MODE="aarch64"
-make -s -j2 V=0 MODE="aarch64" toolchain
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zlib
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zlib/gz
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/zstd
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/sqlite3
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/sqlite3/libsqlite3.a
-make -s -j2 V=0 MODE="aarch64" o/aarch64/third_party/bzip2
+make -s -j V=0 MODE="aarch64" toolchain
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/zlib
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/zlib/gz
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/zstd
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/sqlite3
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/sqlite3/libsqlite3.a
+make -s -j V=0 MODE="aarch64" o/aarch64/third_party/bzip2
 $COSMO/bin/aarch64-unknown-cosmo-cc --update

@@ -39,7 +39,7 @@ export PKG_CONFIG=""
     --disable-nls --disable-dependency-tracking --disable-silent-rules
 
 # run make and/or make install
-make -s -j2
-make install -s -j2
+make -s -j
+make install -s -j
 
 echo "DONE."
