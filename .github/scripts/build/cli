@@ -51,7 +51,7 @@ cd $BASELOC
 ls -al ./
 
 # xz
-apelinkpls $RESULTS/xz.com $COSMOS_X86/xz $COSMOS_AARCH64/xz
+apelinkpls $RESULTS/xz.com $COSMOS_X86/bin/xz $COSMOS_AARCH64/bin/xz
 cd "$BASELOC"
 
 # bash
