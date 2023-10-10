@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -eux
+
+make clean
+make ARCH=x86_64 berry
+rm -rf berry-berry/berry
+make clean
+make ARCH=aarch64 MODE=aarch64 berry
+
+export MODE=
+export MODE_AARCH64=aarch64
+export BASELOC=$(realpath $PWD)
+export COSMO=$BASELOC/cosmopolitan
+export COSMOS_X86=$BASELOC/cosmos/x86_64
+export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
+export CONFIGDIR=$BASELOC/dummy
+export RESULTS=$BASELOC/bin
+
+APELINK=$COSMO/o//tool/build/apelink.com
+APELINKFLAGS=
+
+apelinkpls () {
+    OUTPUT="$1"
+    OUTPUT_X86_64="$2"
+    OUTPUT_AARCH64="$3"
+    OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
+    OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
+    TARG_FOLD="$(dirname $OUTPUT)"
+    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
+        -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$OUTPUT_X86_64" \
+        "$OUTPUT_AARCH64"
+    cp "$OUTPUT_X86_64" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$OUTPUT_AARCH64" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+echo "creating fat APEs"
+mkdir -p "$CONFIGDIR"
+mkdir -p "$RESULTS"
+
+# berry
+apelinkpls $RESULTS/berry $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
+
+# done?
+ls -al $RESULTS
+
+pushd berry-lang/berry
+$RESULTS/berry testall.be
+$RESULTS/berry -e "1+1"
+

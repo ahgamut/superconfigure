@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -e
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+FOLDER="berry"
+
+if [ -d "$FOLDER" ]; then
+    # we already downloaded it
+    cd $FOLDER
+    make -s -i clean
+    cd ..
+else
+    # download the source code
+    git clone --depth=1 https://github.com/berry-lang/berry berry
+    pushd berry
+    git apply ../fix_paths.diff
+    popd
+    cat berry/Makefile
+fi
+
+
+# go into the source folder, configure
+cd "$FOLDER"
+
+# run make and/or make install
+make -s -j
+cp ./berry $COSMOS/bin
+
+echo "DONE."
