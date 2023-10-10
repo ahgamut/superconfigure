@@ -33,7 +33,7 @@ fi
 cd "$FOLDER"
 
 # run make and/or make install
-make -s -j
+make -s -j2
 
 # test berry
 ./berry -e "1+1"

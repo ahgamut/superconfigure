@@ -43,7 +43,7 @@ cd $FOLDER
     CFLAGS="-Os"
 
 # run make and/or make install
-make -s -j
-make install -s -j
+make -s -j2
+make install -s -j2
 
 echo "DONE."
