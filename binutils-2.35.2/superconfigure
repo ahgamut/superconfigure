@@ -2,6 +2,8 @@
 set -e
 shopt -s expand_aliases
 
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+
 # check for cosmo dirs
 if [ -z ${COSMO+x} ]; then 
     echo "could not find COSMO source directory!";
@@ -43,7 +45,7 @@ export PKG_CONFIG=""
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
     --program-prefix="" \
     --disable-bootstrap --disable-libada --build=$ARCH-linux-gnu \
-    --target=x86_64-linux-gnu
+    --target=$TARGET_ARCH-linux-cosmo
 
 # run make and/or make install
 make -s -j2
