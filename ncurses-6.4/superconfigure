@@ -20,7 +20,7 @@ FOLDER="ncurses-6.4"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i clean
+    make -s -i clean || true
     cd ..
 else
     # download the source code

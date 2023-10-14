@@ -17,7 +17,8 @@ FOLDER="pypack1"
 if [ -d "$FOLDER" ]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i clean
+    make -s -i clean || true
+    make -s -i distclean || true
     cd ..
 else
     # download the source code
