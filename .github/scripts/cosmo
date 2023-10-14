@@ -4,7 +4,6 @@ set -eux
 echo "Initial Setup"
 export BASELOC=$PWD
 export COSMO=$BASELOC/cosmopolitan
-export RESULTS=$BASELOC/bin
 
 echo "Compiling Cosmopolitan Libc"
 cd $BASELOC

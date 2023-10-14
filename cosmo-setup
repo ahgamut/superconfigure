@@ -6,7 +6,7 @@ cd $BASELOC
 # create the COSMOS and related folders
 mkdir -p $COSMOS
 mkdir -p $DIRCONFIG
-mkdir -p $RESULTS
+mkdir -p $RESULTS/bin
 sudo rm -f /zip
 sudo ln -sf $COSMOS /zip
 cd $COSMOS

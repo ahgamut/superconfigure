@@ -14,7 +14,7 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS_X86=$BASELOC/cosmos/x86_64
 export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
-export RESULTS=$BASELOC/bin
+export RESULTS=$BASELOC/results
 
 APELINK=$COSMO/o//tool/build/apelink.com
 APELINKFLAGS=
@@ -26,7 +26,7 @@ apelinkpls () {
     OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
     OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
     TARG_FOLD="$(dirname $OUTPUT)"
-    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
+    "$COSMO/o/tool/build/apelink.com" -l "$COSMO/o/$MODE/ape/ape.elf" \
         -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
@@ -43,31 +43,67 @@ mkdir -p "$RESULTS"
 cd $BASELOC
 ls -al ./
 
-# from bin
-for EXE in $(find $COSMOS_X86/bin -type f | grep -v 'x86_64-'); do
-    baseEXE="$(basename -- $EXE)"
-    apelinkpls $RESULTS/$baseEXE.com\
-        $COSMOS_X86/bin/$baseEXE\
-        $COSMOS_AARCH64/bin/$baseEXE
+FILELIST='
+bin/x86_64-linux-cosmo-addr2line
+bin/x86_64-linux-cosmo-ar
+bin/x86_64-linux-cosmo-as
+bin/x86_64-linux-cosmo-c++
+bin/x86_64-linux-cosmo-c++filt
+bin/x86_64-linux-cosmo-cpp
+bin/x86_64-linux-cosmo-elfedit
+bin/x86_64-linux-cosmo-g++
+bin/x86_64-linux-cosmo-gcc
+bin/x86_64-linux-cosmo-gcc-11.2.0
+bin/x86_64-linux-cosmo-gcc-ar
+bin/x86_64-linux-cosmo-gcc-nm
+bin/x86_64-linux-cosmo-gcc-ranlib
+bin/x86_64-linux-cosmo-gprof
+bin/x86_64-linux-cosmo-ld
+bin/x86_64-linux-cosmo-ld.bfd
+bin/x86_64-linux-cosmo-nm
+bin/x86_64-linux-cosmo-objcopy
+bin/x86_64-linux-cosmo-objdump
+bin/x86_64-linux-cosmo-ranlib
+bin/x86_64-linux-cosmo-readelf
+bin/x86_64-linux-cosmo-size
+bin/x86_64-linux-cosmo-strings
+bin/x86_64-linux-cosmo-strip
+libexec/gcc/x86_64-linux-cosmo/11.2.0/install-tools/fixincl
+libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1
+libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1plus
+libexec/gcc/x86_64-linux-cosmo/11.2.0/collect2
+libexec/gcc/x86_64-linux-cosmo/11.2.0/lto-wrapper
+'
+
+mkdir -p $RESULTS/bin
+mkdir -p $RESULTS/libexec/gcc/x86_64-linux-cosmo/11.2.0/install-tools
+
+for EXE in $FILELIST; do
+    apelinkpls $RESULTS/$EXE.com\
+        $COSMOS_X86/$EXE\
+        $COSMOS_AARCH64/$EXE
 done
 
-# from libexec
-apelinkpls $RESULTS/fixincl.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-cosmo/11.2.0/install-tools/fixincl\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-cosmo/11.2.0/install-tools/fixincl
+exit 0
 
-apelinkpls $RESULTS/cc1.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1
+# binutil's make install also creates copies of the below binaries
+# at another location.
 
-apelinkpls $RESULTS/cc1plus.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1plus\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1plus
+DUPELIST='
+ar
+as
+ld
+ld.bfd
+nm
+objcopy
+objdump
+ranlib
+readelf
+strip
+'
 
-apelinkpls $RESULTS/collect2.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-cosmo/11.2.0/collect2\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-cosmo/11.2.0/collect2
+mkdir -p $RESULTS/x86_64-linux-cosmo/bin
 
-apelinkpls $RESULTS/lto-wrapper.com\
-    $COSMOS_X86/libexec/gcc/x86_64-linux-cosmo/11.2.0/lto-wrapper\
-    $COSMOS_AARCH64/libexec/gcc/x86_64-linux-cosmo/11.2.0/lto-wrapper
+for EXE in $DUPELIST; do
+    cp $RESULTS/bin/x86_64-linux-cosmo-$EXE $RESULTS/x86_64-linux-cosmo/bin/$EXE
+done

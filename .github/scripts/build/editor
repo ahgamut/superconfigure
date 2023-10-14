@@ -12,7 +12,7 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS_X86=$BASELOC/cosmos/x86_64
 export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
-export RESULTS=$BASELOC/bin
+export RESULTS=$BASELOC/results
 
 APELINK=$COSMO/o//tool/build/apelink.com
 APELINKFLAGS=
@@ -56,9 +56,9 @@ ls -al ./
 
 # emacs
 cd "$BASELOC"
-apelinkpls $RESULTS/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
+apelinkpls $RESULTS/bin/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
 cd /zip
-zip -r $RESULTS/emacs.com \
+zip -r $RESULTS/bin/emacs.com \
     share/terminfo \
     $(find x86_64 -type f | grep 'emacs\.pdmp') \
     $(find aarch64 -type f | grep 'emacs\.pdmp') \
@@ -69,8 +69,8 @@ zip -r $RESULTS/emacs.com \
 
 # vim
 cd "$BASELOC"
-apelinkpls $RESULTS/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
+apelinkpls $RESULTS/bin/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
 cd /zip
-zip -r $RESULTS/vim.com \
+zip -r $RESULTS/bin/vim.com \
     share/terminfo \
     share/vim

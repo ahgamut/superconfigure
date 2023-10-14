@@ -44,7 +44,6 @@ cd build
     --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
     --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
     --disable-libgomp --disable-libatomic \
-    --program-prefix="" \
     --with-gnu-as=yes --with-gnu-ld=yes --build=$ARCH-linux-gnu \
     --target=$TARGET_ARCH-linux-cosmo \
 

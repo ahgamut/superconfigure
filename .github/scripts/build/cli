@@ -12,7 +12,7 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS_X86=$BASELOC/cosmos/x86_64
 export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
 export CONFIGDIR=$BASELOC/dummy
-export RESULTS=$BASELOC/bin
+export RESULTS=$BASELOC/results
 
 APELINK=$COSMO/o//tool/build/apelink.com
 APELINKFLAGS=
@@ -51,27 +51,27 @@ cd $BASELOC
 ls -al ./
 
 # xz
-apelinkpls $RESULTS/xz.com $COSMOS_X86/bin/xz $COSMOS_AARCH64/bin/xz
+apelinkpls $RESULTS/bin/xz.com $COSMOS_X86/bin/xz $COSMOS_AARCH64/bin/xz
 cd "$BASELOC"
 
 # bash
-apelinkpls $RESULTS/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
+apelinkpls $RESULTS/bin/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
 cd /zip
-zip -r $RESULTS/bash.com share/terminfo
+zip -r $RESULTS/bin/bash.com share/terminfo
 cd "$BASELOC"
 
 # wget
-apelinkpls $RESULTS/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
+apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cd /zip
 cp $BASELOC/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
 cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
-zip $RESULTS/wget.com wgetrc
-zip -qr $RESULTS/wget.com usr/
+zip $RESULTS/bin/wget.com wgetrc
+zip -qr $RESULTS/bin/wget.com usr/
 cd "$BASELOC"
 
 # berry
-apelinkpls $RESULTS/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
+apelinkpls $RESULTS/bin/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
 cd /zip
-zip -r $RESULTS/berry.com share/terminfo
+zip -r $RESULTS/bin/berry.com share/terminfo
 cd "$BASELOC"

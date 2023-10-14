@@ -43,12 +43,11 @@ export PKG_CONFIG=""
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
-    --program-prefix="" \
     --disable-bootstrap --disable-libada --build=$ARCH-linux-gnu \
     --target=$TARGET_ARCH-linux-cosmo
 
 # run make and/or make install
-make -s -j2
-make install -s -j2
+make -s -j6
+make install -s -j6
 
 echo "DONE."
