@@ -1,0 +1,12 @@
+--- less-643/edit.c	2023-07-20 22:43:14.000000000 +0000
++++ -	2023-10-14 08:10:56.288448727 +0000
+@@ -16,9 +16,7 @@
+ #if HAVE_SYS_WAIT_H
+ #include <sys/wait.h>
+ #endif
+-#if OS2
+ #include <signal.h>
+-#endif
+ 
+ public int fd0 = 0;
+ 
