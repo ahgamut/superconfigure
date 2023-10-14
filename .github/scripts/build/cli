@@ -86,7 +86,7 @@ cd "$BASELOC"
 apelinkpls $RESULTS/bin/grep.com $COSMOS_X86/bin/grep $COSMOS_AARCH64/bin/grep
 
 # coreutils
-FILES='
+FILELIST='
 echo cp ls mv sha256sum [ test base64 cat chown chmod dd cksum
 df dir dirname basename du env expand expr factor join kill link
 ln logname id md5sum head mkdir nice nl nproc numfmt od pr pinky
