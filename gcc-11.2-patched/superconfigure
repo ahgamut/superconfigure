@@ -48,7 +48,7 @@ cd build
     --target=$TARGET_ARCH-linux-cosmo \
 
 # run make and/or make install
-make -s -j6 all-gcc
-make -i -s -j6 install
+make -s -j2 all-gcc
+make -i -s -j2 install
 
 echo "DONE."

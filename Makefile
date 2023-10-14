@@ -23,6 +23,7 @@ vim-9.0.1670.built: ncurses-6.4.built readline-8.2.built
 
 bash-5.2.built: ncurses-6.4.built readline-8.2.built
 less-643.built: ncurses-6.4.built readline-8.2.built
+grep-3.11.built: ncurses-6.4.built readline-8.2.built
 
 wget-1.21.built: openssl-1.1.1u.built libuuid-1.0.3.built xz-5.4.3.built
 

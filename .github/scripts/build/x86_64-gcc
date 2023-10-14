@@ -53,7 +53,6 @@ bin/x86_64-linux-cosmo-cpp
 bin/x86_64-linux-cosmo-elfedit
 bin/x86_64-linux-cosmo-g++
 bin/x86_64-linux-cosmo-gcc
-bin/x86_64-linux-cosmo-gcc-11.2.0
 bin/x86_64-linux-cosmo-gcc-ar
 bin/x86_64-linux-cosmo-gcc-nm
 bin/x86_64-linux-cosmo-gcc-ranlib

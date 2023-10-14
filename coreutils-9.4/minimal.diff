@@ -110,14 +110,13 @@
  
  /* Flags, for iflag="..." and oflag="...".  */
  static struct symbol_value const flags[] =
---- coreutils-9.4/lib/canonicalize.c	2023-10-14 07:47:37.442538863 +0000
-+++ -	2023-10-14 07:48:34.790223563 +0000
-@@ -216,7 +216,7 @@
+--- coreutils-9.4/lib/canonicalize.c	2023-05-19 17:22:04.000000000 +0000
++++ -	2023-10-14 08:29:12.804879724 +0000
+@@ -216,7 +216,6 @@
              case ERANGE:
                if (scratch_buffer_grow (&bufs->rname))
                  break;
 -              FALLTHROUGH;
-+           // FALLTHROUGH;
              case ENOMEM:
                xalloc_die ();
  
