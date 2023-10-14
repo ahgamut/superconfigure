@@ -60,16 +60,6 @@ cd /zip
 zip -r $RESULTS/bin/bash.com share/terminfo
 cd "$BASELOC"
 
-# wget
-apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
-cd /zip
-cp $BASELOC/wget*/wgetrc ./
-mkdir -p ./usr/share/ssl/root
-cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
-zip $RESULTS/bin/wget.com wgetrc
-zip -qr $RESULTS/bin/wget.com usr/
-cd "$BASELOC"
-
 # berry
 apelinkpls $RESULTS/bin/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
 cd /zip

@@ -1,0 +1,42 @@
+--- rsync-3.2.7/io.c	2022-10-21 00:57:22.000000000 +0000
++++ -	2023-10-14 19:13:15.030755691 +0000
+@@ -965,7 +965,7 @@
+ {
+ 	char *hdr;
+ 	size_t needed, pos;
+-	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO);
++	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO2);
+ 
+ 	if (!OUT_MULTIPLEXED)
+ 		return 0;
+@@ -1633,7 +1633,7 @@
+ 		if (tag == MSG_ERROR_SOCKET)
+ 			msgs2stderr = 1;
+ 		/* FALL THROUGH */
+-	case MSG_INFO:
++	case MSG_INFO2:
+ 	case MSG_ERROR:
+ 	case MSG_ERROR_XFER:
+ 	case MSG_WARNING:
+--- rsync-3.2.7/log.c	2023-10-14 19:14:01.745365190 +0000
++++ -	2023-10-14 19:14:09.345037287 +0000
+@@ -333,7 +333,7 @@
+ 			if (msg == MSG_ERROR)
+ 				msg = MSG_ERROR_XFER;
+ 			else if (msg == MSG_WARNING)
+-				msg = MSG_INFO;
++				msg = MSG_INFO2;
+ 		}
+ 		/* Pass the message to the non-server side. */
+ 		if (send_msg(msg, buf, len, !is_utf8))
+--- rsync-3.2.7/rsync.h	2023-10-14 19:14:17.842971983 +0000
++++ -	2023-10-14 19:14:22.476292245 +0000
+@@ -261,7 +261,7 @@
+  * values must all be present here with identical numbers. */
+ enum msgcode {
+ 	MSG_DATA=0,	/* raw data on the multiplexed stream */
+-	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO=FINFO, /* remote logging */
++	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO2=FINFO, /* remote logging */
+ 	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
+ 	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
+ 	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */

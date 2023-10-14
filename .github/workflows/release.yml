@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        result: [aarch64-gcc, x86_64-gcc, cli, datasette, pypack1, editor]
+        result: [web, aarch64-gcc, x86_64-gcc, cli, datasette, pypack1, editor]
     name: ${{ matrix.result }}
     steps:
       - name: Checkout the repository

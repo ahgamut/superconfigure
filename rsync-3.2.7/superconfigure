@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -e
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd rsync*/
+    make -s -i clean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://github.com/WayneD/rsync/archive/refs/tags/v3.2.7.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd rsync*/
+
+export OPENSSL_CFLAGS=""
+export OPENSSL_LIBS="-lssl -lcrypto"
+
+./configure --prefix="$COSMOS"\
+    --with-rsyncd-conf=/zip/rsyncd.conf --with-included-popt\
+    --with-openssl-conf=/zip/openssl.conf --without-included-zlib\
+    --sysconfdir=/zip/etc --datarootdir=/zip/share\
+    --disable-iconv --disable-lz4 --disable-xxhash\
+    --disable-acl-support --disable-xattr-support\
+    --disable-locale --disable-md2man\
+    --disable-roll-simd --disable-md5-asm --disable-roll-asm\
+    CFLAGS="-Os"
+
+# run make and/or make install
+make V=1 -s -j2
+make install -s -j2
+
+echo "DONE."
