@@ -16,26 +16,29 @@ fi
 alias strip=$STRIP
 alias ar=$AR
 
-if [[ -f sources.tar.gz ]]; then
+if [[ -f sources.tar.xz ]]; then
     # we already downloaded it
-    cd coreutils*/
+    cd findutils*/
     make -s -i clean || true
     make -s -i distclean || true
     cd ..
 else
     # download the source code
-    wget -q https://ftp.gnu.org/gnu/coreutils/coreutils-9.4.tar.gz -O sources.tar.gz
-    tar -xzf sources.tar.gz
+    wget -q https://ftp.gnu.org/gnu/findutils/findutils-4.9.0.tar.xz -O sources.tar.xz
+    tar -xf sources.tar.xz
 
     # apply patches if any
     patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
-cd coreutils*/
+cd findutils*/
 ./configure --prefix="$COSMOS"\
-    --disable-nls --disable-dependency-tracking\
-    --disable-silent-rules\
+    --disable-silent-rules --disable-dependency-tracking\
+    --disable-asserts --disable-compiler-warnings\
+    --disable-nls --disable-rpath\
+    --without-selinux --with-gnu-ld=yes\
+    --without-libiconv-prefix --with-packager='cosmo'\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install

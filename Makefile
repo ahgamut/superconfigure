@@ -45,7 +45,7 @@ gcc-11.2-patched.built: binutils-2.35.2.built
 coreutils-9.4.built: gmp-6.3.0.built
 
 cli: grep-3.11.built less-643.built bash-5.2.built\
-	coreutils-9.4.built \
+	findutils-4.9.0.built coreutils-9.4.built \
 	berry-lang.built xz-5.4.3.built
 
 web: wget-1.21.built rsync-3.2.7.built
