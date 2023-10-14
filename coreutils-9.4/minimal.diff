@@ -1,0 +1,123 @@
+--- coreutils-9.4/lib/fadvise.h	2023-10-14 07:18:06.321757461 +0000
++++ -	2023-10-14 07:21:24.066900086 +0000
+@@ -41,14 +41,13 @@
+    value is needed, but it must be guarded by appropriate #ifdefs.  */
+ 
+ #if HAVE_POSIX_FADVISE
+-typedef enum {
+-  FADVISE_NORMAL =     POSIX_FADV_NORMAL,
+-  FADVISE_SEQUENTIAL = POSIX_FADV_SEQUENTIAL,
+-  FADVISE_NOREUSE =    POSIX_FADV_NOREUSE,
+-  FADVISE_DONTNEED =   POSIX_FADV_DONTNEED,
+-  FADVISE_WILLNEED =   POSIX_FADV_WILLNEED,
+-  FADVISE_RANDOM =     POSIX_FADV_RANDOM
+-} fadvice_t;
++#define   FADVISE_NORMAL     POSIX_FADV_NORMAL
++#define   FADVISE_SEQUENTIAL POSIX_FADV_SEQUENTIAL
++#define   FADVISE_NOREUSE    POSIX_FADV_NOREUSE
++#define   FADVISE_DONTNEED   POSIX_FADV_DONTNEED
++#define   FADVISE_WILLNEED   POSIX_FADV_WILLNEED
++#define   FADVISE_RANDOM     POSIX_FADV_RANDO
++typedef int fadvice_t;
+ #else
+ typedef enum {
+   FADVISE_NORMAL,
+--- coreutils-9.4/src/dd.c	2023-08-29 11:39:27.000000000 +0000
++++ -	2023-10-14 07:35:57.694435006 +0000
+@@ -289,43 +289,41 @@
+ };
+ 
+ #define FFS_MASK(x) ((x) ^ ((x) & ((x) - 1)))
+-enum
+-  {
+     /* Compute a value that's bitwise disjoint from the union
+        of all O_ values.  */
+-    v = ~(0
+-          | O_APPEND
+-          | O_BINARY
+-          | O_CIO
+-          | O_DIRECT
+-          | O_DIRECTORY
+-          | O_DSYNC
+-          | O_NOATIME
+-          | O_NOCTTY
+-          | O_NOFOLLOW
+-          | O_NOLINKS
+-          | O_NONBLOCK
+-          | O_SYNC
+-          | O_TEXT
+-          ),
++#define v (~(0\
++          | O_APPEND\
++          | O_BINARY\
++          | O_CIO\
++          | O_DIRECT\
++          | O_DIRECTORY\
++          | O_DSYNC\
++          | O_NOATIME\
++          | O_NOCTTY\
++          | O_NOFOLLOW\
++          | O_NOLINKS\
++          | O_NONBLOCK\
++          | O_SYNC\
++          | O_TEXT\
++          ))
+ 
+     /* Use its lowest bits for private flags.  */
+-    O_FULLBLOCK = FFS_MASK (v),
+-    v2 = v ^ O_FULLBLOCK,
++#define     O_FULLBLOCK (FFS_MASK(v))
++#define     v2 (v ^ O_FULLBLOCK)
+ 
+-    O_NOCACHE = FFS_MASK (v2),
+-    v3 = v2 ^ O_NOCACHE,
++#define     O_NOCACHE (FFS_MASK(v2))
++#define     v3 (v2 ^ O_NOCACHE)
+ 
+-    O_COUNT_BYTES = FFS_MASK (v3),
+-    v4 = v3 ^ O_COUNT_BYTES,
++#define     O_COUNT_BYTES (FFS_MASK(v3))
++#define     v4 (v3 ^ O_COUNT_BYTES)
+ 
+-    O_SKIP_BYTES = FFS_MASK (v4),
+-    v5 = v4 ^ O_SKIP_BYTES,
++#define     O_SKIP_BYTES (FFS_MASK(v4))
++#define     v5 (v4 ^ O_SKIP_BYTES)
+ 
+-    O_SEEK_BYTES = FFS_MASK (v5)
+-  };
++#define     O_SEEK_BYTES (FFS_MASK(v5))
+ 
+-/* Ensure that we got something.  */
++/*
++// Ensure that we got something.
+ static_assert (O_FULLBLOCK != 0);
+ static_assert (O_NOCACHE != 0);
+ static_assert (O_COUNT_BYTES != 0);
+@@ -334,12 +332,13 @@
+
+-#define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
++*/ #define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
+ 
+-/* Ensure that this is a single-bit value.  */
++/* Ensure that this is a single-bit value. */ /*
+ static_assert ( ! MULTIPLE_BITS_SET (O_FULLBLOCK));
+ static_assert ( ! MULTIPLE_BITS_SET (O_NOCACHE));
+ static_assert ( ! MULTIPLE_BITS_SET (O_COUNT_BYTES));
+ static_assert ( ! MULTIPLE_BITS_SET (O_SKIP_BYTES));
+ static_assert ( ! MULTIPLE_BITS_SET (O_SEEK_BYTES));
++*/
+ 
+ /* Flags, for iflag="..." and oflag="...".  */
+ static struct symbol_value const flags[] =
+--- coreutils-9.4/lib/canonicalize.c	2023-10-14 07:47:37.442538863 +0000
++++ -	2023-10-14 07:48:34.790223563 +0000
+@@ -216,7 +216,7 @@
+             case ERANGE:
+               if (scratch_buffer_grow (&bufs->rname))
+                 break;
+-                FALLTHROUGH;
++                // FALLTHROUGH;
+             case ENOMEM:
+               xalloc_die ();
+ 
