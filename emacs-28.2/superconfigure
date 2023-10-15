@@ -41,7 +41,7 @@ export PKG_CONFIG=""
     --disable-acl --with-threads\
     --with-sound=no --with-unexec=no\
     --without-gpm --without-modules --without-libgmp\
-    --without-lcms2 --without-xpm --without-j2peg\
+    --without-lcms2 --without-xpm --without-jpeg\
     --without-png --without-gif --without-tiff\
     --without-rsvg --without-libsystemd\
     --without-kerberos --without-kerberos5\
