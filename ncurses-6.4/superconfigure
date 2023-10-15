@@ -28,7 +28,7 @@ else
     tar -xzf sources.tar.gz
 
     # apply patches if any
-    # patch -p0 -i
+    # patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
@@ -37,7 +37,8 @@ cd $FOLDER
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\
     --without-dlsym --without-pcre2 --without-sysmouse\
-    --with-curses-h --disable-stripping \
+    --with-curses-h --disable-stripping --enable-widec\
+    --disable-lib-suffixes\
     --prefix=$COSMOS\
     --sysconfdir=/zip --datarootdir=/zip/share\
     CFLAGS="-Os"

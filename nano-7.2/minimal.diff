@@ -1,0 +1,11 @@
+--- nano-7.2/src/definitions.h	2023-01-18 08:19:15.000000000 +0000
++++ -	2023-10-15 23:28:39.319778391 +0000
+@@ -61,7 +61,7 @@
+ #include <sys/stat.h>
+ 
+ /* Prefer wide ncurses over normal ncurses over curses. */
+-#if defined(HAVE_NCURSESW_NCURSES_H)
++#if 0 && defined(HAVE_NCURSESW_NCURSES_H)
+ #include <ncursesw/ncurses.h>
+ #elif defined(HAVE_NCURSES_H)
+ #include <ncurses.h>

@@ -25,6 +25,7 @@ cd $COSMOS
 ls $COSMOS/lib
 # 
 cp ./lib/libpthread.a ./lib/libcrypt.a
+cp ./lib/libpthread.a ./lib/libncursesw.a
 cp ./lib/libpthread.a ./lib/libgio-2.0.a
 cp ./lib/libpthread.a ./lib/libgobject-2.0.a
 cp ./lib/libpthread.a ./lib/libglib-2.0.a
