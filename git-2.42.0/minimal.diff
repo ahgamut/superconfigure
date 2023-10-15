@@ -31,7 +31,7 @@
  #ifdef HAVE_RTLGENRANDOM
  /* This is required to get access to RtlGenRandom. */
  #define SystemFunction036 NTAPI SystemFunction036
---- ./git-2.42.0/exec-cmd.c	2023-10-15 00:59:24.033779526 +0000
+--- git-2.42.0/exec-cmd.c	2023-10-15 00:59:24.033779526 +0000
 +++ -	2023-10-15 00:59:44.092185558 +0000
 @@ -25,6 +25,7 @@
  #endif /* RUNTIME_PREFIX */
@@ -58,3 +58,46 @@
  	ssize_t res;
  	char *p = buf;
  	while (len) {
+--- git-2.42.0/Makefile	2023-08-21 16:34:58.000000000 +0000
++++ -	2023-10-15 19:44:43.377717698 +0000
+@@ -20,6 +20,7 @@
+ #
+ # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
+ #
++SHELL_PATH=sh
+ # Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
+ # to PATH if your tools in /usr/bin are broken.
+ #
+@@ -216,6 +217,7 @@
+ # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
+ #
+ # Define NO_PERL if you do not want Perl scripts or libraries at all.
++NO_PERL=1
+ #
+ # Define NO_PERL_CPAN_FALLBACKS if you do not want to install bundled
+ # copies of CPAN modules that serve as a fallback in case the modules
+@@ -232,7 +234,7 @@
+ # but /usr/bin/python2.7 or /usr/bin/python3 on some platforms).
+ #
+ # Define NO_PYTHON if you do not want Python scripts or libraries at all.
+-#
++NO_PYTHON=1
+ # Define NO_TCLTK if you do not want Tcl/Tk GUI.
+ #
+ # The TCL_PATH variable governs the location of the Tcl interpreter
+@@ -302,6 +304,7 @@
+ # you want to use something different.  The value will be interpreted by the
+ # shell at runtime when it is used.
+ #
++DEFAULT_PAGER=less
+ # Define DEFAULT_EDITOR to a sensible editor command (defaults to "vi") if you
+ # want to use something different.  The value will be interpreted by the shell
+ # if necessary when it is used.  Examples:
+@@ -310,6 +313,7 @@
+ #   DEFAULT_EDITOR='$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork'
+ #
++DEFAULT_EDITOR=vim
+ # Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies on
+ # header files to be automatically computed, to avoid rebuilding objects when
+ # an unrelated header file changes.  Define it to "no" to use the hard-coded
