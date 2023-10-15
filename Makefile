@@ -23,6 +23,7 @@ berry-lang.built: readline-8.2.built
 
 emacs-28.2.built: ncurses-6.4.built
 vim-9.0.1670.built: ncurses-6.4.built readline-8.2.built
+nano-7.2.built: ncurses-6.4.built readline-8.2.built
 
 wget-1.21.built: openssl-1.1.1u.built libuuid-1.0.3.built xz-5.4.3.built
 rsync-3.2.7.built: openssl-1.1.1u.built
@@ -51,7 +52,7 @@ cli: tree-2.1.1.built grep-3.11.built less-643.built bash-5.2.built\
 	findutils-4.9.0.built coreutils-9.4.built \
 	berry-lang.built xz-5.4.3.built
 web: wget-1.21.built rsync-3.2.7.built curl-8.4.0.built git-2.42.0.built
-editor: emacs-28.2.built vim-9.0.1670.built
+editor: nano-7.2.built emacs-28.2.built vim-9.0.1670.built
 pypack1: cpy311-pypack1.built
 datasette: cpy311-datasette.built
 python: pypack1 datasette

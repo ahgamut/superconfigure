@@ -47,6 +47,7 @@ cp -r $COSMOS_X86/x86_64 ./
 cp -r $COSMOS_AARCH64/aarch64 ./
 cp -r $COSMOS_X86/share/terminfo ./share
 cp -r $COSMOS_X86/share/vim ./share
+cp -r $COSMOS_X86/share/nano ./share
 cp -r $COSMOS_X86/share/emacs ./share
 ls -al /zip
 
@@ -74,3 +75,11 @@ cd /zip
 zip -r $RESULTS/bin/vim.com \
     share/terminfo \
     share/vim
+
+# nano
+cd "$BASELOC"
+apelinkpls $RESULTS/bin/nano.com $COSMOS_X86/bin/nano $COSMOS_AARCH64/bin/nano
+cd /zip
+zip -r $RESULTS/bin/nano.com \
+    share/terminfo\
+    share/nano

@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+export STRIP="/bin/true"
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd nano*/
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://www.nano-editor.org/dist/v7/nano-7.2.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i minimal.diff
+fi
+
+cd nano*/
+# go into the source folder, configure
+./configure --sysconfdir=/zip --datarootdir=/zip/share\
+    --prefix=$COSMOS\
+    --disable-nls --disable-rpath --disable-silent-rules\
+    CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses"\
+    LDFLAGS="-L$COSMOS/lib"\
+    NCURSES_LIBS="-L$COSMOS/lib -lncurses -ltinfo"\
+    NCURSESW_LIBS="-L$COSMOS/lib -lncurses -ltinfo"
+
+# run make and/or make install
+make -s -j2
+make install -s -j2
+
+echo "DONE."
