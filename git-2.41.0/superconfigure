@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-./configure --prefix="$COSMOS"\
-    --enable-pthreads=-lpthread\
-    --without-tcltk\
-    CFLAGS="-Os"

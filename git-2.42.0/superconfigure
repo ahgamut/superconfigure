@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd git*/
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://github.com/git/git/archive/refs/tags/v2.42.0.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd git*/
+autoconf || true
+export CURL_LDFLAGS="-lcurl -lzstd -lssl -lcrypto -lz"
+./configure --prefix="$COSMOS"\
+    --with-curl --with-openssl\
+    --enable-pthreads="-lpthread"\
+    --without-tcltk\
+   CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" LIBS="-lcurl -lzstd -lssl -lcrypto -lz"
+ 
+# run make and/or make install
+make -s -j2
+make install -s -j2
+
+echo "DONE."

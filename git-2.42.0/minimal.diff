@@ -1,0 +1,43 @@
+--- git-2.42.0/ref-filter.c	2023-08-21 16:34:58.000000000 +0000
++++ -	2023-10-15 00:39:55.176415900 +0000
+@@ -2948,7 +2948,7 @@
+ 	return 0;
+ }
+ 
+-static int memcasecmp(const void *vs1, const void *vs2, size_t n)
++static int memcasecmp2(const void *vs1, const void *vs2, size_t n)
+ {
+ 	const char *s1 = vs1, *s2 = vs2;
+ 	const char *end = s1 + n;
+@@ -2999,7 +2999,7 @@
+ 					strlen(vb->s) : vb->s_size;
+ 			int (*cmp_fn)(const void *, const void *, size_t);
+ 			cmp_fn = s->sort_flags & REF_SORTING_ICASE
+-				? memcasecmp : memcmp;
++				? memcasecmp2 : memcmp;
+ 
+ 			cmp = cmp_fn(va->s, vb->s, b_size > a_size ?
+ 				     a_size : b_size);
+--- git-2.42.0/wrapper.c	2023-08-21 16:34:58.000000000 +0000
++++ -	2023-10-15 00:46:13.066890578 +0000
+@@ -10,6 +10,10 @@
+ #include "strbuf.h"
+ #include "trace2.h"
+ 
++extern const int SYNC_FILE_RANGE_WAIT_BEFORE;
++extern const int SYNC_FILE_RANGE_WAIT_AFTER;
++extern const int SYNC_FILE_RANGE_WRITE;
++
+ #ifdef HAVE_RTLGENRANDOM
+ /* This is required to get access to RtlGenRandom. */
+ #define SystemFunction036 NTAPI SystemFunction036
+--- ./git-2.42.0/exec-cmd.c	2023-10-15 00:59:24.033779526 +0000
++++ -	2023-10-15 00:59:44.092185558 +0000
+@@ -25,6 +25,7 @@
+ #endif /* RUNTIME_PREFIX */
+ 
+ #define MAX_ARGS 32
++#undef PROCFS_EXECUTABLE_PATH
+ 
+ static const char *system_prefix(void);
+ 
