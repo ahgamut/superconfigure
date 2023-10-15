@@ -67,11 +67,9 @@ bin/aarch64-linux-cosmo-readelf
 bin/aarch64-linux-cosmo-size
 bin/aarch64-linux-cosmo-strings
 bin/aarch64-linux-cosmo-strip
-libexec/gcc/aarch64-linux-cosmo/11.2.0/install-tools/fixincl
 libexec/gcc/aarch64-linux-cosmo/11.2.0/cc1
 libexec/gcc/aarch64-linux-cosmo/11.2.0/cc1plus
 libexec/gcc/aarch64-linux-cosmo/11.2.0/collect2
-libexec/gcc/aarch64-linux-cosmo/11.2.0/lto-wrapper
 '
 mkdir -p $RESULTS/bin
 mkdir -p $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/install-tools
@@ -82,6 +80,18 @@ for EXE in $FILELIST; do
         $COSMOS_AARCH64/$EXE
 done
 
+# cosmo toolchain also has these binaries in the specific locations
+DUPELIST2='
+as
+ld
+ld.bfd
+'
+
+for EXE in $DUPELIST2; do
+    cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/$EXE.com
+done
+
+exit 0
 # binutil's make install also creates copies of the below binaries
 # at another location.
 
@@ -104,13 +114,4 @@ for EXE in $DUPELIST; do
     cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/aarch64-linux-cosmo/bin/$EXE.com
 done
 
-# cosmo toolchain also has these binaries in the specific locations
-DUPELIST2='
-as
-ld
-ld.bfd
-'
 
-for EXE in $DUPELIST2; do
-    cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/$EXE.com
-done
