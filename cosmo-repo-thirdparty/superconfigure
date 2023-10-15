@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+cd $COSMO
+
+# run make and/or make install
+make -s -j2 \
+    o/$MODE/third_party/sqlite3/sqlite3.com\
+    o/$MODE/third_party/quickjs/qjs.com\
+    o/$MODE/third_party/lua/lua.com\
+    o/$MODE/third_party/make/make.com\
+    o/$MODE/third_party/zip/zip.com\
+    o/$MODE/third_party/unzip/unzip.com\
+    o/$MODE/third_party/bzip2/bzip2.com\
+    o/$MODE/third_party/zstd/zstd.com\
+    o/$MODE/third_party/awk/awk.com\
+    o/$MODE/third_party/sed/sed.com\
+    o/$MODE/third_party/tidy/tidy.com
+
+cp o/$MODE/third_party/sqlite3/sqlite3.com.dbg $COSMOS/bin/sqlite3
+cp o/$MODE/third_party/quickjs/qjs.com.dbg $COSMOS/bin/qjs
+cp o/$MODE/third_party/lua/lua.com.dbg $COSMOS/bin/lua
+cp o/$MODE/third_party/make/make.com.dbg $COSMOS/bin/make
+cp o/$MODE/third_party/zip/zip.com.dbg $COSMOS/bin/zip
+cp o/$MODE/third_party/unzip/unzip.com.dbg $COSMOS/bin/unzip
+cp o/$MODE/third_party/bzip2/bzip2.com.dbg $COSMOS/bin/bzip2
+cp o/$MODE/third_party/zstd/zstd.com.dbg $COSMOS/bin/zstd
+cp o/$MODE/third_party/awk/awk.com.dbg $COSMOS/bin/awk
+cp o/$MODE/third_party/sed/sed.com.dbg $COSMOS/bin/sed
+cp o/$MODE/third_party/tidy/tidy.com.dbg $COSMOS/bin/tidy
+
+echo "DONE."
