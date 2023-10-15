@@ -36,7 +36,7 @@ cd curl*/
 ./configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --enable-pthreads --with-openssl=$COSMOS\
-    --with-ca-path=/zip/share/usr/ssl/root\
+    --with-ca-path=/zip/share/usr/ssl/root --without-ca-fallback\
     --without-pic --with-gnu-ld\
     CFLAGS="-Os"
 
