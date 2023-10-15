@@ -26,8 +26,8 @@ vim-9.0.1670.built: ncurses-6.4.built readline-8.2.built
 
 wget-1.21.built: openssl-1.1.1u.built libuuid-1.0.3.built xz-5.4.3.built
 rsync-3.2.7.built: openssl-1.1.1u.built
-curl-8.4.0.built: openssl-1.1.1u.built xz-5.4.3.built
-git-2.42.0.built: openssl-1.1.1u.built xz-5.4.3.built curl-8.4.0.built
+curl-8.4.0.built: openssl-1.1.1u.built xz-5.4.3.built libssh2-1.11.0.built
+git-2.42.0.built: openssl-1.1.1u.built xz-5.4.3.built curl-8.4.0.built libexpat-2.5.0.built
 
 cpy311-datasette.built: ncurses-6.4.built readline-8.2.built\
 	openssl-1.1.1u.built gdbm-1.23.built libuuid-1.0.3.built\
