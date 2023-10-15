@@ -41,3 +41,20 @@
  
  static const char *system_prefix(void);
  
+--- git-2.42.0/wrapper.c	2023-10-15 01:09:47.215982750 +0000
++++ -	2023-10-15 16:54:58.930952393 +0000
+@@ -760,11 +760,12 @@
+ 
+ int csprng_bytes(void *buf, size_t len)
+ {
+-#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
++#if 0 && defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
+ 	/* This function never returns an error. */
+ 	arc4random_buf(buf, len);
+ 	return 0;
+-#elif defined(HAVE_GETRANDOM)
++#elif 1 || defined(HAVE_GETRANDOM)
++#pragma message("using getrandom function")
+ 	ssize_t res;
+ 	char *p = buf;
+ 	while (len) {

@@ -42,6 +42,8 @@ mkdir -p "$RESULTS"
 sudo rm -f /zip
 sudo ln -sf "$CONFIGDIR" /zip
 cd /zip
+mkdir -p share
+cp -r $COSMOS_X86/share/git-core ./share
 ls -al /zip
 
 
@@ -58,9 +60,18 @@ zip $RESULTS/bin/wget.com wgetrc
 zip -qr $RESULTS/bin/wget.com usr/
 cd "$BASELOC"
 
+# rsync
+apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
+
+# curl
+apelinkpls $RESULTS/bin/curl.com $COSMOS_X86/bin/curl $COSMOS_AARCH64/bin/curl
+cd /zip
+zip -qr $RESULTS/bin/curl.com usr/
+cd "$BASELOC"
+
+
+# git
 FILELIST='
-bin/rsync
-bin/curl
 bin/git
 bin/git-receive-pack
 bin/git-shell
@@ -219,8 +230,11 @@ libexec/git-core/scalar
 mkdir -p $RESULTS/bin
 mkdir -p $RESULTS/libexec/git-core/mergetools
 
+cd /zip
+
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/$EXE.com $COSMOS_X86/$EXE $COSMOS_AARCH64/$EXE
+    zip -qr $RESULTS/$EXE.com ./share/git-core
 done
 
 # These aren't binaries, but some are executable

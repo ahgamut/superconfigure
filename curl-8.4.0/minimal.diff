@@ -1,0 +1,23 @@
+--- curl-8.4.0/lib/rand.c	2023-10-05 07:58:50.000000000 +0000
++++ -	2023-10-15 17:11:10.561841406 +0000
+@@ -152,15 +152,16 @@
+ #endif
+ 
+ #if defined(RANDOM_FILE) && !defined(WIN32)
++#pragma message("using getrandom instead of reading from RANDOM_FILE")
+   if(!seeded) {
+     /* if there's a random file to read a seed from, use it */
+-    int fd = open(RANDOM_FILE, O_RDONLY);
+-    if(fd > -1) {
++    // int fd = open(RANDOM_FILE, O_RDONLY);
++    if(1 /* || fd > -1 */) {
+       /* read random data into the randseed variable */
+-      ssize_t nread = read(fd, &randseed, sizeof(randseed));
++      ssize_t nread = getrandom(&randseed, sizeof(randseed), 0);
+       if(nread == sizeof(randseed))
+         seeded = TRUE;
+-      close(fd);
++      // close(fd);
+     }
+   }
+ #endif
