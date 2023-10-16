@@ -2,7 +2,7 @@
 set -eux
 
 make ARCH=x86_64 datasette
-make clean
+
 make ARCH=aarch64 datasette
 
 export MODE=

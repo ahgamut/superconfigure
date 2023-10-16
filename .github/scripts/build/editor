@@ -2,7 +2,7 @@
 set -eux
 
 make ARCH=x86_64 editor
-make clean
+
 make ARCH=aarch64 editor
 
 export MODE=
