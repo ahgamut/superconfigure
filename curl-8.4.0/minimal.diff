@@ -51,8 +51,7 @@
 +#undef HAVE_POLL_FINE0
  
  /* Define to 1 if you have the <poll.h> header file. */
--#undef HAVE_POLL_H
-+#undef HAVE_POLL_H0
+ #undef HAVE_POLL_H
  
  /* Define to 1 if you have a working POSIX-style strerror_r function. */
  #undef HAVE_POSIX_STRERROR_R
