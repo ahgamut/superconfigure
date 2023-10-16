@@ -10,7 +10,7 @@ cd $BASELOC
 
 cd $COSMO
 export MODE=""
-make -s -j6 V=0 MODE="" toolchain\
+make -s -j2 V=0 MODE="" toolchain\
     o//third_party/zlib o//third_party/zlib/gz o//third_party/zstd\
     o//third_party/sqlite3 o//third_party/sqlite3/libsqlite3.a\
     o//third_party/bzip2\
@@ -19,7 +19,7 @@ $COSMO/bin/x86_64-unknown-cosmo-cc --update
 
 cd $COSMO
 export MODE="aarch64"
-make -s -j6 V=0 MODE="aarch64" toolchain\
+make -s -j2 V=0 MODE="aarch64" toolchain\
     o/aarch64/third_party/zlib o/aarch64/third_party/zlib/gz o/aarch64/third_party/zstd\
     o/aarch64/third_party/sqlite3 o/aarch64/third_party/sqlite3/libsqlite3.a\
     o/aarch64/third_party/bzip2
