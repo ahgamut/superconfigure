@@ -37,6 +37,7 @@ apelinkpls () {
 echo "creating fat APEs"
 mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
+mkdir -p $RESULTS/bin
 
 # the zip folder
 sudo rm -f /zip
@@ -70,13 +71,66 @@ zip -qr $RESULTS/bin/curl.com usr/
 cd "$BASELOC"
 
 
+
 # git
-FILELIST='
+mkdir -p $RESULTS/libexec/git-core/mergetools
+
+# these are the unique binaries
+BINLIST='
 bin/git
-bin/git-receive-pack
 bin/git-shell
-bin/git-upload-archive
+libexec/git-core/git-sh-i18n--envsubst
+libexec/git-core/git-http-backend
+libexec/git-core/scalar
+libexec/git-core/git-daemon
+libexec/git-core/git-http-fetch
+libexec/git-core/git-imap-send
+libexec/git-core/git-remote-https
+libexec/git-core/git-http-push
+'
+cd /zip
+for EXE in $BINLIST; do
+    apelinkpls $RESULTS/$EXE.com $COSMOS_X86/$EXE $COSMOS_AARCH64/$EXE
+    zip -qr $RESULTS/$EXE.com usr/
+    zip -qr $RESULTS/$EXE.com share/git-core
+done
+
+# these are in /bin but symlinked to git
+SYMLIST1='
+bin/git-receive-pack
 bin/git-upload-pack
+bin/git-upload-archive
+'
+
+for SYM in $SYMLIST1; do
+    # we symlink to git here because that's what it is going to become eventually
+    ln -sf git $RESULTS/$SYM.com
+done
+
+
+# these are in /libexec/git-core but symlinked to ../../bin/git-shell
+SYMLIST2a='
+libexec/git-core/git-shell
+'
+for SYM in $SYMLIST2a; do
+    # we symlink to ../../bin/git here because that's what it is going to become eventually
+    ln -sf ../../bin/git-shell $RESULTS/$SYM.com
+done
+
+# these are in /libexec/git-core but symlinked to git-remote-http
+SYMLIST2b='
+libexec/git-core/git-remote-ftp
+libexec/git-core/git-remote-ftps
+libexec/git-core/git-remote-http
+'
+
+for SYM in $SYMLIST2a; do
+    # we symlink to git-remote-https here because that's what it is going to become eventually
+    ln -sf git-remote-https $RESULTS/$SYM.com
+done
+
+# these are in /libexec/git-core but symlinked to ../../bin/git
+SYMLIST2='
 libexec/git-core/git
 libexec/git-core/git-add
 libexec/git-core/git-am
@@ -110,7 +164,6 @@ libexec/git-core/git-credential
 libexec/git-core/git-credential-cache
 libexec/git-core/git-credential-cache--daemon
 libexec/git-core/git-credential-store
-libexec/git-core/git-daemon
 libexec/git-core/git-describe
 libexec/git-core/git-diagnose
 libexec/git-core/git-diff
@@ -135,9 +188,6 @@ libexec/git-core/git-grep
 libexec/git-core/git-hash-object
 libexec/git-core/git-help
 libexec/git-core/git-hook
-libexec/git-core/git-http-backend
-libexec/git-core/git-http-fetch
-libexec/git-core/git-imap-send
 libexec/git-core/git-index-pack
 libexec/git-core/git-init
 libexec/git-core/git-init-db
@@ -179,10 +229,6 @@ libexec/git-core/git-reflog
 libexec/git-core/git-remote
 libexec/git-core/git-remote-ext
 libexec/git-core/git-remote-fd
-libexec/git-core/git-remote-ftp
-libexec/git-core/git-remote-ftps
-libexec/git-core/git-remote-http
-libexec/git-core/git-remote-https
 libexec/git-core/git-repack
 libexec/git-core/git-replace
 libexec/git-core/git-rerere
@@ -193,8 +239,6 @@ libexec/git-core/git-rev-list
 libexec/git-core/git-rev-parse
 libexec/git-core/git-rm
 libexec/git-core/git-send-pack
-libexec/git-core/git-shell
-libexec/git-core/git-sh-i18n--envsubst
 libexec/git-core/git-shortlog
 libexec/git-core/git-show
 libexec/git-core/git-show-branch
@@ -224,18 +268,13 @@ libexec/git-core/git-version
 libexec/git-core/git-whatchanged
 libexec/git-core/git-worktree
 libexec/git-core/git-write-tree
-libexec/git-core/scalar
 '
 
-mkdir -p $RESULTS/bin
-mkdir -p $RESULTS/libexec/git-core/mergetools
-
-cd /zip
-
-for EXE in $FILELIST; do
-    apelinkpls $RESULTS/$EXE.com $COSMOS_X86/$EXE $COSMOS_AARCH64/$EXE
-    zip -qr $RESULTS/$EXE.com ./share/git-core
+for SYM in $SYMLIST2; do
+    # we symlink to ../../bin/git here because that's what it is going to become eventually
+    ln -sf ../../bin/git $RESULTS/$SYM.com
 done
+
 
 # These aren't binaries, but some are executable
 # not sure how Git will use these

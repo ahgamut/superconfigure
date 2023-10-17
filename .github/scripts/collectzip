@@ -17,7 +17,7 @@ for COMFILE in $(find . -name "*.com"); do
 done
 
 ZFILE="$BASELOC/${ZFILENAME:-extras}.zip"
-zip "$ZFILE" $(find . -name "*" | grep -v "\.x86" | grep -v "\.aarch64")
+zip --symlinks "$ZFILE" $(find . -name "*" | grep -v "\.x86" | grep -v "\.aarch64")
 
 ZFILE="$BASELOC/${ZFILENAME:-extras}-dbg.zip"
-zip "$ZFILE" $(find . -name "*" -type f)
+zip --symlinks "$ZFILE" $(find . -name "*" -type f)
