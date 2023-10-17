@@ -5,6 +5,20 @@ echo "Initial Setup"
 export BASELOC=$PWD
 export COSMO=$BASELOC/cosmopolitan
 
+if [ -z ${GITHUB_ACTIONS+x} ]; then 
+    # we are not on GA
+    if [[ `nproc` -gt 2 ]]; then
+        numproc=$((`nproc` - 2))
+    else
+        numproc=1
+    fi
+else 
+    # we are on GA
+    numproc=2
+fi
+
+MAXPROC="${MAXPROC:-$numproc}"
+
 echo "Compiling Cosmopolitan Libc"
 cd $BASELOC
 
