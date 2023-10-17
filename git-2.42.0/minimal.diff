@@ -101,3 +101,83 @@
  # Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies on
  # header files to be automatically computed, to avoid rebuilding objects when
  # an unrelated header file changes.  Define it to "no" to use the hard-coded
+--- git-2.42.0/run-command.c	2023-08-21 16:34:58.000000000 +0000
++++ -	2023-10-17 02:09:15.063456195 +0000
+@@ -171,6 +171,19 @@
+ }
+ 
+ #ifndef locate_in_PATH
++#define _COSMO_SOURCE
++#include "libc/mem/gc.h"
++#include "libc/str/str.h"
++#include "libc/x/x.h"
++
++extern char* GetProgramExecutableName();
++static int cosmo_endswith(const char *s, const char *suffix) {
++  size_t n, m;
++  n = strlen(s);
++  m = strlen(suffix);
++  if (m > n) return 0;
++  return !memcmp(s + n - m, suffix, m);
++}
+ /*
+  * Search $PATH for a command.  This emulates the path search that
+  * execvp would perform, without actually executing the command so it
+@@ -190,11 +203,55 @@
+  */
+ static char *locate_in_PATH(const char *file)
+ {
+-	const char *p = getenv("PATH");
++    const char *progname = strdup(GetProgramExecutableName());
++    const char *progdir = dirname(progname);
++    char *otherdir = "";
++
++    if (cosmo_endswith(progdir, "bin")) {
++        /* we are running <dir>/bin/git */
++        otherdir = xjoinpaths(progdir, "../libexec/git-core/");
++    }
++    else if (cosmo_endswith(progdir, "libexec/git-core")) {
++        /* we are running <dir>/libexec/git-core/git */
++        otherdir = xjoinpaths(progdir, "../../bin/");
++    }
++    else {
++        /* I don't know where we are running this */
++        otherdir = "";
++    }
++    const char *fsp = xstrcat(progdir, ":", otherdir, NULL);
++    if (!fsp) return NULL;
++
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+-	if (!p || !*p)
++    /* first search the paths we'd expect */
++	while (1) {
++		const char *end = strchrnul(fsp, ':');
++
++		strbuf_reset(&buf);
++
++		/* POSIX specifies an empty entry as the current directory. */
++		if (end != fsp) {
++			strbuf_add(&buf, fsp, end - fsp);
++			strbuf_addch(&buf, '/');
++		}
++		strbuf_addstr(&buf, file);
++
++		if (is_executable(buf.buf))
++			return strbuf_detach(&buf, NULL);
++
++		if (!*end)
++			break;
++		fsp = end + 1;
++	}
++
++    /* now search the other PATHs if you have to */
++	const char *p = getenv("PATH");
++	
++    if (!p || !*p) {
++	    strbuf_release(&buf);
+ 		return NULL;
++    }
+ 
+ 	while (1) {
+ 		const char *end = strchrnul(p, ':');

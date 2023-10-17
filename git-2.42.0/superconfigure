@@ -44,9 +44,12 @@ export NO_PYTHON=1
 export SHELL_PATH="sh"
 
 ./configure --prefix="$COSMOS"\
-    --with-curl --with-openssl\
-    --enable-pthreads="-lpthread"\
-    --without-tcltk --sysconfdir=/zip/etc --datarootdir=/zip/share\
+    --with-curl --with-openssl --enable-pthreads="-lpthread"\
+    --without-tcltk --without-python \
+    --sysconfdir=/zip/etc --datarootdir=/zip/share\
+    --with-pager=less --with-editor=vim  --with-shell=sh\
+    --with-gitconfig=/zip/gitconfig --with-gitattributes=/zip/gitattributes\
+    --with-sane-tool-path=""\
    CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" LIBS="-lcurl -lssh2 -lzstd -lssl -lcrypto -lz"
  
 # run make and/or make install
