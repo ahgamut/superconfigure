@@ -32,7 +32,7 @@ fi
 cd tree*
 
 # run make and/or make install
-make -s -j2
-make install -s -j2
+make -s -j$MAXPROC
+make install -s -j$MAXPROC
 
 echo "DONE."

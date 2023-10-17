@@ -33,7 +33,7 @@ fi
 cd "$FOLDER"
 
 # run make and/or make install
-make -s -j2
+make -s -j$MAXPROC
 
 # test berry
 ./berry -e "1+1"

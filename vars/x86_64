@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
+if [ -z ${GITHUB_ACTIONS+x} ]; then 
+    # we are not on GA
+    if [[ `nproc` -gt 2 ]]; then
+        numproc=$((`nproc` - 2))
+    else
+        numproc=1
+    fi
+else 
+    # we are on GA
+    numproc=2
+fi
+
+export MAXPROC="${MAXPROC:-$numproc}"
+
 export ARCH=x86_64
 export MODE=""
 export BASELOC=$(realpath $PWD)

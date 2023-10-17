@@ -27,7 +27,7 @@ cd brotli*/
     CFLAGS="-Os"
 
 # run make and/or make install
-make -i -s -j2
-make install -i -s -j2
+make -i -s -j$MAXPROC
+make install -i -s -j$MAXPROC
 
 echo "DONE."

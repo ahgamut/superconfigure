@@ -39,7 +39,7 @@ cd $FOLDER
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make -s -j2
+make -s -j$MAXPROC
 mkdir -p dummy
 cp -r build/lib* ./dummy
 cp ./python $COSMOS/bin
