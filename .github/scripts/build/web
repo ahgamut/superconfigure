@@ -40,9 +40,7 @@ mkdir -p "$RESULTS"
 mkdir -p $RESULTS/bin
 
 # the zip folder
-sudo rm -f /zip
-sudo ln -sf "$CONFIGDIR" /zip
-cd /zip
+cd "$CONFIGDIR"
 mkdir -p share
 cp -r $COSMOS_X86/share/git-core ./share
 ls -al /zip
@@ -53,7 +51,7 @@ ls -al ./
 
 # wget
 apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
-cd /zip
+cd "$CONFIGDIR"
 cp $BASELOC/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
 cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
@@ -66,7 +64,7 @@ apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsyn
 
 # curl
 apelinkpls $RESULTS/bin/curl.com $COSMOS_X86/bin/curl $COSMOS_AARCH64/bin/curl
-cd /zip
+cd "$CONFIGDIR"
 zip -qr $RESULTS/bin/curl.com usr/
 cd "$BASELOC"
 
@@ -88,7 +86,7 @@ libexec/git-core/git-imap-send
 libexec/git-core/git-remote-https
 libexec/git-core/git-http-push
 '
-cd /zip
+cd "$CONFIGDIR"
 for EXE in $BINLIST; do
     apelinkpls $RESULTS/$EXE.com $COSMOS_X86/$EXE $COSMOS_AARCH64/$EXE
     zip -qr $RESULTS/$EXE.com usr/

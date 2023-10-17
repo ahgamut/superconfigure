@@ -39,9 +39,7 @@ mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
 
 # the zip folder
-sudo rm -f /zip
-sudo ln -sf "$CONFIGDIR" /zip
-cd /zip
+cd "$CONFIGDIR"
 mkdir -p share
 cp -r $COSMOS_X86/share/terminfo ./share
 ls -al /zip
@@ -56,19 +54,19 @@ cd "$BASELOC"
 
 # bash
 apelinkpls $RESULTS/bin/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/bash.com share/terminfo
 cd "$BASELOC"
 
 # berry
 apelinkpls $RESULTS/bin/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/berry.com share/terminfo
 cd "$BASELOC"
 
 # less
 apelinkpls $RESULTS/bin/less.com $COSMOS_X86/bin/less $COSMOS_AARCH64/bin/less
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/less.com share/terminfo
 cd "$BASELOC"
 

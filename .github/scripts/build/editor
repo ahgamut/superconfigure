@@ -39,9 +39,7 @@ mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS"
 
 # the zip folder
-sudo rm -f /zip
-sudo ln -sf "$CONFIGDIR" /zip
-cd /zip
+cd "$CONFIGDIR"
 mkdir -p share
 cp -r $COSMOS_X86/x86_64 ./
 cp -r $COSMOS_AARCH64/aarch64 ./
@@ -58,7 +56,7 @@ ls -al ./
 # emacs
 cd "$BASELOC"
 apelinkpls $RESULTS/bin/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/emacs.com \
     share/terminfo \
     $(find x86_64 -type f | grep 'emacs\.pdmp') \
@@ -71,7 +69,7 @@ zip -r $RESULTS/bin/emacs.com \
 # vim
 cd "$BASELOC"
 apelinkpls $RESULTS/bin/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/vim.com \
     share/terminfo \
     share/vim
@@ -79,7 +77,7 @@ zip -r $RESULTS/bin/vim.com \
 # nano
 cd "$BASELOC"
 apelinkpls $RESULTS/bin/nano.com $COSMOS_X86/bin/nano $COSMOS_AARCH64/bin/nano
-cd /zip
+cd "$CONFIGDIR"
 zip -r $RESULTS/bin/nano.com \
     share/terminfo\
     share/nano
