@@ -2,8 +2,8 @@
 set -eux
 
 make ARCH=x86_64 pypack1
-
 make ARCH=aarch64 pypack1
+rm -f cosmo.setup.*
 
 export MODE=
 export MODE_AARCH64=aarch64

@@ -2,8 +2,8 @@
 set -eux
 
 make ARCH=x86_64 editor
-
 make ARCH=aarch64 editor
+rm -f cosmo.setup.*
 
 export MODE=
 export MODE_AARCH64=aarch64
