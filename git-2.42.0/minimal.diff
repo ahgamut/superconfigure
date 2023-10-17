@@ -128,23 +128,23 @@
  static char *locate_in_PATH(const char *file)
  {
 -	const char *p = getenv("PATH");
-+    const char *progname = strdup(GetProgramExecutableName());
-+    const char *progdir = dirname(progname);
++    char *progname = _gc(strdup(GetProgramExecutableName()));
++    char *progdir = dirname(progname);
 +    char *otherdir = "";
 +
 +    if (cosmo_endswith(progdir, "bin")) {
 +        /* we are running <dir>/bin/git */
-+        otherdir = xjoinpaths(progdir, "../libexec/git-core/");
++        otherdir = _gc(xjoinpaths(progdir, "../libexec/git-core/"));
 +    }
 +    else if (cosmo_endswith(progdir, "libexec/git-core")) {
 +        /* we are running <dir>/libexec/git-core/git */
-+        otherdir = xjoinpaths(progdir, "../../bin/");
++        otherdir = _gc(xjoinpaths(progdir, "../../bin/"));
 +    }
 +    else {
 +        /* I don't know where we are running this */
 +        otherdir = "";
 +    }
-+    const char *fsp = xstrcat(progdir, ":", otherdir, NULL);
++    const char *fsp = _gc(xstrcat(progdir, ":", otherdir, NULL));
 +    if (!fsp) return NULL;
 +
  	struct strbuf buf = STRBUF_INIT;
