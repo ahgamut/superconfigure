@@ -25,6 +25,7 @@ else
 
     # apply patches if any
     patch -p0 -i minimal.diff
+    mkdir -p build
 fi
 
 SYSROOT_BUILD=$(realpath ./build)
