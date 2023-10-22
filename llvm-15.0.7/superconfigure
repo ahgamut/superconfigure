@@ -14,7 +14,7 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-if [ -d "sources.tar.gz" ]; then
+if [ -f "sources.tar.gz" ]; then
     # we already downloaded it
     rm -rf build
     mkdir -p build
