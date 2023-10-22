@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -e
+
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+if [ -d "sources.tar.gz" ]; then
+    # we already downloaded it
+    rm -rf build
+    mkdir -p build
+else
+    # download the source code
+    wget -q https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-15.0.7.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    patch -p0 -i minimal.diff
+fi
+
+SYSROOT_BUILD=$(realpath ./build)
+
+# go into the source folder, configure
+cd build
+
+cmake -S ../llvm-project*/llvm -B ./ -G Ninja \
+    -DCMAKE_C_COMPILER="$CC"\
+    -DCMAKE_CXX_COMPILER="$CXX"\
+    -DCMAKE_INSTALL_PREFIX="$COSMOS"\
+    -DLLVM_ENABLE_PROJECTS="clang"\
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo\
+    -DLLVM_TARGETS_TO_BUILD="X86;AArch64"\
+    -DLLVM_ENABLE_PIC=OFF\
+    -DLLVM_ENABLE_LIBCXX=OFF\
+    -DLLVM_ENABLE_LLVM_LIBC=OFF\
+    -DLLVM_ENABLE_MODULES=OFF\
+    -DLLVM_ENABLE_PEDANTIC=OFF\
+    -DBUILD_SHARED_LIBS=OFF\
+    -DLLVM_BUILD_STATIC=ON\
+    -DLLVM_ENABLE_LIBFFI=OFF\
+    -DLLVM_ENABLE_LIBPFM=OFF\
+    -DLLVM_ENABLE_LIBEDIT=OFF\
+    -DLLVM_ENABLE_TERMINFO=OFF\
+    -DLLVM_ENABLE_LIBXML2=OFF\
+    -DLLVM_ENABLE_CURL=OFF\
+    -DLLVM_ENABLE_LIBTHREADS=ON
+
+# run make and/or make install
+ninja -j$MAXPROC clang-format
+cp ./bin/clang-format $COSMOS/bin
+
+echo "DONE."

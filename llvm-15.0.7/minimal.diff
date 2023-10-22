@@ -1,0 +1,234 @@
+--- llvm-project-llvmorg-15.0.7/clang/lib/AST/VTableBuilder.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 20:06:17.038642245 +0000
+@@ -201,12 +201,13 @@
+         SubobjectLayoutClassOffsets[std::make_pair(OverriderRD,
+                                                    Method.Subobject)];
+ 
+-      OverriderInfo& Overrider = OverridersMap[std::make_pair(MD, BaseOffset)];
+-      assert(!Overrider.Method && "Overrider should not exist yet!");
++      auto tmpp = std::make_pair(MD, BaseOffset);
++      OverriderInfo& Overrider2 = OverridersMap[tmpp];
++      assert(!Overrider2.Method && "Overrider should not exist yet!");
+ 
+-      Overrider.Offset = OverriderOffset;
+-      Overrider.Method = Method.Method;
+-      Overrider.VirtualBase = Method.InVirtualSubobject;
++      Overrider2.Offset = OverriderOffset;
++      Overrider2.Method = Method.Method;
++      Overrider2.VirtualBase = Method.InVirtualSubobject;
+     }
+   }
+ 
+--- llvm-project-llvmorg-15.0.7/clang/lib/CodeGen/CGVTables.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-22 00:40:00.538824598 +0000
+@@ -315,7 +315,7 @@
+         CGM.ErrorUnsupported(
+             MD, "return-adjusting thunk with incomplete parameter type");
+       else if (CurFnInfo->isVariadic())
+-        llvm_unreachable("shouldn't try to emit musttail return-adjusting "
++        CGM.ErrorUnsupported(MD, "shouldn't try to emit musttail return-adjusting "
+                          "thunks for variadic functions");
+       else
+         CGM.ErrorUnsupported(
+--- llvm-project-llvmorg-15.0.7/clang/tools/clang-linker-wrapper/ClangLinkerWrapper.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-22 00:41:34.445892464 +0000
+@@ -177,7 +177,7 @@
+   outs().flush();
+   logAllUnhandledErrors(std::move(E),
+                         WithColor::error(errs(), LinkerExecutable));
+-  exit(EXIT_FAILURE);
++  exit(1 /* EXIT_FAILURE */);
+ }
+ 
+ /// Create an extra user-specified \p OffloadFile.
+@@ -1496,11 +1496,11 @@
+         "The will then transparently pass all arguments and input to the\n"
+         "specified host linker to create the final binary.\n",
+         Args.hasArg(OPT_help_hidden), Args.hasArg(OPT_help_hidden));
+-    return EXIT_SUCCESS;
++    return 0; // EXIT_SUCCESS;
+   }
+   if (Args.hasArg(OPT_v)) {
+     printVersion(outs());
+-    return EXIT_SUCCESS;
++    return 0; // EXIT_SUCCESS;
+   }
+ 
+   // This forwards '-mllvm' arguments to LLVM if present.
+@@ -1556,5 +1556,5 @@
+       if (std::error_code EC = sys::fs::remove(TempFile))
+         reportError(createFileError(TempFile, EC));
+ 
+-  return EXIT_SUCCESS;
++  return 0; // EXIT_SUCCESS;
+ }
+--- llvm-project-llvmorg-15.0.7/clang/tools/clang-offload-packager/ClangOffloadPackager.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-22 00:40:28.384920421 +0000
+@@ -61,12 +61,12 @@
+ 
+   if (Help) {
+     cl::PrintHelpMessage();
+-    return EXIT_SUCCESS;
++    return 0; // EXIT_SUCCESS;
+   }
+ 
+   auto reportError = [argv](Error E) {
+     logAllUnhandledErrors(std::move(E), WithColor::error(errs(), argv[0]));
+-    return EXIT_FAILURE;
++    return 1; // EXIT_FAILURE;
+   };
+ 
+   SmallVector<char, 1024> BinaryData;
+Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.h.swp and /home/ahgamut/sources/llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.h.swp differ
+Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp and /home/ahgamut/sources/llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp differ
+--- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Support/RWMutex.h	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 19:35:02.955594492 +0000
+@@ -17,7 +17,7 @@
+ #include "llvm/Support/Threading.h"
+ #include <cassert>
+ #include <mutex>
+-#include <shared_mutex>
++// #include <shared_mutex>
+ 
+ // std::shared_timed_mutex is only availble on macOS 10.12 and later.
+ #if defined(__APPLE__) && defined(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__)
+@@ -25,6 +25,7 @@
+ #define LLVM_USE_RW_MUTEX_IMPL
+ #endif
+ #endif
++#define LLVM_USE_RW_MUTEX_IMPL
+ 
+ namespace llvm {
+ namespace sys {
+@@ -94,10 +95,10 @@
+ template <bool mt_only> class SmartRWMutex {
+   // shared_mutex (C++17) is more efficient than shared_timed_mutex (C++14)
+   // on Windows and always available on MSVC except with libc++.
+-#if (defined(_MSC_VER) && !defined(_LIBCPP_VERSION)) || __cplusplus > 201402L
++#if 0 && (defined(_MSC_VER) && !defined(_LIBCPP_VERSION)) || __cplusplus > 201402L
+   std::shared_mutex impl;
+ #else
+-#if !defined(LLVM_USE_RW_MUTEX_IMPL)
++#if 0 && !defined(LLVM_USE_RW_MUTEX_IMPL)
+   std::shared_timed_mutex impl;
+ #else
+   RWMutexImpl impl;
+--- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Support/SwapByteOrder.h	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 19:18:31.888677457 +0000
+@@ -21,7 +21,7 @@
+ #include <stdlib.h>
+ #endif
+ 
+-#if defined(__linux__) || defined(__GNU__) || defined(__HAIKU__) ||            \
++#if 1 || defined(__linux__) || defined(__GNU__) || defined(__HAIKU__) ||            \
+     defined(__Fuchsia__) || defined(__EMSCRIPTEN__)
+ #include <endian.h>
+ #elif defined(_AIX)
+--- llvm-project-llvmorg-15.0.7/llvm/lib/AsmParser/LLLexer.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-22 00:00:24.724003967 +0000
+@@ -638,6 +638,7 @@
+   KEYWORD(async);
+ 
+ #define GET_ATTR_NAMES
++#undef nocallback
+ #define ATTRIBUTE_ENUM(ENUM_NAME, DISPLAY_NAME) \
+   KEYWORD(DISPLAY_NAME);
+ #include "llvm/IR/Attributes.inc"
+--- llvm-project-llvmorg-15.0.7/llvm/lib/Support/Unix/Path.inc	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 19:33:40.151329993 +0000
+@@ -126,7 +126,7 @@
+ 
+ const file_t kInvalidFile = -1;
+ 
+-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||     \
++#if 1 || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||     \
+     defined(__minix) || defined(__FreeBSD_kernel__) || defined(__linux__) ||   \
+     defined(__CYGWIN__) || defined(__DragonFly__) || defined(_AIX) || defined(__GNU__) || \
+     (defined(__sun__) && defined(__svr4__))
+@@ -287,7 +287,7 @@
+   // Fall back to the classical detection.
+   if (getprogpath(exe_path, argv0))
+     return exe_path;
+-#elif defined(__sun__) && defined(__svr4__)
++#elif 1 || defined(__sun__) && defined(__svr4__)
+   char exe_path[PATH_MAX];
+   const char *aPath = "/proc/self/execname";
+   if (sys::fs::exists(aPath)) {
+@@ -500,7 +500,7 @@
+   default:
+     return true;
+   }
+-#elif defined(__CYGWIN__)
++#elif 1 || defined(__CYGWIN__)
+   // Cygwin doesn't expose this information; would need to use Win32 API.
+   return false;
+ #elif defined(__Fuchsia__)
+--- llvm-project-llvmorg-15.0.7/llvm/lib/Support/Unix/Program.inc	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 19:29:24.097773683 +0000
+@@ -538,7 +538,7 @@
+   static long ArgMax = sysconf(_SC_ARG_MAX);
+   // POSIX requires that _POSIX_ARG_MAX is 4096, which is the lowest possible
+   // value for ARG_MAX on a POSIX compliant system.
+-  static long ArgMin = _POSIX_ARG_MAX;
++  static long ArgMin = 4096;
+ 
+   // This the same baseline used by xargs.
+   long EffectiveArgMax = 128 * 1024;
+--- llvm-project-llvmorg-15.0.7/llvm/lib/Transforms/Scalar/GVNHoist.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 20:02:09.497935814 +0000
+@@ -891,7 +891,9 @@
+     auto TI = BB->getTerminator();
+     auto B = CHIs.begin();
+     // [PreIt, PHIIt) form a range of CHIs which have identical VNs.
+-    auto PHIIt = llvm::find_if(CHIs, [B](CHIArg &A) { return A != *B; });
++    // auto PHIIt = llvm::find_if(CHIs, [B](CHIArg &A) { return A != *B; });
++    auto PHIIt = CHIs.begin();
++    for(; PHIIt != CHIs.end() && (*PHIIt) == (*B); ++PHIIt);
+     auto PrevIt = CHIs.begin();
+     while (PrevIt != PHIIt) {
+       // Collect values which satisfy safety checks.
+@@ -912,8 +914,9 @@
+ 
+       // Check other VNs
+       PrevIt = PHIIt;
+-      PHIIt = std::find_if(PrevIt, CHIs.end(),
+-                           [PrevIt](CHIArg &A) { return A != *PrevIt; });
++      for(; PHIIt != CHIs.end() && (*PHIIt) == (*PrevIt); ++PHIIt);
++      /* PHIIt = std::find_if(PrevIt, CHIs.end(),
++                           [PrevIt](CHIArg &A) { return A != *PrevIt; }); */
+     }
+   }
+ }
+--- llvm-project-llvmorg-15.0.7/llvm/utils/TableGen/CodeGenSchedule.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-21 19:37:41.487417188 +0000
+@@ -359,7 +359,14 @@
+       }
+     }
+   }
+-
++    
++  auto LessThan = [](const APInt &Lhs, const APInt &Rhs) {
++                 unsigned LhsCountPopulation = Lhs.countPopulation();
++                 unsigned RhsCountPopulation = Rhs.countPopulation();
++                 return ((LhsCountPopulation < RhsCountPopulation) ||
++                         ((LhsCountPopulation == RhsCountPopulation) &&
++                          (Lhs.countLeadingZeros() > Rhs.countLeadingZeros())));
++               };
+   // Sort OpcodeMappings elements based on their CPU and predicate masks.
+   // As a last resort, order elements by opcode identifier.
+   llvm::sort(OpcodeMappings,
+@@ -369,13 +376,7 @@
+                const std::pair<APInt, APInt> &LhsMasks = OpcodeMasks[LhsIdx];
+                const std::pair<APInt, APInt> &RhsMasks = OpcodeMasks[RhsIdx];
+ 
+-               auto LessThan = [](const APInt &Lhs, const APInt &Rhs) {
+-                 unsigned LhsCountPopulation = Lhs.countPopulation();
+-                 unsigned RhsCountPopulation = Rhs.countPopulation();
+-                 return ((LhsCountPopulation < RhsCountPopulation) ||
+-                         ((LhsCountPopulation == RhsCountPopulation) &&
+-                          (Lhs.countLeadingZeros() > Rhs.countLeadingZeros())));
+-               };
++               
+ 
+                if (LhsMasks.first != RhsMasks.first)
+                  return LessThan(LhsMasks.first, RhsMasks.first);

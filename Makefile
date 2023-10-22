@@ -56,6 +56,7 @@ editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARC
 pypack1: cpy311-pypack1.built.$(ARCH)
 datasette: cpy311-datasette.built.$(ARCH)
 gcc: gcc-11.2-patched.built.$(ARCH)
+llvm: llvm-15.0.7.built.$(ARCH)
 
 python: pypack1 datasette
 all: python cli editor gcc web
