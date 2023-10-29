@@ -46,7 +46,7 @@ cd build
     --disable-libgomp --disable-libatomic \
     --with-gnu-as=yes --with-gnu-ld=yes --build=$ARCH-linux-gnu \
     --target=$TARGET_ARCH-linux-cosmo \
-    CFLAGS="-D_LARGEFILE64_SOURCE=1"
+    CFLAGS="-Os -D_LARGEFILE64_SOURCE=1"
 
 # run make and/or make install
 make -s -j$MAXPROC all-gcc

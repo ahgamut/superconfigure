@@ -47,6 +47,8 @@ gcc-11.2-patched.built.$(ARCH): binutils-2.35.2.built.$(ARCH)
 
 coreutils-9.4.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
 
+llvm-15.0.7.built.$(ARCH): zlib-1.3.built.$(ARCH)
+
 cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 cli: tree-2.1.1.built.$(ARCH) grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
 	findutils-4.9.0.built.$(ARCH) coreutils-9.4.built.$(ARCH) \
