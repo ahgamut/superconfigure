@@ -232,3 +232,14 @@ Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp
  
                 if (LhsMasks.first != RhsMasks.first)
                   return LessThan(LhsMasks.first, RhsMasks.first);
+--- llvm-project-llvmorg-15.0.7/llvm/lib/Support/Unix/Memory.inc	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-10-29 07:23:06.980276500 +0000
+@@ -246,7 +246,7 @@
+   // FIXME: Can we safely always call this for __GNUC__ everywhere?
+   const char *Start = static_cast<const char *>(Addr);
+   const char *End = Start + Len;
+-  __clear_cache(const_cast<char *>(Start), const_cast<char *>(End));
++  // __clear_cache(const_cast<char *>(Start), const_cast<char *>(End));
+ #  endif
+ 
+ #endif  // end apple

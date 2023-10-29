@@ -58,7 +58,7 @@ cmake -S ../llvm-project*/llvm -B ./ -G Ninja \
     -DLLVM_ENABLE_LIBTHREADS=ON
 
 # run make and/or make install
-ninja -j$MAXPROC clang-format
-cp ./bin/clang-format $COSMOS/bin
+ninja -j$MAXPROC -k0 || true
+cp bin/* $COSMOS/bin
 
 echo "DONE."
