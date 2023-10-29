@@ -25,9 +25,17 @@ emacs-28.2.built.$(ARCH): ncurses-6.4.built.$(ARCH)
 vim-9.0.1670.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 nano-7.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 
-wget-1.21.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) libuuid-1.0.3.built.$(ARCH) xz-5.4.3.built.$(ARCH)
+pigz-2.8.built.$(ARCH): zlib-1.3.built.$(ARCH)
+
+tar-1.35.built.$(ARCH): superconfigure.built.$(ARCH)\
+	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
+	gzip-1.13.built.$(ARCH)
+
+wget-1.21.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
+	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)
 rsync-3.2.7.built.$(ARCH): openssl-1.1.1u.built.$(ARCH)
-curl-8.4.0.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) xz-5.4.3.built.$(ARCH) libssh2-1.11.0.built.$(ARCH)
+curl-8.4.0.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) xz-5.4.3.built.$(ARCH)\
+	libssh2-1.11.0.built.$(ARCH) brotli-1.1.0.built.$(ARCH)
 git-2.42.0.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) xz-5.4.3.built.$(ARCH) curl-8.4.0.built.$(ARCH) libexpat-2.5.0.built.$(ARCH)
 
 cpy311-datasette.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)\
@@ -53,8 +61,13 @@ cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 
 cli: grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
 	findutils-4.9.0.built.$(ARCH) coreutils-9.4.built.$(ARCH) \
-	berry-lang.built.$(ARCH) xz-5.4.3.built.$(ARCH)\
-	cosmo-repo-thirdparty.built.$(ARCH)
+	berry-lang.built.$(ARCH) cosmo-repo-thirdparty.built.$(ARCH)
+
+compress: cosmo-repo-thirdparty.built.$(ARCH)\
+	superconfigure.built.$(ARCH)\
+	pigz-2.8.built.$(ARCH)\
+	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
+	gzip-1.13.built.$(ARCH) tar-1.35.built.$(ARCH)
 
 web: wget-1.21.built.$(ARCH) rsync-3.2.7.built.$(ARCH) curl-8.4.0.built.$(ARCH) git-2.42.0.built.$(ARCH)
 editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARCH)

@@ -35,8 +35,7 @@ fi
 cd git*/
 autoconf || true
 
-export CURL_CONFIG="$COSMOS/bin/curl-config"
-export CURL_LDFLAGS="-lcurl -lssh2 -lzstd -lssl -lcrypto -lz"
+export CURL_LDFLAGS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 export CSPRNG_METHOD="getrandom"
 export NO_PERL=1
 export NO_POLL=1
@@ -50,7 +49,7 @@ export SHELL_PATH="sh"
     --with-pager=less --with-editor=vim  --with-shell=sh\
     --with-gitconfig=/zip/gitconfig --with-gitattributes=/zip/gitattributes\
     --with-sane-tool-path=""\
-   CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" LIBS="-lcurl -lssh2 -lzstd -lssl -lcrypto -lz"
+   CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" LIBS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
  
 # run make and/or make install
 make -s -j$MAXPROC

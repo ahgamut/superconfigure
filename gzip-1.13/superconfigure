@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
-shopt -s expand_aliases
 
 # check for cosmo dirs
 if [ -z ${COSMO+x} ]; then 
@@ -13,32 +12,27 @@ if [ -z ${COSMOS+x} ]; then
     exit 1
 fi
 
-alias strip=$STRIP
-alias ar=$AR
 
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
-    cd curl*/
+    cd gzip*/
     make -s -i clean || true
     make -s -i distclean || true
     cd ..
 else
     # download the source code
-    wget -q https://github.com/curl/curl/releases/download/curl-8_4_0/curl-8.4.0.tar.gz -O sources.tar.gz
+    wget -q https://ftp.gnu.org/gnu/gzip/gzip-1.13.tar.gz -O sources.tar.gz
     tar -xzf sources.tar.gz
 
     # apply patches if any
-    patch -p0 -i minimal.diff
+    # patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
-cd curl*/
+cd gzip*/
 ./configure --prefix="$COSMOS"\
-    --enable-shared=no --enable-static=yes\
-    --enable-pthreads --with-openssl=$COSMOS\
-    --with-ca-path=/zip/usr/share/ssl/root --without-ca-fallback\
-    --without-pic --with-gnu-ld\
-    CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"
+    --exec-prefix=/zip --datarootdir=/zip/share\
+    CFLAGS="-Os"
 
 # run make and/or make install
 make -s -j$MAXPROC

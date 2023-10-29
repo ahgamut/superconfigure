@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -e
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    rm -rf build
+    mkdir -p build
+else
+    # download the source code
+    wget -q https://github.com/google/brotli/archive/refs/tags/v1.1.0.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i
+    mkdir -p build
+fi
+
+
+# go into the source folder, configure
+cd build/
+cmake -G Ninja ../brotli*/\
+    -DCMAKE_INSTALL_PREFIX="$COSMOS"\
+    -DBUILD_SHARED_LIBS=OFF\
+    -DCMAKE_C_FLAGS="-Os"
+
+# run make and/or make install
+ninja -j$MAXPROC
+ninja install -j$MAXPROC
+
+echo "DONE."

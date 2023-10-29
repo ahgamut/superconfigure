@@ -31,9 +31,18 @@ cp ./lib/libpthread.a ./lib/libgio-2.0.a
 cp ./lib/libpthread.a ./lib/libgobject-2.0.a
 cp ./lib/libpthread.a ./lib/libglib-2.0.a
 
-cp $COSMO/o/$MODE/third_party/zlib/zlib.a ./lib/libz.a
-$AR rcu ./lib/libz.a $COSMO/o/$MODE/third_party/zlib/gz/*.o
-echo '#include "third_party/zlib/zlib.h"' >> ./include/zlib.h
+if [ -f ./include/zlib.h ]; then
+    echo "already have zlib.h"
+else
+    echo '#include "third_party/zlib/zlib.h"' >> ./include/zlib.h
+fi
+
+if [ -f ./lib/libz.a ]; then
+    echo "already have libz.a"
+else
+    cp $COSMO/o/$MODE/third_party/zlib/zlib.a ./lib/libz.a
+    $AR rcu ./lib/libz.a $COSMO/o/$MODE/third_party/zlib/gz/*.o
+fi
 
 cp $COSMO/o/$MODE/third_party/zstd/zstd.a ./lib/libzstd.a
 echo '#include "third_party/zstd/zstd.h"' >> ./include/zstd.h

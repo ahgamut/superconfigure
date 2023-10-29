@@ -1,0 +1,11 @@
+--- tar-1.35/src/create.c	2023-07-10 13:43:02.000000000 +0000
++++ -	2023-10-29 06:09:17.632187865 +0000
+@@ -30,7 +30,7 @@
+ 
+ /* Error number to use when an impostor is discovered.
+    Pretend the impostor isn't there.  */
+-enum { IMPOSTOR_ERRNO = ENOENT };
++#define IMPOSTOR_ERRNO ENOENT
+ 
+ struct link
+   {
