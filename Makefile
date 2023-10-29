@@ -50,9 +50,12 @@ coreutils-9.4.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
 llvm-15.0.7.built.$(ARCH): zlib-1.3.built.$(ARCH) superconfigure.built.$(ARCH)
 
 cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
-cli: tree-2.1.1.built.$(ARCH) grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
+
+cli: grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
 	findutils-4.9.0.built.$(ARCH) coreutils-9.4.built.$(ARCH) \
-	berry-lang.built.$(ARCH) xz-5.4.3.built.$(ARCH)
+	berry-lang.built.$(ARCH) xz-5.4.3.built.$(ARCH)\
+	cosmo-repo-thirdparty.built.$(ARCH)
+
 web: wget-1.21.built.$(ARCH) rsync-3.2.7.built.$(ARCH) curl-8.4.0.built.$(ARCH) git-2.42.0.built.$(ARCH)
 editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARCH)
 pypack1: cpy311-pypack1.built.$(ARCH)
