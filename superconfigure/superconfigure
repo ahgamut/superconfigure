@@ -14,13 +14,14 @@ fi
 
 ARCH="${ARCH:-x86_64}"
 cd $COSMO/o/third_party/gcc
-if [[ -f "$ARCH-gcc.zip" ]]; then
+if [[ -f "x86_64-gcc.zip" ]]; then
     # we already downloaded it
     cd $BASELOC
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.15/$ARCH-gcc.zip
-    unzip -o $ARCH-gcc.zip
-    rm -f bin/$ARCH-*musl-gcc
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.15/x86_64-gcc.zip
+    unzip -o x86_64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.15/aarch64-gcc.zip
+    unzip -o aarch64-gcc.zip
     cd $BASELOC
 fi
 
