@@ -142,7 +142,9 @@ bin/yaml2obj
 mkdir -p $RESULTS/bin
 
 for EXE in $FILELIST; do
-    apelinkpls $RESULTS/$EXE.com\
-        $COSMOS_X86/$EXE\
-        $COSMOS_AARCH64/$EXE
+    if [ -f $COSMOS_X86/$EXE ] && [ -f $COSMOS_AARCH64/$EXE ]; then
+        apelinkpls $RESULTS/$EXE.com\
+            $COSMOS_X86/$EXE\
+            $COSMOS_AARCH64/$EXE
+    fi
 done
