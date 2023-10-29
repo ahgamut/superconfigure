@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd zlib*/
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://github.com/madler/zlib/releases/download/v1.3/zlib-1.3.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    # patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd zlib*/
+ARCH="${ARCH:-x86_64}"
+./configure --static --64 --prefix=$COSMOS\
+    --includedir=$COSMOS/include\
+    --eprefix=$COSMOS/bin --libdir=$COSMOS/lib\
+    --archs="-arch $ARCH"
+
+# run make and/or make install
+make -s -j$MAXPROC
+make install -s -j$MAXPROC
+
+echo "DONE."
