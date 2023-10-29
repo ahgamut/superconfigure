@@ -27,6 +27,7 @@ make -s -j$MAXPROC \
     o/$MODE/third_party/zstd/zstd.com\
     o/$MODE/third_party/awk/awk.com\
     o/$MODE/third_party/sed/sed.com\
+    o/$MODE/third_party/tree/tree.com\
     o/$MODE/third_party/tidy/tidy.com
 
 cp o/$MODE/third_party/sqlite3/sqlite3.com.dbg $COSMOS/bin/sqlite3
@@ -40,5 +41,6 @@ cp o/$MODE/third_party/zstd/zstd.com.dbg $COSMOS/bin/zstd
 cp o/$MODE/third_party/awk/awk.com.dbg $COSMOS/bin/awk
 cp o/$MODE/third_party/sed/sed.com.dbg $COSMOS/bin/sed
 cp o/$MODE/third_party/tidy/tidy.com.dbg $COSMOS/bin/tidy
+cp o/$MODE/third_party/tree/tree.com.dbg $COSMOS/bin/tree
 
 echo "DONE."

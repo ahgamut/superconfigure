@@ -1,3 +1,7 @@
+#
+cosmopolitan/
+gcc-11.2-patched/gcc/
+
 # Prerequisites
 *.d
 

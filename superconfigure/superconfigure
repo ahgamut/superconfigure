@@ -19,8 +19,9 @@ if [[ -f "$ARCH-gcc.zip" ]]; then
     cd $BASELOC
 else
     wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.15/$ARCH-gcc.zip
-    unzip $ARCH-gcc.zip
+    unzip -o $ARCH-gcc.zip
     rm -f bin/$ARCH-*musl-gcc
+    cd $BASELOC
 fi
 
 echo "DONE."

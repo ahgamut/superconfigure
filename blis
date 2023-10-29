@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-./configure --prefix=$COSMOS\
-    --enable-verbose-make --disable-shared\
-    --disable-system\
-    --enable-blas --disable-cblas\
-    CFLAGS="-Os" generic
