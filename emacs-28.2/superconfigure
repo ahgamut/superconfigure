@@ -40,7 +40,7 @@ export PKG_CONFIG=""
 ./configure --without-x --without-gnutls\
     --disable-acl --with-threads\
     --with-sound=no --with-unexec=no\
-    --without-gpm --without-modules --without-libgmp\
+    --without-gpm --without-libgmp\
     --without-lcms2 --without-xpm --without-jpeg\
     --without-png --without-gif --without-tiff\
     --without-rsvg --without-libsystemd\
