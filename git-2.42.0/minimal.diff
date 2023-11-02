@@ -181,3 +181,24 @@
  
  	while (1) {
  		const char *end = strchrnul(p, ':');
+--- git-2.42.0/preload-index.c	2023-08-21 16:34:58.000000000 +0000
++++ -	2023-11-02 01:44:54.546318539 +0000
+@@ -16,6 +16,9 @@
+ #include "symlinks.h"
+ #include "trace2.h"
+ 
++#define _COSMO_SOURCE
++#include <stdbool.h>
++#include "libc/dce.h"
+ /*
+  * Mostly randomly chosen maximum thread counts: we
+  * cap the parallelism to 20 threads, and we want
+@@ -108,7 +111,7 @@
+ 	struct progress_data pd;
+ 	int t2_sum_lstat = 0;
+ 
+-	if (!HAVE_THREADS || !core_preload_index)
++	if (IsWindows() || !HAVE_THREADS || !core_preload_index)
+ 		return;
+ 
+ 	threads = index->cache_nr / THREAD_COST;

@@ -3,7 +3,7 @@ set -eux
 
 make ARCH=x86_64 compress
 make ARCH=aarch64 compress
-rm -f cosmo.setup.*
+# rm -f cosmo.setup.*
 
 export MODE=
 export MODE_AARCH64=aarch64
