@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+FOLDER="zsh-zsh-5.9"
+
+if [[ -f sources.tar.xz ]]; then
+    # we already downloaded it
+    cd zsh*/
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q https://sourceforge.net/projects/zsh/files/zsh/5.9/zsh-5.9.tar.xz/download -O sources.tar.xz
+    tar -xJf sources.tar.xz
+
+    # apply patches if any
+    patch -p0 -i zsh-cosmo.diff
+fi
+
+# go into the source folder, configure
+cd zsh*/
+./configure --prefix="$COSMOS" --disable-dynamic \
+    --exec-prefix=/zip --datarootdir=/zip/share\
+    CFLAGS="-Os -I$COSMOS/include/ncurses"
+
+# run make and/or make install
+make -s -j$MAXPROC
+make install -s -j$MAXPROC
+
+echo "DONE."

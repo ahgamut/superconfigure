@@ -61,7 +61,8 @@ cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 
 cli: grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
 	findutils-4.9.0.built.$(ARCH) coreutils-9.4.built.$(ARCH) \
-	berry-lang.built.$(ARCH) cosmo-repo-thirdparty.built.$(ARCH)
+	berry-lang.built.$(ARCH) cosmo-repo-thirdparty.built.$(ARCH) \
+	zsh-5.9.built.$(ARCH)
 
 compress: cosmo-repo-thirdparty.built.$(ARCH)\
 	superconfigure.built.$(ARCH)\
