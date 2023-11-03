@@ -33,7 +33,8 @@ fi
 # go into the source folder, configure
 cd zsh*/
 ./configure --prefix="$COSMOS" --disable-dynamic \
-    --exec-prefix=/zip --datarootdir=/zip/share\
+    --exec-prefix=/zip --datarootdir=/zip/share \
+    --with-tcsetpgrp \
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install
