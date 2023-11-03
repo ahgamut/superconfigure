@@ -66,6 +66,12 @@ cd "$CONFIGDIR"
 zip -r $RESULTS/bin/less.com share/terminfo
 cd "$BASELOC"
 
+# zsh
+apelinkpls $RESULTS/bin/zsh.com $COSMOS_X86/bin/zsh $COSMOS_AARCH64/bin/zsh
+cd "$CONFIGDIR"
+zip -r $RESULTS/bin/zsh.com share/terminfo
+cd "$BASELOC"
+
 FILELIST='
 echo cp ls mv sha256sum [ test base64 cat chown chmod dd cksum
 df dir dirname basename du env expand expr factor join kill link

@@ -1,0 +1,54 @@
+diff -r --unified zsh-5.9a/Src/exec.c zsh-5.9/Src/exec.c
+--- zsh-5.9a/Src/exec.c	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/Src/exec.c	2023-11-03 15:51:06.715433334 +0100
+@@ -267,7 +267,7 @@
+ /* the resource limits for the shell and its children */
+ 
+ /**/
+-mod_export struct rlimit current_limits[RLIM_NLIMITS], limits[RLIM_NLIMITS];
++mod_export struct rlimit current_limits[16], limits[16];
+ 
+ /**/
+ mod_export int
+diff -r --unified zsh-5.9a/aczsh.m4 zsh-5.9/aczsh.m4
+--- zsh-5.9a/aczsh.m4	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/aczsh.m4	2023-11-03 15:51:06.715433334 +0100
+@@ -418,7 +418,9 @@
+     AC_TRY_COMMAND($CC -c $CFLAGS $CPPFLAGS $DLCFLAGS conftest1.c 1>&AS_MESSAGE_LOG_FD) &&
+     AC_TRY_COMMAND($DLLD -o conftest1.$DL_EXT $LDFLAGS $DLLDFLAGS conftest1.o $LIBS 1>&AS_MESSAGE_LOG_FD); then
+     save_ldflags=$LDFLAGS
+-    LDFLAGS="$LDFLAGS $EXTRA_LDFLAGS -s"
++    dnl -s is removed here to prevent stripping executables,
++    dnl making this test a no-op
++    LDFLAGS="$LDFLAGS $EXTRA_LDFLAGS"
+     AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ #include <stdlib.h>
+ #ifdef HPUX10DYNAMIC
+diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
+--- zsh-5.9a/configure.ac	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/configure.ac	2023-11-03 15:52:09.295424525 +0100
+@@ -513,21 +513,21 @@
+      s/ *$//'
+ 
+ case " $LDFLAGS " in
+-  *" -s "*) strip_exeldflags=true strip_libldflags=true
++  *" -s "*) strip_exeldflags=false strip_libldflags=false
+     LDFLAGS=`echo " $LDFLAGS " | sed "$sed"` ;;
+   *) strip_exeldflags=false strip_libldflags=false ;;
+ esac
+ 
+ case " ${EXELDFLAGS+$EXELDFLAGS }" in
+   " ") ;;
+-  *" -s "*) strip_exeldflags=true
++  *" -s "*) strip_exeldflags=false
+     EXELDFLAGS=`echo " $EXELDFLAGS " | sed "$sed"` ;;
+   *) strip_exeldflags=false ;;
+ esac
+ 
+ case " ${LIBLDFLAGS+$LIBLDFLAGS }" in
+   " ") ;;
+-  *" -s "*) strip_libldflags=true
++  *" -s "*) strip_libldflags=false
+     LIBLDFLAGS=`echo " $LIBLDFLAGS " | sed "$sed"` ;;
+   *) strip_libldflags=false ;;
+ esac
