@@ -41,3 +41,14 @@ index 57414db..7a86829 100755
      if os.system(cmd)
          os.exit(-1)
      end
+--- -	2023-11-04 02:24:52.727430851 +0000
++++ berry/default/berry_conf.h	2023-10-29 05:32:39.828938709 +0000
+@@ -162,7 +162,7 @@
+  * otherwise disable the feature.
+  * Default: 1
+  **/
+-#define BE_USE_SHARED_LIB               0
++#define BE_USE_SHARED_LIB               1
+ 
+ /* Macro: BE_USE_OVERLOAD_HASH
+  * Allows instances to overload hash methods for use in the
