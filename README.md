@@ -7,7 +7,7 @@ APE binaries](https://github.com/jart/cosmopolitan#amd64--arm64-fat-ape-binaries
 Currently available:
 
 * GNU `bash-5.2`, `findutils-4.9.0`, `coreutils-9.4`
-* `vim-9.0.1670`, `emacs-28.2`, `nano-7.2`
+* `vim-9.0.1670`, `emacs-29.1`, `nano-7.2`
 * CPython3.11.4
 * `wget-1.21`, `curl-8.4.0`, `git-2.42.0`
 * [`gcc-11.2.0`][portcosmo] and `binutils-2.35.2` targeting `x86_64-linux-cosmo`

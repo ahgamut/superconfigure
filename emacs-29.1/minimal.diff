@@ -1,0 +1,57 @@
+--- ./emacs-29.1/src/config.in	2023-07-23 09:58:50.000000000 +0200
++++ ./emacs-29.1/src/config.in.new	2023-11-05 10:42:18.274387041 +0100
+@@ -1790,7 +1790,7 @@
+ #undef INTERNAL_TERMINAL
+ 
+ /* Define to read input using SIGIO. */
+-#undef INTERRUPT_INPUT
++#undef INTERRUPT_INPUT0
+ 
+ /* Returns true if character is any form of separator. */
+ #undef IS_ANY_SEP
+@@ -2094,7 +2094,7 @@
+ #undef UNIX98_PTYS
+ 
+ /* Define to 1 if FIONREAD is usable. */
+-#undef USABLE_FIONREAD
++#undef USABLE_FIONREAD0
+ 
+ /* Define to 1 if SIGIO is usable. */
+ #undef USABLE_SIGIO
+
+--- ./emacs-29.1/src/filelock.c	2023-01-01 14:46:43.000000000 +0100
++++ ./emacs-29.1/src/filelock.c.new	2023-11-04 17:53:19.163803983 +0100
+@@ -298,7 +298,7 @@
+    There is no way to tell whether a symlink call fails due to
+    permissions issues or because links are not supported, but luckily
+    the lock file code should work either way.  */
+-enum { LINKS_MIGHT_NOT_WORK = EPERM };
++#define LINKS_MIGHT_NOT_WORK EPERM
+ 
+ /* Rename OLD to NEW.  If FORCE, replace any existing NEW.
+    It is OK if there are temporarily two hard links to OLD.
+@@ -498,17 +498,14 @@
+ 
+ /* True if errno values are negative.  Although the C standard
+    requires them to be positive, they are negative in Haiku.  */
+-enum { NEGATIVE_ERRNO = EDOM < 0 };
++#define NEGATIVE_ERRNO (EDOM < 0)
+ 
+ /* Nonzero values that are not errno values.  */
+-enum
+-  {
+-    /* Another process on this machine owns it.  */
+-    ANOTHER_OWNS_IT = NEGATIVE_ERRNO ? 1 : -1,
+-
+-    /* This Emacs process owns it.  */
+-    I_OWN_IT = 2 * ANOTHER_OWNS_IT
+-  };
++/* Another process on this machine owns it.  */
++#define ANOTHER_OWNS_IT (NEGATIVE_ERRNO ? 1 : -1)
++
++/* This Emacs process owns it.  */
++#define I_OWN_IT (2 * ANOTHER_OWNS_IT)
+ 
+ /* Return 0 if nobody owns the lock file LFNAME or the lock is obsolete,
+    ANOTHER_OWNS_IT if another process owns it
+
