@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+ARCH="${ARCH:-x86_64}"
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.xz ]]; then
+    # we already downloaded it
+    cd gnutls*
+    make -s -i clean || true
+    make -s -i distclean || true
+    cd ..
+else
+    # download the source code
+    wget -q  https://www.gnupg.org/ftp/gcrypt/gnutls/v3.7/gnutls-3.7.10.tar.xz -O sources.tar.xz
+    tar -xf sources.tar.xz
+
+    # apply patches if any
+    # patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd gnutls*
+export GOBJECT_LIBS=""
+export PKG_CONFIG=""
+export NETTLE_CFLAGS="-I$COSMOS/include/nettle"
+export NETTLE_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
+export HOGWEED_CFLAGS="-I$COSMOS/include"
+export HOGWEED_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
+
+./configure --sysconfdir=/zip --datarootdir=/zip/share\
+    --libexecdir=/zip/$ARCH --prefix=$COSMOS\
+    --disable-shared --enable-static\
+    --with-gnu-ld --disable-cxx\
+    --disable-nls --disable-rpath --disable-tests\
+    --disable-hardware-acceleration --disable-padlock\
+    --disable-libdane --disable-guile\
+    --disable-bash-tests --disable-doc\
+    --without-p11-kit --without-tpm --without-tpm2\
+    --with-included-libtasn1 --with-included-unistring\
+    --enable-fat\
+    --with-default-trust-store-file=/zip/share/ssl/certs/ca-certificates.crt \
+    --with-default-trust-store-dir=/zip/share/ssl/certs \
+    --with-default-trust-store-dir=/zip/share/ssl/default.crl \
+    --with-unbound-root-key-file=/zip/share/unbound/root.key
+    CFLAGS="-Os"
+
+# run make and/or make install
+make -s -j$MAXPROC
+make install -s -j$MAXPROC
+
+echo "DONE."

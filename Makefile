@@ -21,7 +21,9 @@ less-643.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 grep-3.11.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 berry-lang.built.$(ARCH): readline-8.2.built.$(ARCH)
 
-emacs-28.2.built.$(ARCH): ncurses-6.4.built.$(ARCH)
+nettle-3.9.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
+gnutls-3.7.10.built.$(ARCH): nettle-3.9.built.$(ARCH) brotli-1.1.0.built.$(ARCH) 
+emacs-28.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) gnutls-3.7.10.built.$(ARCH)
 vim-9.0.1670.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 nano-7.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 
@@ -46,8 +48,7 @@ cpy311-pypack1.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARC
 	openssl-1.1.1u.built.$(ARCH) gdbm-1.23.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
 	xz-5.4.3.built.$(ARCH)
 
-gmp-6.3.0.built.$(ARCH): zlib-1.3.built.$(ARCH)
-mpfr-4.2.0.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
+mpfr-4.2.0.built.$(ARCH): zlib-1.3.built.$(ARCH) gmp-6.3.0.built.$(ARCH)
 texinfo-7.0.2.built.$(ARCH): gmp-6.3.0.built.$(ARCH) ncurses-6.4.built.$(ARCH)
 mpc-1.3.1.built.$(ARCH): gmp-6.3.0.built.$(ARCH) mpfr-4.2.0.built.$(ARCH) isl-0.18.built.$(ARCH)
 binutils-2.35.2.built.$(ARCH): gmp-6.3.0.built.$(ARCH) mpc-1.3.1.built.$(ARCH) mpfr-4.2.0.built.$(ARCH) isl-0.18.built.$(ARCH)

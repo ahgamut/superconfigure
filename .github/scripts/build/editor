@@ -47,6 +47,8 @@ cp -r $COSMOS_X86/share/terminfo ./share
 cp -r $COSMOS_X86/share/vim ./share
 cp -r $COSMOS_X86/share/nano ./share
 cp -r $COSMOS_X86/share/emacs ./share
+mkdir -p ./share/ssl/certs/
+cp /etc/ssl/certs/* ./share/ssl/certs/
 ls -al /zip
 
 
@@ -59,6 +61,7 @@ for e in emacs emacsclient; do
     apelinkpls $RESULTS/bin/$e.com $COSMOS_X86/bin/$e $COSMOS_AARCH64/bin/$e
     cd "$CONFIGDIR"
     zip -qr $RESULTS/bin/$e.com \
+        share/ssl \
         share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
         $(find aarch64 -type f | grep '\.pdmp') \

@@ -30,4 +30,347 @@
  
  /* Rename OLD to NEW.  If FORCE, replace any existing NEW.
     It is OK if there are temporarily two hard links to OLD.
-
+diff -urN emacs-28.2/src/bytecode.c new/src/bytecode.c
+--- emacs-28.2/src/bytecode.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/bytecode.c	2023-11-05 21:17:21.211742883 +0000
+@@ -1412,7 +1412,7 @@
+ 		    break;
+               }
+             else
+-              i = hash_lookup (h, v1, NULL);
++              i = hash_lookup2 (h, v1, NULL);
+ 
+ 	    if (i >= 0)
+ 	      {
+diff -urN emacs-28.2/src/category.c new/src/category.c
+--- emacs-28.2/src/category.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/category.c	2023-11-05 21:17:21.207742543 +0000
+@@ -56,7 +56,7 @@
+ 			Qnil, false));
+   struct Lisp_Hash_Table *h = XHASH_TABLE (XCHAR_TABLE (table)->extras[1]);
+   Lisp_Object hash;
+-  ptrdiff_t i = hash_lookup (h, category_set, &hash);
++  ptrdiff_t i = hash_lookup2 (h, category_set, &hash);
+   if (i >= 0)
+     return HASH_KEY (h, i);
+   hash_put (h, category_set, Qnil, hash);
+diff -urN emacs-28.2/src/ccl.c new/src/ccl.c
+--- emacs-28.2/src/ccl.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/ccl.c	2023-11-05 21:17:21.211742883 +0000
+@@ -1366,7 +1366,7 @@
+ 
+ 		eop = (FIXNUM_OVERFLOW_P (reg[RRR])
+ 		       ? -1
+-		       : hash_lookup (h, make_fixnum (reg[RRR]), NULL));
++		       : hash_lookup2 (h, make_fixnum (reg[RRR]), NULL));
+ 		if (eop >= 0)
+ 		  {
+ 		    Lisp_Object opl;
+@@ -1395,7 +1395,7 @@
+ 
+ 		eop = (FIXNUM_OVERFLOW_P (i)
+ 		       ? -1
+-		       : hash_lookup (h, make_fixnum (i), NULL));
++		       : hash_lookup2 (h, make_fixnum (i), NULL));
+ 		if (eop >= 0)
+ 		  {
+ 		    Lisp_Object opl;
+diff -urN emacs-28.2/src/charset.c new/src/charset.c
+--- emacs-28.2/src/charset.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/charset.c	2023-11-05 21:17:21.207742543 +0000
+@@ -1107,7 +1107,7 @@
+   CHECK_LIST (args[charset_arg_plist]);
+   ASET (attrs, charset_plist, args[charset_arg_plist]);
+ 
+-  charset.hash_index = hash_lookup (hash_table, args[charset_arg_name],
++  charset.hash_index = hash_lookup2 (hash_table, args[charset_arg_name],
+ 				    &hash_code);
+   if (charset.hash_index >= 0)
+     {
+diff -urN emacs-28.2/src/charset.h new/src/charset.h
+--- emacs-28.2/src/charset.h	2022-09-06 21:31:54.000000000 +0000
++++ new/src/charset.h	2023-11-05 21:17:21.203742203 +0000
+@@ -286,7 +286,7 @@
+ /* Return an index to Vcharset_hash_table of the charset whose symbol
+    is SYMBOL.  */
+ #define CHARSET_SYMBOL_HASH_INDEX(symbol)	\
+-  hash_lookup (XHASH_TABLE (Vcharset_hash_table), symbol, NULL)
++  hash_lookup2 (XHASH_TABLE (Vcharset_hash_table), symbol, NULL)
+ 
+ /* Return the attribute vector of CHARSET.  */
+ #define CHARSET_ATTRIBUTES(charset)	\
+diff -urN emacs-28.2/src/coding.h new/src/coding.h
+--- emacs-28.2/src/coding.h	2022-09-06 21:31:54.000000000 +0000
++++ new/src/coding.h	2023-11-05 21:17:21.207742543 +0000
+@@ -193,7 +193,7 @@
+ /* Return the ID of CODING_SYSTEM_SYMBOL.  */
+ 
+ #define CODING_SYSTEM_ID(coding_system_symbol)			\
+-  hash_lookup (XHASH_TABLE (Vcoding_system_hash_table),		\
++  hash_lookup2 (XHASH_TABLE (Vcoding_system_hash_table),		\
+ 	       coding_system_symbol, NULL)
+ 
+ /* Return true if CODING_SYSTEM_SYMBOL is a coding system.  */
+diff -urN emacs-28.2/src/composite.c new/src/composite.c
+--- emacs-28.2/src/composite.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/composite.c	2023-11-05 21:17:21.203742203 +0000
+@@ -238,7 +238,7 @@
+   else
+     goto invalid_composition;
+ 
+-  hash_index = hash_lookup (hash_table, key, &hash_code);
++  hash_index = hash_lookup2 (hash_table, key, &hash_code);
+   if (hash_index >= 0)
+     {
+       /* We have already registered the same composition.  Change PROP
+@@ -641,7 +641,7 @@
+ composition_gstring_lookup_cache (Lisp_Object header)
+ {
+   struct Lisp_Hash_Table *h = XHASH_TABLE (gstring_hash_table);
+-  ptrdiff_t i = hash_lookup (h, header, NULL);
++  ptrdiff_t i = hash_lookup2 (h, header, NULL);
+ 
+   return (i >= 0 ? HASH_VALUE (h, i) : Qnil);
+ }
+diff -urN emacs-28.2/src/emacs-module.c new/src/emacs-module.c
+--- emacs-28.2/src/emacs-module.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/emacs-module.c	2023-11-05 21:17:21.211742883 +0000
+@@ -427,7 +427,7 @@
+   MODULE_FUNCTION_BEGIN (NULL);
+   struct Lisp_Hash_Table *h = XHASH_TABLE (Vmodule_refs_hash);
+   Lisp_Object new_obj = value_to_lisp (value), hashcode;
+-  ptrdiff_t i = hash_lookup (h, new_obj, &hashcode);
++  ptrdiff_t i = hash_lookup2 (h, new_obj, &hashcode);
+ 
+   /* Note: This approach requires the garbage collector to never move
+      objects.  */
+@@ -464,7 +464,7 @@
+   MODULE_FUNCTION_BEGIN ();
+   struct Lisp_Hash_Table *h = XHASH_TABLE (Vmodule_refs_hash);
+   Lisp_Object obj = value_to_lisp (global_value);
+-  ptrdiff_t i = hash_lookup (h, obj, NULL);
++  ptrdiff_t i = hash_lookup2 (h, obj, NULL);
+ 
+   if (module_assertions)
+     {
+diff -urN emacs-28.2/src/fns.c new/src/fns.c
+--- emacs-28.2/src/fns.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/fns.c	2023-11-05 21:17:35.544962661 +0000
+@@ -2553,7 +2553,7 @@
+ 	  {
+ 	    struct Lisp_Hash_Table *h = XHASH_TABLE (ht);
+ 	    Lisp_Object hash;
+-	    ptrdiff_t i = hash_lookup (h, o1, &hash);
++	    ptrdiff_t i = hash_lookup2 (h, o1, &hash);
+ 	    if (i >= 0)
+ 	      { /* `o1' was seen already.  */
+ 		Lisp_Object o2s = HASH_VALUE (h, i);
+@@ -4471,7 +4471,7 @@
+    matching KEY, or -1 if not found.  */
+ 
+ ptrdiff_t
+-hash_lookup (struct Lisp_Hash_Table *h, Lisp_Object key, Lisp_Object *hash)
++hash_lookup2 (struct Lisp_Hash_Table *h, Lisp_Object key, Lisp_Object *hash)
+ {
+   ptrdiff_t start_of_bucket, i;
+ 
+@@ -4720,7 +4720,7 @@
+    can be any EMACS_UINT value.  */
+ 
+ EMACS_UINT
+-hash_string (char const *ptr, ptrdiff_t len)
++hash_string2 (char const *ptr, ptrdiff_t len)
+ {
+   char const *p   = ptr;
+   char const *end = ptr + len;
+@@ -4756,7 +4756,7 @@
+ static EMACS_UINT
+ sxhash_string (char const *ptr, ptrdiff_t len)
+ {
+-  EMACS_UINT hash = hash_string (ptr, len);
++  EMACS_UINT hash = hash_string2 (ptr, len);
+   return SXHASH_REDUCE (hash);
+ }
+ 
+@@ -5217,7 +5217,7 @@
+   (Lisp_Object key, Lisp_Object table, Lisp_Object dflt)
+ {
+   struct Lisp_Hash_Table *h = check_hash_table (table);
+-  ptrdiff_t i = hash_lookup (h, key, NULL);
++  ptrdiff_t i = hash_lookup2 (h, key, NULL);
+   return i >= 0 ? HASH_VALUE (h, i) : dflt;
+ }
+ 
+@@ -5232,7 +5232,7 @@
+   check_mutable_hash_table (table, h);
+ 
+   Lisp_Object hash;
+-  ptrdiff_t i = hash_lookup (h, key, &hash);
++  ptrdiff_t i = hash_lookup2 (h, key, &hash);
+   if (i >= 0)
+     set_hash_value_slot (h, i, value);
+   else
+diff -urN emacs-28.2/src/image.c new/src/image.c
+--- emacs-28.2/src/image.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/image.c	2023-11-05 21:17:21.199741862 +0000
+@@ -4171,7 +4171,7 @@
+ static int
+ xpm_color_bucket (char *color_name)
+ {
+-  EMACS_UINT hash = hash_string (color_name, strlen (color_name));
++  EMACS_UINT hash = hash_string2 (color_name, strlen (color_name));
+   return hash % XPM_COLOR_CACHE_BUCKETS;
+ }
+ 
+@@ -4853,7 +4853,7 @@
+   struct Lisp_Hash_Table *table = XHASH_TABLE (color_table);
+   Lisp_Object chars = make_unibyte_string (chars_start, chars_len), hash_code;
+ 
+-  hash_lookup (table, chars, &hash_code);
++  hash_lookup2 (table, chars, &hash_code);
+   hash_put (table, chars, color, hash_code);
+ }
+ 
+@@ -4864,7 +4864,7 @@
+ {
+   struct Lisp_Hash_Table *table = XHASH_TABLE (color_table);
+   ptrdiff_t i =
+-    hash_lookup (table, make_unibyte_string (chars_start, chars_len), NULL);
++    hash_lookup2 (table, make_unibyte_string (chars_start, chars_len), NULL);
+ 
+   return i >= 0 ? HASH_VALUE (table, i) : Qnil;
+ }
+diff -urN emacs-28.2/src/json.c new/src/json.c
+--- emacs-28.2/src/json.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/json.c	2023-11-05 21:17:21.207742543 +0000
+@@ -864,7 +864,7 @@
+               json_object_foreach (json, key_str, value)
+                 {
+ 		  Lisp_Object key = build_string_from_utf8 (key_str), hash;
+-                  ptrdiff_t i = hash_lookup (h, key, &hash);
++                  ptrdiff_t i = hash_lookup2 (h, key, &hash);
+                   /* Keys in JSON objects are unique, so the key can't
+                      be present yet.  */
+                   eassert (i < 0);
+diff -urN emacs-28.2/src/lisp.h new/src/lisp.h
+--- emacs-28.2/src/lisp.h	2022-09-06 21:31:54.000000000 +0000
++++ new/src/lisp.h	2023-11-05 21:17:21.203742203 +0000
+@@ -3628,14 +3628,14 @@
+ extern bool sweep_weak_table (struct Lisp_Hash_Table *, bool);
+ extern void hexbuf_digest (char *, void const *, int);
+ extern char *extract_data_from_object (Lisp_Object, ptrdiff_t *, ptrdiff_t *);
+-EMACS_UINT hash_string (char const *, ptrdiff_t);
++EMACS_UINT hash_string2 (char const *, ptrdiff_t);
+ EMACS_UINT sxhash (Lisp_Object);
+ Lisp_Object hashfn_eql (Lisp_Object, struct Lisp_Hash_Table *);
+ Lisp_Object hashfn_equal (Lisp_Object, struct Lisp_Hash_Table *);
+ Lisp_Object hashfn_user_defined (Lisp_Object, struct Lisp_Hash_Table *);
+ Lisp_Object make_hash_table (struct hash_table_test, EMACS_INT, float, float,
+                              Lisp_Object, bool);
+-ptrdiff_t hash_lookup (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object *);
++ptrdiff_t hash_lookup2 (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object *);
+ ptrdiff_t hash_put (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object,
+ 		    Lisp_Object);
+ void hash_remove_from_table (struct Lisp_Hash_Table *, Lisp_Object);
+diff -urN emacs-28.2/src/lread.c new/src/lread.c
+--- emacs-28.2/src/lread.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/lread.c	2023-11-05 21:17:21.211742883 +0000
+@@ -3445,7 +3445,7 @@
+ 			= XHASH_TABLE (read_objects_map);
+ 		      Lisp_Object number = make_fixnum (n), hash;
+ 
+-		      ptrdiff_t i = hash_lookup (h, number, &hash);
++		      ptrdiff_t i = hash_lookup2 (h, number, &hash);
+ 		      if (i >= 0)
+ 			/* Not normal, but input could be malformed.  */
+ 			set_hash_value_slot (h, i, placeholder);
+@@ -3463,7 +3463,7 @@
+ 			{
+ 			  struct Lisp_Hash_Table *h2
+ 			    = XHASH_TABLE (read_objects_completed);
+-			  i = hash_lookup (h2, tem, &hash);
++			  i = hash_lookup2 (h2, tem, &hash);
+ 			  eassert (i < 0);
+ 			  hash_put (h2, tem, Qnil, hash);
+ 			}
+@@ -3481,7 +3481,7 @@
+ 			    (tem, placeholder, read_objects_completed);
+ 
+ 		          /* ...and #n# will use the real value from now on.  */
+-			  i = hash_lookup (h, number, &hash);
++			  i = hash_lookup2 (h, number, &hash);
+ 			  eassert (i >= 0);
+ 			  set_hash_value_slot (h, i, tem);
+ 
+@@ -3494,7 +3494,7 @@
+ 		    {
+ 		      struct Lisp_Hash_Table *h
+ 			= XHASH_TABLE (read_objects_map);
+-		      ptrdiff_t i = hash_lookup (h, make_fixnum (n), NULL);
++		      ptrdiff_t i = hash_lookup2 (h, make_fixnum (n), NULL);
+ 		      if (i >= 0)
+ 			return HASH_VALUE (h, i);
+ 		    }
+@@ -3896,7 +3896,7 @@
+      by #n=, which means that we can find it as a value in
+      COMPLETED.  */
+   if (EQ (subst->completed, Qt)
+-      || hash_lookup (XHASH_TABLE (subst->completed), subtree, NULL) >= 0)
++      || hash_lookup2 (XHASH_TABLE (subst->completed), subtree, NULL) >= 0)
+     subst->seen = Fcons (subtree, subst->seen);
+ 
+   /* Recurse according to subtree's type.
+@@ -4617,7 +4617,7 @@
+   obarray = check_obarray (obarray);
+   /* This is sometimes needed in the middle of GC.  */
+   obsize = gc_asize (obarray);
+-  hash = hash_string (ptr, size_byte) % obsize;
++  hash = hash_string2 (ptr, size_byte) % obsize;
+   bucket = AREF (obarray, hash);
+   oblookup_last_bucket_number = hash;
+   if (EQ (bucket, make_fixnum (0)))
+diff -urN emacs-28.2/src/macfont.m new/src/macfont.m
+--- emacs-28.2/src/macfont.m	2022-09-06 21:31:54.000000000 +0000
++++ new/src/macfont.m	2023-11-05 21:17:21.203742203 +0000
+@@ -966,7 +966,7 @@
+   if (HASH_TABLE_P (macfont_family_cache))
+     {
+       struct Lisp_Hash_Table *h = XHASH_TABLE (macfont_family_cache);
+-      ptrdiff_t i = hash_lookup (h, symbol, NULL);
++      ptrdiff_t i = hash_lookup2 (h, symbol, NULL);
+ 
+       if (i >= 0)
+ 	{
+@@ -992,7 +992,7 @@
+     macfont_family_cache = CALLN (Fmake_hash_table, QCtest, Qeq);
+ 
+   h = XHASH_TABLE (macfont_family_cache);
+-  i = hash_lookup (h, symbol, &hash);
++  i = hash_lookup2 (h, symbol, &hash);
+   value = string ? make_mint_ptr ((void *) CFRetain (string)) : Qnil;
+   if (i >= 0)
+     {
+diff -urN emacs-28.2/src/minibuf.c new/src/minibuf.c
+--- emacs-28.2/src/minibuf.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/minibuf.c	2023-11-05 21:17:21.203742203 +0000
+@@ -2120,7 +2120,7 @@
+   else if (HASH_TABLE_P (collection))
+     {
+       struct Lisp_Hash_Table *h = XHASH_TABLE (collection);
+-      i = hash_lookup (h, string, NULL);
++      i = hash_lookup2 (h, string, NULL);
+       if (i >= 0)
+         {
+           tem = HASH_KEY (h, i);
+diff -urN emacs-28.2/src/profiler.c new/src/profiler.c
+--- emacs-28.2/src/profiler.c	2022-09-06 21:31:54.000000000 +0000
++++ new/src/profiler.c	2023-11-05 21:17:21.207742543 +0000
+@@ -166,7 +166,7 @@
+        handler, and we optimize the code to try and avoid computing the
+        hash+lookup twice.  See fns.c:Fputhash for reference.  */
+     Lisp_Object hash;
+-    ptrdiff_t j = hash_lookup (log, backtrace, &hash);
++    ptrdiff_t j = hash_lookup2 (log, backtrace, &hash);
+     if (j >= 0)
+       {
+ 	EMACS_INT old_val = XFIXNUM (HASH_VALUE (log, j));
