@@ -55,16 +55,18 @@ ls -al ./
 
 # emacs
 cd "$BASELOC"
-apelinkpls $RESULTS/bin/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emacs
-cd "$CONFIGDIR"
-zip -r $RESULTS/bin/emacs.com \
-    share/terminfo \
-    $(find x86_64 -type f | grep '\.pdmp') \
-    $(find aarch64 -type f | grep '\.pdmp') \
-    $(find share/emacs -type f |
-    grep -v '\.el.gz$' |
-    grep -v refcards |
-    grep -v images)
+for e in emacs emacsclient; do
+    apelinkpls $RESULTS/bin/$e.com $COSMOS_X86/bin/e$e $COSMOS_AARCH64/bin/$e
+    cd "$CONFIGDIR"
+    zip -r $RESULTS/bin/$e.com \
+        share/terminfo \
+        $(find x86_64 -type f | grep '\.pdmp') \
+        $(find aarch64 -type f | grep '\.pdmp') \
+        $(find share/emacs -type f |
+        grep -v '\.el.gz$' |
+        grep -v refcards |
+        grep -v images)
+done
 
 # vim
 cd "$BASELOC"
