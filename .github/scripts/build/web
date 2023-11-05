@@ -69,6 +69,10 @@ exit 0
 # rsync
 apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
 
+exit 0
+
+# rsync
+apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
 
 # git
 cd "$CONFIGDIR"

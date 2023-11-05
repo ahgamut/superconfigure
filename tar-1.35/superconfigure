@@ -36,7 +36,7 @@ cd tar*/
     --with-packager="cosmo" --without-xattrs\
     --with-gzip=gzip --with-bzip2=bzip2\
     --with-xz=xz --with-zstd=zstd\
-    --exec-prefix=/zip --datarootdir=/zip/share\
+    --datarootdir=/zip/share\
     CFLAGS="-Os"
 
 # run make and/or make install
