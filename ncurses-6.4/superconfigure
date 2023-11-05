@@ -34,6 +34,7 @@ fi
 # go into the source folder, configure
 cd $FOLDER
 ./configure --without-libtool --without-shared\
+    --without-manpages --without-tests --without-tack\
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\
     --without-dlsym --without-pcre2 --without-sysmouse\
