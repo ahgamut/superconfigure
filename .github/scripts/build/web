@@ -42,7 +42,6 @@ mkdir -p $RESULTS/bin
 # the zip folder
 cd "$CONFIGDIR"
 mkdir -p share
-cp -r $COSMOS_X86/share/git-core ./share
 ls -al /zip
 
 
@@ -59,18 +58,21 @@ zip $RESULTS/bin/wget.com wgetrc
 zip -qr $RESULTS/bin/wget.com usr/
 cd "$BASELOC"
 
-# rsync
-apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
-
 # curl
 apelinkpls $RESULTS/bin/curl.com $COSMOS_X86/bin/curl $COSMOS_AARCH64/bin/curl
 cd "$CONFIGDIR"
 zip -qr $RESULTS/bin/curl.com usr/
 cd "$BASELOC"
 
+exit 0
+
+# rsync
+apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
 
 
 # git
+cd "$CONFIGDIR"
+cp -r $COSMOS_X86/share/git-core ./share
 mkdir -p $RESULTS/libexec/git-core/mergetools
 
 # these are the unique binaries
