@@ -59,8 +59,8 @@ apelinkpls $RESULTS/bin/emacs.com $COSMOS_X86/bin/emacs $COSMOS_AARCH64/bin/emac
 cd "$CONFIGDIR"
 zip -r $RESULTS/bin/emacs.com \
     share/terminfo \
-    $(find x86_64 -type f | grep 'emacs\.pdmp') \
-    $(find aarch64 -type f | grep 'emacs\.pdmp') \
+    $(find x86_64 -type f | grep '\.pdmp') \
+    $(find aarch64 -type f | grep '\.pdmp') \
     $(find share/emacs -type f |
     grep -v '\.el.gz$' |
     grep -v refcards |
