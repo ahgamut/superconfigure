@@ -56,9 +56,9 @@ ls -al ./
 # emacs
 cd "$BASELOC"
 for e in emacs emacsclient; do
-    apelinkpls $RESULTS/bin/$e.com $COSMOS_X86/bin/e$e $COSMOS_AARCH64/bin/$e
+    apelinkpls $RESULTS/bin/$e.com $COSMOS_X86/bin/$e $COSMOS_AARCH64/bin/$e
     cd "$CONFIGDIR"
-    zip -r $RESULTS/bin/$e.com \
+    zip -qr $RESULTS/bin/$e.com \
         share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
         $(find aarch64 -type f | grep '\.pdmp') \
