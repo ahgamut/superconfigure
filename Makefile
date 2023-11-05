@@ -71,7 +71,7 @@ compress: cosmo-repo-thirdparty.built.$(ARCH)\
 	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
 	gzip-1.13.built.$(ARCH) tar-1.35.built.$(ARCH)
 
-web: wget-1.21.built.$(ARCH) curl-8.4.0.built.$(ARCH)
+web: wget-1.21.built.$(ARCH) curl-8.4.0.built.$(ARCH) git-2.42.0.built.$(ARCH) rsync-3.2.7.built.$(ARCH)
 editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARCH)
 pypack1: cpy311-pypack1.built.$(ARCH)
 datasette: cpy311-datasette.built.$(ARCH)

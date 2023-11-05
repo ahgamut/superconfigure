@@ -53,7 +53,7 @@ apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cd "$CONFIGDIR"
 cp $BASELOC/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
-cp /etc/ssl/certs/*.0 ./usr/share/ssl/root/
+cp /etc/ssl/certs/* ./usr/share/ssl/root/
 zip $RESULTS/bin/wget.com wgetrc
 zip -qr $RESULTS/bin/wget.com usr/
 cd "$BASELOC"
@@ -63,13 +63,6 @@ apelinkpls $RESULTS/bin/curl.com $COSMOS_X86/bin/curl $COSMOS_AARCH64/bin/curl
 cd "$CONFIGDIR"
 zip -qr $RESULTS/bin/curl.com usr/
 cd "$BASELOC"
-
-exit 0
-
-# rsync
-apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
-
-exit 0
 
 # rsync
 apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsync
