@@ -48,7 +48,8 @@ cp -r $COSMOS_X86/share/vim ./share
 cp -r $COSMOS_X86/share/nano ./share
 cp -r $COSMOS_X86/share/emacs ./share
 mkdir -p ./share/ssl/certs/
-cp /etc/ssl/certs/* ./share/ssl/certs/
+cp /etc/ssl/certs/*.0 ./share/ssl/certs/
+cp /etc/ssl/certs/*.pem ./share/ssl/certs/
 ls -al /zip
 
 
