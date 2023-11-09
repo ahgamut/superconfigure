@@ -77,8 +77,8 @@ pypack1: cpy311-pypack1.built.$(ARCH)
 datasette: cpy311-datasette.built.$(ARCH)
 llvm: llvm-15.0.7.built.$(ARCH)
 
-aarch64-gcc: aarch64-gcc.built.$(ARCH)
-x86_64-gcc: x86_64-gcc.built.$(ARCH)
+aarch64-gcc: aarch64-gcc-11.2.built.$(ARCH)
+x86_64-gcc: x86_64-gcc-11.2.built.$(ARCH)
 
 python: pypack1 datasette
 gcc: x86_64-gcc aarch64-gcc
