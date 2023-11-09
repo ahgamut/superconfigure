@@ -3,8 +3,9 @@ set -eux
 
 echo "Initial Setup"
 export BASELOC=$PWD
+ARCH="${ARCH:-x86_64}"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
-export COSMOS="${COSMOS:-$BASELOC/cosmos}"
+export COSMOS="${COSMOS:-$BASELOC/cosmos/$ARCH}"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
     # we are not on GA

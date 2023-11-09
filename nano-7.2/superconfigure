@@ -34,6 +34,9 @@ else
 fi
 
 cd nano*/
+export NCURSES_CONFIG="$COSMOS/bin/ncurses6-config"
+export NCURSESW_CONFIG="$COSMOS/bin/ncurses6-config"
+export NCURSES_CFLAGS="-I$COSMOS/include -I$COSMOS/include/ncurses"
 # go into the source folder, configure
 ./configure --sysconfdir=/zip --datarootdir=/zip/share\
     --prefix=$COSMOS\
