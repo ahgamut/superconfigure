@@ -76,15 +76,12 @@ editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARC
 pypack1: cpy311-pypack1.built.$(ARCH)
 datasette: cpy311-datasette.built.$(ARCH)
 llvm: llvm-15.0.7.built.$(ARCH)
-
-aarch64-gcc: aarch64-gcc-11.2.built.$(ARCH)
-x86_64-gcc: x86_64-gcc-11.2.built.$(ARCH)
+gcc: gcc-11.2-patched.built.$(ARCH)
 
 python: pypack1 datasette
-gcc: x86_64-gcc aarch64-gcc
 
-cosmos: python cli editor gcc web compress
-all: python cli editor gcc web compress
+cosmos: python cli editor web compress
+all: python cli editor web compress
 
 clean:
 	find . -name "*.built*" | xargs rm -f
