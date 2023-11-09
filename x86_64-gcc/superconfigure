@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+export TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+BASELOC="${BASELOC:-..}"
+
+cd $BASELOC/gcc-11.2-patched
+./superconfigure

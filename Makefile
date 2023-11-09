@@ -75,11 +75,15 @@ web: wget-1.21.built.$(ARCH) curl-8.4.0.built.$(ARCH) git-2.42.0.built.$(ARCH) r
 editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARCH)
 pypack1: cpy311-pypack1.built.$(ARCH)
 datasette: cpy311-datasette.built.$(ARCH)
-gcc: gcc-11.2-patched.built.$(ARCH)
 llvm: llvm-15.0.7.built.$(ARCH)
 
+aarch64-gcc: aarch64-gcc.built.$(ARCH)
+x86_64-gcc: x86_64-gcc.built.$(ARCH)
+
 python: pypack1 datasette
-all: python cli editor gcc web
+gcc: x86_64-gcc aarch64-gcc
+
+all: python cli editor gcc web compress
 
 clean:
 	find . -name "*.built*" | xargs rm -f
