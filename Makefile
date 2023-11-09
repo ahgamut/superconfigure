@@ -80,7 +80,7 @@ gcc: gcc-11.2-patched.built.$(ARCH)
 
 python: pypack1 datasette
 
-cosmos: python cli editor web compress
+cosmos: python cli editor compress
 all: python cli editor web compress
 
 clean:
