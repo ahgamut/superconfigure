@@ -83,6 +83,7 @@ x86_64-gcc: x86_64-gcc.built.$(ARCH)
 python: pypack1 datasette
 gcc: x86_64-gcc aarch64-gcc
 
+cosmos: python cli editor gcc web compress
 all: python cli editor gcc web compress
 
 clean:
