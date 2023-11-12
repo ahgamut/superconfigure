@@ -28,7 +28,7 @@ cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 lib/readline-8.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH)
 lib/nettle-3.9.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
 lib/gnutls-3.7.10.built.$(ARCH): lib/nettle-3.9.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH) 
-lib/mpfr-4.2.0.built.$(ARCH): compress/zlib-1.3.built.$(ARCH) lib/gmp-6.3.0.built.$(ARCH)
+lib/mpfr-4.2.0.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
 lib/mpc-1.3.1.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
 
 # cli
@@ -62,7 +62,6 @@ editor: editor/nano-7.2.built.$(ARCH)\
 
 # compress
 
-compress/pigz-2.8.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
 compress/tar-1.35.built.$(ARCH): compress/xz-5.4.3.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)\
 	compress/gzip-1.13.built.$(ARCH)
 
@@ -127,8 +126,6 @@ compiler/aarch64-binutils.built.$(ARCH):\
 	lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
 compiler/aarch64-gcc.built.$(ARCH):\
 	compiler/aarch64-binutils.built.$(ARCH)
-
-compiler/llvm-15.0.7.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
 
 gcc: compiler/$(TARGET_ARCH)-gcc.built.$(ARCH)
 llvm: compiler/llvm-15.0.7.built.$(ARCH)
