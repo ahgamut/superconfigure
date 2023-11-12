@@ -22,7 +22,10 @@ fi
 MAXPROC="${MAXPROC:-$numproc}"
 
 echo "updating compiler binaries"
-cd $COSMO/tool/cosmocc
+cd $COSMO
+mkdir -p cosmocc
+cd cosmocc
+
 if [[ -f x86_64-gcc.zip ]]; then
     echo "you already downloaded x86_64-gcc.zip"
 else
@@ -36,6 +39,9 @@ fi
 
 unzip -qo x86_64-gcc.zip
 unzip -qo aarch64-gcc.zip
+
+cd $COSMO
+bash tool/cosmocc/package.sh
 
 cd $BASELOC
 
@@ -55,3 +61,20 @@ make -s -j$MAXPROC V=0 MODE="aarch64" toolchain\
     o/aarch64/third_party/zlib o/aarch64/third_party/zlib/gz o/aarch64/third_party/zstd\
     o/aarch64/third_party/sqlite3 o/aarch64/third_party/sqlite3/libsqlite3.a\
     o/aarch64/third_party/bzip2
+
+#
+
+echo "copying third_party headers"
+
+cd $COSMO/cosmocc/include/third_party
+SUBFOLDERS='
+zlib
+zstd
+sqlite3
+bzip2
+'
+for SUBFOLDER in $SUBFOLDERS; do
+    mkdir -p $SUBFOLDER
+    cp $COSMO/third_party/$SUBFOLDER/*.h ./$SUBFOLDER || true
+    cp $COSMO/third_party/$SUBFOLDER/*.inc ./$SUBFOLDER || true
+done
