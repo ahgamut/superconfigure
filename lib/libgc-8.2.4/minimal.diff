@@ -1,0 +1,136 @@
+diff -urN ./gc-8.2.4/configure /home/ahgamut/sources/gc-8.2.4/configure
+--- ./gc-8.2.4/configure	2023-05-26 18:57:16.000000000 +0000
++++ -    2023-11-09 05:30:07.671209178 +0000
+@@ -17184,7 +17184,7 @@
+ # We should set -fexceptions if we are using gcc and might be used
+ # inside something like gcj.  This is the zeroth approximation:
+ if test :"$GCC": = :yes: ; then
+-    gc_cflags="${gc_cflags} -fexceptions"
++    gc_cflags="${gc_cflags} "
+ else
+     case "$host" in
+       hppa*-*-hpux* )
+diff -urN ./gc-8.2.4/include/private/gcconfig.h /home/ahgamut/sources/gc-8.2.4/include/private/gcconfig.h
+--- ./gc-8.2.4/include/private/gcconfig.h	2023-05-26 18:56:18.000000000 +0000
++++ -    2023-11-09 05:30:49.391450600 +0000
+@@ -712,6 +712,18 @@
+ #   define mach_type_known
+ # endif
+ 
++#if defined(__COSMOPOLITAN__)
++#if defined(__x86_64__)
++#define mach_type_known
++#define X86_64
++#define LINUX // optional?
++#elif defined(__aarch64__)
++#define mach_type_known
++#define AARCH64
++#define LINUX // optional?
++#endif
++#endif
++
+ /* Feel free to add more clauses here */
+ 
+ /* Or manually define the machine type here.  A machine type is         */
+diff -urN ./gc-8.2.4/minimal.diff /home/ahgamut/sources/gc-8.2.4/minimal.diff
+--- ./gc-8.2.4/minimal.diff	1970-01-01 00:00:00.000000000 +0000
++++ -    2023-11-09 06:48:38.306106292 +0000
+@@ -0,0 +1,34 @@
++diff -urN ./gc-8.2.4/configure /home/ahgamut/sources/gc-8.2.4/configure
++--- ./gc-8.2.4/configure	2023-05-26 18:57:16.000000000 +0000
+++++ -    2023-11-09 05:30:07.671209178 +0000
++@@ -17184,7 +17184,7 @@
++ # We should set -fexceptions if we are using gcc and might be used
++ # inside something like gcj.  This is the zeroth approximation:
++ if test :"$GCC": = :yes: ; then
++-    gc_cflags="${gc_cflags} -fexceptions"
+++    gc_cflags="${gc_cflags} "
++ else
++     case "$host" in
++       hppa*-*-hpux* )
++diff -urN ./gc-8.2.4/include/private/gcconfig.h /home/ahgamut/sources/gc-8.2.4/include/private/gcconfig.h
++--- ./gc-8.2.4/include/private/gcconfig.h	2023-05-26 18:56:18.000000000 +0000
+++++ -    2023-11-09 05:30:49.391450600 +0000
++@@ -712,6 +712,18 @@
++ #   define mach_type_known
++ # endif
++ 
+++#if defined(__COSMOPOLITAN__)
+++#if defined(__x86_64__)
+++#define mach_type_known
+++#define X86_64
+++#define LINUX // optional?
+++#elif defined(__aarch64__)
+++#define mach_type_known
+++#define AARCH64
+++#define LINUX // optional?
+++#endif
+++#endif
+++
++ /* Feel free to add more clauses here */
++ 
++ /* Or manually define the machine type here.  A machine type is         */
+diff -urN ./gc-8.2.4/os_dep.c /home/ahgamut/sources/gc-8.2.4/os_dep.c
+--- ./gc-8.2.4/os_dep.c	2023-05-26 18:56:18.000000000 +0000
++++ -    2023-11-09 06:47:00.268139541 +0000
+@@ -1088,7 +1088,7 @@
+ 
+ #endif /* HPUX_STACK_BOTTOM */
+ 
+-#ifdef LINUX_STACKBOTTOM
++#if 0 && defined(LINUX_STACKBOTTOM)
+ 
+ # include <sys/types.h>
+ # include <sys/stat.h>
+@@ -1224,7 +1224,7 @@
+   }
+ #endif /* FREEBSD_STACKBOTTOM */
+ 
+-#if defined(ECOS) || defined(NOSYS)
++#if 0 && (defined(ECOS) || defined(NOSYS))
+   ptr_t GC_get_main_stack_base(void)
+   {
+     return STACKBOTTOM;
+@@ -1268,18 +1268,18 @@
+ #   endif
+   }
+ # define GET_MAIN_STACKBASE_SPECIAL
+-#elif !defined(AMIGA) && !defined(HAIKU) && !defined(OS2) \
++#elif 0 && !defined(AMIGA) && !defined(HAIKU) && !defined(OS2) \
+       && !defined(MSWIN32) && !defined(MSWINCE) && !defined(CYGWIN32) \
+       && !defined(GC_OPENBSD_THREADS) \
+       && (!defined(GC_SOLARIS_THREADS) || defined(_STRICT_STDC))
+ 
+-# if (defined(HAVE_PTHREAD_ATTR_GET_NP) || defined(HAVE_PTHREAD_GETATTR_NP)) \
++# if 0 && (defined(HAVE_PTHREAD_ATTR_GET_NP) || defined(HAVE_PTHREAD_GETATTR_NP)) \
+      && (defined(THREADS) || defined(USE_GET_STACKBASE_FOR_MAIN))
+ #   include <pthread.h>
+ #   ifdef HAVE_PTHREAD_NP_H
+ #     include <pthread_np.h> /* for pthread_attr_get_np() */
+ #   endif
+-# elif defined(DARWIN) && !defined(NO_PTHREAD_GET_STACKADDR_NP)
++# elif 0 && defined(DARWIN) && !defined(NO_PTHREAD_GET_STACKADDR_NP)
+     /* We could use pthread_get_stackaddr_np even in case of a  */
+     /* single-threaded gclib (there is no -lpthread on Darwin). */
+ #   include <pthread.h>
+@@ -1579,7 +1579,7 @@
+ # endif /* !NEED_FIND_LIMIT */
+ #endif /* !HAVE_GET_STACK_BASE */
+ 
+-#ifndef GET_MAIN_STACKBASE_SPECIAL
++#if !defined(GET_MAIN_STACKBASE_SPECIAL)
+   /* This is always called from the main thread.  Default implementation. */
+   ptr_t GC_get_main_stack_base(void)
+   {
+diff -urN ./gc-8.2.4/superconfigure /home/ahgamut/sources/gc-8.2.4/superconfigure
+--- ./gc-8.2.4/superconfigure	1970-01-01 00:00:00.000000000 +0000
++++ -    2023-11-09 05:35:37.276717981 +0000
+@@ -0,0 +1,8 @@
++#!/usr/bin/env bash
++
++./configure --prefix="$COSMOS"\
++    --disable-shared --enable-static\
++    --without-pic --disable-cplusplus\
++    --disable-gcj-support --enable-threads=posix\
++    --enable-mmap --disable-dynamic-loading\
++    CFLAGS="-Os"
