@@ -11,7 +11,7 @@ index a84af6b..cbb5303 100755
 +LIBS        = -static -lm -ldl -lreadline -lncurses -ltinfo
  TARGET      = berry
 -CC          = gcc
-+CC          = $(COSMO)/tool/cosmocc/bin/$(ARCH)-unknown-cosmo-cc
++CC          = $(COSMO)/cosmocc/bin/$(ARCH)-unknown-cosmo-cc
  MKDIR       = mkdir
 -LFLAGS      =
 -PREFIX      = /usr/local

@@ -19,17 +19,16 @@ rm -f sample.com sample.com.dbg
 $CC sample.c -o sample.com
 ./sample.com
 
+# don't copy core cosmo libs into $COSMOS, because
+# cosmocc adds them via -L anyway
+# cp $COSMO/cosmocc/$ARCH-linux-cosmo/lib/*.a $COSMOS/lib || true
+
 echo "Setting up libz and libzstd in $COSMOS"
-mv $COSMO/cosmocc/$ARCH-linux-cosmo/lib/*.a $COSMOS/lib || true # running many times
 cd $COSMOS
-ls $COSMOS/lib
-# 
-cp ./lib/libpthread.a ./lib/libcrypt.a
-cp ./lib/libpthread.a ./lib/libatomic.a
-cp ./lib/libpthread.a ./lib/libncursesw.a
-cp ./lib/libpthread.a ./lib/libgio-2.0.a
-cp ./lib/libpthread.a ./lib/libgobject-2.0.a
-cp ./lib/libpthread.a ./lib/libglib-2.0.a
+
+for lib in crypt atomic ncursesw gio-2.0 gobject-2.0 glib-2.0; do
+    printf '\041\074\141\162\143\150\076\012' >"./lib/lib$lib.a"
+done
 
 if [ -f ./include/zlib.h ]; then
     echo "already have zlib.h"
@@ -55,3 +54,5 @@ echo '#include "third_party/sqlite3/sqlite3.h"' >> ./include/sqlite3.h
 
 # ls $COSMOS/lib -al
 # ls $COSMOS/include -al
+
+ls $COSMOS/lib

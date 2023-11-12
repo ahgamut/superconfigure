@@ -1,6 +1,6 @@
 diff -urN ./ninja-1.11.1/src/disk_interface.cc /home/ahgamut/sources/ninja-1.11.1/src/disk_interface.cc
 --- ./ninja-1.11.1/src/disk_interface.cc	2022-08-30 19:47:02.000000000 +0000
-+++ -    2023-11-09 05:11:13.543909186 +0000
++++ ./ninja-1.11.1/src/disk_interface.cc    2023-11-09 05:11:13.543909186 +0000
 @@ -258,11 +258,10 @@
  FileReader::Status RealDiskInterface::ReadFile(const string& path,
                                                 string* contents,
@@ -34,17 +34,3 @@ diff -urN ./ninja-1.11.1/src/disk_interface.cc /home/ahgamut/sources/ninja-1.11.
    }
  #endif
    return 0;
-diff -urN ./ninja-1.11.1/superconfigure /home/ahgamut/sources/ninja-1.11.1/superconfigure
---- ./ninja-1.11.1/superconfigure	1970-01-01 00:00:00.000000000 +0000
-+++ -    2023-11-09 05:12:10.633713181 +0000
-@@ -0,0 +1,10 @@
-+#!/usr/bin/env bash
-+
-+mkdir -p build
-+cd build
-+ninja -t clean || true
-+
-+cmake -G Ninja ..\
-+    -DCMAKE_BUILD_SHARED=OFF\
-+    -DCMAKE_BUILD_STATIC=ON\
-+    -DCMAKE_INSTALL_PREFIX="$COSMOS"

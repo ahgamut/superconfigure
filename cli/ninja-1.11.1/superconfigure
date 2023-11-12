@@ -15,8 +15,7 @@ fi
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd ninja*
-    make -s -i clean || true
-    make -s -i distclean || true
+    rm -rf build
     cd ..
 else
     # download the source code
@@ -29,6 +28,8 @@ fi
 
 # go into the source folder, configure
 cd ninja*
+mkdir -p build
+cd build
 cmake -G Ninja ..\
     -DCMAKE_BUILD_SHARED=OFF\
     -DCMAKE_BUILD_STATIC=ON\
