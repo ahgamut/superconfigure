@@ -19,83 +19,118 @@ cosmo.setup.$(ARCH):
 	source $(BASELOC)/vars/$(ARCH) && cd $< && ./superconfigure
 	touch $@
 
+# from cosmo monorepo
+
 cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 
-readline-8.2.built.$(ARCH): ncurses-6.4.built.$(ARCH)
-bash-5.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
-less-643.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
-grep-3.11.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
-berry-lang.built.$(ARCH): readline-8.2.built.$(ARCH)
-coreutils-9.4.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
+# lib
 
-nettle-3.9.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
-gnutls-3.7.10.built.$(ARCH): nettle-3.9.built.$(ARCH) brotli-1.1.0.built.$(ARCH) 
-emacs-28.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) gnutls-3.7.10.built.$(ARCH)
-vim-9.0.1670.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
-nano-7.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
+lib/readline-8.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH)
+lib/nettle-3.9.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
+lib/gnutls-3.7.10.built.$(ARCH): lib/nettle-3.9.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH) 
+lib/mpfr-4.2.0.built.$(ARCH): compress/zlib-1.3.built.$(ARCH) lib/gmp-6.3.0.built.$(ARCH)
+lib/mpc-1.3.1.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
 
-pigz-2.8.built.$(ARCH): zlib-1.3.built.$(ARCH)
-tar-1.35.built.$(ARCH): xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
-	gzip-1.13.built.$(ARCH)
+# cli
 
-wget-1.21.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
-	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)
-rsync-3.2.7.built.$(ARCH): openssl-1.1.1u.built.$(ARCH)
-curl-8.4.0.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) xz-5.4.3.built.$(ARCH)\
-	libssh2-1.11.0.built.$(ARCH) brotli-1.1.0.built.$(ARCH)
-git-2.42.0.built.$(ARCH): openssl-1.1.1u.built.$(ARCH)\
-	xz-5.4.3.built.$(ARCH) curl-8.4.0.built.$(ARCH) libexpat-2.5.0.built.$(ARCH)
+cli/bash-5.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/less-643.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/grep-3.11.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/berry-lang.built.$(ARCH): lib/readline-8.2.built.$(ARCH)
+cli/coreutils-9.4.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
+cli/texinfo-7.0.2.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/ncurses-6.4.built.$(ARCH)
 
-cpy311-datasette.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)\
-	openssl-1.1.1u.built.$(ARCH) gdbm-1.23.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
-	libyaml-0.2.5.built.$(ARCH) xz-5.4.3.built.$(ARCH)
+cli: cosmo-repo-thirdparty.built.$(ARCH)\
+	cli/grep-3.11.built.$(ARCH)\
+	cli/less-643.built.$(ARCH)\
+	cli/bash-5.2.built.$(ARCH)\
+	cli/findutils-4.9.0.built.$(ARCH)\
+	cli/coreutils-9.4.built.$(ARCH)\
+	cli/berry-lang.built.$(ARCH)\
+	cli/zsh-5.9.built.$(ARCH)
 
-cpy311-pypack1.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)\
-	openssl-1.1.1u.built.$(ARCH) gdbm-1.23.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
-	xz-5.4.3.built.$(ARCH)
+# editor
 
-mpfr-4.2.0.built.$(ARCH): zlib-1.3.built.$(ARCH) gmp-6.3.0.built.$(ARCH)
-texinfo-7.0.2.built.$(ARCH): gmp-6.3.0.built.$(ARCH) ncurses-6.4.built.$(ARCH)
-mpc-1.3.1.built.$(ARCH): gmp-6.3.0.built.$(ARCH) mpfr-4.2.0.built.$(ARCH) isl-0.18.built.$(ARCH)
+editor/emacs-28.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/gnutls-3.7.10.built.$(ARCH)
+editor/vim-9.0.1670.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+editor/nano-7.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
 
-x86_64-binutils.built.$(ARCH):\
-	gmp-6.3.0.built.$(ARCH) mpc-1.3.1.built.$(ARCH)\
-	mpfr-4.2.0.built.$(ARCH) isl-0.18.built.$(ARCH)
-x86_64-gcc.built.$(ARCH):\
-	x86_64-binutils.built.$(ARCH)
+editor: editor/nano-7.2.built.$(ARCH)\
+	editor/emacs-28.2.built.$(ARCH)\
+	editor/vim-9.0.1670.built.$(ARCH)
 
-aarch64-binutils.built.$(ARCH):\
-	gmp-6.3.0.built.$(ARCH) mpc-1.3.1.built.$(ARCH)\
-	mpfr-4.2.0.built.$(ARCH) isl-0.18.built.$(ARCH)
-aarch64-gcc.built.$(ARCH):\
-	aarch64-binutils.built.$(ARCH)
+# compress
 
-llvm-15.0.7.built.$(ARCH): zlib-1.3.built.$(ARCH)
-
-cli: grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
-	findutils-4.9.0.built.$(ARCH) coreutils-9.4.built.$(ARCH) \
-	berry-lang.built.$(ARCH) cosmo-repo-thirdparty.built.$(ARCH) \
-	zsh-5.9.built.$(ARCH)
+compress/pigz-2.8.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
+compress/tar-1.35.built.$(ARCH): compress/xz-5.4.3.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)\
+	compress/gzip-1.13.built.$(ARCH)
 
 compress: cosmo-repo-thirdparty.built.$(ARCH)\
-	pigz-2.8.built.$(ARCH)\
-	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
-	gzip-1.13.built.$(ARCH) tar-1.35.built.$(ARCH)
+	compress/pigz-2.8.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)\
+	compress/brotli-1.1.0.built.$(ARCH)\
+	compress/gzip-1.13.built.$(ARCH)\
+	compress/tar-1.35.built.$(ARCH)
 
-gcc: $(TARGET_ARCH)-gcc.built.$(ARCH)
-web: wget-1.21.built.$(ARCH) curl-8.4.0.built.$(ARCH) git-2.42.0.built.$(ARCH) rsync-3.2.7.built.$(ARCH)
-editor: nano-7.2.built.$(ARCH) emacs-28.2.built.$(ARCH) vim-9.0.1670.built.$(ARCH)
-pypack1: cpy311-pypack1.built.$(ARCH)
-datasette: cpy311-datasette.built.$(ARCH)
-llvm: llvm-15.0.7.built.$(ARCH)
+# web
+
+web/wget-1.21.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)
+web/rsync-3.2.7.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH)
+web/curl-8.4.0.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)\
+	lib/libssh2-1.11.0.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)
+web/git-2.42.0.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH) web/curl-8.4.0.built.$(ARCH) lib/libexpat-2.5.0.built.$(ARCH)
+
+web: web/wget-1.21.built.$(ARCH)\
+	web/curl-8.4.0.built.$(ARCH)\
+	web/rsync-3.2.7.built.$(ARCH)\
+	web/git-2.42.0.built.$(ARCH)
+
+# python
+
+python/cpy311-datasette.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
+	lib/libyaml-0.2.5.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)
+
+python/cpy311-pypack1.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)
+
+pypack1: python/cpy311-pypack1.built.$(ARCH)
+datasette: python/cpy311-datasette.built.$(ARCH)
 
 python: pypack1 datasette
+
+# compiler
+
+compiler/x86_64-binutils.built.$(ARCH):\
+	lib/gmp-6.3.0.built.$(ARCH) lib/mpc-1.3.1.built.$(ARCH)\
+	lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
+compiler/x86_64-gcc.built.$(ARCH):\
+	compiler/x86_64-binutils.built.$(ARCH)
+
+compiler/aarch64-binutils.built.$(ARCH):\
+	lib/gmp-6.3.0.built.$(ARCH) lib/mpc-1.3.1.built.$(ARCH)\
+	lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
+compiler/aarch64-gcc.built.$(ARCH):\
+	compiler/aarch64-binutils.built.$(ARCH)
+
+compiler/llvm-15.0.7.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
+
+gcc: compiler/$(TARGET_ARCH)-gcc.built.$(ARCH)
+llvm: compiler/llvm-15.0.7.built.$(ARCH)
+
+######
 
 cosmos: python cli editor compress
 all: python cli editor web compress
 
+######
+
 clean:
-	find . -name "*.built*" | xargs rm -f
+	find . -name "*.built.x86_64" | xargs rm -f
+	find . -name "*.built.aarch64" | xargs rm -f
 	rm -f $(BASELOC)/cosmo.setup.*
 
 distclean:
