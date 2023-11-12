@@ -134,6 +134,8 @@ compiler/aarch64-gcc.built.$(ARCH):\
 	compiler/aarch64-binutils.built.$(ARCH)
 
 gcc: compiler/$(TARGET_ARCH)-gcc.built.$(ARCH)
+
+compiler/llvm-15.0.7.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
 llvm: compiler/llvm-15.0.7.built.$(ARCH)
 
 ######
