@@ -65,6 +65,8 @@ editor: editor/nano-7.2.built.$(ARCH)\
 compress/tar-1.35.built.$(ARCH): compress/xz-5.4.3.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)\
 	compress/gzip-1.13.built.$(ARCH)
 
+compress/pigz-2.8.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
+
 compress: cosmo-repo-thirdparty.built.$(ARCH)\
 	compress/pigz-2.8.built.$(ARCH)\
 	compress/xz-5.4.3.built.$(ARCH)\
