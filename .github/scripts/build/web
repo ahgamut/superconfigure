@@ -51,7 +51,7 @@ ls -al ./
 # wget
 apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cd "$CONFIGDIR"
-cp $BASELOC/wget*/wgetrc ./
+cp $BASELOC/web/wget*/wgetrc ./
 mkdir -p ./usr/share/ssl/root
 cp /etc/ssl/certs/*.* ./usr/share/ssl/root/ || true
 zip $RESULTS/bin/wget.com wgetrc
