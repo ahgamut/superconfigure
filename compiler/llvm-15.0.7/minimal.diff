@@ -79,8 +79,6 @@
    };
  
    SmallVector<char, 1024> BinaryData;
-Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.h.swp and /home/ahgamut/sources/llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.h.swp differ
-Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp and /home/ahgamut/sources/llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp differ
 --- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Support/RWMutex.h	2023-01-12 07:12:30.000000000 +0000
 +++ -	2023-10-21 19:35:02.955594492 +0000
 @@ -17,7 +17,7 @@
@@ -88,7 +86,7 @@ Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp
  #include <cassert>
  #include <mutex>
 -#include <shared_mutex>
-+// #include <shared_mutex>
++#include <shared_mutex> // is this ok now?
  
  // std::shared_timed_mutex is only availble on macOS 10.12 and later.
  #if defined(__APPLE__) && defined(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__)
@@ -243,3 +241,107 @@ Binary files llvm-project-llvmorg-15.0.7/llvm/include/llvm/IR/.Attributes.td.swp
  #  endif
  
  #endif  // end apple
+--- llvm-project-llvmorg-15.0.7/llvm/tools/llvm-readobj/WasmDumper.cpp	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 19:31:34.241753199 +0000
+@@ -179,17 +179,18 @@
+         if (!Seg.Name.empty())
+           W.printString("Name", Seg.Name);
+         W.printNumber("Size", static_cast<uint64_t>(Seg.Content.size()));
+-        if (Seg.Offset.Extended)
+-          llvm_unreachable("extended const exprs not supported");
+-        else if (Seg.Offset.Inst.Opcode == wasm::WASM_OPCODE_I32_CONST)
++        // if (Seg.Offset.Extended)
++        // llvm_unreachable("extended const exprs not supported");
++        if (!Seg.Offset.Extended) {
++        if (Seg.Offset.Inst.Opcode == wasm::WASM_OPCODE_I32_CONST)
+           W.printNumber("Offset", Seg.Offset.Inst.Value.Int32);
+         else if (Seg.Offset.Inst.Opcode == wasm::WASM_OPCODE_I64_CONST)
+           W.printNumber("Offset", Seg.Offset.Inst.Value.Int64);
+         else if (Seg.Offset.Inst.Opcode == wasm::WASM_OPCODE_GLOBAL_GET) {
+           ListScope Group(W, "Offset");
+           W.printNumber("Global", Seg.Offset.Inst.Value.Global);
+-        } else
+-          llvm_unreachable("unknown init expr opcode");
++        } } else
++          llvm_unreachable("unknown init expr opcode (or extended constexpr not supported)");
+       }
+       break;
+     }
+--- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Analysis/ScalarEvolution.h	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 19:40:46.708864981 +0000
+@@ -42,6 +42,8 @@
+ #include <memory>
+ #include <utility>
+ 
++#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
++
+ namespace llvm {
+ 
+ class OverflowingBinaryOperator;
+--- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Pass.h	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 19:41:49.333914738 +0000
+@@ -28,6 +28,8 @@
+ #ifndef LLVM_PASS_H
+ #define LLVM_PASS_H
+ 
++#pragma GCC diagnostic ignored "-Wcomment"
++
+ #include <string>
+ 
+ namespace llvm {
+--- llvm-project-llvmorg-15.0.7/llvm/include/llvm/Analysis/BranchProbabilityInfo.h	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 19:48:01.285679807 +0000
+@@ -28,6 +28,8 @@
+ #include <memory>
+ #include <utility>
+ 
++#pragma GCC diagnostic ignored "-Wcomment"
++
+ namespace llvm {
+ 
+ class Function;
+--- llvm-project-llvmorg-15.0.7/clang/tools/libclang/CIndexer.cpp	2023-11-12 21:12:30.499635188 +0000
++++ -	2023-11-12 21:12:34.911964406 +0000
+@@ -125,13 +125,13 @@
+ #elif defined(_AIX)
+   getClangResourcesPathImplAIX(LibClangPath);
+ #else
+-  Dl_info info;
++  // Dl_info info;
+   std::string Path;
+   // This silly cast below avoids a C++ warning.
+-  if (dladdr((void *)(uintptr_t)clang_createTranslationUnit, &info) != 0) {
++  /* if (dladdr((void *)(uintptr_t)clang_createTranslationUnit, &info) != 0) {
+     // We now have the CIndex directory, locate clang relative to it.
+     LibClangPath += info.dli_fname;
+-  } else if (!(Path = llvm::sys::fs::getMainExecutable(nullptr, nullptr)).empty()) {
++  } else */ if (!(Path = llvm::sys::fs::getMainExecutable(nullptr, nullptr)).empty()) {
+     // If we can't get the path using dladdr, try to get the main executable
+     // path. This may be needed when we're statically linking libclang with
+     // musl libc, for example.
+--- llvm-project-llvmorg-15.0.7/third-party/benchmark/src/benchmark.cc	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 21:26:32.105670647 +0000
+@@ -169,9 +169,9 @@
+ #endif
+   // Offset tests to ensure commonly accessed data is on the first cache line.
+   const int cache_line_size = 64;
+-  static_assert(offsetof(State, error_occurred_) <=
++  /* static_assert(offsetof(State, error_occurred_) <=
+                     (cache_line_size - sizeof(error_occurred_)),
+-                "");
++                ""); */
+ #if defined(__INTEL_COMPILER)
+ #pragma warning pop
+ #elif defined(__GNUC__)
+--- llvm-project-llvmorg-15.0.7/third-party/benchmark/src/timers.cc	2023-01-12 07:12:30.000000000 +0000
++++ -	2023-11-12 21:28:24.244254912 +0000
+@@ -177,7 +177,8 @@
+   if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts) == 0) return MakeTime(ts);
+   DiagnoseAndExit("clock_gettime(CLOCK_THREAD_CPUTIME_ID, ...) failed");
+ #else
+-#error Per-thread timing is not available on your system.
++// #error Per-thread timing is not available on your system.
++  DiagnoseAndExit("Per-thread timing is not available right now.");
+ #endif
+ }
+ 
