@@ -81,6 +81,7 @@ stty sha224sum readlink realpath shred sum tail head uname tty
 tsort wc uptime unlink uniq unexpand yes sleep touch true false rmdir
 find locate xargs
 tree make lua sqlite3 awk sed tidy
+ninja
 grep'
 
 for EXE in $FILELIST; do

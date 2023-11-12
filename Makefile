@@ -41,6 +41,7 @@ cli/coreutils-9.4.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
 cli/texinfo-7.0.2.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/ncurses-6.4.built.$(ARCH)
 
 cli: cosmo-repo-thirdparty.built.$(ARCH)\
+	cli/ninja-1.11.built.$(ARCH)\
 	cli/grep-3.11.built.$(ARCH)\
 	cli/less-643.built.$(ARCH)\
 	cli/bash-5.2.built.$(ARCH)\
@@ -74,13 +75,20 @@ compress: cosmo-repo-thirdparty.built.$(ARCH)\
 
 # web
 
-web/wget-1.21.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
-	compress/xz-5.4.3.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)
+web/wget-1.21.built.$(ARCH):\
+	lib/openssl-1.1.1u.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)\
+	compress/brotli-1.1.0.built.$(ARCH)
 web/rsync-3.2.7.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH)
-web/curl-8.4.0.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)\
+web/curl-8.4.0.built.$(ARCH):\
+	lib/openssl-1.1.1u.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)\
 	lib/libssh2-1.11.0.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH)
-web/git-2.42.0.built.$(ARCH): lib/openssl-1.1.1u.built.$(ARCH)\
-	compress/xz-5.4.3.built.$(ARCH) web/curl-8.4.0.built.$(ARCH) lib/libexpat-2.5.0.built.$(ARCH)
+web/git-2.42.0.built.$(ARCH):\
+	lib/openssl-1.1.1u.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)\
+	web/curl-8.4.0.built.$(ARCH)\
+	lib/libexpat-2.5.0.built.$(ARCH)
 
 web: web/wget-1.21.built.$(ARCH)\
 	web/curl-8.4.0.built.$(ARCH)\
@@ -89,12 +97,16 @@ web: web/wget-1.21.built.$(ARCH)\
 
 # python
 
-python/cpy311-datasette.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
-	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
+python/cpy311-datasette.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH)\
 	lib/libyaml-0.2.5.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)
 
-python/cpy311-pypack1.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
-	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH) lib/libuuid-1.0.3.built.$(ARCH)\
+python/cpy311-pypack1.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH) lib/libyaml-0.2.5.built.$(ARCH)\
 	compress/xz-5.4.3.built.$(ARCH)
 
 pypack1: python/cpy311-pypack1.built.$(ARCH)

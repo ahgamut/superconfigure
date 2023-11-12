@@ -79,7 +79,7 @@ ln logname id md5sum head mkdir nice nl nproc numfmt od pr pinky
 rm pathchk mktemp printenv seq sha1sum sha256sum stat sha384sum
 stty sha224sum readlink realpath shred sum tail head uname tty
 tsort wc uptime unlink uniq unexpand yes sleep touch true false rmdir
-find locate xargs grep'
+find locate xargs ninja grep'
 
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
