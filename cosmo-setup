@@ -14,7 +14,6 @@ mkdir -p include bin lib libexec share $ARCH
 cd $BASELOC
 
 echo "Setting up cosmocc"
-$CC --update >/dev/null
 cd $BASELOC
 rm -f sample.com sample.com.dbg
 $CC sample.c -o sample.com
