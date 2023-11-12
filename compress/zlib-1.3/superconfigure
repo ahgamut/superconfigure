@@ -28,6 +28,8 @@ else
     # patch -p0 -i minimal.diff
 fi
 
+rm -f $COSMOS/include/zlib.h
+
 # go into the source folder, configure
 cd zlib*/
 ARCH="${ARCH:-x86_64}"
