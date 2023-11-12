@@ -148,6 +148,4 @@ clean:
 distclean:
 	git clean -f -d -x
 
-.PHONY: all clean distclean\
-	python cli pypack1 web \
-	gcc datasette editor
+.PHONY: all clean distclean
