@@ -21,6 +21,13 @@ fi
 
 MAXPROC="${MAXPROC:-$numproc}"
 
+echo "updating compiler binaries"
+cd $COSMO/tool/cosmocc
+wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.18/x86_64-gcc.zip
+unzip -o x86_64-gcc.zip
+wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.18/aarch64-gcc.zip
+unzip -o aarch64-gcc.zip
+
 echo "Compiling Cosmopolitan Libc"
 cd $BASELOC
 
@@ -31,7 +38,7 @@ make -s -j$MAXPROC V=0 MODE="" toolchain\
     o//third_party/sqlite3 o//third_party/sqlite3/libsqlite3.a\
     o//third_party/bzip2\
     o//tool/build/zipcopy.com o//tool/build/apelink.com
-$COSMO/bin/x86_64-unknown-cosmo-cc --update
+$COSMO/tool/cosmocc/bin/x86_64-unknown-cosmo-cc --update
 
 cd $COSMO
 export MODE="aarch64"
@@ -39,4 +46,4 @@ make -s -j$MAXPROC V=0 MODE="aarch64" toolchain\
     o/aarch64/third_party/zlib o/aarch64/third_party/zlib/gz o/aarch64/third_party/zstd\
     o/aarch64/third_party/sqlite3 o/aarch64/third_party/sqlite3/libsqlite3.a\
     o/aarch64/third_party/bzip2
-$COSMO/bin/aarch64-unknown-cosmo-cc --update
+$COSMO/tool/cosmocc/bin/aarch64-unknown-cosmo-cc --update

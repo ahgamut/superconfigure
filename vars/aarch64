@@ -22,7 +22,7 @@ export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/results
 export DIRCONFIG=$BASELOC/cosmos/config
 
-PREFIX="$COSMO/bin/$ARCH-unknown-cosmo"
+PREFIX="$COSMO/tool/cosmocc/bin/$ARCH-unknown-cosmo"
 export CC=$PREFIX-cc
 export CXX=$PREFIX-c++
 export LD=$PREFIX-cc
