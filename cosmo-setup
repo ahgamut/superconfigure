@@ -20,7 +20,7 @@ $CC sample.c -o sample.com
 ./sample.com
 
 echo "Setting up libz and libzstd in $COSMOS"
-mv $COSMO/cosmocc/$ARCH-linux/cosmo/lib/*.a $COSMOS/lib || true # running many times
+mv $COSMO/cosmocc/$ARCH-linux-cosmo/lib/*.a $COSMOS/lib || true # running many times
 cd $COSMOS
 ls $COSMOS/lib
 # 
