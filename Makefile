@@ -29,8 +29,7 @@ nano-7.2.built.$(ARCH): ncurses-6.4.built.$(ARCH) readline-8.2.built.$(ARCH)
 
 pigz-2.8.built.$(ARCH): zlib-1.3.built.$(ARCH)
 
-tar-1.35.built.$(ARCH): superconfigure.built.$(ARCH)\
-	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
+tar-1.35.built.$(ARCH): xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
 	gzip-1.13.built.$(ARCH)
 
 wget-1.21.built.$(ARCH): openssl-1.1.1u.built.$(ARCH) libuuid-1.0.3.built.$(ARCH)\
@@ -56,7 +55,7 @@ gcc-11.2-patched.built.$(ARCH): binutils-2.35.2.built.$(ARCH)
 
 coreutils-9.4.built.$(ARCH): gmp-6.3.0.built.$(ARCH)
 
-llvm-15.0.7.built.$(ARCH): zlib-1.3.built.$(ARCH) superconfigure.built.$(ARCH)
+llvm-15.0.7.built.$(ARCH): zlib-1.3.built.$(ARCH)
 
 cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 
@@ -66,7 +65,6 @@ cli: grep-3.11.built.$(ARCH) less-643.built.$(ARCH) bash-5.2.built.$(ARCH)\
 	zsh-5.9.built.$(ARCH)
 
 compress: cosmo-repo-thirdparty.built.$(ARCH)\
-	superconfigure.built.$(ARCH)\
 	pigz-2.8.built.$(ARCH)\
 	xz-5.4.3.built.$(ARCH) brotli-1.1.0.built.$(ARCH)\
 	gzip-1.13.built.$(ARCH) tar-1.35.built.$(ARCH)
