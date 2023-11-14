@@ -17,7 +17,7 @@ FOLDER="xz-5.4.3"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make V=1 -s -i clean
+    make V=0 -s -i clean
     cd ..
 else
     # download the source code
@@ -39,7 +39,7 @@ cd "$FOLDER"
     CFLAGS="-Os -std=gnu99"
 
 # run make and/or make install
-make V=1 -s -j$MAXPROC
-make install V=1 -s -j$MAXPROC
+make V=0 -s -j$MAXPROC
+make install V=0 -s -j$MAXPROC
 
 echo "DONE."

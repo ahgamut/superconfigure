@@ -22,7 +22,7 @@ FOLDER="vim-9.0.1670"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make V=1 -s -i distclean
+    make V=0 -s -i distclean
     cd ..
 else
     # download the source code
@@ -50,7 +50,7 @@ cd $FOLDER
     CFLAGS="-Os -I$COSMOS/include" LDFLAGS="-L$COSMOS/lib" 
 
 # run make and/or make install
-make V=1 -s -j$MAXPROC
-make install V=1 -s -j$MAXPROC
+make V=0 -s -j$MAXPROC
+make install V=0 -s -j$MAXPROC
 
 echo "DONE."

@@ -17,7 +17,7 @@ FOLDER="readline-8.2"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make V=1 -s -i clean || true
+    make V=0 -s -i clean || true
     cd ..
 else
     # download the source code
@@ -38,7 +38,7 @@ cd $FOLDER
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install
-make V=1 -s -j$MAXPROC
-make install V=1 -s -j$MAXPROC
+make V=0 -s -j$MAXPROC
+make install V=0 -s -j$MAXPROC
 
 echo "DONE."

@@ -17,7 +17,7 @@ FOLDER="berry"
 if [ -d "$FOLDER" ]; then
     # we already downloaded it
     cd $FOLDER
-    make V=1 -s -i clean
+    make V=0 -s -i clean
     cd ..
 else
     # download the source code
@@ -33,7 +33,7 @@ fi
 cd "$FOLDER"
 
 # run make and/or make install
-make V=1 -s -j$MAXPROC
+make V=0 -s -j$MAXPROC
 
 # test berry
 ./berry -e "1+1"
