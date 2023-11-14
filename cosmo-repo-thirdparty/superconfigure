@@ -16,7 +16,7 @@ fi
 cd $COSMO
 
 # run make and/or make install
-make -s -j$MAXPROC \
+make V=1 -s -j$MAXPROC \
     o/$MODE/examples/greenbean.com\
     o/$MODE/examples/life.com\
     o/$MODE/examples/nesemu1.com\

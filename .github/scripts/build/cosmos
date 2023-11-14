@@ -203,7 +203,7 @@ cd "$BASELOC"
 
 apelinkpls $RESULTS/bin/python.com $COSMOS_X86/bin/python $COSMOS_AARCH64/bin/python
 cd $CONFIGDIR
-unzip -q $BASELOC/python/cpy311-pypack1/pypack1/python.com || true
+unzip -qo $BASELOC/python/cpy311-pypack1/pypack1/python.com || true
 ls -al
 mkdir -p build
 cp -r $BASELOC/python/cpy311-pypack1/pypack1/dummy/lib*aarch64* ./build || true 

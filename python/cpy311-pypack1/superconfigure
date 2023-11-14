@@ -17,8 +17,8 @@ FOLDER="pypack1"
 if [ -d "$FOLDER" ]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i clean || true
-    make -s -i distclean || true
+    make V=1 -s -i clean || true
+    make V=1 -s -i distclean || true
     cd ..
 else
     # download the source code
@@ -39,7 +39,7 @@ cd $FOLDER
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
 mkdir -p dummy
 cp -r build/lib* ./dummy
 cp ./python $COSMOS/bin

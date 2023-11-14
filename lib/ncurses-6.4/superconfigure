@@ -20,7 +20,7 @@ FOLDER="ncurses-6.4"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i clean || true
+    make V=1 -s -i clean || true
     cd ..
 else
     # download the source code
@@ -45,7 +45,7 @@ cd $FOLDER
     CFLAGS="-Os"
 
 # run make and/or make install
-make -s -j$MAXPROC
-make install -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
+make install V=1 -s -j$MAXPROC
 
 echo "DONE."

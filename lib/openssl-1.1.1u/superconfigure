@@ -15,7 +15,7 @@ fi
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd openssl*
-    make -s -i clean
+    make V=1 -s -i clean
     cd ..
 else
     # download the source code
@@ -44,7 +44,7 @@ ARCH="${ARCH:-x86_64}"
     --prefix=$COSMOS linux-$ARCH
 
 # run make and/or make install
-make -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
 make install_sw -s -j$MAXPROC
 
 echo "DONE."

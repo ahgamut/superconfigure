@@ -23,7 +23,7 @@ FOLDER="emacs-28.2"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd $FOLDER
-    make -s -i distclean
+    make V=1 -s -i distclean
     cd ..
 else
     # download the source code
@@ -50,7 +50,7 @@ export LIBGNUTLS_LIBS="-L$COSMOS/lib -lgnutls -lhogweed -lnettle -lgmp"
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 
 # run make and/or make install
-make -s -j$MAXPROC
-make install -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
+make install V=1 -s -j$MAXPROC
 
 echo "DONE."

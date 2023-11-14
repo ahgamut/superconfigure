@@ -16,8 +16,8 @@ fi
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd pigz*/
-    make -s -i clean || true
-    make -s -i distclean || true
+    make V=1 -s -i clean || true
+    make V=1 -s -i distclean || true
     cd ..
 else
     # download the source code
@@ -32,7 +32,7 @@ fi
 cd pigz*/
 
 # run make and/or make install
-make -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
 cp pigz $COSMOS/bin
 
 echo "DONE."

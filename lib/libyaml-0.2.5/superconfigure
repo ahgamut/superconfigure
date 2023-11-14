@@ -17,7 +17,7 @@ FOLDER="libyaml-0.2.5"
 if [[ -f sources.tar.gz ]]; then
     # we already downloaded it
     cd libyaml*
-    make -s -i clean
+    make V=1 -s -i clean
     cd ..
 else
     # download the source code
@@ -38,7 +38,7 @@ autoreconf -fvi
     CFLAGS="-Os"
 
 # run make and/or make install
-make -s -j$MAXPROC
-make install -s -j$MAXPROC
+make V=1 -s -j$MAXPROC
+make install V=1 -s -j$MAXPROC
 
 echo "DONE."
