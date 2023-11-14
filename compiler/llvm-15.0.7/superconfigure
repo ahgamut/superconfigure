@@ -71,7 +71,7 @@ cmake -S ../llvm-project*/llvm -B ./ -G Ninja \
     -DLLVM_ENABLE_LIBTHREADS=ON
 
 # avoid -I/usr/include
-grep -rl "-I/usr/include" | xargs sed -i 's&-I/usr/include&&g'
+grep -rl "\-I/usr/include" | xargs sed -i 's&-I/usr/include&&g' || true
 
 # run make and/or make install
 ninja -j$MAXPROC -k5
