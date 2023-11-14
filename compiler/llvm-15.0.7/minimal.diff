@@ -345,3 +345,41 @@
  #endif
  }
  
+
+--- llvm-project-llvmorg-15.0.7/llvm/lib/Support/RandomNumberGenerator.cpp	2023-11-14 04:05:36.132101692 +0000
++++ -	2023-11-14 04:06:58.240111579 +0000
+@@ -64,6 +64,8 @@
+   return Generator();
+ }
+ 
++extern ssize_t getrandom(void *, size_t, unsigned int);
++
+ // Get random vector of specified size
+ std::error_code llvm::getRandomBytes(void *Buffer, size_t Size) {
+ #ifdef _WIN32
+@@ -76,19 +78,19 @@
+   }
+   return std::error_code(GetLastError(), std::system_category());
+ #else
+-  int Fd = open("/dev/urandom", O_RDONLY);
+-  if (Fd != -1) {
++  // int Fd = open("/dev/urandom", O_RDONLY);
++  if (1 /* Fd != -1 */) {
+     std::error_code Ret;
+-    ssize_t BytesRead = read(Fd, Buffer, Size);
++    ssize_t BytesRead = getrandom(Buffer, Size, 0);
+     if (BytesRead == -1)
+       Ret = std::error_code(errno, std::system_category());
+     else if (BytesRead != static_cast<ssize_t>(Size))
+       Ret = std::error_code(EIO, std::system_category());
+-    if (close(Fd) == -1)
+-      Ret = std::error_code(errno, std::system_category());
++    // if (close(Fd) == -1)
++    //  Ret = std::error_code(errno, std::system_category());
+ 
+     return Ret;
+   }
+-  return std::error_code(errno, std::system_category());
++  // return std::error_code(errno, std::system_category());
+ #endif
+ }
