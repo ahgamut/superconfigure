@@ -39,7 +39,8 @@ cd build
     --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
     --with-static-standard-libraries --disable-libada --disable-libssp \
     --disable-host-shared --disable-objc-gc --enable-languages=c,c++ --disable-bootstrap \
-    --disable-assembly --disable-werror --disable-multilib --enable-tls \
+    --disable-assembly --disable-werror  -enable-tls \
+    --enable-multilib --enable-multiarch \
     --disable-libmudflap --disable-libsanitizer --disable-gnu-indirect-function \
     --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
     --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
