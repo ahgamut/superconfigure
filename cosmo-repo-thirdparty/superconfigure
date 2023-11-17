@@ -31,7 +31,6 @@ make V=0 -s -j$MAXPROC \
     o/$MODE/third_party/lua/lua.com\
     o/$MODE/third_party/make/make.com\
     o/$MODE/third_party/quickjs/qjs.com\
-    o/$MODE/third_party/sed/sed.com\
     o/$MODE/third_party/sqlite3/sqlite3.com\
     o/$MODE/third_party/tidy/tidy.com\
     o/$MODE/third_party/tree/tree.com\
@@ -58,7 +57,6 @@ cp o/$MODE/third_party/ggml/llama.com.dbg $COSMOS/bin/llama
 cp o/$MODE/third_party/lua/lua.com.dbg $COSMOS/bin/lua
 cp o/$MODE/third_party/make/make.com.dbg $COSMOS/bin/make
 cp o/$MODE/third_party/quickjs/qjs.com.dbg $COSMOS/bin/qjs
-cp o/$MODE/third_party/sed/sed.com.dbg $COSMOS/bin/sed
 cp o/$MODE/third_party/sqlite3/sqlite3.com.dbg $COSMOS/bin/sqlite3
 cp o/$MODE/third_party/tidy/tidy.com.dbg $COSMOS/bin/tidy
 cp o/$MODE/third_party/tree/tree.com.dbg $COSMOS/bin/tree
