@@ -4,35 +4,87 @@ this repo contains shell scripts that wrap `./configure` to build software with
 [Cosmopolitan Libc][cosmo]. The executables that are built on this repo are [fat
 APE binaries](https://github.com/jart/cosmopolitan#amd64--arm64-fat-ape-binaries).
 
-Currently available:
-
-* GNU `bash-5.2`, `findutils-4.9.0`, `coreutils-9.4`
-* `vim-9.0.1670`, `emacs-28.2`, `nano-7.2`
-* CPython3.11.4
-* `wget-1.21`, `curl-8.4.0`, `git-2.42.0`
-* [`gcc-11.2.0`][portcosmo] and `binutils-2.35.2` targeting `x86_64-linux-cosmo`
-* [`gcc-11.2.0`][portcosmo] and `binutils-2.35.2` targeting `aarch64-linux-cosmo`
-* a collection of binaries built from the [`third_party` folder][cosmo-3p] of the
-  Cosmopolitan Libc repo
-
 # How can I get these?
 
 The  [`Releases` page](https://github.com/ahgamut/superconfigure/releases)
 should have the most recent builds of executables in this repo, built via Github
-Actions. If you'd like to build these executables yourself, here's how:
+Actions. 
 
-* Clone this repository
-* install necessary build dependencies (most notably `qemu` and SSL certs) -- see
-  `./.github/scripts/setup` for details
-* build the [Cosmopolitan Libc repository][cosmo] for `MODE=` and `MODE=aarch64`
-  -- see `.github/scripts/cosmo`
-* to build `bash`, `less`, `find`, `tree`, and GNU coreutils run `./.github/scripts/cli`
-* to build `vim`, `emacs`, and `nano` run `./.github/scripts/editor`
-* to build CPython3.11.4 [`datasette` 1.0.0a6][datasette] run `./.github/scripts/datasette`
-* to build CPython3.11.4 with CLI utilities like `black` and `cookiecutter` run `./.github/scripts/pypack1`
+# How can I build these locally?
 
-The build scripts assume `bash`/Debian/Ubuntu. 
-If you'd like to add your own software build scripts, submit a PR!
+The build scripts assume `bash`/Debian/Ubuntu (some may also need sudo access
+just to setup a `/zip` folder during the build).  If you'd like to add your own
+software build scripts, submit a PR!  You can follow the steps in
+`.github/workflows/release.yml` on your machine:
+
+- clone this repository
+- install necessary build dependencies (most notably `qemu` and SSL certs) -- see `./.github/scripts/setup` for details
+- clone the cosmopolitan libc repository within this repository
+- build the `cosmopolitan` toolchain by running `./.github/scripts/cosmo`
+
+## Building the executable collections
+
+You can run any of the shell scripts in `./.github/scripts/build` to get a
+collection of fat binaries
+
+* to build `bash`, `less`, `find`, `tree`, and GNU coreutils run `./.github/scripts/build/cli`
+* to build `vim`, `emacs`, and `nano` run `./.github/scripts/build/editor`
+* to build CPython3.11.4 [`datasette` 1.0.0a6][datasette] run `./.github/scripts/build/datasette`
+* to build the GCC collection for `x86_64` run `./.github/scripts/build/x86_64-gcc`
+
+you can run `./.github/scripts/collectzip` to store all build results in a
+ZIP file.
+
+## Building via `make`
+
+You can build fat binaries using the Makefile as well! After setting up the
+toolchain, if you want to get the `./.github/scripts/web` collection, run 
+
+```sh
+make ARCH=x86_64 web
+make ARCH=aarch64 web
+```
+
+the `./.github/scripts/web` does a little more than the Makefile (helps with
+creating the fat binaries, but using the Makefile helps for debugging or just
+building arch-specific binaries.
+
+Suppose you wanted to build only a specific binary from the Makefile, instead of
+the whole `cli` collection:
+
+```sh
+make ARCH=x86_64 cli/bash-5.2.built.x86_64
+make ARCH=aarch64 cli/bash-5.2.built.aarch64
+```
+
+## Building individual targets without `make`
+
+The Makefile aims to handle the dependencies between the various packages
+that are currently built. If you want to build these individually (and handle
+building the dependencies manually), you can do the following:
+
+Let's say you wanted to build `bash` with Cosmopolitan Libc.
+The steps are:
+
+```sh
+# assume ./.github/scripts/cosmo has already been run
+
+# build x86_64
+source vars/x86_64
+cd lib/ncurses-6.4 && superconfigure && cd ../../
+cd lib/readline-8.2 && superconfigure && cd ../../
+cd cli/bash-5.2 && superconfigure && cd ../../
+
+# build aarch64
+source vars/aarch64
+cd lib/ncurses-6.4 && superconfigure && cd ../../
+cd lib/readline-8.2 && superconfigure && cd ../../
+cd cli/bash-5.2 && superconfigure && cd ../../
+```
+
+Then you can use a bash function similar to `apelinkpls` in the build scripts to
+create the fat binary.
+
 
 ## Adding to the ZIP Store
 
