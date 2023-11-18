@@ -39,9 +39,34 @@ mkdir -p "$CONFIGDIR"
 mkdir -p "$RESULTS/bin"
 
 FILELIST='
-awk tidy zstd lua qjs
-sqlite3 zip unzip bzip2 make
+greenbean
+life
+nesemu1
+printimage
+script
+ttyinfo
+unbourne
+wall
+awk
+bzip2
+ctags
+llama
+lua
+make
+qjs
+sqlite3
+tidy
+tree
+unzip
+zip
+zstd
+assimilate
+pledge
+verynice
+redbean
 '
+
+
 
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE

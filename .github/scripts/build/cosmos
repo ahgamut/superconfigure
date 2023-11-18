@@ -73,13 +73,16 @@ zip -r $RESULTS/bin/zsh.com share/terminfo
 cd "$BASELOC"
 
 FILELIST='
-echo cp ls mv sha256sum [ test base64 cat chown chmod dd cksum
-df dir dirname basename du env expand expr factor join kill link
-ln logname id md5sum head mkdir nice nl nproc numfmt od pr pinky
-rm pathchk mktemp printenv seq sha1sum sha256sum stat sha384sum
-stty sha224sum readlink realpath shred sum tail head uname tty
-tsort wc uptime unlink uniq unexpand yes sleep touch true false rmdir
-find locate xargs ninja grep'
+[ b2sum base32 base64 basename basenc cat chcon chgrp chmod chown chroot cksum 
+comm cp csplit cut date dd df dir dircolors dirname du echo env expand expr 
+factor false fmt fold groups head id install join kill link ln logname ls 
+md5sum mkdir mkfifo mknod mktemp mv nice nl nohup nproc numfmt od paste pathchk 
+pinky pr printenv printf ptx pwd readlink realpath rm rmdir runcon seq sha1sum 
+sha224sum sha256sum sha384sum sha512sum shred shuf sleep sort split stat stty 
+sum sync tac tail tee test timeout touch tr true truncate tsort tty uname 
+unexpand uniq unlink uptime users vdir wc who whoami yes 
+find locate xargs
+tree make lua sqlite3 awk sed tidy ninja grep'
 
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
@@ -103,7 +106,6 @@ llama
 lua
 make
 qjs
-sed
 sqlite3
 tidy
 tree
