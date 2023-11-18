@@ -1,10 +1,13 @@
 # `superconfigure`
 
-this repo contains shell scripts that wrap `./configure` to build software with
-[Cosmopolitan Libc][cosmo]. The executables that are built on this repo are [fat
-APE binaries](https://github.com/jart/cosmopolitan#amd64--arm64-fat-ape-binaries).
+`superconfigure` is a collection of programs ported to run as fat binaries using
+[Cosmopolitan Libc][cosmo]. This repository includes build scripts for popular
+software such as `bash`, `lua`, `emacs`, GNU Coreutils, `sed`, `gcc-11`, `curl`,
+`clang-15`, and others. For each of these, the source code is downloaded from
+the upstream sources, compiled for `x86_64` and `aarch64`, and finally combined
+into a fat binary using Cosmopolitan Libc's `apelink` program.
 
-# How can I get these?
+# Where can I download the built software?
 
 The  [`Releases` page](https://github.com/ahgamut/superconfigure/releases)
 should have the most recent builds of executables in this repo, built via Github
@@ -35,7 +38,7 @@ collection of fat binaries
 you can run `./.github/scripts/collectzip` to store all build results in a
 ZIP file.
 
-## Building via `make`
+## Building collections via `make`
 
 You can build fat binaries using the Makefile as well! After setting up the
 toolchain, if you want to get the `./.github/scripts/web` collection, run 
