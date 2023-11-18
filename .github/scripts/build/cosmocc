@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+set -eux
+
+export TARGET_ARCH=x86_64
+make ARCH=x86_64 gcc
+make ARCH=aarch64 gcc
+# rm -f cosmo.setup.*
+
+export TARGET_ARCH=aarch64
+make ARCH=x86_64 gcc
+make ARCH=aarch64 gcc
+# rm -f cosmo.setup.*
+
+export MODE=
+export MODE_AARCH64=aarch64
+export BASELOC=$(realpath $PWD)
+export COSMO=$BASELOC/cosmopolitan
+export COSMOS_X86=$BASELOC/cosmos/x86_64
+export COSMOS_AARCH64=$BASELOC/cosmos/aarch64
+export CONFIGDIR=$BASELOC/dummy
+export RESULTS=$BASELOC/results
+
+APELINK=$COSMO/o//tool/build/apelink.com
+APELINKFLAGS=
+
+apelinkpls () {
+    OUTPUT="$1"
+    OUTPUT_X86_64="$2"
+    OUTPUT_AARCH64="$3"
+    OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
+    OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
+    TARG_FOLD="$(dirname $OUTPUT)"
+    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
+        -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$OUTPUT_X86_64" \
+        "$OUTPUT_AARCH64"
+    cp "$OUTPUT_X86_64" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$OUTPUT_AARCH64" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+echo "creating fat APEs"
+mkdir -p "$CONFIGDIR"
+mkdir -p "$RESULTS"
+
+# x86_64-gcc
+
+cd $BASELOC
+ls -al ./
+
+FILELIST='
+bin/x86_64-linux-cosmo-addr2line
+bin/x86_64-linux-cosmo-ar
+bin/x86_64-linux-cosmo-as
+bin/x86_64-linux-cosmo-c++
+bin/x86_64-linux-cosmo-c++filt
+bin/x86_64-linux-cosmo-cpp
+bin/x86_64-linux-cosmo-elfedit
+bin/x86_64-linux-cosmo-g++
+bin/x86_64-linux-cosmo-gcc
+bin/x86_64-linux-cosmo-gcc-ar
+bin/x86_64-linux-cosmo-gcc-nm
+bin/x86_64-linux-cosmo-gcc-ranlib
+bin/x86_64-linux-cosmo-gprof
+bin/x86_64-linux-cosmo-ld
+bin/x86_64-linux-cosmo-ld.bfd
+bin/x86_64-linux-cosmo-nm
+bin/x86_64-linux-cosmo-objcopy
+bin/x86_64-linux-cosmo-objdump
+bin/x86_64-linux-cosmo-ranlib
+bin/x86_64-linux-cosmo-readelf
+bin/x86_64-linux-cosmo-size
+bin/x86_64-linux-cosmo-strings
+bin/x86_64-linux-cosmo-strip
+libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1
+libexec/gcc/x86_64-linux-cosmo/11.2.0/cc1plus
+libexec/gcc/x86_64-linux-cosmo/11.2.0/collect2
+'
+
+mkdir -p $RESULTS/bin
+mkdir -p $RESULTS/libexec/gcc/x86_64-linux-cosmo/11.2.0/install-tools
+
+for EXE in $FILELIST; do
+    apelinkpls $RESULTS/$EXE.com\
+        $COSMOS_X86/$EXE\
+        $COSMOS_AARCH64/$EXE
+done
+
+# cosmo toolchain also has these binaries in the specific locations
+DUPELIST2='
+as
+ld
+ld.bfd
+'
+
+for EXE in $DUPELIST2; do
+    cp $RESULTS/bin/x86_64-linux-cosmo-$EXE.com $RESULTS/libexec/gcc/x86_64-linux-cosmo/11.2.0/$EXE.com
+done
+
+# aarch64-gcc
+
+cd $BASELOC
+ls -al ./
+
+FILELIST='
+bin/aarch64-linux-cosmo-addr2line
+bin/aarch64-linux-cosmo-ar
+bin/aarch64-linux-cosmo-as
+bin/aarch64-linux-cosmo-c++
+bin/aarch64-linux-cosmo-c++filt
+bin/aarch64-linux-cosmo-cpp
+bin/aarch64-linux-cosmo-elfedit
+bin/aarch64-linux-cosmo-g++
+bin/aarch64-linux-cosmo-gcc
+bin/aarch64-linux-cosmo-gcc-ar
+bin/aarch64-linux-cosmo-gcc-nm
+bin/aarch64-linux-cosmo-gcc-ranlib
+bin/aarch64-linux-cosmo-gprof
+bin/aarch64-linux-cosmo-ld
+bin/aarch64-linux-cosmo-ld.bfd
+bin/aarch64-linux-cosmo-nm
+bin/aarch64-linux-cosmo-objcopy
+bin/aarch64-linux-cosmo-objdump
+bin/aarch64-linux-cosmo-ranlib
+bin/aarch64-linux-cosmo-readelf
+bin/aarch64-linux-cosmo-size
+bin/aarch64-linux-cosmo-strings
+bin/aarch64-linux-cosmo-strip
+libexec/gcc/aarch64-linux-cosmo/11.2.0/cc1
+libexec/gcc/aarch64-linux-cosmo/11.2.0/cc1plus
+libexec/gcc/aarch64-linux-cosmo/11.2.0/collect2
+'
+mkdir -p $RESULTS/bin
+mkdir -p $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/install-tools
+
+for EXE in $FILELIST; do
+    apelinkpls $RESULTS/$EXE.com\
+        $COSMOS_X86/$EXE\
+        $COSMOS_AARCH64/$EXE
+done
+
+# cosmo toolchain also has these binaries in the specific locations
+DUPELIST2='
+as
+ld
+ld.bfd
+'
+
+for EXE in $DUPELIST2; do
+    cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/$EXE.com
+done
+
+exit 0
+# binutil's make install also creates copies of the below binaries
+# at another location.
+
+DUPELIST='
+ar
+as
+ld
+ld.bfd
+nm
+objcopy
+objdump
+ranlib
+readelf
+strip
+'
+
+mkdir -p $RESULTS/aarch64-linux-cosmo/bin
+
+for EXE in $DUPELIST; do
+    cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/aarch64-linux-cosmo/bin/$EXE.com
+done
