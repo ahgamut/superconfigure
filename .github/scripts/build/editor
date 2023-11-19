@@ -41,12 +41,12 @@ mkdir -p "$RESULTS"
 # the zip folder
 cd "$CONFIGDIR"
 mkdir -p share
-cp -r $COSMOS_X86/x86_64 ./
-cp -r $COSMOS_AARCH64/aarch64 ./
-cp -r $COSMOS_X86/share/terminfo ./share
-cp -r $COSMOS_X86/share/vim ./share
-cp -r $COSMOS_X86/share/nano ./share
-cp -r $COSMOS_X86/share/emacs ./share
+cp -r /zip/x86_64 ./
+cp -r /zip/aarch64 ./
+cp -r /zip/share/terminfo ./share
+cp -r /zip/share/vim ./share
+cp -r /zip/share/nano ./share
+cp -r /zip/share/emacs ./share
 mkdir -p ./share/ssl/certs/
 cp /etc/ssl/certs/*.* ./share/ssl/certs/ || true
 ls -al /zip

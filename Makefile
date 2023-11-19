@@ -146,12 +146,17 @@ all: python cli editor web compress
 
 ######
 
-clean:
+zipclean:
+	rm -rf /zip/share
+	rm -rf /zip/x86_64
+	rm -rf /zip/aarch64
+
+clean: zipclean
 	find . -name "*.built.x86_64" | xargs rm -f
 	find . -name "*.built.aarch64" | xargs rm -f
 	rm -f $(BASELOC)/cosmo.setup.*
 
-distclean:
+distclean: zipclean
 	git clean -f -d -x
 
-.PHONY: all clean distclean
+.PHONY: all clean distclean zipclean

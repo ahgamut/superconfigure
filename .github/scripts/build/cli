@@ -41,7 +41,7 @@ mkdir -p "$RESULTS"
 # the zip folder
 cd "$CONFIGDIR"
 mkdir -p share
-cp -r $COSMOS_X86/share/terminfo ./share
+cp -r /zip/share/terminfo ./share
 ls -al /zip
 
 

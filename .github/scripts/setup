@@ -6,6 +6,10 @@ sudo apt-get install -y qemu qemu-utils qemu-user-static
 sudo apt-get install -y texinfo
 sudo apt-get install -y cmake ninja-build
 
+# the zip folder
+sudo mkdir -p /zip
+sudo chmod -R 0777 /zip
+
 # cosmo
 git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan
 

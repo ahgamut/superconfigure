@@ -69,12 +69,7 @@ apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsyn
 
 # git
 cd "$CONFIGDIR"
-if [[ -d $COSMOS_X86/share/git-core ]]; then
-    cp -r $COSMOS_X86/share/git-core ./share || true
-fi
-if [[ -d $COSMOS_AARCH64/share/git-core ]]; then
-    cp -r $COSMOS_AARCH64/share/git-core ./share || true
-fi
+cp -r /zip/share/git-core ./share || true
 mkdir -p $RESULTS/libexec/git-core/mergetools
 
 # these are the unique binaries

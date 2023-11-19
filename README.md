@@ -13,15 +13,21 @@ The  [`Releases` page](https://github.com/ahgamut/superconfigure/releases)
 should have the most recent builds of executables in this repo, built via Github
 Actions. 
 
+If you'd like to add your own software build scripts, submit a PR!  
+
 # How can I build these locally?
 
-The build scripts assume `bash`/Debian/Ubuntu (some may also need sudo access
-just to setup a `/zip` folder during the build).  If you'd like to add your own
-software build scripts, submit a PR!  You can follow the steps in
-`.github/workflows/release.yml` on your machine:
+The build scripts assume `bash`/Debian/Ubuntu (you may also need sudo access to
+setup a `/zip` folder).  You can follow the steps in
+`.github/workflows/release.yml` on your machine (see `./.github/scripts/setup`
+for details):
 
 - clone this repository
-- install necessary build dependencies (most notably `qemu` and SSL certs) -- see `./.github/scripts/setup` for details
+- create a folder `/zip` on your system that provides read/write access to
+  everyone
+- install necessary build dependencies:
+    - `qemu` to run aarch64 ELF binaries
+    - SSL certificates
 - clone the cosmopolitan libc repository within this repository
 - build the `cosmopolitan` toolchain by running `./.github/scripts/cosmo`
 
