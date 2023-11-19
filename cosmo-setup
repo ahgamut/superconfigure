@@ -9,6 +9,7 @@ mkdir -p $DIRCONFIG
 mkdir -p $RESULTS/bin
 cd $COSMOS
 mkdir -p include bin lib libexec share $ARCH
+mkdir -p /zip/share /zip/$ARCH
 cd $BASELOC
 
 echo "Setting up cosmocc"
