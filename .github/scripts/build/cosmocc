@@ -150,8 +150,3 @@ ld.bfd
 for EXE in $DUPELIST2; do
     cp $RESULTS/bin/aarch64-linux-cosmo-$EXE.com $RESULTS/libexec/gcc/aarch64-linux-cosmo/11.2.0/$EXE.com
 done
-
-# store cosmocc binaries in the same folder structure
-cd $RESULTS
-mkdir -p ./o/third_party/gcc
-mv ./bin ./libexec ./o/third_party/gcc
