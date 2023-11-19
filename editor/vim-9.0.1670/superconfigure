@@ -35,7 +35,8 @@ fi
 
 cd $FOLDER
 # go into the source folder, configure
-./configure --disable-darwin --disable-smack --disable-selinux\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --disable-darwin --disable-smack --disable-selinux\
     --disable-xsmp --enable-luainterp=no --enable-perlinterp=no\
     --enable-pythoninterp=no --enable-python3interp=no\
     --enable-tclinterp=no --enable-rubyinterp=no\

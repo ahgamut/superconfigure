@@ -32,7 +32,8 @@ cd rsync*/
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
-./configure --prefix="$COSMOS"\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS"\
     --with-rsyncd-conf=/zip/rsyncd.conf --with-included-popt\
     --with-openssl-conf=/zip/openssl.conf --without-included-zlib\
     --sysconfdir=/zip/etc --datarootdir=/zip/share\

@@ -35,7 +35,8 @@ fi
 cd mpc*
 export PKG_CONFIG=""
 
-./configure --prefix=$COSMOS\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix=$COSMOS\
     --disable-shared --disable-dependency-tracking --disable-silent-rules
 
 # run make and/or make install

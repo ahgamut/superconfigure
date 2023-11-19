@@ -33,7 +33,8 @@ fi
 
 # go into the source folder, configure
 cd findutils*/
-./configure --prefix="$COSMOS"\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS"\
     --disable-silent-rules --disable-dependency-tracking\
     --disable-asserts --disable-compiler-warnings\
     --disable-nls --disable-rpath\

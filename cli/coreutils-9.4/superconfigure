@@ -33,7 +33,8 @@ fi
 
 # go into the source folder, configure
 cd coreutils*/
-./configure --prefix="$COSMOS"\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS"\
     --disable-nls --disable-dependency-tracking\
     --disable-silent-rules --disable-xattr\
     --disable-rpath --disable-acl --disable-assert\

@@ -42,7 +42,8 @@ export NETTLE_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 export HOGWEED_CFLAGS="-I$COSMOS/include"
 export HOGWEED_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 
-./configure --sysconfdir=/zip --datarootdir=/zip/share\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --sysconfdir=/zip --datarootdir=/zip/share\
     --libexecdir=/zip/$ARCH --prefix=$COSMOS\
     --disable-shared --enable-static\
     --with-gnu-ld --disable-cxx\

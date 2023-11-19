@@ -33,7 +33,8 @@ fi
 
 # go into the source folder, configure
 cd grep*/
-./configure --prefix="$COSMOS"\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS"\
     CFLAGS="-Os"
 
 # run make and/or make install

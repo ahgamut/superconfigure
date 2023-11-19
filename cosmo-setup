@@ -12,6 +12,9 @@ mkdir -p include bin lib libexec share $ARCH
 mkdir -p /zip/share /zip/$ARCH
 cd $BASELOC
 
+# add basic config.cache for configure scripts
+cp $BASELOC/vars/common.cache $COSMOS
+
 echo "Setting up cosmocc"
 cd $BASELOC
 rm -f sample.com sample.com.dbg

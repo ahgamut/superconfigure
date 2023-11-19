@@ -38,7 +38,8 @@ export NCURSES_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSESW_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSES_CFLAGS="-I$COSMOS/include -I$COSMOS/include/ncurses"
 # go into the source folder, configure
-./configure --sysconfdir=/zip --datarootdir=/zip/share\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --sysconfdir=/zip --datarootdir=/zip/share\
     --prefix=$COSMOS\
     --disable-nls --disable-rpath --disable-silent-rules\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses"\

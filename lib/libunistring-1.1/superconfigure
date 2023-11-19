@@ -29,7 +29,8 @@ fi
 
 # go into the source folder, configure
 cd libuni*
-./configure --prefix="$COSMOS"\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS"\
     --disable-shared --enable-static\
     --without-pic --with-gnu-ld\
     --disable-rpath\

@@ -31,7 +31,8 @@ fi
 
 # go into the source folder, configure
 cd expat*
-./configure --enable-static --disable-shared\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --enable-static --disable-shared\
     --without-pic --with-gnu-ld\
     --disable-tests --disable-examples --without-docbook\
     --with-getrandom\

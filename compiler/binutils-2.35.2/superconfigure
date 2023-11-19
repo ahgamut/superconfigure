@@ -38,7 +38,8 @@ fi
 cd binutils*
 export PKG_CONFIG=""
 
-./configure --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
     --disable-silent-rules --disable-libstdcxx --disable-werror --disable-multilib \
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \

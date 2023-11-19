@@ -32,7 +32,8 @@ fi
 
 # go into the source folder, configure
 cd zsh*/
-./configure --prefix="$COSMOS" --disable-dynamic \
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --prefix="$COSMOS" --disable-dynamic \
     --datarootdir=/zip/share --with-tcsetpgrp \
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 

@@ -31,7 +31,8 @@ fi
 
 # go into the source folder, configure
 cd $FOLDER
-./configure --disable-shared --enable-static\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --disable-shared --enable-static\
     --enable-multibyte --prefix=$COSMOS\
     --with-curses\
     --sysconfdir=/zip --datarootdir=/zip/share\

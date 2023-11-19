@@ -31,7 +31,8 @@ fi
 
 # go into the source folder, configure
 cd $FOLDER
-./configure --disable-shared --disable-loadable-sqlite-extensions\
+cp $COSMOS/common.cache ./config.cache
+./configure --cache-file=config.cache --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
     --with-pymalloc --with-openssl=$COSMOS/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
