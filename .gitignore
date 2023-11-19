@@ -1,6 +1,9 @@
 #
 cosmopolitan/
-gcc-11.2-patched/gcc/
+compiler/gcc-11.2-patched/gcc/
+cli/berry-lang/berry
+python/cpy311-datasette/datasette
+python/cpy311-pypack1/pypack1
 
 # Prerequisites
 *.d
