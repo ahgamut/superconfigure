@@ -33,8 +33,7 @@ rm -f $COSMOS/include/zlib.h
 # go into the source folder, configure
 cd zlib*/
 ARCH="${ARCH:-x86_64}"
-cp $COSMOS/common.cache ./config.cache
-./configure --cache-file=config.cache --static --64 --prefix=$COSMOS\
+./configure --static --64 --prefix=$COSMOS\
     --includedir=$COSMOS/include\
     --eprefix=$COSMOS/bin --libdir=$COSMOS/lib\
     --archs="-arch $ARCH"

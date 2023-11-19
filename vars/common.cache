@@ -1059,8 +1059,6 @@ ac_cv_header_stat_broken=${ac_cv_header_stat_broken=no}
 ac_cv_header_stdalign_h=${ac_cv_header_stdalign_h=yes}
 ac_cv_header_stdarg_h=${ac_cv_header_stdarg_h=yes}
 ac_cv_header_stdatomic_h=${ac_cv_header_stdatomic_h=yes}
-ac_cv_header_stdbool_h=${ac_cv_header_stdbool_h=no}
-ac_cv_header_stdbool_h=${ac_cv_header_stdbool_h=yes}
 ac_cv_header_stdc=${ac_cv_header_stdc='yes'}
 ac_cv_header_stdc=${ac_cv_header_stdc=yes}
 ac_cv_header_stdckdint_h=${ac_cv_header_stdckdint_h=yes}
@@ -1373,8 +1371,6 @@ ac_cv_search_uuid_generate=${ac_cv_search_uuid_generate=-luuid}
 ac_cv_search_yywrap=${ac_cv_search_yywrap=no}
 ac_cv_search_ZSTD_minCLevel=${ac_cv_search_ZSTD_minCLevel=-lzstd}
 ac_cv_should_define__xopen_source=${ac_cv_should_define__xopen_source=no}
-ac_cv_sizeof_bool=${ac_cv_sizeof_bool='1'}
-ac_cv_sizeof__Bool=${ac_cv_sizeof__Bool=1}
 ac_cv_sizeof_char=${ac_cv_sizeof_char=1}
 ac_cv_sizeof_char_p=${ac_cv_sizeof_char_p=8}
 ac_cv_sizeof_charp=${ac_cv_sizeof_charp=8}
@@ -1437,9 +1433,6 @@ ac_cv_sys_year2038_opts=${ac_cv_sys_year2038_opts='none needed'}
 ac_cv_type_bits16_t=${ac_cv_type_bits16_t=no}
 ac_cv_type_bits32_t=${ac_cv_type_bits32_t=no}
 ac_cv_type_bits64_t=${ac_cv_type_bits64_t=no}
-ac_cv_type_bool=${ac_cv_type_bool='yes'}
-ac_cv_type_bool=${ac_cv_type_bool=yes}
-ac_cv_type__Bool=${ac_cv_type__Bool=yes}
 ac_cv_type_dev_t=${ac_cv_type_dev_t=yes}
 ac_cv_type___fsword_t=${ac_cv_type___fsword_t=no}
 ac_cv_type_getgroups=${ac_cv_type_getgroups=gid_t}
