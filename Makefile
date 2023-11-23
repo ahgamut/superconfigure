@@ -41,6 +41,7 @@ cli/coreutils-9.4.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
 cli/texinfo-7.0.2.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/ncurses-6.4.built.$(ARCH)
 
 cli: cosmo-repo-thirdparty.built.$(ARCH)\
+	cli/make-4.4.built.$(ARCH)\
 	cli/sed-4.9.built.$(ARCH)\
 	cli/ninja-1.11.1.built.$(ARCH)\
 	cli/grep-3.11.built.$(ARCH)\

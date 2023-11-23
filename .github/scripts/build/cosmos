@@ -82,6 +82,7 @@ sha224sum sha256sum sha384sum sha512sum shred shuf sleep sort split stat stty
 sum sync tac tail tee test timeout touch tr true truncate tsort tty uname 
 unexpand uniq unlink uptime users vdir wc who whoami yes 
 find locate xargs
+gmake
 tree make lua sqlite3 awk sed tidy ninja grep'
 
 for EXE in $FILELIST; do
