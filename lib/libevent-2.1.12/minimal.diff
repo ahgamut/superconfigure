@@ -1,0 +1,30 @@
+--- ./libevent-2.1.12-stable/config.h.in	2020-07-05 12:04:13.000000000 +0000
++++ -	2023-11-27 03:27:17.169950774 +0000
+@@ -45,13 +45,13 @@
+ #undef HAVE_DLFCN_H
+ 
+ /* Define if your system supports the epoll system calls */
+-#undef HAVE_EPOLL
++#undef HAVE_EPOLL_PLS_NO
+ 
+ /* Define to 1 if you have the `epoll_create1' function. */
+-#undef HAVE_EPOLL_CREATE1
++#undef HAVE_EPOLL_CREATE1_PLS_NO
+ 
+ /* Define to 1 if you have the `epoll_ctl' function. */
+-#undef HAVE_EPOLL_CTL
++#undef HAVE_EPOLL_CTL_PLS_NO
+ 
+ /* Define to 1 if you have the <errno.h> header file. */
+ #undef HAVE_ERRNO_H
+--- libevent-2.1.12-stable/evutil.c	2023-11-29 01:40:22.273791104 +0000
++++ -	2023-11-29 01:41:10.807550345 +0000
+@@ -2007,7 +2007,7 @@
+ 	if (cp == NULL)
+ 		return evutil_inet_pton(af, src, dst);
+ 
+-	if_index = if_nametoindex(cp + 1);
++	if_index = 0; // if_nametoindex(cp + 1);
+ 	if (if_index == 0) {
+ 		/* Could be numeric */
+ 		if_index = strtoul(cp + 1, &check, 10);
