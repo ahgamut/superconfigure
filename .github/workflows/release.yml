@@ -34,6 +34,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: "${{ matrix.result }}*.zip"
+          file: "/ahgamut/superconfigure/${{ matrix.result }}*.zip"
           overwrite: true
-          working-directory: /ahgamut/superconfigure
