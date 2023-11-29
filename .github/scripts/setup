@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# update?
+sudo apt update
+
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev
 sudo apt-get install -y qemu qemu-utils qemu-user-static
