@@ -19,14 +19,18 @@ jobs:
       - name: support ape bins and SSL things
         run: bash ./.github/scripts/setup
       - name: build Cosmo
+        working-directory: /ahgamut/superconfigure
         run: bash ./.github/scripts/cosmo
       - name: build ${{ matrix.result }}
+        working-directory: /ahgamut/superconfigure
         run: bash ./.github/scripts/build/${{ matrix.result }}
       - name: collect into zip
+        working-directory: /ahgamut/superconfigure
         env:
           ZFILENAME: ${{ matrix.result }}
         run: bash ./.github/scripts/collectzip
       - name: Upload binaries to release
+        working-directory: /ahgamut/superconfigure
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

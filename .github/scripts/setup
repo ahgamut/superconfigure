@@ -13,6 +13,15 @@ sudo apt-get install -y cmake ninja-build
 sudo mkdir -p /zip
 sudo chmod -R 0777 /zip
 
+# the actual build folder
+sudo mkdir -p /ahgamut
+sudo chmod -R 0777 /ahgamut
+
+cd "$GITHUB_WORKSPACE"
+cd ../
+cp -r superconfigure /ahgamut
+cd /ahgamut/superconfigure
+
 # cosmo
 git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan
 
