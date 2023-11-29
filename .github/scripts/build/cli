@@ -42,6 +42,7 @@ mkdir -p "$RESULTS"
 cd "$CONFIGDIR"
 mkdir -p share
 cp -r /zip/share/terminfo ./share
+cp -r /zip/share/zsh ./share || true
 ls -al /zip
 
 
@@ -59,9 +60,16 @@ tmux
 for EXE in $TERMLIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
     cd "$CONFIGDIR"
-    zip -r $RESULTS/bin/$EXE.com share/terminfo
+    zip -qr $RESULTS/bin/$EXE.com share/terminfo
     cd "$BASELOC"
 done
+
+# zsh
+cd "$CONFIGDIR"
+zip -qr $RESULTS/bin/zsh.com share/zsh
+cd "$BASELOC"
+
+
 
 FILELIST='
 [ b2sum base32 base64 basename basenc cat chcon chgrp chmod chown chroot cksum 

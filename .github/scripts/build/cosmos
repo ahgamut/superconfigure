@@ -43,34 +43,32 @@ mkdir -p "$RESULTS"
 cd "$CONFIGDIR"
 mkdir -p share
 cp -r /zip/share/terminfo ./share
+cp -r /zip/share/zsh ./share || true
 ls -al /zip
 
 cd $BASELOC
 ls -al ./
 
-# bash
-apelinkpls $RESULTS/bin/bash.com $COSMOS_X86/bin/bash $COSMOS_AARCH64/bin/bash
-cd "$CONFIGDIR"
-zip -r $RESULTS/bin/bash.com share/terminfo
-cd "$BASELOC"
+TERMLIST='
+bash
+berry
+less
+zsh
+tmux
+'
 
-# berry
-apelinkpls $RESULTS/bin/berry.com $COSMOS_X86/bin/berry $COSMOS_AARCH64/bin/berry
-cd "$CONFIGDIR"
-zip -r $RESULTS/bin/berry.com share/terminfo
-cd "$BASELOC"
-
-# less
-apelinkpls $RESULTS/bin/less.com $COSMOS_X86/bin/less $COSMOS_AARCH64/bin/less
-cd "$CONFIGDIR"
-zip -r $RESULTS/bin/less.com share/terminfo
-cd "$BASELOC"
+for EXE in $TERMLIST; do
+    apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
+    cd "$CONFIGDIR"
+    zip -qr $RESULTS/bin/$EXE.com share/terminfo
+    cd "$BASELOC"
+done
 
 # zsh
-apelinkpls $RESULTS/bin/zsh.com $COSMOS_X86/bin/zsh $COSMOS_AARCH64/bin/zsh
 cd "$CONFIGDIR"
-zip -r $RESULTS/bin/zsh.com share/terminfo
+zip -qr $RESULTS/bin/zsh.com share/zsh
 cd "$BASELOC"
+
 
 FILELIST='
 [ b2sum base32 base64 basename basenc cat chcon chgrp chmod chown chroot cksum 
