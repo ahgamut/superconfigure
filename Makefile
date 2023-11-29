@@ -43,7 +43,6 @@ cli/texinfo-7.0.2.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/ncurses-6.4.bui
 cli/tmux-3.3a.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/libevent-2.1.12.built.$(ARCH)
 
 cli: cosmo-repo-thirdparty.built.$(ARCH)\
-	cli/tmux-3.3a.built.$(ARCH)\
 	cli/make-4.4.built.$(ARCH)\
 	cli/sed-4.9.built.$(ARCH)\
 	cli/ninja-1.11.1.built.$(ARCH)\
