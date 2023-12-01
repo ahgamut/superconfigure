@@ -36,23 +36,11 @@ cd zsh*/
 ./configure --cache-file=config.cache --prefix="$COSMOS" --disable-dynamic \
     --datarootdir=/zip/share --with-tcsetpgrp --enable-gdbm \
     --enable-zshenv=/zip/zshenv  \
-    CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm" \
-    LDFLAGS="-lncurses"
-
-link_static() {
-  for module_name in "$@"; do
-    grep -n "name=zsh/$module_name " config.modules | cut -d: -f1 | \
-      while read line; do
-        sed -i "${line}s/link=no/link=static/" config.modules
-      done
-  done
-}
-
-link_static mathfunc regex
+    CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm"
 
 # run make and/or make install
 make V=0 -s -j$MAXPROC
 make install V=0 -s -j$MAXPROC
-echo 'source /etc/zshenv' > /zip/zshenv
+cp ./zshenv /zip/zshenv
 
 echo "DONE."

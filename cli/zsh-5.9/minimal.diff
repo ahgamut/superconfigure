@@ -127,3 +127,207 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
  	@for subdir in Src Doc; do \
  	  (cd $$subdir && $(MAKE) $(MAKEDEFS) $@) || exit 1; \
  	done
+--- zsh-5.9/Src/Modules/cap.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:08:30.012926051 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/cap
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="b:cap b:getcap b:setcap"
+--- zsh-5.9/Src/Modules/curses.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:08:52.040516143 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/curses
+-link='if test "x$ac_cv_func_initscr" = xyes && test "x$zsh_cv_path_curses_header" != x; then echo dynamic; else echo no; fi'
++link=no
+ load=no
+ 
+ autofeatures="b:zcurses"
+--- zsh-5.9/Src/Modules/datetime.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:09:06.044957126 +0000
+@@ -1,6 +1,6 @@
+ name=zsh/datetime
+ 
+-link=either
++link=static
+ load=no
+ 
+ functions='Functions/Calendar/*'
+--- zsh-5.9/Src/Modules/db_gdbm.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:09:31.416779728 +0000
+@@ -1,10 +1,5 @@
+ name=zsh/db/gdbm
+-link='if test "x$ac_cv_lib_gdbm_gdbm_open" = xyes && test "x$ac_cv_header_gdbm_h" = xyes; then
+-  echo dynamic
+-else
+-  echo no
+-fi
+-'
++link=static
+ load=no
+ 
+ autofeatures="b:ztie b:zuntie b:zgdbmpath p:zgdbm_tied"
+--- zsh-5.9/Src/Modules/parameter.mdd	2018-11-13 08:04:43.000000000 +0000
++++ -	2023-12-01 22:10:38.978269025 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/parameter
+-link=either
++link=static
+ load=yes
+ 
+ autofeatures="p:parameters p:commands p:functions p:dis_functions p:functions_source p:dis_functions_source p:funcfiletrace p:funcsourcetrace p:funcstack p:functrace p:builtins p:dis_builtins p:reswords p:dis_reswords p:patchars p:dis_patchars p:options p:modules p:dirstack p:history p:historywords p:jobtexts p:jobdirs p:jobstates p:nameddirs p:userdirs p:usergroups p:aliases p:dis_aliases p:galiases p:dis_galiases p:saliases p:dis_saliases"
+--- zsh-5.9/Src/Modules/zutil.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:10:46.139729945 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/zutil
+-link=either
++link=static
+ load=yes
+ 
+ moddeps="zsh/complete"
+--- zsh-5.9/Src/Modules/zselect.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:12:13.073245060 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/zselect
+-link=dynamic
++link=static
+ load=no
+ 
+ objects="zselect.o"
+--- zsh-5.9/Src/Modules/example.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:12:22.118370938 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/example
+-link=dynamic
++link=no
+ load=no
+ 
+ autofeatures="b:example C:ex c:len p:exint p:exstr p:exarr f:sum f:length"
+--- zsh-5.9/Src/Modules/stat.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:12:32.518483224 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/stat
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="b:stat b:zstat"
+--- zsh-5.9/Src/Modules/mathfunc.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:12:43.703091397 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/mathfunc
+-link=dynamic
++link=static
+ load=no
+ 
+ objects="mathfunc.o"
+--- zsh-5.9/Src/Modules/socket.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:13:12.270619140 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/net/socket
+-link=dynamic
++link=static
+ load=no
+ 
+ objects="socket.o"
+--- zsh-5.9/Src/Modules/system.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:13:19.579987590 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/system
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="b:sysread b:syswrite b:sysopen b:sysseek b:syserror p:errnos f:systell"
+--- zsh-5.9/Src/Modules/watch.mdd	2022-05-08 06:18:22.000000000 +0000
++++ -	2023-12-01 22:13:27.430668412 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/watch
+-link=dynamic
++link=static
+ load=yes
+ 
+ autofeatures="b:log p:WATCH p:watch"
+--- zsh-5.9/Src/Modules/param_private.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:13:45.075989090 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/param/private
+-link=dynamic
++link=static
+ load=yes
+ 
+ autofeatures="b:private"
+--- zsh-5.9/Src/Modules/clone.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:13:53.953537582 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/clone
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="b:clone"
+--- zsh-5.9/Src/Modules/nearcolor.mdd	2019-02-01 00:37:34.000000000 +0000
++++ -	2023-12-01 22:14:12.682289050 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/nearcolor
+-link=dynamic
++link=static
+ load=no
+ 
+ objects="nearcolor.o"
+--- zsh-5.9/Src/Modules/zprof.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:06.541386243 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/zprof
+-link=dynamic
++link=no
+ load=no
+ 
+ autofeatures="b:zprof"
+--- zsh-5.9/Src/Modules/zftp.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:10.159651980 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/zftp
+-link=dynamic
++link=no
+ load=no
+ functions='Functions/Zftp/*'
+ 
+--- zsh-5.9/Src/Modules/tcp.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:13.381540907 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/net/tcp
+-link=dynamic
++link=no
+ load=no
+ functions='Functions/TCP/*'
+ 
+--- zsh-5.9/Src/Modules/zpty.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:18.855628981 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/zpty
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="b:zpty"
+--- zsh-5.9/Src/Modules/files.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:36.813493343 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/files
+-link=dynamic
++link=no
+ load=no
+ 
+ autofeatures="b:chgrp b:chown b:ln b:mkdir b:mv b:rm b:rmdir b:sync b:zf_chgrp b:zf_chown b:zf_ln b:zf_mkdir b:zf_mv b:zf_rm b:zf_rmdir b:zf_sync"
+--- zsh-5.9/Src/Modules/mapfile.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 22:15:44.292105298 +0000
+@@ -1,5 +1,5 @@
+ name=zsh/mapfile
+-link=dynamic
++link=static
+ load=no
+ 
+ autofeatures="p:mapfile"

@@ -43,6 +43,7 @@ cd "$CONFIGDIR"
 mkdir -p share
 cp -r /zip/share/terminfo ./share
 cp -r /zip/share/zsh ./share || true
+cp /zip/zshenv ./
 ls -al /zip
 
 

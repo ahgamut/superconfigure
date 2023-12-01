@@ -1,0 +1,3 @@
+if [ -f /etc/zshenv ]; then
+    source /etc/zshenv
+fi
