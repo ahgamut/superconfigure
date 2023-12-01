@@ -8,6 +8,8 @@ sudo apt-get install -y ca-certificates libssl-dev
 sudo apt-get install -y qemu qemu-utils qemu-user-static
 sudo apt-get install -y texinfo
 sudo apt-get install -y cmake ninja-build
+sudo apt-get install -y bison
+sudo apt-get install -y zip
 
 # the zip folder
 sudo mkdir -p /zip
