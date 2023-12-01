@@ -27,7 +27,7 @@ else
     tar -xJf sources.tar.xz
 
     # apply patches if any
-    patch -p0 -i zsh-cosmo.diff
+    patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure

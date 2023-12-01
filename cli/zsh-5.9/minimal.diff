@@ -116,3 +116,14 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
  	&& defined(HAVE_INET_NTOP) && defined(HAVE_INET_PTON)
  # define SUPPORT_IPV6 1
  #endif
+--- zsh-5.9/Makefile.in	2023-12-01 13:19:15.215726166 +0000
++++ -	2023-12-01 13:19:20.143349106 +0000
+@@ -41,7 +41,7 @@
+ # ========== DEPENDENCIES FOR BUILDING ==========
+ 
+ # default target
+-all: config.h config.modules
++all: config.h 
+ 	@for subdir in Src Doc; do \
+ 	  (cd $$subdir && $(MAKE) $(MAKEDEFS) $@) || exit 1; \
+ 	done
