@@ -37,7 +37,7 @@ cd zsh*/
     --datarootdir=/zip/share --with-tcsetpgrp --enable-gdbm \
     --enable-zshenv=/zip/zshenv --enable-zshrc=/zip/zshrc \
     CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm"
-cp ../config.modules ./
+cp ../config_modules ./config.modules
 
 # run make and/or make install
 make V=0 -s -j$MAXPROC
