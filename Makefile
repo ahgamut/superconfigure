@@ -34,6 +34,9 @@ lib/mpc-1.3.1.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/mpfr-4.2.0.built.$(
 # cli
 
 cli/bash-5.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/zsh-5.9.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/gdbm-1.23.built.$(ARCH)
 cli/less-643.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
 cli/grep-3.11.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
 cli/berry-lang.built.$(ARCH): lib/readline-8.2.built.$(ARCH)
