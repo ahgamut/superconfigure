@@ -1,0 +1,129 @@
+diff -r --unified zsh-5.9a/Src/exec.c zsh-5.9/Src/exec.c
+--- zsh-5.9a/Src/exec.c	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/Src/exec.c	2023-11-03 15:51:06.715433334 +0100
+@@ -267,7 +267,7 @@
+ /* the resource limits for the shell and its children */
+ 
+ /**/
+-mod_export struct rlimit current_limits[RLIM_NLIMITS], limits[RLIM_NLIMITS];
++mod_export struct rlimit current_limits[16], limits[16];
+ 
+ /**/
+ mod_export int
+diff -r --unified zsh-5.9a/aczsh.m4 zsh-5.9/aczsh.m4
+--- zsh-5.9a/aczsh.m4	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/aczsh.m4	2023-11-03 15:51:06.715433334 +0100
+@@ -418,7 +418,9 @@
+     AC_TRY_COMMAND($CC -c $CFLAGS $CPPFLAGS $DLCFLAGS conftest1.c 1>&AS_MESSAGE_LOG_FD) &&
+     AC_TRY_COMMAND($DLLD -o conftest1.$DL_EXT $LDFLAGS $DLLDFLAGS conftest1.o $LIBS 1>&AS_MESSAGE_LOG_FD); then
+     save_ldflags=$LDFLAGS
+-    LDFLAGS="$LDFLAGS $EXTRA_LDFLAGS -s"
++    dnl -s is removed here to prevent stripping executables,
++    dnl making this test a no-op
++    LDFLAGS="$LDFLAGS $EXTRA_LDFLAGS"
+     AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ #include <stdlib.h>
+ #ifdef HPUX10DYNAMIC
+diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
+--- zsh-5.9a/configure.ac	2022-05-08 08:18:22.000000000 +0200
++++ zsh-5.9/configure.ac	2023-11-03 15:52:09.295424525 +0100
+@@ -513,21 +513,21 @@
+      s/ *$//'
+ 
+ case " $LDFLAGS " in
+-  *" -s "*) strip_exeldflags=true strip_libldflags=true
++  *" -s "*) strip_exeldflags=false strip_libldflags=false
+     LDFLAGS=`echo " $LDFLAGS " | sed "$sed"` ;;
+   *) strip_exeldflags=false strip_libldflags=false ;;
+ esac
+ 
+ case " ${EXELDFLAGS+$EXELDFLAGS }" in
+   " ") ;;
+-  *" -s "*) strip_exeldflags=true
++  *" -s "*) strip_exeldflags=false
+     EXELDFLAGS=`echo " $EXELDFLAGS " | sed "$sed"` ;;
+   *) strip_exeldflags=false ;;
+ esac
+ 
+ case " ${LIBLDFLAGS+$LIBLDFLAGS }" in
+   " ") ;;
+-  *" -s "*) strip_libldflags=true
++  *" -s "*) strip_libldflags=false
+     LIBLDFLAGS=`echo " $LIBLDFLAGS " | sed "$sed"` ;;
+   *) strip_libldflags=false ;;
+ esac
+--- zsh-5.9/Config/uninstallfns.sh	2017-12-04 14:09:35.000000000 +0000
++++ -	2023-12-01 12:06:29.124438295 +0000
+@@ -4,7 +4,7 @@
+ scriptdir=$DESTDIR$scriptdir
+ 
+ allfuncs="`grep ' functions=' ${dir_top}/config.modules |
+-  sed -e '/^#/d' -e '/ link=no/d' -e 's/^.* functions=//'`"
++  sed -e '/^#/d' -e '/ link=static/d' -e 's/^.* functions=//'`"
+ 
+ allfuncs="`cd ${sdir_top}; echo ${allfuncs}`"
+ 
+--- zsh-5.9/Config/installfns.sh	2017-12-04 14:09:35.000000000 +0000
++++ -	2023-12-01 12:06:37.323280781 +0000
+@@ -6,7 +6,7 @@
+ /bin/sh $sdir_top/mkinstalldirs $fndir || exit 1;
+ 
+ allfuncs="`grep ' functions=.' ${dir_top}/config.modules |
+-  sed -e '/^#/d' -e '/ link=no/d' -e 's/^.* functions=//'`"
++  sed -e '/^#/d' -e '/ link=static/d' -e 's/^.* functions=//'`"
+ 
+ allfuncs="`cd $sdir_top; echo ${allfuncs}`"
+ 
+--- zsh-5.9/Src/mkbltnmlst.sh	2017-12-04 14:09:36.000000000 +0000
++++ -	2023-12-01 12:06:40.373108856 +0000
+@@ -13,7 +13,7 @@
+ bin_mods="`grep ' link=static' $CFMOD | sed -e '/^#/d' \
+ -e 's/ .*/ /' -e 's/^name=/ /'`"
+ 
+-x_mods="`grep ' load=yes' $CFMOD | sed -e '/^#/d' -e '/ link=no/d' \
++x_mods="`grep ' load=yes' $CFMOD | sed -e '/^#/d' -e '/ link=static/d' \
+ -e 's/ .*/ /' -e 's/^name=/ /'`"
+ 
+ trap "rm -f $1; exit 1" 1 2 15
+--- zsh-5.9/Src/zsh.mdd	2022-05-08 06:18:22.000000000 +0000
++++ -	2023-12-01 12:06:43.130698582 +0000
+@@ -92,7 +92,7 @@
+ 	  if test x$(FUNCTIONS_SUBDIRS) != x && \
+ 	     test x$(FUNCTIONS_SUBDIRS) != xno; then \
+ 	    fpath_tmp="`grep ' functions=.' \
+-	    $(dir_top)/config.modules | sed -e '/^#/d' -e '/ link=no/d' \
++	    $(dir_top)/config.modules | sed -e '/^#/d' -e '/ link=static/d' \
+ 	    -e 's/^.* functions=//'`"; \
+ 	    fpath_tmp=`for f in $$fpath_tmp; do \
+ 	      echo $$f | sed -e 's%^Functions/%%' -e 's%/[^/]*$$%%' -e 's%/\*%%'; \
+--- zsh-5.9/Src/Modules/tcp.h	2023-12-01 12:17:22.070568112 +0000
++++ -	2023-12-01 12:17:37.485306356 +0000
+@@ -57,7 +57,7 @@
+  * not including this file only on systems where we know it's missing.
+  * Currently this is just some older versions of cygwin.
+  */
+-#if defined(HAVE_NETINET_IN_SYSTM_H) || !defined(__CYGWIN__)
++#if 0
+ # include <netinet/in_systm.h>
+ #endif
+ #include <netinet/in.h>
+@@ -66,7 +66,7 @@
+ 
+ /* Is IPv6 supported by the library? */
+ 
+-#if defined(AF_INET6) && defined(IN6ADDR_LOOPBACK_INIT) \
++#if 0 && defined(AF_INET6) && defined(IN6ADDR_LOOPBACK_INIT) \
+ 	&& defined(HAVE_INET_NTOP) && defined(HAVE_INET_PTON)
+ # define SUPPORT_IPV6 1
+ #endif
+--- zsh-5.9/Makefile.in	2023-12-01 13:19:15.215726166 +0000
++++ -	2023-12-01 13:19:20.143349106 +0000
+@@ -41,7 +41,7 @@
+ # ========== DEPENDENCIES FOR BUILDING ==========
+ 
+ # default target
+-all: config.h config.modules
++all: config.h 
+ 	@for subdir in Src Doc; do \
+ 	  (cd $$subdir && $(MAKE) $(MAKEDEFS) $@) || exit 1; \
+ 	done

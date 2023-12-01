@@ -27,15 +27,17 @@ else
     tar -xJf sources.tar.xz
 
     # apply patches if any
-    patch -p0 -i zsh-cosmo.diff
+    patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
 cd zsh*/
 # cp $COSMOS/common.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS" --disable-dynamic \
-    --enable-zshenv=/zip/zshenv --datarootdir=/zip/share --with-tcsetpgrp \
-    CFLAGS="-Os -I$COSMOS/include/ncurses"
+    --datarootdir=/zip/share --with-tcsetpgrp --enable-gdbm \
+    --enable-zshenv=/zip/zshenv  \
+    CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm" \
+    LDFLAGS="-lncurses"
 
 link_static() {
   for module_name in "$@"; do

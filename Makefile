@@ -34,6 +34,9 @@ lib/mpc-1.3.1.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/mpfr-4.2.0.built.$(
 # cli
 
 cli/bash-5.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/zsh-5.9.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/gdbm-1.23.built.$(ARCH)
 cli/less-643.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
 cli/grep-3.11.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
 cli/berry-lang.built.$(ARCH): lib/readline-8.2.built.$(ARCH)
@@ -100,6 +103,13 @@ web/git-2.42.0.built.$(ARCH):\
 	web/curl-8.4.0.built.$(ARCH)\
 	lib/libexpat-2.5.0.built.$(ARCH)
 
+web/postgres-15.5.built.$(ARCH):\
+	lib/openssl-1.1.1u.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH)\
+	lib/readline-8.2.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)\
+	lib/libexpat-2.5.0.built.$(ARCH)
+
 web: web/wget-1.21.built.$(ARCH)\
 	web/curl-8.4.0.built.$(ARCH)\
 	web/rsync-3.2.7.built.$(ARCH)\
@@ -119,10 +129,17 @@ python/cpy311-pypack1.built.$(ARCH):\
 	lib/libuuid-1.0.3.built.$(ARCH) lib/libexpat-2.5.0.built.$(ARCH)\
 	lib/libyaml-0.2.5.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)
 
+python/cpy311-pypack2.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH) lib/gdbm-1.23.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH) lib/libexpat-2.5.0.built.$(ARCH)\
+	lib/libyaml-0.2.5.built.$(ARCH) compress/xz-5.4.3.built.$(ARCH)
+
+pypack2: python/cpy311-pypack2.built.$(ARCH)
 pypack1: python/cpy311-pypack1.built.$(ARCH)
 datasette: python/cpy311-datasette.built.$(ARCH)
 
-python: pypack1 datasette
+python: pypack2 pypack1 datasette
 
 # compiler
 
