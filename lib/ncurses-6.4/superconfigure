@@ -49,4 +49,7 @@ cp $COSMOS/common.cache ./config.cache
 make V=0 -s -j$MAXPROC
 make install V=0 -s -j$MAXPROC
 
+wget -q https://github.com/kovidgoyal/kitty/raw/master/terminfo/x/xterm-kitty
+cp ./xterm-kitty /zip/share/terminfo/x/
+
 echo "DONE."
