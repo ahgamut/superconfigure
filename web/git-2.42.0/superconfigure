@@ -46,7 +46,7 @@ cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\
     --without-tcltk --without-python \
-    --sysconfdir=/zip/etc --datarootdir=/zip/share\
+    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
     --with-pager=less --with-editor=vim  --with-shell=sh\
     --with-gitconfig=/zip/gitconfig --with-gitattributes=/zip/gitattributes\
     --with-sane-tool-path=""\

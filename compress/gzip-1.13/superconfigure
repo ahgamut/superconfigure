@@ -32,7 +32,7 @@ fi
 cd gzip*/
 cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
-    --datarootdir=/zip/share\
+    --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 # run make and/or make install

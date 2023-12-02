@@ -34,7 +34,7 @@ fi
 cd zsh*/
 cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS" --disable-dynamic \
-    --datarootdir=/zip/share --with-tcsetpgrp --enable-gdbm \
+    --datarootdir=/zip/usr/share --with-tcsetpgrp --enable-gdbm \
     --enable-zshenv=/zip/zshenv  \
     CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm"
 

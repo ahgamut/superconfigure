@@ -39,7 +39,7 @@ cp ../saved_config.cache ./config.cache
     --without-bash-malloc --enable-static-link\
     --disable-rpath --with-installed-readline\
     --disable-nls --enable-threads=posix\
-    --datarootdir=/zip/share\
+    --datarootdir=/zip/usr/share\
     --with-gnu-ld --with-curses\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
 

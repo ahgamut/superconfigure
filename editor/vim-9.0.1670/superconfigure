@@ -46,7 +46,7 @@ cp ../saved_config.cache ./config.cache
     --disable-canberra --disable-libsodium\
     --without-x --with-tlib=tinfo\
     --with-local-dir=$COSMOS/lib\
-    --sysconfdir=/zip --datarootdir=/zip/share\
+    --sysconfdir=/zip --datarootdir=/zip/usr/share\
     --prefix=$COSMOS\
     CFLAGS="-Os -I$COSMOS/include" LDFLAGS="-L$COSMOS/lib" 
 

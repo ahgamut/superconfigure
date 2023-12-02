@@ -36,7 +36,7 @@ cp ../saved_config.cache ./config.cache
     --without-pic --with-gnu-ld\
     --disable-tests --disable-examples --without-docbook\
     --with-getrandom\
-    --prefix="$COSMOS" --sysconfdir=/zip/etc --datarootdir=/zip/share \
+    --prefix="$COSMOS" --sysconfdir=/zip/etc --datarootdir=/zip/usr/share \
     CFLAGS="-Os"
 
 # run make and/or make install

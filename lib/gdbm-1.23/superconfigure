@@ -38,7 +38,7 @@ cp ../saved_config.cache ./config.cache
     --disable-shared --enable-static\
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld --without-readline\
-    --sysconfdir=/zip --datarootdir=/zip/share\
+    --sysconfdir=/zip --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 # run make and/or make install

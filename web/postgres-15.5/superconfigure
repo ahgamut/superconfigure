@@ -32,7 +32,7 @@ cd postgres*/
 cp $COSMOS/common.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --with-gnu-ld\
-    --sysconfdir=/zip/share --datarootdir=/zip/share --build=$ARCH-linux-gnu\
+    --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share --build=$ARCH-linux-gnu\
     --disable-nls --disable-rpath\
     --disable-debug --disable-profiling --disable-coverage --disable-dtrace\
     --disable-tap-tests --disable-depend --disable-cassert --disable-thread-safety\

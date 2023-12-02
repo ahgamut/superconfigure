@@ -40,7 +40,7 @@ export PKG_CONFIG=""
 
 cp $COSMOS/common.cache ./config.cache
 ./configure --cache-file=config.cache --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
-    --datarootdir=/zip/share --sysconfdir=/zip/share\
+    --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
     --disable-silent-rules --disable-libstdcxx --disable-werror --disable-multilib \
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \

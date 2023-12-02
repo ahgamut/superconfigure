@@ -37,7 +37,7 @@ cp ../saved_config.cache ./config.cache
     --with-packager="cosmo" --without-xattrs\
     --with-gzip=gzip --with-bzip2=bzip2\
     --with-xz=xz --with-zstd=zstd\
-    --datarootdir=/zip/share\
+    --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 # run make and/or make install

@@ -41,7 +41,7 @@ mkdir -p $RESULTS/bin
 
 # the zip folder
 cd "$CONFIGDIR"
-mkdir -p share
+mkdir -p usr/share
 ls -al /zip
 
 
@@ -69,7 +69,7 @@ apelinkpls $RESULTS/bin/rsync.com $COSMOS_X86/bin/rsync $COSMOS_AARCH64/bin/rsyn
 
 # git
 cd "$CONFIGDIR"
-cp -r /zip/share/git-core ./share || true
+cp -r /zip/usr/share/git-core ./usr/share || true
 mkdir -p $RESULTS/libexec/git-core/mergetools
 
 # these are the unique binaries
@@ -89,7 +89,6 @@ cd "$CONFIGDIR"
 for EXE in $BINLIST; do
     apelinkpls $RESULTS/$EXE.com $COSMOS_X86/$EXE $COSMOS_AARCH64/$EXE
     zip -qr $RESULTS/$EXE.com usr/
-    zip -qr $RESULTS/$EXE.com share/git-core
 done
 
 # these are in /bin but symlinked to git
