@@ -41,9 +41,9 @@ mkdir -p "$RESULTS"
 
 # cli
 cd "$CONFIGDIR"
-mkdir -p share
-cp -r /zip/share/terminfo ./share
-cp -r /zip/share/zsh ./share || true
+mkdir -p usr/share
+cp -r /zip/usr/share/terminfo ./usr/share
+cp -r /zip/usr/share/zsh ./usr/share || true
 ls -al /zip
 
 cd $BASELOC
@@ -60,13 +60,13 @@ tmux
 for EXE in $TERMLIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
     cd "$CONFIGDIR"
-    zip -qr $RESULTS/bin/$EXE.com share/terminfo
+    zip -qr $RESULTS/bin/$EXE.com usr/share/terminfo
     cd "$BASELOC"
 done
 
 # zsh
 cd "$CONFIGDIR"
-zip -qr $RESULTS/bin/zsh.com share/zsh
+zip -qr $RESULTS/bin/zsh.com usr/share/zsh
 cd "$BASELOC"
 
 
@@ -138,15 +138,15 @@ done
 # editor
 
 cd "$CONFIGDIR"
-mkdir -p share
+mkdir -p usr/share
 cp -r /zip/x86_64 ./
 cp -r /zip/aarch64 ./
-cp -r /zip/share/terminfo ./share
-cp -r /zip/share/vim ./share
-cp -r /zip/share/nano ./share
-cp -r /zip/share/emacs ./share
-mkdir -p ./share/ssl/certs/
-cp /etc/ssl/certs/*.* ./share/ssl/certs/ || true
+cp -r /zip/usr/share/terminfo ./usr/share
+cp -r /zip/usr/share/vim ./usr/share
+cp -r /zip/usr/share/nano ./usr/share
+cp -r /zip/usr/share/emacs ./usr/share
+mkdir -p ./usr/share/ssl/certs/
+cp /etc/ssl/certs/*.* ./usr/share/ssl/certs/ || true
 ls -al /zip
 
 
@@ -159,8 +159,8 @@ for e in emacs emacsclient; do
     apelinkpls $RESULTS/bin/$e.com $COSMOS_X86/bin/$e $COSMOS_AARCH64/bin/$e
     cd "$CONFIGDIR"
     zip -qr $RESULTS/bin/$e.com \
-        share/ssl \
-        share/terminfo \
+        usr/share/ssl \
+        usr/share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
         $(find aarch64 -type f | grep '\.pdmp') \
         $(find share/emacs -type f |
@@ -174,16 +174,16 @@ cd "$BASELOC"
 apelinkpls $RESULTS/bin/vim.com $COSMOS_X86/bin/vim $COSMOS_AARCH64/bin/vim
 cd "$CONFIGDIR"
 zip -r $RESULTS/bin/vim.com \
-    share/terminfo \
-    share/vim
+    usr/share/terminfo \
+    usr/share/vim
 
 # nano
 cd "$BASELOC"
 apelinkpls $RESULTS/bin/nano.com $COSMOS_X86/bin/nano $COSMOS_AARCH64/bin/nano
 cd "$CONFIGDIR"
 zip -r $RESULTS/bin/nano.com \
-    share/terminfo\
-    share/nano
+    usr/share/terminfo\
+    usr/share/nano
 
 # datasette
 

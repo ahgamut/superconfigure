@@ -40,9 +40,9 @@ mkdir -p "$RESULTS"
 
 # the zip folder
 cd "$CONFIGDIR"
-mkdir -p share
-cp -r /zip/share/terminfo ./share
-cp -r /zip/share/zsh ./share || true
+mkdir -p usr/share
+cp -r /zip/usr/share/terminfo ./usr/share
+cp -r /zip/usr/share/zsh ./usr/share || true
 cp /zip/zshenv ./
 ls -al /zip
 
@@ -61,13 +61,13 @@ tmux
 for EXE in $TERMLIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86/bin/$EXE $COSMOS_AARCH64/bin/$EXE
     cd "$CONFIGDIR"
-    zip -qr $RESULTS/bin/$EXE.com share/terminfo
+    zip -qr $RESULTS/bin/$EXE.com usr/share/terminfo
     cd "$BASELOC"
 done
 
 # zsh
 cd "$CONFIGDIR"
-zip -qr $RESULTS/bin/zsh.com share/zsh zshenv
+zip -qr $RESULTS/bin/zsh.com usr/share/zsh zshenv
 cd "$BASELOC"
 
 

@@ -36,7 +36,7 @@ SYSROOT_BUILD=$(realpath ./build)
 cd build
 cp $COSMOS/common.cache ./config.cache
 ../$FOLDER/configure --cache-file=config.cache --prefix=$COSMOS --with-sysroot="$SYSROOT_BUILD" \
-    --datarootdir=/zip/share --sysconfdir=/zip/share\
+    --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
     --with-system-zlib --disable-shared --enable-static --disable-libquadmath \
     --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
     --with-static-standard-libraries --disable-libada --disable-libssp \

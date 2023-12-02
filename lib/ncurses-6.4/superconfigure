@@ -42,7 +42,7 @@ cp ../saved_config.cache ./config.cache
     --with-curses-h --disable-stripping --enable-widec\
     --disable-lib-suffixes\
     --prefix=$COSMOS\
-    --sysconfdir=/zip --datarootdir=/zip/share\
+    --sysconfdir=/zip --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 # run make and/or make install
@@ -50,6 +50,6 @@ make V=0 -s -j$MAXPROC
 make install V=0 -s -j$MAXPROC
 
 wget -q https://github.com/kovidgoyal/kitty/raw/master/terminfo/x/xterm-kitty
-cp ./xterm-kitty /zip/share/terminfo/x/
+cp ./xterm-kitty /zip/usr/share/terminfo/x/
 
 echo "DONE."

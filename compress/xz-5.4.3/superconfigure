@@ -36,7 +36,7 @@ cp ../saved_config.cache ./config.cache
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld\
     --enable-sandbox=no\
-    --sysconfdir=/zip --datarootdir=/zip/share\
+    --sysconfdir=/zip --datarootdir=/zip/usr/share\
     CFLAGS="-Os -std=gnu99"
 
 # run make and/or make install

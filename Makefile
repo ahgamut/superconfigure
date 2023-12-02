@@ -168,6 +168,7 @@ all: python cli editor web compress
 ######
 
 zipclean:
+	rm -rf /zip/usr
 	rm -rf /zip/share
 	rm -rf /zip/x86_64
 	rm -rf /zip/aarch64

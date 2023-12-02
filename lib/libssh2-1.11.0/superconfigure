@@ -35,7 +35,7 @@ cp ../saved_config.cache ./config.cache
     --with-crypto=openssl --with-libssl-prefix="$COSMOS/lib"\
     --without-pic --with-gnu-ld --disable-rpath\
     --disable-tests --disable-examples-build --disable-werror\
-    --prefix="$COSMOS" --sysconfdir=/zip/etc --datarootdir=/zip/share\
+    --prefix="$COSMOS" --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 # run make and/or make install

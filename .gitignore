@@ -4,6 +4,7 @@ compiler/gcc-11.2-patched/gcc/
 cli/berry-lang/berry
 python/cpy311-datasette/datasette
 python/cpy311-pypack1/pypack1
+python/cpy311-pypack2/pypack2
 
 # Prerequisites
 *.d
