@@ -42,7 +42,7 @@ mkdir -p "$RESULTS"
 cd "$CONFIGDIR"
 mkdir -p etc usr/share
 cp -r /zip/usr/share/terminfo ./usr/share
-cp -r /zip/usr/share/zsh ./usr/share || true
+cp -r /zip/usr/share/zsh ./usr/share
 cp /zip/etc/z* ./etc
 ls -al /zip
 
