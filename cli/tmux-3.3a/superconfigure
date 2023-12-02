@@ -30,7 +30,7 @@ fi
 
 # go into the source folder, configure
 cd tmux*/
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./autogen.sh
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --enable-static --disable-fuzzing\

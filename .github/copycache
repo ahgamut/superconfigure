@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+for CFILE in $(find . -name "config.cache"); do
+    rdir=`dirname $CFILE`
+    rdir=`dirname $rdir`
+    cat $CFILE | \
+        grep -v -e '#' -e '=/' -e 'x86_64' -e 'aarch64' -e 'arm' -e 'x87' | \
+        grep -v -e '_build' -e '_env' -e '_prog' -e '_path' -e 'align' | \
+        grep -v -e 'ahg' -e 'asm' > "$rdir"/saved_config.cache
+    if [ -f "$rdir"/superconfigure ]; then
+        sed -i 's&\$COSMOS/common.cache&../saved_config.cache&g' "$rdir"/superconfigure
+    fi
+done
+
+echo "updated all saved_config.cache files."

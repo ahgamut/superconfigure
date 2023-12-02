@@ -30,7 +30,7 @@ fi
 
 # go into the source folder, configure
 cd libuuid*
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --enable-static --disable-shared\
     --without-pic --with-gnu-ld\
     --prefix="$COSMOS"\

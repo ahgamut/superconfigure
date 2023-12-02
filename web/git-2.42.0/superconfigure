@@ -42,7 +42,7 @@ export NO_POLL=1
 export NO_PYTHON=1
 export SHELL_PATH="sh"
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\
     --without-tcltk --without-python \
