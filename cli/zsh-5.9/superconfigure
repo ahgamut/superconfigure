@@ -41,6 +41,6 @@ cd zsh*/
 # run make and/or make install
 make V=0 -s -j$MAXPROC
 make install V=0 -s -j$MAXPROC
-cp ./zshenv /zip/zshenv
+cp ../zshenv /zip/zshenv
 
 echo "DONE."
