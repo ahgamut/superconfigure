@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for CFILE in $(find . -name "saved_config.cache"); do
+    echo "" > $CFILE
+done
+
+echo "cleaned out all saved_config.cache files."

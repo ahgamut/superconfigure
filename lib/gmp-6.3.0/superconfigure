@@ -35,7 +35,7 @@ fi
 cd gmp*
 export PKG_CONFIG=""
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix=$COSMOS\
     --disable-shared --disable-dependency-tracking\
     --disable-silent-rules --enable-fat\

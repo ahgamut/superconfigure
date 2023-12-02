@@ -32,7 +32,7 @@ fi
 cd libyaml*
 ls -al
 autoreconf -fvi
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --without-pic --with-gnu-ld\
     --disable-shared --enable-static\
     --prefix=$COSMOS\

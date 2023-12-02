@@ -39,7 +39,7 @@ cd nettle*
 export GOBJECT_LIBS=""
 export PKG_CONFIG=""
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --disable-shared --enable-fat\
     --disable-openssl --disable-assembler\
     --libdir="$COSMOS/lib" --prefix="$COSMOS"\

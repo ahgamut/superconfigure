@@ -33,7 +33,7 @@ fi
 
 # go into the source folder, configure
 cd $FOLDER
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --without-libtool --without-shared\
     --without-manpages --without-tests --without-tack\
     --without-ada --without-cxx --without-cxx-binding\

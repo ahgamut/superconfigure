@@ -32,7 +32,7 @@ fi
 
 # go into the source folder, configure
 cd zsh*/
-# cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS" --disable-dynamic \
     --datarootdir=/zip/share --with-tcsetpgrp --enable-gdbm \
     --enable-zshenv=/zip/zshenv  \

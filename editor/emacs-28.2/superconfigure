@@ -41,7 +41,7 @@ export PKG_CONFIG=""
 export LIBGNUTLS_CFLAGS="-I$COSMOS/include/gnutls -I$COSMOS/include/nettle"
 export LIBGNUTLS_LIBS="-L$COSMOS/lib -lgnutls -lhogweed -lnettle -lgmp"
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --with-gnutls=ifavailable\
     --host=$ARCH-linux-gnu --with-threads\
     --without-dbus --without-selinux\

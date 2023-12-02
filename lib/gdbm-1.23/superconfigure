@@ -32,7 +32,7 @@ fi
 cd "$FOLDER"
 export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --disable-memory-mapped-io --enable-libgdbm-compat\
     --disable-shared --enable-static\

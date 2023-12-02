@@ -36,7 +36,7 @@ cd $FOLDER
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
-cp $COSMOS/common.cache ./config.cache
+cp ../saved_config.cache ./config.cache
 ./configure --cache-file=config.cache --prefix="$COSMOS"\
     --with-ssl=openssl --with-openssl=yes\
     --sysconfdir=/zip --with-gnu-ld=yes\
