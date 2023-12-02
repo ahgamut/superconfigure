@@ -52,50 +52,6 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
      LIBLDFLAGS=`echo " $LIBLDFLAGS " | sed "$sed"` ;;
    *) strip_libldflags=false ;;
  esac
---- zsh-5.9/Config/uninstallfns.sh	2017-12-04 14:09:35.000000000 +0000
-+++ -	2023-12-01 12:06:29.124438295 +0000
-@@ -4,7 +4,7 @@
- scriptdir=$DESTDIR$scriptdir
- 
- allfuncs="`grep ' functions=' ${dir_top}/config.modules |
--  sed -e '/^#/d' -e '/ link=no/d' -e 's/^.* functions=//'`"
-+  sed -e '/^#/d' -e '/ link=static/d' -e 's/^.* functions=//'`"
- 
- allfuncs="`cd ${sdir_top}; echo ${allfuncs}`"
- 
---- zsh-5.9/Config/installfns.sh	2017-12-04 14:09:35.000000000 +0000
-+++ -	2023-12-01 12:06:37.323280781 +0000
-@@ -6,7 +6,7 @@
- /bin/sh $sdir_top/mkinstalldirs $fndir || exit 1;
- 
- allfuncs="`grep ' functions=.' ${dir_top}/config.modules |
--  sed -e '/^#/d' -e '/ link=no/d' -e 's/^.* functions=//'`"
-+  sed -e '/^#/d' -e '/ link=static/d' -e 's/^.* functions=//'`"
- 
- allfuncs="`cd $sdir_top; echo ${allfuncs}`"
- 
---- zsh-5.9/Src/mkbltnmlst.sh	2017-12-04 14:09:36.000000000 +0000
-+++ -	2023-12-01 12:06:40.373108856 +0000
-@@ -13,7 +13,7 @@
- bin_mods="`grep ' link=static' $CFMOD | sed -e '/^#/d' \
- -e 's/ .*/ /' -e 's/^name=/ /'`"
- 
--x_mods="`grep ' load=yes' $CFMOD | sed -e '/^#/d' -e '/ link=no/d' \
-+x_mods="`grep ' load=yes' $CFMOD | sed -e '/^#/d' -e '/ link=static/d' \
- -e 's/ .*/ /' -e 's/^name=/ /'`"
- 
- trap "rm -f $1; exit 1" 1 2 15
---- zsh-5.9/Src/zsh.mdd	2022-05-08 06:18:22.000000000 +0000
-+++ -	2023-12-01 12:06:43.130698582 +0000
-@@ -92,7 +92,7 @@
- 	  if test x$(FUNCTIONS_SUBDIRS) != x && \
- 	     test x$(FUNCTIONS_SUBDIRS) != xno; then \
- 	    fpath_tmp="`grep ' functions=.' \
--	    $(dir_top)/config.modules | sed -e '/^#/d' -e '/ link=no/d' \
-+	    $(dir_top)/config.modules | sed -e '/^#/d' -e '/ link=static/d' \
- 	    -e 's/^.* functions=//'`"; \
- 	    fpath_tmp=`for f in $$fpath_tmp; do \
- 	      echo $$f | sed -e 's%^Functions/%%' -e 's%/[^/]*$$%%' -e 's%/\*%%'; \
 --- zsh-5.9/Src/Modules/tcp.h	2023-12-01 12:17:22.070568112 +0000
 +++ -	2023-12-01 12:17:37.485306356 +0000
 @@ -57,7 +57,7 @@
@@ -271,7 +227,7 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
 @@ -1,5 +1,5 @@
  name=zsh/zprof
 -link=dynamic
-+link=no
++link=static
  load=no
  
  autofeatures="b:zprof"
@@ -307,7 +263,7 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
 @@ -1,5 +1,5 @@
  name=zsh/files
 -link=dynamic
-+link=no
++link=static
  load=no
  
  autofeatures="b:chgrp b:chown b:ln b:mkdir b:mv b:rm b:rmdir b:sync b:zf_chgrp b:zf_chown b:zf_ln b:zf_mkdir b:zf_mv b:zf_rm b:zf_rmdir b:zf_sync"
