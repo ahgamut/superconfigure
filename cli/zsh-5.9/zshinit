@@ -7,3 +7,4 @@ for d in $rcpath; do
     return $?
   }
 done
+return 0
