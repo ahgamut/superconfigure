@@ -41,6 +41,7 @@ python/cpy311-pypack1/pypack1
 *.app
 *.i*86
 *.x86_64
+*.aarch64
 *.hex
 
 # Debug files
