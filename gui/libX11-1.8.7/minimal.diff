@@ -1,0 +1,10 @@
+--- libX11-1.8.7-old/src/XlibInt.c	2023-10-03 18:37:42.000000000 +0200
++++ libX11-1.8.7/src/XlibInt.c	2023-12-02 21:38:43.244810320 +0100
+@@ -31,6 +31,7 @@
+  *	interface library (Xlib) to the X Window System Protocol V11.0.
+  */
+ 
++#include <poll.h>
+ #ifdef WIN32
+ #define _XLIBINT_
+ #endif
