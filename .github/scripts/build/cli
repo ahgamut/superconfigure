@@ -40,10 +40,10 @@ mkdir -p "$RESULTS"
 
 # the zip folder
 cd "$CONFIGDIR"
-mkdir -p usr/share
+mkdir -p etc usr/share
 cp -r /zip/usr/share/terminfo ./usr/share
-cp -r /zip/usr/share/zsh ./usr/share || true
-cp /zip/zshenv ./
+cp -r /zip/usr/share/zsh ./usr/share
+cp /zip/etc/z* ./etc
 ls -al /zip
 
 
@@ -67,7 +67,8 @@ done
 
 # zsh
 cd "$CONFIGDIR"
-zip -qr $RESULTS/bin/zsh.com usr/share/zsh zshenv
+zip -qr $RESULTS/bin/zsh.com usr/share/zsh
+zip -qr0 $RESULTS/bin/zsh.com etc
 cd "$BASELOC"
 
 

@@ -1,0 +1,9 @@
+[[ -z ${(t)rcpath} || ${(t)rcpath} != array ]] &&
+  rcpath=(/etc{,/zsh})
+for d in $rcpath; do
+  local rcfile="$d/$1"
+  [[ -f "$rcfile" ]] && {
+    . "$rcfile"
+    return $?
+  }
+done
