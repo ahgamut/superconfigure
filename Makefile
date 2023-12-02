@@ -168,10 +168,7 @@ all: python cli editor web compress
 ######
 
 zipclean:
-	rm -rf /zip/usr
-	rm -rf /zip/share
-	rm -rf /zip/x86_64
-	rm -rf /zip/aarch64
+	find /zip -mindepth 1 -delete
 
 clean: zipclean
 	find . -name "*.built.x86_64" | xargs rm -f
