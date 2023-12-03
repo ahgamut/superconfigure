@@ -39,10 +39,10 @@ autoconf --force
 ./configure \
     --disable-shared --enable-static\
     --without-pic --prefix=$COSMOS\
-    --disable-{pulseaudio,diskaudio,sndio}\
+    --disable-{pulseaudio,sndio}\
     --disable-video-{kmsdrm,vulkan,opengles2}\
     --with-x --enable-video-x11\
-    CFLAGS="-Os"
+    CFLAGS="-Os" SDL_STATIC_LIBS="-lXext -lX11 -lxcb -lXau"
 
 # run make and/or make install
 make V=0 -s -j$MAXPROC
@@ -52,7 +52,7 @@ cd test
 ./configure \
     --disable-shared --enable-static\
     --without-pic --prefix=$COSMOS\
-    CFLAGS="-Os" SDL_LIBS="$(pkg-config --libs sdl2) -lxcb -lXau"
+    CFLAGS="-Os" SDL_LIBS="$(pkg-config --libs sdl2)"
 
 make V=0 -j$MAXPROC
 make install V=0 -j$MAXPROC

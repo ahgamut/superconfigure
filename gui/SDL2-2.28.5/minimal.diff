@@ -20,3 +20,12 @@ diff -r --unified SDL2-2.28.5-old/src/thread/pthread/SDL_systhread.c SDL2-2.28.5
  #include "../../SDL_internal.h"
  
  #include "SDL_system.h"
+--- SDL2-2.28.5/sdl2.pc.in	2023-11-02 17:03:38.000000000 +0000
++++ -	2023-12-03 06:03:03.576900598 +0000
+@@ -10,5 +10,5 @@
+ Version: @SDL_VERSION@
+ Requires.private: @PKGCONFIG_DEPENDS@
+ Conflicts:
+-Libs: -L${libdir} @SDL_RLD_FLAGS@ @SDL_LIBS@ @PKGCONFIG_LIBS_PRIV@ @SDL_STATIC_LIBS@
++Libs: -L${libdir}  -lSDL2   -lm  -lX11 -lXext -lxcb -lXau -lpthread
+ Cflags: -I${includedir} -I${includedir}/SDL2 @SDL_CFLAGS@
