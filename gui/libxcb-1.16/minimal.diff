@@ -1,0 +1,11 @@
+--- libxcb-1.16-old/src/config.h.in	2023-08-16 22:18:36.000000000 +0200
++++ libxcb-1.16/src/config.h.in	2023-12-02 22:47:57.624157502 +0100
+@@ -28,7 +28,7 @@
+ #undef HAVE_MINIX_CONFIG_H
+ 
+ /* Define if your platform supports sendmsg */
+-#undef HAVE_SENDMSG
++#undef HAVE_SENDMSG_BLOCK
+ 
+ /* Have the sockaddr_un.sun_len member. */
+ #undef HAVE_SOCKADDR_SUN_LEN

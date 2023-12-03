@@ -160,6 +160,18 @@ gcc: compiler/$(TARGET_ARCH)-gcc.built.$(ARCH)
 compiler/llvm-15.0.7.built.$(ARCH): compress/zlib-1.3.built.$(ARCH)
 llvm: compiler/llvm-15.0.7.built.$(ARCH)
 
+# gui
+
+gui/xorgproto-2023.2.built.$(ARCH): gui/util-macros-1.20.0.built.$(ARCH)
+gui/xcb-proto-1.16.0.built.$(ARCH): gui/util-macros-1.20.0.built.$(ARCH)
+gui/xtrans-1.5.0.built.$(ARCH): gui/xorgproto-2023.2.built.$(ARCH)
+gui/libXau-1.0.11.built.$(ARCH): gui/xorgproto-2023.2.built.$(ARCH) gui/xtrans-1.5.0.built.$(ARCH)
+gui/libxcb-1.16.built.$(ARCH): gui/libXau-1.0.11.built.$(ARCH) gui/xcb-proto-1.16.0.built.$(ARCH)
+gui/libX11-1.8.7.built.$(ARCH): gui/libxcb-1.16.built.$(ARCH)
+gui/libXext-1.3.5.built.$(ARCH): gui/libX11-1.8.7.built.$(ARCH)
+gui/SDL2-2.28.5.built.$(ARCH): gui/libXext-1.3.5.built.$(ARCH) gui/libX11-1.8.7.built.$(ARCH)
+gui: gui/SDL2-2.28.5.built.$(ARCH)
+
 ######
 
 cosmos: python cli editor compress

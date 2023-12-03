@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+# check for cosmo dirs
+if [ -z ${COSMO+x} ]; then 
+    echo "could not find COSMO source directory!";
+    exit 1
+fi
+
+if [ -z ${COSMOS+x} ]; then 
+    echo "could not find COSMOS install directory!";
+    exit 1
+fi
+
+alias strip=$STRIP
+alias ar=$AR
+
+if [[ -f sources.tar.gz ]]; then
+    # we already downloaded it
+    cd SDL2*
+    make V=0 -s -i clean || true
+    cd test
+    make V=0 -s -i clean || true
+    cd ../..
+else
+    # download the source code
+    wget -q https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-2.28.5.tar.gz -O sources.tar.gz
+    tar -xzf sources.tar.gz
+
+    # apply patches if any
+    patch -p0 -i minimal.diff
+fi
+
+# go into the source folder, configure
+cd SDL2*
+aclocal --force
+autoconf --force
+./configure \
+    --disable-shared --enable-static\
+    --without-pic --prefix=$COSMOS\
+    --disable-{pulseaudio,diskaudio,sndio}\
+    --disable-video-{kmsdrm,vulkan,opengles2}\
+    --with-x --enable-video-x11\
+    CFLAGS="-Os"
+
+# run make and/or make install
+make V=0 -s -j$MAXPROC
+make install V=0 -s -j$MAXPROC
+
+cd test
+./configure \
+    --disable-shared --enable-static\
+    --without-pic --prefix=$COSMOS\
+    CFLAGS="-Os" SDL_LIBS="$(pkg-config --libs sdl2) -lxcb -lXau"
+
+make V=0 -j$MAXPROC
+make install V=0 -j$MAXPROC
+
+echo "DONE."
+

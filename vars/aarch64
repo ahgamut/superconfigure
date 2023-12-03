@@ -22,6 +22,7 @@ export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/results
 export DIRCONFIG=$BASELOC/cosmos/config
 export PKG_CONFIG_PATH="$COSMOS/lib/pkgconfig:$COSMOS/share/pkgconfig:$COSMOS/share/pkg-config"
+export ACLOCAL_PATH="$COSMOS/share/aclocal"
 
 PREFIX="$COSMO/cosmocc/bin/$ARCH-unknown-cosmo"
 export CC=$PREFIX-cc
