@@ -165,7 +165,7 @@ for e in emacs emacsclient; do
         usr/share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
         $(find aarch64 -type f | grep '\.pdmp') \
-        $(find share/emacs -type f |
+        $(find usr/share/emacs -type f |
         grep -v '\.el.gz$' |
         grep -v refcards |
         grep -v images)
