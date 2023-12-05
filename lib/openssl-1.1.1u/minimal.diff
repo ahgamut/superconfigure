@@ -1,15 +1,15 @@
-diff -r --unified openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c
---- openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c	2023-12-04 23:57:12.579767864 +0000
-+++ openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c	2023-05-30 12:42:39.000000000 +0000
-@@ -401,9 +401,8 @@
+diff -r --unified openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c
+--- openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c	2023-05-30 12:42:39.000000000 +0000
++++ openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c	2023-12-05 02:26:27.205077467 +0000
+@@ -401,8 +401,9 @@
  #  endif
  
      /* Linux supports this since version 3.17 */
--#  if 1 || defined(__linux) && defined(__NR_getrandom)
--#pragma message "using getrandom function"
--    return getrandom(buf, buflen, 0);
-+#  if defined(__linux) && defined(__NR_getrandom)
-+    return syscall(__NR_getrandom, buf, buflen, 0);
+-#  if defined(__linux) && defined(__NR_getrandom)
+-    return syscall(__NR_getrandom, buf, buflen, 0);
++#  if 1 || defined(__linux) && defined(__NR_getrandom)
++#pragma message "using getrandom function"
++    return getrandom(buf, buflen, 0);
  #  elif (defined(__FreeBSD__) || defined(__NetBSD__)) && defined(KERN_ARND)
      return sysctl_random(buf, buflen);
  #  else
