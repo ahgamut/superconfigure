@@ -41,7 +41,11 @@ mkdir -p $RESULTS/bin
 
 # the zip folder
 cd "$CONFIGDIR"
-mkdir -p usr/share
+mkdir -p ./usr/share/ssl/root
+cp -r /zip/usr/share/terminfo ./usr/share
+cp /etc/ssl/certs/*.* ./usr/share/ssl/root/ || true
+mkdir -p ./ssl/certs
+cp -r /etc/ssl/certs ./ssl
 ls -al /zip
 
 
@@ -52,11 +56,18 @@ ls -al ./
 apelinkpls $RESULTS/bin/wget.com $COSMOS_X86/bin/wget $COSMOS_AARCH64/bin/wget
 cd "$CONFIGDIR"
 cp $BASELOC/web/wget*/wgetrc ./
-mkdir -p ./usr/share/ssl/root
-cp /etc/ssl/certs/*.* ./usr/share/ssl/root/ || true
 zip $RESULTS/bin/wget.com wgetrc
 zip -qr $RESULTS/bin/wget.com usr/
 cd "$BASELOC"
+
+# links
+apelinkpls $RESULTS/bin/links.com $COSMOS_X86/bin/links $COSMOS_AARCH64/bin/links
+cd "$CONFIGDIR"
+zip -qr $RESULTS/bin/links.com\
+    usr/share/terminfo\
+    ssl/
+cd "$BASELOC"
+
 
 # curl
 apelinkpls $RESULTS/bin/curl.com $COSMOS_X86/bin/curl $COSMOS_AARCH64/bin/curl

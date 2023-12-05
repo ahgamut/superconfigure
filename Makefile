@@ -103,6 +103,13 @@ web/git-2.42.0.built.$(ARCH):\
 	web/curl-8.4.0.built.$(ARCH)\
 	lib/libexpat-2.5.0.built.$(ARCH)
 
+web/links-2.29.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH)\
+	lib/openssl-1.1.1u.built.$(ARCH)\
+	lib/libuuid-1.0.3.built.$(ARCH)\
+	compress/xz-5.4.3.built.$(ARCH)\
+	compress/brotli-1.1.0.built.$(ARCH)
+
 web/postgres-15.5.built.$(ARCH):\
 	lib/openssl-1.1.1u.built.$(ARCH)\
 	lib/libuuid-1.0.3.built.$(ARCH)\
@@ -111,6 +118,7 @@ web/postgres-15.5.built.$(ARCH):\
 	lib/libexpat-2.5.0.built.$(ARCH)
 
 web: web/wget-1.21.built.$(ARCH)\
+	web/links-2.29.built.$(ARCH)\
 	web/curl-8.4.0.built.$(ARCH)\
 	web/rsync-3.2.7.built.$(ARCH)\
 	web/git-2.42.0.built.$(ARCH)
