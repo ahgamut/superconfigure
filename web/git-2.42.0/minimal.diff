@@ -1,65 +1,6 @@
---- git-2.42.0/ref-filter.c	2023-08-21 16:34:58.000000000 +0000
-+++ -	2023-10-15 00:39:55.176415900 +0000
-@@ -2948,7 +2948,7 @@
- 	return 0;
- }
- 
--static int memcasecmp(const void *vs1, const void *vs2, size_t n)
-+static int memcasecmp2(const void *vs1, const void *vs2, size_t n)
- {
- 	const char *s1 = vs1, *s2 = vs2;
- 	const char *end = s1 + n;
-@@ -2999,7 +2999,7 @@
- 					strlen(vb->s) : vb->s_size;
- 			int (*cmp_fn)(const void *, const void *, size_t);
- 			cmp_fn = s->sort_flags & REF_SORTING_ICASE
--				? memcasecmp : memcmp;
-+				? memcasecmp2 : memcmp;
- 
- 			cmp = cmp_fn(va->s, vb->s, b_size > a_size ?
- 				     a_size : b_size);
---- git-2.42.0/wrapper.c	2023-08-21 16:34:58.000000000 +0000
-+++ -	2023-10-15 00:46:13.066890578 +0000
-@@ -10,6 +10,10 @@
- #include "strbuf.h"
- #include "trace2.h"
- 
-+extern const int SYNC_FILE_RANGE_WAIT_BEFORE;
-+extern const int SYNC_FILE_RANGE_WAIT_AFTER;
-+extern const int SYNC_FILE_RANGE_WRITE;
-+
- #ifdef HAVE_RTLGENRANDOM
- /* This is required to get access to RtlGenRandom. */
- #define SystemFunction036 NTAPI SystemFunction036
---- git-2.42.0/exec-cmd.c	2023-10-15 00:59:24.033779526 +0000
-+++ -	2023-10-15 00:59:44.092185558 +0000
-@@ -25,6 +25,7 @@
- #endif /* RUNTIME_PREFIX */
- 
- #define MAX_ARGS 32
-+#undef PROCFS_EXECUTABLE_PATH
- 
- static const char *system_prefix(void);
- 
---- git-2.42.0/wrapper.c	2023-10-15 01:09:47.215982750 +0000
-+++ -	2023-10-15 16:54:58.930952393 +0000
-@@ -760,11 +760,12 @@
- 
- int csprng_bytes(void *buf, size_t len)
- {
--#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
-+#if 0 && defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
- 	/* This function never returns an error. */
- 	arc4random_buf(buf, len);
- 	return 0;
--#elif defined(HAVE_GETRANDOM)
-+#elif 1 || defined(HAVE_GETRANDOM)
-+#pragma message("using getrandom function")
- 	ssize_t res;
- 	char *p = buf;
- 	while (len) {
---- git-2.42.0/Makefile	2023-08-21 16:34:58.000000000 +0000
-+++ -	2023-10-15 19:44:43.377717698 +0000
+diff -r --unified git-2.42.0a/Makefile git-2.42.0/Makefile
+--- git-2.42.0a/Makefile	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/Makefile	2023-12-05 00:01:04.889315947 +0000
 @@ -20,6 +20,7 @@
  #
  # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
@@ -101,8 +42,63 @@
  # Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies on
  # header files to be automatically computed, to avoid rebuilding objects when
  # an unrelated header file changes.  Define it to "no" to use the hard-coded
---- git-2.42.0/run-command.c	2023-08-21 16:34:58.000000000 +0000
-+++ -	2023-10-17 02:09:15.063456195 +0000
+diff -r --unified git-2.42.0a/exec-cmd.c git-2.42.0/exec-cmd.c
+--- git-2.42.0a/exec-cmd.c	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/exec-cmd.c	2023-12-05 00:01:04.889315947 +0000
+@@ -25,6 +25,7 @@
+ #endif /* RUNTIME_PREFIX */
+ 
+ #define MAX_ARGS 32
++#undef PROCFS_EXECUTABLE_PATH
+ 
+ static const char *system_prefix(void);
+ 
+diff -r --unified git-2.42.0a/preload-index.c git-2.42.0/preload-index.c
+--- git-2.42.0a/preload-index.c	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/preload-index.c	2023-12-05 00:01:04.893316387 +0000
+@@ -16,6 +16,9 @@
+ #include "symlinks.h"
+ #include "trace2.h"
+ 
++#define _COSMO_SOURCE
++#include <stdbool.h>
++#include "libc/dce.h"
+ /*
+  * Mostly randomly chosen maximum thread counts: we
+  * cap the parallelism to 20 threads, and we want
+@@ -108,7 +111,7 @@
+ 	struct progress_data pd;
+ 	int t2_sum_lstat = 0;
+ 
+-	if (!HAVE_THREADS || !core_preload_index)
++	if (IsWindows() || !HAVE_THREADS || !core_preload_index)
+ 		return;
+ 
+ 	threads = index->cache_nr / THREAD_COST;
+diff -r --unified git-2.42.0a/ref-filter.c git-2.42.0/ref-filter.c
+--- git-2.42.0a/ref-filter.c	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/ref-filter.c	2023-12-05 00:01:04.889315947 +0000
+@@ -2948,7 +2948,7 @@
+ 	return 0;
+ }
+ 
+-static int memcasecmp(const void *vs1, const void *vs2, size_t n)
++static int memcasecmp2(const void *vs1, const void *vs2, size_t n)
+ {
+ 	const char *s1 = vs1, *s2 = vs2;
+ 	const char *end = s1 + n;
+@@ -2999,7 +2999,7 @@
+ 					strlen(vb->s) : vb->s_size;
+ 			int (*cmp_fn)(const void *, const void *, size_t);
+ 			cmp_fn = s->sort_flags & REF_SORTING_ICASE
+-				? memcasecmp : memcmp;
++				? memcasecmp2 : memcmp;
+ 
+ 			cmp = cmp_fn(va->s, vb->s, b_size > a_size ?
+ 				     a_size : b_size);
+diff -r --unified git-2.42.0a/run-command.c git-2.42.0/run-command.c
+--- git-2.42.0a/run-command.c	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/run-command.c	2023-12-05 00:01:04.893316387 +0000
 @@ -171,6 +171,19 @@
  }
  
@@ -181,24 +177,32 @@
  
  	while (1) {
  		const char *end = strchrnul(p, ':');
---- git-2.42.0/preload-index.c	2023-08-21 16:34:58.000000000 +0000
-+++ -	2023-11-02 01:44:54.546318539 +0000
-@@ -16,6 +16,9 @@
- #include "symlinks.h"
+diff -r --unified git-2.42.0a/wrapper.c git-2.42.0/wrapper.c
+--- git-2.42.0a/wrapper.c	2023-08-21 16:34:58.000000000 +0000
++++ git-2.42.0/wrapper.c	2023-12-05 00:01:04.889315947 +0000
+@@ -10,6 +10,10 @@
+ #include "strbuf.h"
  #include "trace2.h"
  
-+#define _COSMO_SOURCE
-+#include <stdbool.h>
-+#include "libc/dce.h"
- /*
-  * Mostly randomly chosen maximum thread counts: we
-  * cap the parallelism to 20 threads, and we want
-@@ -108,7 +111,7 @@
- 	struct progress_data pd;
- 	int t2_sum_lstat = 0;
++extern const int SYNC_FILE_RANGE_WAIT_BEFORE;
++extern const int SYNC_FILE_RANGE_WAIT_AFTER;
++extern const int SYNC_FILE_RANGE_WRITE;
++
+ #ifdef HAVE_RTLGENRANDOM
+ /* This is required to get access to RtlGenRandom. */
+ #define SystemFunction036 NTAPI SystemFunction036
+@@ -756,11 +760,12 @@
  
--	if (!HAVE_THREADS || !core_preload_index)
-+	if (IsWindows() || !HAVE_THREADS || !core_preload_index)
- 		return;
- 
- 	threads = index->cache_nr / THREAD_COST;
+ int csprng_bytes(void *buf, size_t len)
+ {
+-#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
++#if 0 && defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
+ 	/* This function never returns an error. */
+ 	arc4random_buf(buf, len);
+ 	return 0;
+-#elif defined(HAVE_GETRANDOM)
++#elif 1 || defined(HAVE_GETRANDOM)
++#pragma message("using getrandom function")
+ 	ssize_t res;
+ 	char *p = buf;
+ 	while (len) {

@@ -1,5 +1,6 @@
---- ./libevent-2.1.12-stable/config.h.in	2020-07-05 12:04:13.000000000 +0000
-+++ -	2023-11-27 03:27:17.169950774 +0000
+diff -r --unified libevent-2.1.12-stablea/config.h.in libevent-2.1.12-stable/config.h.in
+--- libevent-2.1.12-stablea/config.h.in	2020-07-05 12:04:13.000000000 +0000
++++ libevent-2.1.12-stable/config.h.in	2023-12-04 23:53:20.406240647 +0000
 @@ -45,13 +45,13 @@
  #undef HAVE_DLFCN_H
  
@@ -17,8 +18,9 @@
  
  /* Define to 1 if you have the <errno.h> header file. */
  #undef HAVE_ERRNO_H
---- libevent-2.1.12-stable/evutil.c	2023-11-29 01:40:22.273791104 +0000
-+++ -	2023-11-29 01:41:10.807550345 +0000
+diff -r --unified libevent-2.1.12-stablea/evutil.c libevent-2.1.12-stable/evutil.c
+--- libevent-2.1.12-stablea/evutil.c	2020-07-05 12:01:34.000000000 +0000
++++ libevent-2.1.12-stable/evutil.c	2023-12-04 23:53:20.406240647 +0000
 @@ -2007,7 +2007,7 @@
  	if (cp == NULL)
  		return evutil_inet_pton(af, src, dst);

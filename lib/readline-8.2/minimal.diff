@@ -1,6 +1,6 @@
-diff -ruN ./readline-8.2/input.c ../readline-8.2/input.c
---- ./readline-8.2/input.c	2022-04-08 19:43:24.000000000 +0000
-+++ ../readline-8.2/input.c	2023-08-14 05:19:51.437189243 +0000
+diff -r --unified readline-8.2a/input.c readline-8.2/input.c
+--- readline-8.2a/input.c	2022-04-08 19:43:24.000000000 +0000
++++ readline-8.2/input.c	2023-12-04 23:51:34.830635542 +0000
 @@ -382,6 +382,7 @@
  
    tty = fileno (rl_instream);

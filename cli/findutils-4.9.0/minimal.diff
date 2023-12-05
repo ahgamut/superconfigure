@@ -1,5 +1,6 @@
---- findutils-4.9.0/gl/lib/canonicalize.c	2022-01-03 23:22:27.000000000 +0000
-+++ -	2023-10-14 23:31:34.924269228 +0000
+diff -r --unified findutils-4.9.0a/gl/lib/canonicalize.c findutils-4.9.0/gl/lib/canonicalize.c
+--- findutils-4.9.0a/gl/lib/canonicalize.c	2022-01-03 23:22:27.000000000 +0000
++++ findutils-4.9.0/gl/lib/canonicalize.c	2023-12-04 23:59:36.887637494 +0000
 @@ -234,7 +234,6 @@
              case ERANGE:
                if (scratch_buffer_grow (rname_buf))
@@ -8,8 +9,9 @@
              case ENOMEM:
                xalloc_die ();
  
---- findutils-4.9.0/xargs/xargs.c	2022-01-06 02:15:59.000000000 +0000
-+++ -	2023-10-14 23:33:32.770844652 +0000
+diff -r --unified findutils-4.9.0a/xargs/xargs.c findutils-4.9.0/xargs/xargs.c
+--- findutils-4.9.0a/xargs/xargs.c	2022-01-06 02:15:59.000000000 +0000
++++ findutils-4.9.0/xargs/xargs.c	2023-12-04 23:59:36.891637935 +0000
 @@ -412,7 +412,7 @@
    /* We #define __STDC_LIMIT_MACROS above for its side effect on
     * <limits.h>, but we use it here to avoid getting what would
