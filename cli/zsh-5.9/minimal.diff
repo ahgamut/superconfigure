@@ -1,6 +1,6 @@
 diff -r --unified zsh-5.9a/Src/Modules/cap.mdd zsh-5.9/Src/Modules/cap.mdd
 --- zsh-5.9a/Src/Modules/cap.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/cap.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/cap.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/cap
 -link=dynamic
@@ -10,7 +10,7 @@ diff -r --unified zsh-5.9a/Src/Modules/cap.mdd zsh-5.9/Src/Modules/cap.mdd
  autofeatures="b:cap b:getcap b:setcap"
 diff -r --unified zsh-5.9a/Src/Modules/clone.mdd zsh-5.9/Src/Modules/clone.mdd
 --- zsh-5.9a/Src/Modules/clone.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/clone.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/clone.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/clone
 -link=dynamic
@@ -20,7 +20,7 @@ diff -r --unified zsh-5.9a/Src/Modules/clone.mdd zsh-5.9/Src/Modules/clone.mdd
  autofeatures="b:clone"
 diff -r --unified zsh-5.9a/Src/Modules/curses.mdd zsh-5.9/Src/Modules/curses.mdd
 --- zsh-5.9a/Src/Modules/curses.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/curses.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/curses.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/curses
 -link='if test "x$ac_cv_func_initscr" = xyes && test "x$zsh_cv_path_curses_header" != x; then echo dynamic; else echo no; fi'
@@ -30,7 +30,7 @@ diff -r --unified zsh-5.9a/Src/Modules/curses.mdd zsh-5.9/Src/Modules/curses.mdd
  autofeatures="b:zcurses"
 diff -r --unified zsh-5.9a/Src/Modules/datetime.mdd zsh-5.9/Src/Modules/datetime.mdd
 --- zsh-5.9a/Src/Modules/datetime.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/datetime.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/datetime.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,6 +1,6 @@
  name=zsh/datetime
  
@@ -41,7 +41,7 @@ diff -r --unified zsh-5.9a/Src/Modules/datetime.mdd zsh-5.9/Src/Modules/datetime
  functions='Functions/Calendar/*'
 diff -r --unified zsh-5.9a/Src/Modules/db_gdbm.mdd zsh-5.9/Src/Modules/db_gdbm.mdd
 --- zsh-5.9a/Src/Modules/db_gdbm.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/db_gdbm.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/db_gdbm.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,10 +1,5 @@
  name=zsh/db/gdbm
 -link='if test "x$ac_cv_lib_gdbm_gdbm_open" = xyes && test "x$ac_cv_header_gdbm_h" = xyes; then
@@ -56,7 +56,7 @@ diff -r --unified zsh-5.9a/Src/Modules/db_gdbm.mdd zsh-5.9/Src/Modules/db_gdbm.m
  autofeatures="b:ztie b:zuntie b:zgdbmpath p:zgdbm_tied"
 diff -r --unified zsh-5.9a/Src/Modules/example.mdd zsh-5.9/Src/Modules/example.mdd
 --- zsh-5.9a/Src/Modules/example.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/example.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/example.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/example
 -link=dynamic
@@ -66,7 +66,7 @@ diff -r --unified zsh-5.9a/Src/Modules/example.mdd zsh-5.9/Src/Modules/example.m
  autofeatures="b:example C:ex c:len p:exint p:exstr p:exarr f:sum f:length"
 diff -r --unified zsh-5.9a/Src/Modules/files.mdd zsh-5.9/Src/Modules/files.mdd
 --- zsh-5.9a/Src/Modules/files.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/files.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/files.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/files
 -link=dynamic
@@ -76,7 +76,7 @@ diff -r --unified zsh-5.9a/Src/Modules/files.mdd zsh-5.9/Src/Modules/files.mdd
  autofeatures="b:chgrp b:chown b:ln b:mkdir b:mv b:rm b:rmdir b:sync b:zf_chgrp b:zf_chown b:zf_ln b:zf_mkdir b:zf_mv b:zf_rm b:zf_rmdir b:zf_sync"
 diff -r --unified zsh-5.9a/Src/Modules/mapfile.mdd zsh-5.9/Src/Modules/mapfile.mdd
 --- zsh-5.9a/Src/Modules/mapfile.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/mapfile.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/mapfile.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/mapfile
 -link=dynamic
@@ -86,7 +86,7 @@ diff -r --unified zsh-5.9a/Src/Modules/mapfile.mdd zsh-5.9/Src/Modules/mapfile.m
  autofeatures="p:mapfile"
 diff -r --unified zsh-5.9a/Src/Modules/mathfunc.mdd zsh-5.9/Src/Modules/mathfunc.mdd
 --- zsh-5.9a/Src/Modules/mathfunc.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/mathfunc.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/mathfunc.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/mathfunc
 -link=dynamic
@@ -96,7 +96,7 @@ diff -r --unified zsh-5.9a/Src/Modules/mathfunc.mdd zsh-5.9/Src/Modules/mathfunc
  objects="mathfunc.o"
 diff -r --unified zsh-5.9a/Src/Modules/nearcolor.mdd zsh-5.9/Src/Modules/nearcolor.mdd
 --- zsh-5.9a/Src/Modules/nearcolor.mdd	2019-02-01 00:37:34.000000000 +0000
-+++ zsh-5.9/Src/Modules/nearcolor.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/nearcolor.mdd	2023-12-05 00:00:29.933471423 +0000
 @@ -1,5 +1,5 @@
  name=zsh/nearcolor
 -link=dynamic
@@ -106,7 +106,7 @@ diff -r --unified zsh-5.9a/Src/Modules/nearcolor.mdd zsh-5.9/Src/Modules/nearcol
  objects="nearcolor.o"
 diff -r --unified zsh-5.9a/Src/Modules/param_private.mdd zsh-5.9/Src/Modules/param_private.mdd
 --- zsh-5.9a/Src/Modules/param_private.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/param_private.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/param_private.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/param/private
 -link=dynamic
@@ -116,7 +116,7 @@ diff -r --unified zsh-5.9a/Src/Modules/param_private.mdd zsh-5.9/Src/Modules/par
  autofeatures="b:private"
 diff -r --unified zsh-5.9a/Src/Modules/parameter.mdd zsh-5.9/Src/Modules/parameter.mdd
 --- zsh-5.9a/Src/Modules/parameter.mdd	2018-11-13 08:04:43.000000000 +0000
-+++ zsh-5.9/Src/Modules/parameter.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/parameter.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/parameter
 -link=either
@@ -126,7 +126,7 @@ diff -r --unified zsh-5.9a/Src/Modules/parameter.mdd zsh-5.9/Src/Modules/paramet
  autofeatures="p:parameters p:commands p:functions p:dis_functions p:functions_source p:dis_functions_source p:funcfiletrace p:funcsourcetrace p:funcstack p:functrace p:builtins p:dis_builtins p:reswords p:dis_reswords p:patchars p:dis_patchars p:options p:modules p:dirstack p:history p:historywords p:jobtexts p:jobdirs p:jobstates p:nameddirs p:userdirs p:usergroups p:aliases p:dis_aliases p:galiases p:dis_galiases p:saliases p:dis_saliases"
 diff -r --unified zsh-5.9a/Src/Modules/socket.mdd zsh-5.9/Src/Modules/socket.mdd
 --- zsh-5.9a/Src/Modules/socket.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/socket.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/socket.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/net/socket
 -link=dynamic
@@ -136,7 +136,7 @@ diff -r --unified zsh-5.9a/Src/Modules/socket.mdd zsh-5.9/Src/Modules/socket.mdd
  objects="socket.o"
 diff -r --unified zsh-5.9a/Src/Modules/stat.mdd zsh-5.9/Src/Modules/stat.mdd
 --- zsh-5.9a/Src/Modules/stat.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/stat.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/stat.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/stat
 -link=dynamic
@@ -146,7 +146,7 @@ diff -r --unified zsh-5.9a/Src/Modules/stat.mdd zsh-5.9/Src/Modules/stat.mdd
  autofeatures="b:stat b:zstat"
 diff -r --unified zsh-5.9a/Src/Modules/system.mdd zsh-5.9/Src/Modules/system.mdd
 --- zsh-5.9a/Src/Modules/system.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/system.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/system.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/system
 -link=dynamic
@@ -156,7 +156,7 @@ diff -r --unified zsh-5.9a/Src/Modules/system.mdd zsh-5.9/Src/Modules/system.mdd
  autofeatures="b:sysread b:syswrite b:sysopen b:sysseek b:syserror p:errnos f:systell"
 diff -r --unified zsh-5.9a/Src/Modules/tcp.h zsh-5.9/Src/Modules/tcp.h
 --- zsh-5.9a/Src/Modules/tcp.h	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/tcp.h	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/tcp.h	2023-12-05 00:00:29.937471863 +0000
 @@ -57,7 +57,7 @@
   * not including this file only on systems where we know it's missing.
   * Currently this is just some older versions of cygwin.
@@ -177,7 +177,7 @@ diff -r --unified zsh-5.9a/Src/Modules/tcp.h zsh-5.9/Src/Modules/tcp.h
  #endif
 diff -r --unified zsh-5.9a/Src/Modules/tcp.mdd zsh-5.9/Src/Modules/tcp.mdd
 --- zsh-5.9a/Src/Modules/tcp.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/tcp.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/tcp.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/net/tcp
 -link=dynamic
@@ -187,7 +187,7 @@ diff -r --unified zsh-5.9a/Src/Modules/tcp.mdd zsh-5.9/Src/Modules/tcp.mdd
  
 diff -r --unified zsh-5.9a/Src/Modules/watch.mdd zsh-5.9/Src/Modules/watch.mdd
 --- zsh-5.9a/Src/Modules/watch.mdd	2022-05-08 06:18:22.000000000 +0000
-+++ zsh-5.9/Src/Modules/watch.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/watch.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/watch
 -link=dynamic
@@ -197,7 +197,7 @@ diff -r --unified zsh-5.9a/Src/Modules/watch.mdd zsh-5.9/Src/Modules/watch.mdd
  autofeatures="b:log p:WATCH p:watch"
 diff -r --unified zsh-5.9a/Src/Modules/zftp.mdd zsh-5.9/Src/Modules/zftp.mdd
 --- zsh-5.9a/Src/Modules/zftp.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/zftp.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/zftp.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/zftp
 -link=dynamic
@@ -207,7 +207,7 @@ diff -r --unified zsh-5.9a/Src/Modules/zftp.mdd zsh-5.9/Src/Modules/zftp.mdd
  
 diff -r --unified zsh-5.9a/Src/Modules/zprof.mdd zsh-5.9/Src/Modules/zprof.mdd
 --- zsh-5.9a/Src/Modules/zprof.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/zprof.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/zprof.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/zprof
 -link=dynamic
@@ -217,7 +217,7 @@ diff -r --unified zsh-5.9a/Src/Modules/zprof.mdd zsh-5.9/Src/Modules/zprof.mdd
  autofeatures="b:zprof"
 diff -r --unified zsh-5.9a/Src/Modules/zpty.mdd zsh-5.9/Src/Modules/zpty.mdd
 --- zsh-5.9a/Src/Modules/zpty.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/zpty.mdd	2023-12-02 19:16:01.430310522 +0000
++++ zsh-5.9/Src/Modules/zpty.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/zpty
 -link=dynamic
@@ -227,7 +227,7 @@ diff -r --unified zsh-5.9a/Src/Modules/zpty.mdd zsh-5.9/Src/Modules/zpty.mdd
  autofeatures="b:zpty"
 diff -r --unified zsh-5.9a/Src/Modules/zselect.mdd zsh-5.9/Src/Modules/zselect.mdd
 --- zsh-5.9a/Src/Modules/zselect.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/zselect.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/zselect.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/zselect
 -link=dynamic
@@ -237,7 +237,7 @@ diff -r --unified zsh-5.9a/Src/Modules/zselect.mdd zsh-5.9/Src/Modules/zselect.m
  objects="zselect.o"
 diff -r --unified zsh-5.9a/Src/Modules/zutil.mdd zsh-5.9/Src/Modules/zutil.mdd
 --- zsh-5.9a/Src/Modules/zutil.mdd	2017-12-04 14:09:36.000000000 +0000
-+++ zsh-5.9/Src/Modules/zutil.mdd	2023-12-02 19:16:01.426310081 +0000
++++ zsh-5.9/Src/Modules/zutil.mdd	2023-12-05 00:00:29.937471863 +0000
 @@ -1,5 +1,5 @@
  name=zsh/zutil
 -link=either
@@ -247,7 +247,7 @@ diff -r --unified zsh-5.9a/Src/Modules/zutil.mdd zsh-5.9/Src/Modules/zutil.mdd
  moddeps="zsh/complete"
 diff -r --unified zsh-5.9a/Src/exec.c zsh-5.9/Src/exec.c
 --- zsh-5.9a/Src/exec.c	2022-05-08 06:18:22.000000000 +0000
-+++ zsh-5.9/Src/exec.c	2023-12-02 19:16:01.422309642 +0000
++++ zsh-5.9/Src/exec.c	2023-12-05 00:00:29.941472304 +0000
 @@ -267,7 +267,7 @@
  /* the resource limits for the shell and its children */
  
@@ -259,7 +259,7 @@ diff -r --unified zsh-5.9a/Src/exec.c zsh-5.9/Src/exec.c
  mod_export int
 diff -r --unified zsh-5.9a/aczsh.m4 zsh-5.9/aczsh.m4
 --- zsh-5.9a/aczsh.m4	2022-05-08 06:18:22.000000000 +0000
-+++ zsh-5.9/aczsh.m4	2023-12-02 19:16:01.422309642 +0000
++++ zsh-5.9/aczsh.m4	2023-12-05 00:00:29.941472304 +0000
 @@ -418,7 +418,9 @@
      AC_TRY_COMMAND($CC -c $CFLAGS $CPPFLAGS $DLCFLAGS conftest1.c 1>&AS_MESSAGE_LOG_FD) &&
      AC_TRY_COMMAND($DLLD -o conftest1.$DL_EXT $LDFLAGS $DLLDFLAGS conftest1.o $LIBS 1>&AS_MESSAGE_LOG_FD); then
@@ -273,7 +273,7 @@ diff -r --unified zsh-5.9a/aczsh.m4 zsh-5.9/aczsh.m4
  #ifdef HPUX10DYNAMIC
 diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
 --- zsh-5.9a/configure.ac	2022-05-08 06:18:22.000000000 +0000
-+++ zsh-5.9/configure.ac	2023-12-02 19:16:01.422309642 +0000
++++ zsh-5.9/configure.ac	2023-12-05 00:00:29.941472304 +0000
 @@ -513,21 +513,21 @@
       s/ *$//'
  

@@ -1,5 +1,18 @@
---- curl-8.4.0/lib/rand.c	2023-10-05 07:58:50.000000000 +0000
-+++ -	2023-10-15 17:11:10.561841406 +0000
+diff -r --unified curl-8.4.0a/lib/curl_config.h.in curl-8.4.0/lib/curl_config.h.in
+--- curl-8.4.0a/lib/curl_config.h.in	2023-10-09 06:22:28.000000000 +0000
++++ curl-8.4.0/lib/curl_config.h.in	2023-12-05 00:01:27.879844543 +0000
+@@ -513,7 +513,7 @@
+ #undef HAVE_PIPE
+ 
+ /* If you have a fine poll */
+-#undef HAVE_POLL_FINE
++#undef HAVE_POLL_FINE0
+ 
+ /* Define to 1 if you have the <poll.h> header file. */
+ #undef HAVE_POLL_H
+diff -r --unified curl-8.4.0a/lib/rand.c curl-8.4.0/lib/rand.c
+--- curl-8.4.0a/lib/rand.c	2023-10-05 07:58:50.000000000 +0000
++++ curl-8.4.0/lib/rand.c	2023-12-05 00:01:27.879844543 +0000
 @@ -152,15 +152,16 @@
  #endif
  
@@ -21,8 +34,9 @@
      }
    }
  #endif
---- curl-8.4.0/lib/select.c	2023-10-16 01:05:40.207250289 +0000
-+++ -	2023-10-16 01:06:17.443327048 +0000
+diff -r --unified curl-8.4.0a/lib/select.c curl-8.4.0/lib/select.c
+--- curl-8.4.0a/lib/select.c	2023-10-05 07:58:50.000000000 +0000
++++ curl-8.4.0/lib/select.c	2023-12-05 00:01:27.879844543 +0000
 @@ -32,6 +32,7 @@
  #include <unistd.h>
  #endif
@@ -41,17 +55,3 @@
  /*
   * Internal function used for waiting a specific amount of ms
   * in Curl_socket_check() and Curl_poll() when no file descriptor
---- curl-8.4.0/lib/curl_config.h.in	2023-10-09 06:22:28.000000000 +0000
-+++ -	2023-10-16 01:11:18.351653115 +0000
-@@ -513,10 +513,10 @@
- #undef HAVE_PIPE
- 
- /* If you have a fine poll */
--#undef HAVE_POLL_FINE
-+#undef HAVE_POLL_FINE0
- 
- /* Define to 1 if you have the <poll.h> header file. */
- #undef HAVE_POLL_H
- 
- /* Define to 1 if you have a working POSIX-style strerror_r function. */
- #undef HAVE_POSIX_STRERROR_R

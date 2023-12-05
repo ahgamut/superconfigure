@@ -1,6 +1,6 @@
-diff -ruN ./libuuid-1.0.3/gen_uuid.c ../libuuid-1.0.3/gen_uuid.c
---- ./libuuid-1.0.3/gen_uuid.c	2014-08-12 08:07:18.000000000 +0000
-+++ ../libuuid-1.0.3/gen_uuid.c	2023-07-04 05:04:19.423498125 +0000
+diff -r --unified libuuid-1.0.3a/gen_uuid.c libuuid-1.0.3/gen_uuid.c
+--- libuuid-1.0.3a/gen_uuid.c	2014-08-12 08:07:18.000000000 +0000
++++ libuuid-1.0.3/gen_uuid.c	2023-12-04 23:52:01.253539809 +0000
 @@ -100,13 +100,13 @@
  #endif
  

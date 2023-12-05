@@ -1,5 +1,17 @@
---- coreutils-9.4/lib/fadvise.h	2023-10-14 07:18:06.321757461 +0000
-+++ -	2023-10-14 07:21:24.066900086 +0000
+diff -r --unified coreutils-9.4a/lib/canonicalize.c coreutils-9.4/lib/canonicalize.c
+--- coreutils-9.4a/lib/canonicalize.c	2023-05-19 17:22:04.000000000 +0000
++++ coreutils-9.4/lib/canonicalize.c	2023-12-04 23:58:08.089872118 +0000
+@@ -216,7 +216,6 @@
+             case ERANGE:
+               if (scratch_buffer_grow (&bufs->rname))
+                 break;
+-              FALLTHROUGH;
+             case ENOMEM:
+               xalloc_die ();
+ 
+diff -r --unified coreutils-9.4a/lib/fadvise.h coreutils-9.4/lib/fadvise.h
+--- coreutils-9.4a/lib/fadvise.h	2023-03-13 13:28:47.000000000 +0000
++++ coreutils-9.4/lib/fadvise.h	2023-12-04 23:58:08.085871678 +0000
 @@ -41,14 +41,13 @@
     value is needed, but it must be guarded by appropriate #ifdefs.  */
  
@@ -22,9 +34,10 @@
  #else
  typedef enum {
    FADVISE_NORMAL,
---- coreutils-9.4/src/dd.c	2023-08-29 11:39:27.000000000 +0000
-+++ -	2023-10-14 07:35:57.694435006 +0000
-@@ -289,43 +289,41 @@
+diff -r --unified coreutils-9.4a/src/dd.c coreutils-9.4/src/dd.c
+--- coreutils-9.4a/src/dd.c	2023-08-29 11:39:27.000000000 +0000
++++ coreutils-9.4/src/dd.c	2023-12-04 23:58:08.085871678 +0000
+@@ -289,57 +289,56 @@
  };
  
  #define FFS_MASK(x) ((x) ^ ((x) & ((x) - 1)))
@@ -94,8 +107,9 @@
  static_assert (O_FULLBLOCK != 0);
  static_assert (O_NOCACHE != 0);
  static_assert (O_COUNT_BYTES != 0);
-@@ -334,12 +332,13 @@
-
+ static_assert (O_SKIP_BYTES != 0);
+ static_assert (O_SEEK_BYTES != 0);
+ 
 -#define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
 +*/ #define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
  
@@ -110,13 +124,3 @@
  
  /* Flags, for iflag="..." and oflag="...".  */
  static struct symbol_value const flags[] =
---- coreutils-9.4/lib/canonicalize.c	2023-05-19 17:22:04.000000000 +0000
-+++ -	2023-10-14 08:29:12.804879724 +0000
-@@ -216,7 +216,6 @@
-             case ERANGE:
-               if (scratch_buffer_grow (&bufs->rname))
-                 break;
--              FALLTHROUGH;
-             case ENOMEM:
-               xalloc_die ();
- 

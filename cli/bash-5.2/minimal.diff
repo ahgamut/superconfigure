@@ -1,5 +1,6 @@
---- bash-5.2/lib/sh/oslib.c	2022-04-14 20:01:47.000000000 +0000
-+++ bash-5.2/lib/sh/oslib2.c	2023-10-10 11:27:29.965380857 +0000
+diff -r --unified bash-5.2a/lib/sh/oslib.c bash-5.2/lib/sh/oslib.c
+--- bash-5.2a/lib/sh/oslib.c	2022-04-14 20:01:47.000000000 +0000
++++ bash-5.2/lib/sh/oslib.c	2023-12-04 23:59:51.109201544 +0000
 @@ -239,7 +239,7 @@
       char *path;
       mode_t mode;

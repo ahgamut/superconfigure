@@ -1,38 +1,6 @@
---- ./emacs-28.2/src/config.in	2022-09-06 22:41:03.000000000 +0000
-+++ ./emacs-28.2/src/config.in.new	2023-09-19 18:59:41.779714091 +0000
-@@ -1572,7 +1572,7 @@
- #undef INTERNAL_TERMINAL
- 
- /* Define to read input using SIGIO. */
--#undef INTERRUPT_INPUT
-+#undef INTERRUPT_INPUT0
- 
- /* Returns true if character is any form of separator. */
- #undef IS_ANY_SEP
-@@ -1871,7 +1871,7 @@
- #undef UNIX98_PTYS
- 
- /* Define to 1 if FIONREAD is usable. */
--#undef USABLE_FIONREAD
-+#undef USABLE_FIONREAD0
- 
- /* Define to 1 if SIGIO is usable. */
- #undef USABLE_SIGIO
-
---- ./emacs-28.2/src/filelock.c	2022-09-06 21:31:54.000000000 +0000
-+++ ./emacs-28.2/src/filelock.c.new	2023-09-19 19:08:14.027515629 +0000
-@@ -298,7 +298,7 @@
-    There is no way to tell whether a symlink call fails due to
-    permissions issues or because links are not supported, but luckily
-    the lock file code should work either way.  */
--enum { LINKS_MIGHT_NOT_WORK = EPERM };
-+#define LINKS_MIGHT_NOT_WORK EPERM
- 
- /* Rename OLD to NEW.  If FORCE, replace any existing NEW.
-    It is OK if there are temporarily two hard links to OLD.
-diff -urN emacs-28.2/src/bytecode.c new/src/bytecode.c
---- emacs-28.2/src/bytecode.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/bytecode.c	2023-11-05 21:17:21.211742883 +0000
+diff -r --unified emacs-28.2a/src/bytecode.c emacs-28.2/src/bytecode.c
+--- emacs-28.2a/src/bytecode.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/bytecode.c	2023-12-04 23:50:04.644715472 +0000
 @@ -1412,7 +1412,7 @@
  		    break;
                }
@@ -42,9 +10,9 @@ diff -urN emacs-28.2/src/bytecode.c new/src/bytecode.c
  
  	    if (i >= 0)
  	      {
-diff -urN emacs-28.2/src/category.c new/src/category.c
---- emacs-28.2/src/category.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/category.c	2023-11-05 21:17:21.207742543 +0000
+diff -r --unified emacs-28.2a/src/category.c emacs-28.2/src/category.c
+--- emacs-28.2a/src/category.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/category.c	2023-12-04 23:50:04.688720314 +0000
 @@ -56,7 +56,7 @@
  			Qnil, false));
    struct Lisp_Hash_Table *h = XHASH_TABLE (XCHAR_TABLE (table)->extras[1]);
@@ -54,9 +22,9 @@ diff -urN emacs-28.2/src/category.c new/src/category.c
    if (i >= 0)
      return HASH_KEY (h, i);
    hash_put (h, category_set, Qnil, hash);
-diff -urN emacs-28.2/src/ccl.c new/src/ccl.c
---- emacs-28.2/src/ccl.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/ccl.c	2023-11-05 21:17:21.211742883 +0000
+diff -r --unified emacs-28.2a/src/ccl.c emacs-28.2/src/ccl.c
+--- emacs-28.2a/src/ccl.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/ccl.c	2023-12-04 23:50:04.688720314 +0000
 @@ -1366,7 +1366,7 @@
  
  		eop = (FIXNUM_OVERFLOW_P (reg[RRR])
@@ -75,9 +43,9 @@ diff -urN emacs-28.2/src/ccl.c new/src/ccl.c
  		if (eop >= 0)
  		  {
  		    Lisp_Object opl;
-diff -urN emacs-28.2/src/charset.c new/src/charset.c
---- emacs-28.2/src/charset.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/charset.c	2023-11-05 21:17:21.207742543 +0000
+diff -r --unified emacs-28.2a/src/charset.c emacs-28.2/src/charset.c
+--- emacs-28.2a/src/charset.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/charset.c	2023-12-04 23:50:04.720723836 +0000
 @@ -1107,7 +1107,7 @@
    CHECK_LIST (args[charset_arg_plist]);
    ASET (attrs, charset_plist, args[charset_arg_plist]);
@@ -87,9 +55,9 @@ diff -urN emacs-28.2/src/charset.c new/src/charset.c
  				    &hash_code);
    if (charset.hash_index >= 0)
      {
-diff -urN emacs-28.2/src/charset.h new/src/charset.h
---- emacs-28.2/src/charset.h	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/charset.h	2023-11-05 21:17:21.203742203 +0000
+diff -r --unified emacs-28.2a/src/charset.h emacs-28.2/src/charset.h
+--- emacs-28.2a/src/charset.h	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/charset.h	2023-12-04 23:50:04.720723836 +0000
 @@ -286,7 +286,7 @@
  /* Return an index to Vcharset_hash_table of the charset whose symbol
     is SYMBOL.  */
@@ -99,9 +67,9 @@ diff -urN emacs-28.2/src/charset.h new/src/charset.h
  
  /* Return the attribute vector of CHARSET.  */
  #define CHARSET_ATTRIBUTES(charset)	\
-diff -urN emacs-28.2/src/coding.h new/src/coding.h
---- emacs-28.2/src/coding.h	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/coding.h	2023-11-05 21:17:21.207742543 +0000
+diff -r --unified emacs-28.2a/src/coding.h emacs-28.2/src/coding.h
+--- emacs-28.2a/src/coding.h	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/coding.h	2023-12-04 23:50:04.720723836 +0000
 @@ -193,7 +193,7 @@
  /* Return the ID of CODING_SYSTEM_SYMBOL.  */
  
@@ -111,9 +79,9 @@ diff -urN emacs-28.2/src/coding.h new/src/coding.h
  	       coding_system_symbol, NULL)
  
  /* Return true if CODING_SYSTEM_SYMBOL is a coding system.  */
-diff -urN emacs-28.2/src/composite.c new/src/composite.c
---- emacs-28.2/src/composite.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/composite.c	2023-11-05 21:17:21.203742203 +0000
+diff -r --unified emacs-28.2a/src/composite.c emacs-28.2/src/composite.c
+--- emacs-28.2a/src/composite.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/composite.c	2023-12-04 23:50:04.720723836 +0000
 @@ -238,7 +238,7 @@
    else
      goto invalid_composition;
@@ -132,9 +100,30 @@ diff -urN emacs-28.2/src/composite.c new/src/composite.c
  
    return (i >= 0 ? HASH_VALUE (h, i) : Qnil);
  }
-diff -urN emacs-28.2/src/emacs-module.c new/src/emacs-module.c
---- emacs-28.2/src/emacs-module.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/emacs-module.c	2023-11-05 21:17:21.211742883 +0000
+diff -r --unified emacs-28.2a/src/config.in emacs-28.2/src/config.in
+--- emacs-28.2a/src/config.in	2022-09-06 22:41:03.000000000 +0000
++++ emacs-28.2/src/config.in	2023-12-04 23:50:04.720723836 +0000
+@@ -1572,7 +1572,7 @@
+ #undef INTERNAL_TERMINAL
+ 
+ /* Define to read input using SIGIO. */
+-#undef INTERRUPT_INPUT
++#undef INTERRUPT_INPUT0
+ 
+ /* Returns true if character is any form of separator. */
+ #undef IS_ANY_SEP
+@@ -1871,7 +1871,7 @@
+ #undef UNIX98_PTYS
+ 
+ /* Define to 1 if FIONREAD is usable. */
+-#undef USABLE_FIONREAD
++#undef USABLE_FIONREAD0
+ 
+ /* Define to 1 if SIGIO is usable. */
+ #undef USABLE_SIGIO
+diff -r --unified emacs-28.2a/src/emacs-module.c emacs-28.2/src/emacs-module.c
+--- emacs-28.2a/src/emacs-module.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/emacs-module.c	2023-12-04 23:50:04.720723836 +0000
 @@ -427,7 +427,7 @@
    MODULE_FUNCTION_BEGIN (NULL);
    struct Lisp_Hash_Table *h = XHASH_TABLE (Vmodule_refs_hash);
@@ -153,9 +142,21 @@ diff -urN emacs-28.2/src/emacs-module.c new/src/emacs-module.c
  
    if (module_assertions)
      {
-diff -urN emacs-28.2/src/fns.c new/src/fns.c
---- emacs-28.2/src/fns.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/fns.c	2023-11-05 21:17:35.544962661 +0000
+diff -r --unified emacs-28.2a/src/filelock.c emacs-28.2/src/filelock.c
+--- emacs-28.2a/src/filelock.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/filelock.c	2023-12-04 23:50:04.720723836 +0000
+@@ -298,7 +298,7 @@
+    There is no way to tell whether a symlink call fails due to
+    permissions issues or because links are not supported, but luckily
+    the lock file code should work either way.  */
+-enum { LINKS_MIGHT_NOT_WORK = EPERM };
++#define LINKS_MIGHT_NOT_WORK EPERM
+ 
+ /* Rename OLD to NEW.  If FORCE, replace any existing NEW.
+    It is OK if there are temporarily two hard links to OLD.
+diff -r --unified emacs-28.2a/src/fns.c emacs-28.2/src/fns.c
+--- emacs-28.2a/src/fns.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/fns.c	2023-12-04 23:50:04.724724277 +0000
 @@ -2553,7 +2553,7 @@
  	  {
  	    struct Lisp_Hash_Table *h = XHASH_TABLE (ht);
@@ -210,9 +211,9 @@ diff -urN emacs-28.2/src/fns.c new/src/fns.c
    if (i >= 0)
      set_hash_value_slot (h, i, value);
    else
-diff -urN emacs-28.2/src/image.c new/src/image.c
---- emacs-28.2/src/image.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/image.c	2023-11-05 21:17:21.199741862 +0000
+diff -r --unified emacs-28.2a/src/image.c emacs-28.2/src/image.c
+--- emacs-28.2a/src/image.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/image.c	2023-12-04 23:50:04.724724277 +0000
 @@ -4171,7 +4171,7 @@
  static int
  xpm_color_bucket (char *color_name)
@@ -240,9 +241,9 @@ diff -urN emacs-28.2/src/image.c new/src/image.c
  
    return i >= 0 ? HASH_VALUE (table, i) : Qnil;
  }
-diff -urN emacs-28.2/src/json.c new/src/json.c
---- emacs-28.2/src/json.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/json.c	2023-11-05 21:17:21.207742543 +0000
+diff -r --unified emacs-28.2a/src/json.c emacs-28.2/src/json.c
+--- emacs-28.2a/src/json.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/json.c	2023-12-04 23:50:04.728724717 +0000
 @@ -864,7 +864,7 @@
                json_object_foreach (json, key_str, value)
                  {
@@ -252,9 +253,9 @@ diff -urN emacs-28.2/src/json.c new/src/json.c
                    /* Keys in JSON objects are unique, so the key can't
                       be present yet.  */
                    eassert (i < 0);
-diff -urN emacs-28.2/src/lisp.h new/src/lisp.h
---- emacs-28.2/src/lisp.h	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/lisp.h	2023-11-05 21:17:21.203742203 +0000
+diff -r --unified emacs-28.2a/src/lisp.h emacs-28.2/src/lisp.h
+--- emacs-28.2a/src/lisp.h	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/lisp.h	2023-12-04 23:50:04.728724717 +0000
 @@ -3628,14 +3628,14 @@
  extern bool sweep_weak_table (struct Lisp_Hash_Table *, bool);
  extern void hexbuf_digest (char *, void const *, int);
@@ -272,9 +273,9 @@ diff -urN emacs-28.2/src/lisp.h new/src/lisp.h
  ptrdiff_t hash_put (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object,
  		    Lisp_Object);
  void hash_remove_from_table (struct Lisp_Hash_Table *, Lisp_Object);
-diff -urN emacs-28.2/src/lread.c new/src/lread.c
---- emacs-28.2/src/lread.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/lread.c	2023-11-05 21:17:21.211742883 +0000
+diff -r --unified emacs-28.2a/src/lread.c emacs-28.2/src/lread.c
+--- emacs-28.2a/src/lread.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/lread.c	2023-12-04 23:50:04.728724717 +0000
 @@ -3445,7 +3445,7 @@
  			= XHASH_TABLE (read_objects_map);
  		      Lisp_Object number = make_fixnum (n), hash;
@@ -329,9 +330,9 @@ diff -urN emacs-28.2/src/lread.c new/src/lread.c
    bucket = AREF (obarray, hash);
    oblookup_last_bucket_number = hash;
    if (EQ (bucket, make_fixnum (0)))
-diff -urN emacs-28.2/src/macfont.m new/src/macfont.m
---- emacs-28.2/src/macfont.m	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/macfont.m	2023-11-05 21:17:21.203742203 +0000
+diff -r --unified emacs-28.2a/src/macfont.m emacs-28.2/src/macfont.m
+--- emacs-28.2a/src/macfont.m	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/macfont.m	2023-12-04 23:50:04.728724717 +0000
 @@ -966,7 +966,7 @@
    if (HASH_TABLE_P (macfont_family_cache))
      {
@@ -350,9 +351,9 @@ diff -urN emacs-28.2/src/macfont.m new/src/macfont.m
    value = string ? make_mint_ptr ((void *) CFRetain (string)) : Qnil;
    if (i >= 0)
      {
-diff -urN emacs-28.2/src/minibuf.c new/src/minibuf.c
---- emacs-28.2/src/minibuf.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/minibuf.c	2023-11-05 21:17:21.203742203 +0000
+diff -r --unified emacs-28.2a/src/minibuf.c emacs-28.2/src/minibuf.c
+--- emacs-28.2a/src/minibuf.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/minibuf.c	2023-12-04 23:50:04.728724717 +0000
 @@ -2120,7 +2120,7 @@
    else if (HASH_TABLE_P (collection))
      {
@@ -362,9 +363,9 @@ diff -urN emacs-28.2/src/minibuf.c new/src/minibuf.c
        if (i >= 0)
          {
            tem = HASH_KEY (h, i);
-diff -urN emacs-28.2/src/profiler.c new/src/profiler.c
---- emacs-28.2/src/profiler.c	2022-09-06 21:31:54.000000000 +0000
-+++ new/src/profiler.c	2023-11-05 21:17:21.207742543 +0000
+diff -r --unified emacs-28.2a/src/profiler.c emacs-28.2/src/profiler.c
+--- emacs-28.2a/src/profiler.c	2022-09-06 21:31:54.000000000 +0000
++++ emacs-28.2/src/profiler.c	2023-12-04 23:50:04.728724717 +0000
 @@ -166,7 +166,7 @@
         handler, and we optimize the code to try and avoid computing the
         hash+lookup twice.  See fns.c:Fputhash for reference.  */

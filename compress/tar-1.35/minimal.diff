@@ -1,5 +1,6 @@
---- tar-1.35/src/create.c	2023-07-10 13:43:02.000000000 +0000
-+++ -	2023-10-29 06:09:17.632187865 +0000
+diff -r --unified tar-1.35a/src/create.c tar-1.35/src/create.c
+--- tar-1.35a/src/create.c	2023-07-10 13:43:02.000000000 +0000
++++ tar-1.35/src/create.c	2023-12-04 23:08:25.789756100 +0000
 @@ -30,7 +30,7 @@
  
  /* Error number to use when an impostor is discovered.
