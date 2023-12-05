@@ -31,7 +31,7 @@ fi
 cd links*/
 # cp $COSMOS/common.cache ./config.cache
 ./configure --prefix="$COSMOS"\
-    --with-ssl="$COSMOS/ssl"\
+    --with-ssl="$COSMOS/ssl" --disable-ipv6 \
     --datadir=/zip/usr/share --sysconfdir=/zip/usr/share\
     --without-openmp  --without-svgalib  --without-x\
     --without-fb      --without-directfb --without-pmshell\
