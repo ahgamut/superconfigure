@@ -1,0 +1,58 @@
+--- lz4-1.9.4/programs/Makefile	2022-08-15 22:45:31.000000000 +0000
++++ -	2023-12-08 02:23:23.638015809 +0000
+@@ -157,7 +157,7 @@
+ # directory variables : GNU conventions prefer lowercase
+ # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+ # support both lower and uppercase (BSD), use lowercase in script
+-PREFIX      ?= /usr/local
++PREFIX      ?= ${COSMOS}
+ prefix      ?= $(PREFIX)
+ EXEC_PREFIX ?= $(prefix)
+ exec_prefix ?= $(EXEC_PREFIX)
+--- lz4-1.9.4/lib/Makefile	2022-08-15 22:45:31.000000000 +0000
++++ -	2023-12-08 02:24:29.553313505 +0000
+@@ -43,7 +43,7 @@
+ LIBVER_PATCH := $(shell echo $(LIBVER_PATCH_SCRIPT))
+ LIBVER  := $(shell echo $(LIBVER_SCRIPT))
+ 
+-BUILD_SHARED:=yes
++BUILD_SHARED:=no
+ BUILD_STATIC:=yes
+ 
+ CPPFLAGS+= -DXXH_NAMESPACE=LZ4_
+@@ -83,7 +83,7 @@
+ lib-release: lib
+ 
+ .PHONY: lib
+-lib: liblz4.a liblz4
++lib: liblz4.a
+ 
+ .PHONY: all
+ all: lib
+@@ -151,7 +151,7 @@
+ # directory variables : GNU conventions prefer lowercase
+ # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+ # support both lower and uppercase (BSD), use lower in script
+-PREFIX      ?= /usr/local
++PREFIX      ?= ${COSMOS}
+ prefix      ?= $(PREFIX)
+ EXEC_PREFIX ?= $(prefix)
+ exec_prefix ?= $(EXEC_PREFIX)
+--- lz4-1.9.4/Makefile	2022-08-15 22:45:31.000000000 +0000
++++ -	2023-12-08 02:27:13.319106238 +0000
+@@ -54,13 +54,13 @@
+ .PHONY: lib lib-release liblz4.a
+ lib: liblz4.a
+ lib lib-release liblz4.a:
+-	$(MAKE) -C $(LZ4DIR) $@
++	$(MAKE) -j$(MAXPROC) -C $(LZ4DIR) $@
+ 
+ .PHONY: lz4 lz4-release
+ lz4 : liblz4.a
+ lz4-release : lib-release
+ lz4 lz4-release :
+-	$(MAKE) -C $(PRGDIR) $@
++	$(MAKE) -j$(MAXPROC) -C $(PRGDIR) $@
+ 	cp $(PRGDIR)/lz4$(EXT) .
+ 
+ .PHONY: examples
