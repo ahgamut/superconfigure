@@ -38,7 +38,9 @@ cli/zsh-5.9.built.$(ARCH):\
 	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
 	lib/gdbm-1.23.built.$(ARCH)
 cli/less-643.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
-cli/grep-3.11.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
+cli/grep-3.11.built.$(ARCH):\
+	lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)\
+	lib/pcre-10.42.built.$(ARCH)
 cli/berry-lang.built.$(ARCH): lib/readline-8.2.built.$(ARCH)
 cli/coreutils-9.4.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
 cli/texinfo-7.0.2.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/ncurses-6.4.built.$(ARCH)
