@@ -417,9 +417,6 @@ ac_cv_func_openat=${ac_cv_func_openat=yes}
 ac_cv_func_opendir=${ac_cv_func_opendir=yes}
 ac_cv_func_openpty=${ac_cv_func_openpty=yes}
 ac_cv_func_pause=${ac_cv_func_pause=yes}
-ac_cv_func_pcre_compile=${ac_cv_func_pcre_compile=no}
-ac_cv_func_pcre_exec=${ac_cv_func_pcre_exec=no}
-ac_cv_func_pcre_study=${ac_cv_func_pcre_study=no}
 ac_cv_func_pipe2=${ac_cv_func_pipe2=yes}
 ac_cv_func_pipe=${ac_cv_func_pipe=yes}
 ac_cv_func_plock=${ac_cv_func_plock=no}
@@ -972,7 +969,6 @@ ac_cv_header_netinet_udp_h=${ac_cv_header_netinet_udp_h=yes}
 ac_cv_header_netpacket_packet_h=${ac_cv_header_netpacket_packet_h=no}
 ac_cv_header_nfs_vfs_h=${ac_cv_header_nfs_vfs_h=no}
 ac_cv_header_nl_types_h=${ac_cv_header_nl_types_h=yes}
-ac_cv_header_pcre_h=${ac_cv_header_pcre_h=no}
 ac_cv_header_poll_h=${ac_cv_header_poll_h=yes}
 ac_cv_header_popt_h=${ac_cv_header_popt_h=no}
 ac_cv_header_popt_popt_h=${ac_cv_header_popt_popt_h=no}
@@ -1684,7 +1680,6 @@ gt_cv_locale_tr_utf8=${gt_cv_locale_tr_utf8=none}
 gt_cv_locale_zh_CN=${gt_cv_locale_zh_CN=none}
 gt_cv_ssize_t=${gt_cv_ssize_t=yes}
 gt_cv_val_LC_MESSAGES=${gt_cv_val_LC_MESSAGES=yes}
-pcre_cv_have_pcre2_compile=${pcre_cv_have_pcre2_compile=no}
 sv_cv_sigaltstack=${sv_cv_sigaltstack=yes}
 sv_cv_sigaltstack_low_base=${sv_cv_sigaltstack_low_base=yes}
 sv_cv_stack_direction=${sv_cv_stack_direction=-1}
