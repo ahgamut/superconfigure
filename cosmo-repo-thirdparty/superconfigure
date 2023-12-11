@@ -27,7 +27,6 @@ make V=0 -s -j$MAXPROC \
     o/$MODE/third_party/awk/awk.com\
     o/$MODE/third_party/bzip2/bzip2.com\
     o/$MODE/third_party/ctags/ctags.com\
-    o/$MODE/third_party/ggml/llama.com\
     o/$MODE/third_party/lua/lua.com\
     o/$MODE/third_party/make/make.com\
     o/$MODE/third_party/quickjs/qjs.com\
@@ -53,7 +52,6 @@ cp o/$MODE/examples/wall.com.dbg $COSMOS/bin/wall
 cp o/$MODE/third_party/awk/awk.com.dbg $COSMOS/bin/awk
 cp o/$MODE/third_party/bzip2/bzip2.com.dbg $COSMOS/bin/bzip2
 cp o/$MODE/third_party/ctags/ctags.com.dbg $COSMOS/bin/ctags
-cp o/$MODE/third_party/ggml/llama.com.dbg $COSMOS/bin/llama
 cp o/$MODE/third_party/lua/lua.com.dbg $COSMOS/bin/lua
 cp o/$MODE/third_party/make/make.com.dbg $COSMOS/bin/make
 cp o/$MODE/third_party/quickjs/qjs.com.dbg $COSMOS/bin/qjs

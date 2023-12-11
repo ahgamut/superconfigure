@@ -103,7 +103,6 @@ wall
 awk
 bzip2
 ctags
-llama
 lua
 make
 qjs
