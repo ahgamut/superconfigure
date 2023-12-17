@@ -25,7 +25,7 @@ else
     tar -xzf sources.tar.gz
 
     # apply patches if any
-    patch -p0 -i minimal.diff
+    # patch -p0 -i minimal.diff
 fi
 
 # go into the source folder, configure
