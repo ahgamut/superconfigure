@@ -1,31 +1,3 @@
-diff -r --unified tmux-3.3aa/compat/base64.c tmux-3.3a/compat/base64.c
---- tmux-3.3aa/compat/base64.c	2022-06-09 11:30:50.000000000 +0000
-+++ tmux-3.3a/compat/base64.c	2023-12-04 23:58:59.587535395 +0000
-@@ -46,10 +46,10 @@
- #include <sys/socket.h>
- #include <netinet/in.h>
- #include <arpa/inet.h>
--#include <arpa/nameser.h>
-+// #include <arpa/nameser.h>
- 
- #include <ctype.h>
--#include <resolv.h>
-+// #include <resolv.h>
- #include <stdio.h>
- 
- #include <stdlib.h>
-diff -r --unified tmux-3.3aa/input.c tmux-3.3a/input.c
---- tmux-3.3aa/input.c	2022-06-09 11:30:50.000000000 +0000
-+++ tmux-3.3a/input.c	2023-12-04 23:58:59.587535395 +0000
-@@ -21,7 +21,7 @@
- #include <netinet/in.h>
- 
- #include <ctype.h>
--#include <resolv.h>
-+// #include <resolv.h>
- #include <stdlib.h>
- #include <string.h>
- #include <time.h>
 diff -r --unified tmux-3.3aa/osdep-linux.c tmux-3.3a/osdep-linux.c
 --- tmux-3.3aa/osdep-linux.c	2022-06-09 11:30:50.000000000 +0000
 +++ tmux-3.3a/osdep-linux.c	2023-12-04 23:58:59.587535395 +0000
@@ -38,27 +10,3 @@ diff -r --unified tmux-3.3aa/osdep-linux.c tmux-3.3a/osdep-linux.c
  		xasprintf(&path, "/proc/%lld/cwd", (long long) sid);
  		n = readlink(path, target, MAXPATHLEN);
  		free(path);
-diff -r --unified tmux-3.3aa/tty-keys.c tmux-3.3a/tty-keys.c
---- tmux-3.3aa/tty-keys.c	2022-06-09 11:30:50.000000000 +0000
-+++ tmux-3.3a/tty-keys.c	2023-12-04 23:58:59.587535395 +0000
-@@ -23,7 +23,7 @@
- 
- #include <ctype.h>
- #include <limits.h>
--#include <resolv.h>
-+// #include <resolv.h>
- #include <stdlib.h>
- #include <string.h>
- #include <termios.h>
-diff -r --unified tmux-3.3aa/tty.c tmux-3.3a/tty.c
---- tmux-3.3aa/tty.c	2022-06-09 11:30:50.000000000 +0000
-+++ tmux-3.3a/tty.c	2023-12-04 23:58:59.587535395 +0000
-@@ -24,7 +24,7 @@
- #include <curses.h>
- #include <errno.h>
- #include <fcntl.h>
--#include <resolv.h>
-+// #include <resolv.h>
- #include <stdlib.h>
- #include <string.h>
- #include <termios.h>
