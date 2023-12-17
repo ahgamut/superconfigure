@@ -1,0 +1,12 @@
+diff -r --unified tmux-3.3aa/osdep-linux.c tmux-3.3a/osdep-linux.c
+--- tmux-3.3aa/osdep-linux.c	2022-06-09 11:30:50.000000000 +0000
++++ tmux-3.3a/osdep-linux.c	2023-12-04 23:58:59.587535395 +0000
+@@ -75,7 +75,7 @@
+ 	n = readlink(path, target, MAXPATHLEN);
+ 	free(path);
+ 
+-	if (n == -1 && ioctl(fd, TIOCGSID, &sid) != -1) {
++	if (n == -1 /* && ioctl(fd, TIOCGSID, &sid) != -1 */) {
+ 		xasprintf(&path, "/proc/%lld/cwd", (long long) sid);
+ 		n = readlink(path, target, MAXPATHLEN);
+ 		free(path);
