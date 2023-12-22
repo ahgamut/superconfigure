@@ -117,6 +117,7 @@ o/%/.built.aarch64: o/%/.configured.aarch64
 o/%/.built.fat: o/%/.built.x86_64 o/%/.built.aarch64
 	touch $@
 	$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
+	source $(BASELOC)/config/vars-fat
 ifneq ($(FATTEN_SCRIPT),)
 		echo "running custom fattening script"
 		$(FATTEN_SCRIPT)	

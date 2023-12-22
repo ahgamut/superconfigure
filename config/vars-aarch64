@@ -1,9 +1,19 @@
-export COSMOS=$(COSMOS_AARCH64) 
-export ARCH=aarch64  
-export MODE=aarch64  
-export CC=$(COSMOCC)/bin/aarch64-unknown-cosmo-cc 
-export CXX=$(COSMOCC)/bin/aarch64-unknown-cosmo-c++
-export LD=$(COSMOCC)/bin/aarch64-unknown-cosmo-cc
-export AR=$(COSMOCC)/bin/aarch64-unknown-cosmo-ar 
-export STRIP=$(COSMOCC)/bin/aarch64-unknown-cosmo-strip 
-export OBJCOPY=$(COSMOCC)/bin/aarch64-unknown-cosmo-objcopy
+#!/usr/bin/env bash
+
+export ARCH=aarch64
+export MODE=aarch64
+export BASELOC=$(realpath $PWD)
+export COSMO=$BASELOC/cosmopolitan
+export COSMOS=$BASELOC/cosmos/$ARCH
+export RESULTS=$BASELOC/results
+export PKG_CONFIG_PATH="$COSMOS/lib/pkgconfig:$COSMOS/share/pkgconfig:$COSMOS/share/pkg-config"
+export ACLOCAL_PATH="$COSMOS/share/aclocal"
+
+PREFIX="$COSMO/cosmocc/bin/$ARCH-unknown-cosmo"
+export CC=$PREFIX-cc
+export CXX=$PREFIX-c++
+export LD=$PREFIX-cc
+export OBJCOPY=$PREFIX-objcopy
+export AR=$PREFIX-ar
+export STRIP=$PREFIX-strip
+export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
