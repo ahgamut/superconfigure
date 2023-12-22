@@ -1,0 +1,9 @@
+export COSMOS=$(COSMOS_AARCH64) 
+export ARCH=aarch64  
+export MODE=aarch64  
+export CC=$(COSMOCC)/bin/aarch64-unknown-cosmo-cc 
+export CXX=$(COSMOCC)/bin/aarch64-unknown-cosmo-c++
+export LD=$(COSMOCC)/bin/aarch64-unknown-cosmo-cc
+export AR=$(COSMOCC)/bin/aarch64-unknown-cosmo-ar 
+export STRIP=$(COSMOCC)/bin/aarch64-unknown-cosmo-strip 
+export OBJCOPY=$(COSMOCC)/bin/aarch64-unknown-cosmo-objcopy

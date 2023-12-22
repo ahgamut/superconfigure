@@ -1,5 +1,6 @@
 # Common Configuration Variables
 
+export SHELL:=bash
 export BASELOC:=$(shell pwd)
 export COSMO:=$(BASELOC)/cosmopolitan
 export COSMOCC:=$(COSMO)/cosmocc
@@ -11,7 +12,7 @@ export APELINK:=$(COSMO)/o/tool/build/apelink.com
 
 ifeq ($(MAXPROC),)
 export MAXPROC:=4
-ifdef $(GITHUB_ACTIONS)
+ifdef GITHUB_ACTIONS
 export MAXPROC:=2
 endif
 endif
@@ -26,10 +27,14 @@ PATCH_COMMAND = $(BASELOC)/config/default_patch.sh
 # if minimal.diff doesn't exist, the above script is ok
 
 CONFIG_COMMAND = echo "need to provide a CONFIG_COMMAND!" && exit 1
-BUILD_COMMAND = $(MAKE)
+BUILD_COMMAND = make
 INSTALL_COMMAND = $(BUILD_COMMAND) install
 
 APELINKPLS:= $(BASELOC)/config/default_apelink.sh
+
+# Specifying SECONDARY means none of the intermediate stuff
+# will get deleted (hopefully).
+.SECONDARY:
 
 
 # Specifying .ONESHELL means commands inside a target will
@@ -40,20 +45,18 @@ APELINKPLS:= $(BASELOC)/config/default_apelink.sh
 # I'd like to enable .SHELLFLAGS but I don't get how it works
 # .SHELLFLAGS = -e
 
-.PRECIOUS: o/%/.downloaded
 o/%/.downloaded: %
 	echo "should be downloading" $(DL_FILE)
-	@$(MKDIR) o/$<
-	@touch $@
-	@cd o/$<
+	$(MKDIR) o/$<
+	touch $@
+	cd o/$<
 	$(DL_COMMAND) $(DL_FILE)
 
-.PRECIOUS: o/%/.patched
 o/%/.patched: o/%/.downloaded
 	echo "should be patching with" $(PATCH_FILE) 
-	@$(MKDIR) $(dir $<)
-	@touch $@
-	@cd $(dir $<)
+	$(MKDIR) $(dir $<)
+	touch $@
+	cd $(dir $<)
 	$(PATCH_COMMAND) $(PATCH_FILE)
 
 
@@ -77,38 +80,43 @@ o/%.aarch64: AR=$(COSMOCC)/bin/aarch64-unknown-cosmo-ar
 o/%.aarch64: STRIP=$(COSMOCC)/bin/aarch64-unknown-cosmo-strip 
 o/%.aarch64: OBJCOPY=$(COSMOCC)/bin/aarch64-unknown-cosmo-objcopy
 
+o/%/.deps.x86_64: o/%/.patched
+	touch $@
 
-.PRECIOUS: o/%/.configured.x86_64
-o/%/.configured.x86_64: o/%/.patched
-	@touch $@
-	@cd $(dir $<)
-	@$(MKDIR) build/x86_64 && cd build/x86_64
+o/%/.deps.aarch64: o/%/.patched
+	touch $@
+
+o/%/.configured.x86_64: o/%/.deps.x86_64
+	touch $@
+	source $(BASELOC)/config/vars-x86_64
+	cd $(dir $<)
+	$(MKDIR) build/x86_64 && cd build/x86_64
 	$(CONFIG_COMMAND)
 
-.PRECIOUS: o/%/.built.x86_64
 o/%/.built.x86_64: o/%/.configured.x86_64
-	@touch $@
-	@cd $(dir $<)/build/x86_64
+	touch $@
+	source $(BASELOC)/config/vars-x86_64
+	cd $(dir $<)/build/x86_64
 	$(BUILD_COMMAND) -j$(MAXPROC)
 	$(INSTALL_COMMAND) -j$(MAXPROC)
 
-.PRECIOUS: o/%/.configured.aarch64
-o/%/.configured.aarch64: o/%/.patched
-	@touch $@
-	@cd $(dir $<)
-	@$(MKDIR) build/aarch64 && cd build/aarch64
+o/%/.configured.aarch64: o/%/.deps.aarch64
+	touch $@
+	source $(BASELOC)/config/vars-aarch64
+	cd $(dir $<)
+	$(MKDIR) build/aarch64 && cd build/aarch64
 	$(CONFIG_COMMAND)
 
-.PRECIOUS: o/%/.built.aarch64
 o/%/.built.aarch64: o/%/.configured.aarch64
-	@touch $@
-	@cd $(dir $<)/build/aarch64
+	touch $@
+	source $(BASELOC)/config/vars-aarch64
+	cd $(dir $<)/build/aarch64
 	$(BUILD_COMMAND) -j$(MAXPROC)
 	$(INSTALL_COMMAND) -j$(MAXPROC)
 
 o/%/.built.fat: o/%/.built.x86_64 o/%/.built.aarch64
 	touch $@
-	@$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
+	$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
 ifneq ($(FATTEN_SCRIPT),)
 		echo "running custom fattening script"
 		$(FATTEN_SCRIPT)	
