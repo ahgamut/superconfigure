@@ -8,19 +8,21 @@ if [[ "$FILELIST" = "ERROR" ]]; then
     exit 1
 fi
 
+echo "$FILELIST"
+
 apelinkpls () {
     OUTPUT="$1"
-    OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
-    OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
+    OLDNAME_X86_64="$(basename -- $2)"
+    OLDNAME_AARCH64="$(basename -- $3)"
     TARG_FOLD="$(dirname $OUTPUT)"
-    "$APELINK" -l "$COSMO/o/$MODE/ape/ape.elf" \
-        -l "$COSMO/o/$MODE_AARCH64/ape/ape.elf" \
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
-        "$OUTPUT_X86_64" \
-        "$OUTPUT_AARCH64"
-    cp "$OUTPUT_X86_64" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
-    cp "$OUTPUT_AARCH64" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
 for EXE in $FILELIST; do

@@ -16,3 +16,5 @@ NCURSES_CONFIG_ARGS = --without-libtool --without-shared\
 $(eval $(call DOWNLOAD_SOURCE,lib/ncurses,$(NCURSES_SRC)))
 # no deps for ncurses except cosmo repo
 $(eval $(call AUTOTOOLS_BUILD,lib/ncurses,$(NCURSES_CONFIG_ARGS),$(NCURSES_CONFIG_ARGS)))
+
+o/lib/ncurses/.built.fat: echo "nothing"
