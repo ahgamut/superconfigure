@@ -10,4 +10,4 @@ $(eval $(call DOWNLOAD_SOURCE,lib/readline,$(READLINE_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/readline,lib/ncurses))
 $(eval $(call AUTOTOOLS_BUILD,lib/readline,$(READLINE_CONFIG_ARGS),$(READLINE_CONFIG_ARGS)))
 
-o/lib/readline/.built.fat: echo "nothing"
+o/lib/readline/.built.fat: APELINKPLS = echo "nothing"
