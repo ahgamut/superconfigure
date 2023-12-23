@@ -87,28 +87,28 @@ o/%/.deps.aarch64: o/%/.patched
 	touch $@
 
 o/%/.configured.x86_64: o/%/.deps.x86_64
-	source $(BASELOC)/config/vars-x86_64 && \
+	@source $(BASELOC)/config/vars-x86_64 && \
 		$(MKDIR) $(dir $<)/build/x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(CONFIG_COMMAND)
 	touch $@
 
 o/%/.built.x86_64: o/%/.configured.x86_64
-	source $(BASELOC)/config/vars-x86_64 && \
+	@source $(BASELOC)/config/vars-x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(BUILD_COMMAND) -j$(MAXPROC) && \
 		$(INSTALL_COMMAND)
 	touch $@
 
 o/%/.configured.aarch64: o/%/.deps.aarch64
-	source $(BASELOC)/config/vars-aarch64 && \
+	@source $(BASELOC)/config/vars-aarch64 && \
 		$(MKDIR) $(dir $<)/build/aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(CONFIG_COMMAND)
 	touch $@
 
 o/%/.built.aarch64: o/%/.configured.aarch64
-	source $(BASELOC)/config/vars-aarch64 && \
+	@source $(BASELOC)/config/vars-aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(BUILD_COMMAND) -j$(MAXPROC) && \
 		$(INSTALL_COMMAND)
@@ -118,7 +118,7 @@ o/%/.built.fat: FATTEN_COMMAND = $(APELINKPLS)
 o/%/.built.fat: BINS =
 o/%/.built.fat: o/%/.built.x86_64 o/%/.built.aarch64
 	$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
-	source $(BASELOC)/config/vars-fat && \
+	@source $(BASELOC)/config/vars-fat && \
 		echo "running apelink for a list of files" && \
 		$(FATTEN_COMMAND) $(BINS)
 	touch $@
