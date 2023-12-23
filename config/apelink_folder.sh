@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
+EXE="${1:-ERROR}"
+shift 1
 FILELIST="$@"
 
-if [[ x"$FILELIST" = "x" ]]; then
-    echo "did not specify files to fatten!"
+if [[ "$EXE" = "ERROR" ]]; then
+    echo "did not specify exe to fatten!"
     exit 1
 fi
 
-echo "$FILELIST"
+if [[ x"$FILELIST" = "x" ]]; then
+    echo "did not specify folders to add!"
+    exit 1
+fi
 
 apelinkpls () {
     OUTPUT="$1"
@@ -25,6 +30,7 @@ apelinkpls () {
     cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
-for EXE in $FILELIST; do
-    apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
-done
+apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
+cd /zip
+zip -qr $RESULTS/bin/$EXE.com $FILELIST
+cd $BASELOC

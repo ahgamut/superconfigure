@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-FILELIST="$@"
-
-if [[ x"$FILELIST" = "x" ]]; then
-    echo "did not specify files to fatten!"
-    exit 1
-fi
-
-echo "$FILELIST"
+FILELIST='emacs emacsclient'
 
 apelinkpls () {
     OUTPUT="$1"
@@ -25,6 +18,22 @@ apelinkpls () {
     cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
+cd /zip
+mkdir -p ./usr/share/ssl/certs/
+cp /etc/ssl/certs/*.* ./usr/share/ssl/certs/ || true
+cd $BASELOC
+
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
+    cd /zip
+    zip -qr $RESULTS/bin/$e.com \
+        usr/share/ssl \
+        usr/share/terminfo \
+        $(find x86_64 -type f | grep '\.pdmp') \
+        $(find aarch64 -type f | grep '\.pdmp') \
+        $(find usr/share/emacs -type f |
+        grep -v '\.el.gz$' |
+        grep -v refcards |
+        grep -v images)
+    cd $BASELOC
 done

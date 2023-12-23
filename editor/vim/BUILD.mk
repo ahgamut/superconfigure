@@ -10,5 +10,6 @@ o/editor/vim/.configured.x86_64:\
 o/editor/vim/.configured.aarch64:\
 	CONFIG_COMMAND = $(BASELOC)/editor/vim/config-wrapper
 
+o/editor/vim/.built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
 o/editor/vim/.built.fat: \
-	BINS = vim
+	BINS = vim usr/share/terminfo usr/share/vim
