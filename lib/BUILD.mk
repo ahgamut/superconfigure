@@ -23,8 +23,7 @@ lib:\
 	o/lib/pcre/.built.fat \
 	o/lib/nettle/.built.fat \
 	o/lib/libuuid/.built.fat \
+	o/lib/gdbm/.built.fat \
 	o/lib/gnutls/.built.fat
 
 .PHONY: lib
-# gdbm is erroring out for some reason
-# o/lib/gdbm/.built.fat \
