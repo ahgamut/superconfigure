@@ -9,4 +9,4 @@ $(eval $(call DOWNLOAD_SOURCE,lib/mpfr,$(MPFR_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/mpfr,lib/gmp compress/zlib))
 $(eval $(call AUTOTOOLS_BUILD,lib/mpfr,$(MPFR_CONFIG_ARGS),$(MPFR_CONFIG_ARGS)))
 
-o/lib/mpfr/.built.fat: APELINKPLS = echo "nothing"
+o/lib/mpfr/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

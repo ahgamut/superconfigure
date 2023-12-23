@@ -10,4 +10,4 @@ o/lib/gnutls/.configured.x86_64:\
 o/lib/gnutls/.configured.aarch64:\
 	CONFIG_COMMAND = $(BASELOC)/lib/gnutls/config-wrapper
 
-o/lib/gnutls/.built.fat: APELINKPLS = echo "nothing"
+o/lib/gnutls/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

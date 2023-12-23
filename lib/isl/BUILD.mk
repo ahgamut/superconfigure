@@ -8,4 +8,4 @@ ISL_CONFIG_ARGS =  --prefix=$$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,lib/isl,$(ISL_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/isl,$(ISL_CONFIG_ARGS),$(ISL_CONFIG_ARGS)))
 
-o/lib/isl/.built.fat: APELINKPLS = echo "nothing"
+o/lib/isl/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

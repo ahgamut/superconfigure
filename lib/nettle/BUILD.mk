@@ -11,4 +11,4 @@ $(eval $(call DOWNLOAD_SOURCE,lib/nettle,$(NETTLE_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/nettle,lib/gmp))
 $(eval $(call AUTOTOOLS_BUILD,lib/nettle,$(NETTLE_CONFIG_ARGS),$(NETTLE_CONFIG_ARGS)))
 
-o/lib/nettle/.built.fat: APELINKPLS = echo "nothing"
+o/lib/nettle/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

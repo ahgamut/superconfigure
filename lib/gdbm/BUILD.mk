@@ -13,4 +13,4 @@ GDBM_CONFIG_ARGS =  --prefix=$$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,lib/gdbm,$(GDBM_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/gbdm,$(GDBM_CONFIG_ARGS),$(GDBM_CONFIG_ARGS)))
 
-o/lib/gdbm/.built.fat: APELINKPLS = echo "nothing"
+o/lib/gdbm/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

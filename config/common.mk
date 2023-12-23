@@ -10,6 +10,9 @@ export RESULTS:=$(BASELOC)/results
 export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy.com
 export APELINK:=$(COSMO)/o/tool/build/apelink.com
 
+APELINKPLS := $(BASELOC)/config/default_apelink.sh
+DUMMYLINK0 := echo ""
+
 ifeq ($(MAXPROC),)
 export MAXPROC:=4
 ifdef GITHUB_ACTIONS
@@ -111,13 +114,13 @@ o/%/.built.aarch64: o/%/.configured.aarch64
 		$(INSTALL_COMMAND)
 	touch $@
 
-o/%/.built.fat: APELINKPLS = $(BASELOC)/config/default_apelink.sh
+o/%/.built.fat: FATTEN_COMMAND = $(APELINKPLS)
 o/%/.built.fat: BINS =
 o/%/.built.fat: o/%/.built.x86_64 o/%/.built.aarch64
 	$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
 	source $(BASELOC)/config/vars-fat && \
 		echo "running apelink for a list of files" && \
-		$(APELINKPLS) $(BINS)
+		$(FATTEN_COMMAND) $(BINS)
 	touch $@
 
 o/%: o/%/.built.fat

@@ -17,4 +17,4 @@ o/lib/pcre/.configured.aarch64: o/lib/pcre/.configured.x86_64
 o/lib/pcre/.configured.aarch64: \
 	CONFIG_COMMAND = ../../pcre*/configure $(PCRE_CONFIG_ARGS)
 
-o/lib/pcre/.built.fat: APELINKPLS = echo "nothing"
+o/lib/pcre/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

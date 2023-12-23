@@ -20,4 +20,4 @@ o/lib/openssl/.configured.x86_64:\
 o/lib/openssl/.configured.aarch64:\
 	CONFIG_COMMAND = ../../openssl*/Configure $(OPENSSL_CONFIG_ARGS)
 
-o/lib/openssl/.built.fat: APELINKPLS = echo "nothing"
+o/lib/openssl/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
