@@ -12,8 +12,10 @@ compress: \
 	o/compress/gzip/.built.fat\
 	o/compress/lz4/.built.fat\
 	o/compress/pigz/.built.fat\
-	o/compress/tar/.built.fat\
 	o/compress/xz/.built.fat\
 	o/compress/zlib/.built.fat
+
+# tar build doesn't work for some reason
+# o/compress/tar/.built.fat
 
 .PHONY: compress
