@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -e
+shopt -s expand_aliases
+
+ARCH="${ARCH:-x86_64}"
+alias strip=$STRIP
+alias ar=$AR
+
+export GOBJECT_LIBS=""
+export PKG_CONFIG=""
+export NETTLE_CFLAGS="-I$COSMOS/include/nettle"
+export NETTLE_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
+export HOGWEED_CFLAGS="-I$COSMOS/include"
+export HOGWEED_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
+
+../../gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --libexecdir=/zip/$ARCH --prefix=$COSMOS\
+    --disable-shared --enable-static\
+    --with-gnu-ld --disable-cxx\
+    --disable-nls --disable-rpath --disable-tests\
+    --disable-hardware-acceleration --disable-padlock\
+    --disable-libdane --disable-guile\
+    --disable-bash-tests --disable-doc\
+    --without-p11-kit --without-tpm --without-tpm2\
+    --with-included-libtasn1 --with-included-unistring\
+    --enable-fat\
+    --with-default-trust-store-file=/zip/usr/share/ssl/certs/ca-certificates.crt \
+    --with-default-trust-store-dir=/zip/usr/share/ssl/certs \
+    --with-default-trust-store-dir=/zip/usr/share/ssl/default.crl \
+    --with-unbound-root-key-file=/zip/usr/share/unbound/root.key \
+    CFLAGS="-Os"

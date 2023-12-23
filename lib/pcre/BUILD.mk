@@ -10,9 +10,11 @@ PCRE_CONFIG_ARGS = --disable-shared --enable-static\
 $(eval $(call DOWNLOAD_SOURCE,lib/pcre,$(PCRE_SRC)))
 
 o/lib/pcre/.configured.x86_64: \
-	CONFIG_COMMAND = ../../pcre*/autogen.sh && ../../pcre*/configure $(PCRE_CONFIG_ARGS)
+	CONFIG_COMMAND = cd ../../pcre*/ && ./autogen.sh && \
+		cd ../build/x86_64/ && ../../pcre*/configure $(PCRE_CONFIG_ARGS)
 
+o/lib/pcre/.configured.aarch64: o/lib/pcre/.configured.x86_64
 o/lib/pcre/.configured.aarch64: \
-	CONFIG_COMMAND = ../../pcre*/autogen.sh && ../../pcre*/configure $(PCRE_CONFIG_ARGS)
+	CONFIG_COMMAND = ../../pcre*/configure $(PCRE_CONFIG_ARGS)
 
 o/lib/pcre/.built.fat: APELINKPLS = echo "nothing"

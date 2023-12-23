@@ -5,6 +5,7 @@ include config/functions.mk
 
 include lib/BUILD.mk
 include compress/BUILD.mk
+include editor/BUILD.mk
 
 include cli/less-643/BUILD.mk
 
