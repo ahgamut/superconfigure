@@ -1,5 +1,5 @@
 
-LESS_SRC := https://ftp.gnu.org/gnu/less/less.tar.gz 
+LESS_SRC := https://ftp.gnu.org/gnu/less/less-643.tar.gz 
 
 LESS_CONFIG_ARGS = --prefix=$$(COSMOS) CFLAGS="-Os"
 

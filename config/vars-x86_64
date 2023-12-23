@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export COSMOPOLITAN_DISABLE_ZIPOS=1
 export ARCH=x86_64
 export MODE=x86_64
 export BASELOC=$(realpath $PWD)

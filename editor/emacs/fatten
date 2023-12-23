@@ -26,7 +26,7 @@ cd $BASELOC
 for EXE in $FILELIST; do
     apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
     cd /zip
-    zip -qr $RESULTS/bin/$e.com \
+    zip -qr $RESULTS/bin/$EXE.com \
         usr/share/ssl \
         usr/share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
