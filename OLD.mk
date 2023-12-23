@@ -23,14 +23,6 @@ cosmo.setup.$(ARCH):
 
 cosmo-thirdparty: cosmo-repo-thirdparty.built.$(ARCH)
 
-# lib
-
-lib/readline-8.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH)
-lib/nettle-3.9.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH)
-lib/gnutls-3.7.10.built.$(ARCH): lib/nettle-3.9.built.$(ARCH) compress/brotli-1.1.0.built.$(ARCH) 
-lib/mpfr-4.2.0.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) compress/zlib-1.3.built.$(ARCH)
-lib/mpc-1.3.1.built.$(ARCH): lib/gmp-6.3.0.built.$(ARCH) lib/mpfr-4.2.0.built.$(ARCH) lib/isl-0.18.built.$(ARCH)
-
 # cli
 
 cli/bash-5.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
@@ -59,16 +51,6 @@ cli: cosmo-repo-thirdparty.built.$(ARCH)\
 	cli/coreutils-9.4.built.$(ARCH)\
 	cli/berry-lang.built.$(ARCH)\
 	cli/zsh-5.9.built.$(ARCH)
-
-# editor
-
-editor/emacs-28.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/gnutls-3.7.10.built.$(ARCH)
-editor/vim-9.0.1670.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
-editor/nano-7.2.built.$(ARCH): lib/ncurses-6.4.built.$(ARCH) lib/readline-8.2.built.$(ARCH)
-
-editor: editor/nano-7.2.built.$(ARCH)\
-	editor/emacs-28.2.built.$(ARCH)\
-	editor/vim-9.0.1670.built.$(ARCH)
 
 # compress
 
