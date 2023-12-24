@@ -8,6 +8,7 @@ include compress/BUILD.mk
 include editor/BUILD.mk
 
 include cli/less/BUILD.mk
+include compiler/binutils/BUILD.mk
 
 clean:
 	rm -rf o/

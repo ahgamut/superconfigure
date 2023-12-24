@@ -29,3 +29,14 @@
  	     | uxpv* | beos* | mpeix* | udk* | moxiebox* \
  	     | interix* | uwin* | mks* | rhapsody* | darwin* \
  	     | openstep* | oskit* | conix* | pw32* | nonstopux* \
+--- -	2023-12-24 08:04:21.569201043 +0000
++++ binutils-2.35.2/bfd/peicode.h	2021-01-30 08:38:03.000000000 +0000
+@@ -1484,7 +1484,7 @@
+       if (opthdr == NULL)
+ 	return NULL;
+       if (amt > opt_hdr_size)
+-	memset (opthdr + opt_hdr_size, 0, amt - opt_hdr_size);
++	memset ((char *)opthdr + opt_hdr_size, 0, amt - opt_hdr_size);
+ 
+       bfd_set_error (bfd_error_no_error);
+       bfd_coff_swap_aouthdr_in (abfd, opthdr, & internal_a);
