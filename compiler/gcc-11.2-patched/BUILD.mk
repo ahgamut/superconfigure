@@ -37,8 +37,8 @@ o/compiler/x86_64-gcc/built.fat: \
 	FATTEN_COMMAND = export TARGET_ARCH=x86_64 && $(BASELOC)/compiler/gcc-11.2-patched/fatten
 
 x86_64-gcc: \
-	o/compiler/x86_64-binutils/.built.fat \
-	o/compiler/x86_64-gcc/.built.fat
+	o/compiler/x86_64-binutils/built.fat \
+	o/compiler/x86_64-gcc/built.fat
 .PHONY: x86_64-gcc
 
 # aarch64-gcc
@@ -64,6 +64,6 @@ o/compiler/aarch64-gcc/built.fat: \
 	FATTEN_COMMAND = export TARGET_ARCH=aarch64 && $(BASELOC)/compiler/gcc-11.2-patched/fatten
 
 aarch64-gcc: \
-	o/compiler/aarch64-binutils/.built.fat \
-	o/compiler/aarch64-gcc/.built.fat
+	o/compiler/aarch64-binutils/built.fat \
+	o/compiler/aarch64-gcc/built.fat
 .PHONY: aarch64-gcc

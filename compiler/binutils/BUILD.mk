@@ -27,7 +27,7 @@ $(eval $(call SPECIFY_DEPS,compiler/x86_64-binutils,lib/gmp lib/mpfr lib/isl lib
 o/compiler/x86_64-binutils/built.fat: \
 	FATTEN_COMMAND = export TARGET_ARCH=x86_64 && $(BASELOC)/compiler/binutils/fatten
 
-x86_64-binutils: o/compiler/x86_64-binutils/.built.fat
+x86_64-binutils: o/compiler/x86_64-binutils/built.fat
 .PHONY: x86_64-binutils
 
 # aarch64-binutils
@@ -44,5 +44,5 @@ $(eval $(call SPECIFY_DEPS,compiler/aarch64-binutils,lib/gmp lib/mpfr lib/isl li
 o/compiler/aarch64-binutils/built.fat: \
 	FATTEN_COMMAND = export TARGET_ARCH=aarch64 && $(BASELOC)/compiler/binutils/fatten
 
-aarch64-binutils: o/compiler/aarch64-binutils/.built.fat
+aarch64-binutils: o/compiler/aarch64-binutils/built.fat
 .PHONY: aarch64-binutils

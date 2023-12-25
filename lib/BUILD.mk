@@ -20,25 +20,25 @@ include lib/pcre/BUILD.mk
 include lib/readline/BUILD.mk
 
 lib:\
-	o/lib/gdbm/.built.fat\
-	o/lib/gmp/.built.fat\
-	o/lib/gnutls/.built.fat\
-	o/lib/isl/.built.fat\
-	o/lib/libevent/.built.fat\
-	o/lib/libexpat/.built.fat\
-	o/lib/libgc/.built.fat\
-	o/lib/libssh2/.built.fat\
-	o/lib/libunistring/.built.fat\
-	o/lib/libuuid/.built.fat\
-	o/lib/libyaml/.built.fat\
-	o/lib/mpc/.built.fat\
-	o/lib/mpfr/.built.fat\
-	o/lib/ncurses/.built.fat\
-	o/lib/nettle/.built.fat\
-	o/lib/openssl/.built.fat\
-	o/lib/pcre/.built.fat\
-	o/lib/readline/.built.fat
+	o/lib/gdbm/built.fat\
+	o/lib/gmp/built.fat\
+	o/lib/gnutls/built.fat\
+	o/lib/isl/built.fat\
+	o/lib/libevent/built.fat\
+	o/lib/libexpat/built.fat\
+	o/lib/libgc/built.fat\
+	o/lib/libssh2/built.fat\
+	o/lib/libunistring/built.fat\
+	o/lib/libuuid/built.fat\
+	o/lib/libyaml/built.fat\
+	o/lib/mpc/built.fat\
+	o/lib/mpfr/built.fat\
+	o/lib/ncurses/built.fat\
+	o/lib/nettle/built.fat\
+	o/lib/openssl/built.fat\
+	o/lib/pcre/built.fat\
+	o/lib/readline/built.fat
 
-# o/lib/libffi/.built.fat
+# o/lib/libffi/built.fat
 
 .PHONY: lib
