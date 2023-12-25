@@ -1,4 +1,5 @@
 
+include lib/certs/BUILD.mk
 include lib/gdbm/BUILD.mk
 include lib/gmp/BUILD.mk
 include lib/gnutls/BUILD.mk

@@ -13,6 +13,7 @@ OPENSSL_CONFIG_ARGS = no-shared no-asm\
     --prefix=$(COSMOS) linux-$(ARCH)
 
 $(eval $(call DOWNLOAD_SOURCE,lib/openssl,$(OPENSSL_SRC)))
+$(eval $(call SPECIFY_DEPS,lib/openssl,lib/certs))
 
 o/lib/openssl/configured.x86_64:\
 	CONFIG_COMMAND = ../../openssl*/Configure $(OPENSSL_CONFIG_ARGS)
