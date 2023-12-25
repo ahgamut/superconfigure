@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -e
+
+export OPENSSL_CFLAGS=""
+export OPENSSL_LIBS="-lssl -lcrypto"
+
+../../wget*/configure --prefix="$COSMOS"\
+    --with-ssl=openssl --with-openssl=yes\
+    --sysconfdir=/zip --with-gnu-ld=yes\
+    --enable-threads=posix --disable-rpath\
+    --disable-xattr --disable-nls\
+    --disable-pcre --disable-pcre2\
+    CFLAGS="-Os" LIBS="-lbz2 -lz -llzma"

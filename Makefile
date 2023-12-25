@@ -13,12 +13,13 @@ include config/common.mk
 include config/functions.mk
 
 include cosmo-repo/BUILD.mk
-
 include lib/BUILD.mk
+
 include cli/BUILD.mk
+include compiler/BUILD.mk
 include compress/BUILD.mk
 include editor/BUILD.mk
-include compiler/BUILD.mk
+include web/BUILD.mk
 
 clean:
 	rm -rf o/

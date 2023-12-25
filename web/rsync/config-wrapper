@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+export OPENSSL_CFLAGS=""
+export OPENSSL_LIBS="-lssl -lcrypto"
+
+../../rsync*/configure --prefix="$COSMOS"\
+    --with-rsyncd-conf=/zip/rsyncd.conf --with-included-popt\
+    --with-openssl-conf=/zip/openssl.conf --without-included-zlib\
+    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --disable-iconv --disable-lz4 --disable-xxhash\
+    --disable-acl-support --disable-xattr-support\
+    --disable-locale --disable-md2man\
+    --disable-roll-simd --disable-md5-asm --disable-roll-asm\
+    CFLAGS="-Os"
