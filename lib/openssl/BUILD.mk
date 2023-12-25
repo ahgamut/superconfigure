@@ -14,10 +14,10 @@ OPENSSL_CONFIG_ARGS = no-shared no-asm\
 
 $(eval $(call DOWNLOAD_SOURCE,lib/openssl,$(OPENSSL_SRC)))
 
-o/lib/openssl/.configured.x86_64:\
+o/lib/openssl/configured.x86_64:\
 	CONFIG_COMMAND = ../../openssl*/Configure $(OPENSSL_CONFIG_ARGS)
 
-o/lib/openssl/.configured.aarch64:\
+o/lib/openssl/configured.aarch64:\
 	CONFIG_COMMAND = ../../openssl*/Configure $(OPENSSL_CONFIG_ARGS)
 
-o/lib/openssl/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/openssl/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

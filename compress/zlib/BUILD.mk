@@ -10,4 +10,4 @@ $(eval $(call DOWNLOAD_SOURCE,compress/zlib,$(ZLIB_SRC)))
 
 $(eval $(call AUTOTOOLS_BUILD,compress/zlib,$(ZLIB_CONFIG_ARGS),$(ZLIB_CONFIG_ARGS)))
 
-o/compress/zlib/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/compress/zlib/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

@@ -9,4 +9,4 @@ $(eval $(call DOWNLOAD_SOURCE,lib/isl,$(ISL_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/isl,lib/gmp))
 $(eval $(call AUTOTOOLS_BUILD,lib/isl,$(ISL_CONFIG_ARGS),$(ISL_CONFIG_ARGS)))
 
-o/lib/isl/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/isl/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

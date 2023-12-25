@@ -13,4 +13,4 @@ XZ_CONFIG_ARGS =  --prefix=$$(COSMOS)\
 
 $(eval $(call AUTOTOOLS_BUILD,compress/xz,$(XZ_CONFIG_ARGS),$(XZ_CONFIG_ARGS)))
 
-o/compress/xz/.built.fat: BINS = xz
+o/compress/xz/built.fat: BINS = xz

@@ -10,11 +10,11 @@ PCRE_CONFIG_ARGS = --disable-shared --enable-static\
 $(eval $(call DOWNLOAD_SOURCE,lib/pcre,$(PCRE_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/pcre,$(PCRE_CONFIG_ARGS),$(PCRE_CONFIG_ARGS)))
 
-o/lib/pcre/.setup: o/lib/pcre/.patched
+o/lib/pcre/setup: o/lib/pcre/.patched
 	cd o/lib/pcre/pcre* && ./autogen.sh
 	touch $@
 
-o/lib/pcre/.configured.x86_64: o/lib/pcre/.setup
-o/lib/pcre/.configured.aarch64: o/lib/pcre/.setup
+o/lib/pcre/configured.x86_64: o/lib/pcre/.setup
+o/lib/pcre/configured.aarch64: o/lib/pcre/.setup
 
-o/lib/pcre/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/pcre/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

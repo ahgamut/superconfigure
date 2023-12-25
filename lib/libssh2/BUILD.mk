@@ -12,4 +12,4 @@ $(eval $(call DOWNLOAD_SOURCE,lib/libssh2,$(LIBSSH2_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/libssh2,lib/openssl))
 $(eval $(call AUTOTOOLS_BUILD,lib/libssh2,$(LIBSSH2_CONFIG_ARGS),$(LIBSSH2_CONFIG_ARGS)))
 
-o/lib/libssh2/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/libssh2/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

@@ -15,4 +15,4 @@ LIBEVENT_CONFIG_ARGS = --cache-file=config.cache --prefix=$$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,lib/libevent,$(LIBEVENT_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/libevent,$(LIBEVENT_CONFIG_ARGS),$(LIBEVENT_CONFIG_ARGS)))
 
-o/lib/libevent/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/libevent/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

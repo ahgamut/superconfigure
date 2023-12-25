@@ -46,14 +46,14 @@ INSTALL_COMMAND = make install
 # I'd like to enable .SHELLFLAGS but I don't get how it works
 # .SHELLFLAGS = -e
 
-o/%/.downloaded: %
+o/%/downloaded: %
 	echo "downloading" $(DL_FILE)
 	$(MKDIR) o/$< && \
 		cd o/$< && \
 		$(DL_COMMAND) $(DL_FILE)
 	touch $@
 
-o/%/.patched: o/%/.downloaded
+o/%/patched: o/%/.downloaded
 	echo "patching " $(PATCH_FILE)
 	$(MKDIR) $(dir $<) && \
 		cd $(dir $<) && \
@@ -80,43 +80,43 @@ o/%.aarch64: AR=$(COSMOCC)/bin/aarch64-unknown-cosmo-ar
 o/%.aarch64: STRIP=$(COSMOCC)/bin/aarch64-unknown-cosmo-strip
 o/%.aarch64: OBJCOPY=$(COSMOCC)/bin/aarch64-unknown-cosmo-objcopy
 
-o/%/.deps.x86_64: o/%/.patched
+o/%/deps.x86_64: o/%/.patched
 	touch $@
 
-o/%/.deps.aarch64: o/%/.patched
+o/%/deps.aarch64: o/%/.patched
 	touch $@
 
-o/%/.configured.x86_64: o/%/.deps.x86_64
+o/%/configured.x86_64: o/%/.deps.x86_64
 	@source $(BASELOC)/config/vars-x86_64 && \
 		$(MKDIR) $(dir $<)/build/x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(CONFIG_COMMAND)
 	touch $@
 
-o/%/.built.x86_64: o/%/.configured.x86_64
+o/%/built.x86_64: o/%/.configured.x86_64
 	@source $(BASELOC)/config/vars-x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(BUILD_COMMAND) -j$(MAXPROC) && \
 		$(INSTALL_COMMAND)
 	touch $@
 
-o/%/.configured.aarch64: o/%/.deps.aarch64
+o/%/configured.aarch64: o/%/.deps.aarch64
 	@source $(BASELOC)/config/vars-aarch64 && \
 		$(MKDIR) $(dir $<)/build/aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(CONFIG_COMMAND)
 	touch $@
 
-o/%/.built.aarch64: o/%/.configured.aarch64
+o/%/built.aarch64: o/%/.configured.aarch64
 	@source $(BASELOC)/config/vars-aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(BUILD_COMMAND) -j$(MAXPROC) && \
 		$(INSTALL_COMMAND)
 	touch $@
 
-o/%/.built.fat: FATTEN_COMMAND = $(APELINKPLS)
-o/%/.built.fat: BINS =
-o/%/.built.fat: o/%/.built.x86_64 o/%/.built.aarch64
+o/%/built.fat: FATTEN_COMMAND = $(APELINKPLS)
+o/%/built.fat: BINS =
+o/%/built.fat: o/%/.built.x86_64 o/%/.built.aarch64
 	$(MKDIR) $(RESULTS)/bin $(RESULTS)/libexec
 	@source $(BASELOC)/config/vars-fat && \
 		echo "running apelink for a list of files" && \

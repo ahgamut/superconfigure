@@ -10,4 +10,4 @@ LIBFFI_CONFIG_ARGS = --prefix=$$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,lib/libffi,$(LIBFFI_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/libffi,$(LIBFFI_CONFIG_ARGS),$(LIBFFI_CONFIG_ARGS)))
 
-o/lib/libffi/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/libffi/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

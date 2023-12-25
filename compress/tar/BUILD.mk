@@ -14,4 +14,4 @@ $(eval $(call DOWNLOAD_SOURCE,compress/tar,$(TAR_SRC)))
 $(eval $(call SPECIFY_DEPS,compress/tar,compress/zlib compress/xz compress/brotli compress/gzip))
 $(eval $(call AUTOTOOLS_BUILD,compress/tar,$(TAR_CONFIG_ARGS),$(TAR_CONFIG_ARGS)))
 
-o/compress/tar/.build.fat: BINS = tar
+o/compress/tar/build.fat: BINS = tar

@@ -9,4 +9,4 @@ LIBUUID_CONFIG_ARGS =  --enable-static --disable-shared\
 $(eval $(call DOWNLOAD_SOURCE,lib/libuuid,$(LIBUUID_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/libuuid,$(LIBUUID_CONFIG_ARGS),$(LIBUUID_CONFIG_ARGS)))
 
-o/lib/libuuid/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/libuuid/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

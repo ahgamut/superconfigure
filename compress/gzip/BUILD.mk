@@ -7,4 +7,4 @@ $(eval $(call DOWNLOAD_SOURCE,compress/gzip,$(GZIP_SRC)))
 $(eval $(call SPECIFY_DEPS,compress/gzip,compress/zlib))
 $(eval $(call AUTOTOOLS_BUILD,compress/gzip,$(GZIP_CONFIG_ARGS),$(GZIP_CONFIG_ARGS)))
 
-o/compress/gzip/.built.fat: BINS = gzip
+o/compress/gzip/built.fat: BINS = gzip

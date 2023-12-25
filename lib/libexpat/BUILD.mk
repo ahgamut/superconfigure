@@ -10,10 +10,10 @@ LIBEXPAT_CONFIG_ARGS =  --enable-static --disable-shared\
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libexpat,$(LIBEXPAT_SRC)))
 
-o/lib/libexpat/.configured.x86_64:\
+o/lib/libexpat/configured.x86_64:\
 	CONFIG_COMMAND = ../../expat*/configure $(LIBEXPAT_CONFIG_ARGS)
 
-o/lib/libexpat/.configured.aarch64:\
+o/lib/libexpat/configured.aarch64:\
 	CONFIG_COMMAND = ../../expat*/configure $(LIBEXPAT_CONFIG_ARGS)
 
-o/lib/libexpat/.built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
+o/lib/libexpat/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

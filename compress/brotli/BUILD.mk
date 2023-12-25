@@ -7,4 +7,4 @@ BROTLI_CONFIG_ARGS = -DCMAKE_INSTALL_PREFIX=$$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,compress/brotli,$(BROTLI_SRC)))
 $(eval $(call CMAKE_BUILD,compress/brotli,$(BROTLI_CONFIG_ARGS),$(BROTLI_CONFIG_ARGS)))
 
-o/compress/brotli/.built.fat: BINS = brotli
+o/compress/brotli/built.fat: BINS = brotli
