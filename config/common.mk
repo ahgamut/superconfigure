@@ -1,15 +1,5 @@
 # Common Configuration Variables
 
-export SHELL:=bash
-export BASELOC:=$(shell pwd)
-export COSMO:=$(BASELOC)/cosmopolitan
-export COSMOCC:=$(COSMO)/cosmocc
-export COSMOS_X86_64:=$(BASELOC)/cosmos/x86_64
-export COSMOS_AARCH64:=$(BASELOC)/cosmos/aarch64
-export RESULTS:=$(BASELOC)/results
-export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy.com
-export APELINK:=$(COSMO)/o/tool/build/apelink.com
-
 APELINKPLS := $(BASELOC)/config/default_apelink.sh
 DUMMYLINK0 := echo ""
 

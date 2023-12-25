@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+export COSMOPOLITAN_DISABLE_ZIPOS=0
+
 cd $COSMO
 make MODE="$MODE" V=0 -s -j$MAXPROC \
     o/$MODE/examples/greenbean.com\

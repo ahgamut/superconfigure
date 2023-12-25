@@ -8,14 +8,15 @@ include compress/xz/BUILD.mk
 include compress/zlib/BUILD.mk
 
 compress: \
+	o/cosmo-repo/compress/built.fat\
 	o/compress/brotli/built.fat\
 	o/compress/gzip/built.fat\
 	o/compress/lz4/built.fat\
 	o/compress/pigz/built.fat\
 	o/compress/xz/built.fat\
+	o/compress/tar/built.fat\
 	o/compress/zlib/built.fat
 
 # tar build doesn't work for some reason
-# o/compress/tar/built.fat
 
 .PHONY: compress

@@ -4,6 +4,7 @@ set -eux
 echo "Initial Setup"
 export BASELOC=$PWD
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
+export RESULTS="${RESULTS:-$BASELOC/results}"
 
 # create the COSMOS and related folders
 cd $BASELOC
