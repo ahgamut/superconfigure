@@ -3,11 +3,11 @@ BINUTILS_SRC := https://ftp.gnu.org/gnu/binutils/binutils-2.35.2.tar.gz
 
 o/compiler/binutils/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)
 o/compiler/binutils/built.x86_64: BUILD_COMMAND = $(DUMMYLINK0)
-o/compiler/binutils/built.x86_64: INSTALL_COMMAND = $(DUMMYLINK0)
+o/compiler/binutils/installed.x86_64: INSTALL_COMMAND = $(DUMMYLINK0)
 
 o/compiler/binutils/configured.aarch64: CONFIG_COMMAND = $(DUMMYLINK0)
 o/compiler/binutils/built.aarch64: BUILD_COMMAND = $(DUMMYLINK0)
-o/compiler/binutils/built.aarch64: INSTALL_COMMAND = $(DUMMYLINK0)
+o/compiler/binutils/installed.aarch64: INSTALL_COMMAND = $(DUMMYLINK0)
 
 o/compiler/binutils/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
 
