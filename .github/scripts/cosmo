@@ -3,9 +3,20 @@ set -eux
 
 echo "Initial Setup"
 export BASELOC=$PWD
-ARCH="${ARCH:-x86_64}"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
-export COSMOS="${COSMOS:-$BASELOC/cosmos/$ARCH}"
+
+# create the COSMOS and related folders
+cd $BASELOC
+mkdir -p $BASELOC/cosmos
+mkdir -p $RESULTS/bin
+for arch in x86_64 aarch64; do
+    mkdir -p $BASELOC/cosmos/$arch
+    cd $BASELOC/cosmos/$arch
+    mkdir -p include bin lib libexec share x86_64 aarch64
+    mkdir -p /zip/$arch
+done
+mkdir -p /zip/usr/share
+cd $BASELOC
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
     # we are not on GA
@@ -18,8 +29,6 @@ else
     # we are on GA
     numproc=2
 fi
-
-MAXPROC="${MAXPROC:-$numproc}"
 
 echo "updating compiler binaries"
 cd $COSMO
@@ -42,39 +51,3 @@ unzip -qo aarch64-gcc.zip
 
 cd $COSMO
 bash tool/cosmocc/package.sh
-
-cd $BASELOC
-
-echo "Compiling Cosmopolitan Libc"
-
-cd $COSMO
-export MODE=""
-make -s -j$MAXPROC V=0 MODE="" toolchain\
-    o//third_party/zlib o//third_party/zlib/gz o//third_party/zstd\
-    o//third_party/sqlite3 o//third_party/sqlite3/libsqlite3.a\
-    o//third_party/bzip2\
-    o//tool/build/zipcopy.com o//tool/build/apelink.com
-
-cd $COSMO
-export MODE="aarch64"
-make -s -j$MAXPROC V=0 MODE="aarch64" toolchain\
-    o/aarch64/third_party/zlib o/aarch64/third_party/zlib/gz o/aarch64/third_party/zstd\
-    o/aarch64/third_party/sqlite3 o/aarch64/third_party/sqlite3/libsqlite3.a\
-    o/aarch64/third_party/bzip2
-
-#
-
-echo "copying third_party headers"
-
-cd $COSMO/cosmocc/include/third_party
-SUBFOLDERS='
-zlib
-zstd
-sqlite3
-bzip2
-'
-for SUBFOLDER in $SUBFOLDERS; do
-    mkdir -p $SUBFOLDER
-    cp $COSMO/third_party/$SUBFOLDER/*.h ./$SUBFOLDER || true
-    cp $COSMO/third_party/$SUBFOLDER/*.inc ./$SUBFOLDER || true
-done
