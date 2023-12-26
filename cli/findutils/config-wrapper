@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+../../findutils*/configure --prefix="$COSMOS"\
+    --disable-silent-rules --disable-dependency-tracking\
+    --disable-asserts --disable-compiler-warnings\
+    --disable-nls --disable-rpath\
+    --without-selinux --with-gnu-ld=yes\
+    --without-libiconv-prefix --with-packager='cosmo'\
+    CFLAGS="-Os -I$COSMOS/include/ncurses"

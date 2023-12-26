@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+../../tmux*/configure --prefix="$COSMOS"\
+    --enable-static --disable-fuzzing\
+    --disable-dependency-tracking\
+    --disable-utempter --disable-utf8proc\
+    --disable-systemd\
+    CFLAGS="-Os -I$COSMOS/include/ncurses"

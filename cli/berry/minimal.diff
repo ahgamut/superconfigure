@@ -1,7 +1,7 @@
-diff --git a/Makefile b/Makefile
+diff --git a/berry/Makefile b/berry/Makefile
 index a84af6b..cbb5303 100755
---- a/Makefile
-+++ b/Makefile
+--- a/berry/Makefile
++++ b/berry/Makefile
 @@ -1,12 +1,12 @@
 -CFLAGS      = -Wall -Wextra -std=c99 -pedantic-errors -O2
 +CFLAGS      = -Wall -Wextra -std=c99 -pedantic-errors -O2 -I$(COSMOS)/include
@@ -20,10 +20,10 @@ index a84af6b..cbb5303 100755
  BINDIR      = $(PREFIX)/bin
  
  INCPATH     = src default
-diff --git a/testall.be b/testall.be
+diff --git a/berry/testall.be b/berry/testall.be
 index 57414db..7a86829 100755
---- a/testall.be
-+++ b/testall.be
+--- a/berry/testall.be
++++ b/berry/testall.be
 @@ -1,7 +1,7 @@
  #! ./berry
  import os
@@ -42,7 +42,7 @@ index 57414db..7a86829 100755
          os.exit(-1)
      end
 --- -	2023-11-04 02:24:52.727430851 +0000
-+++ berry/default/berry_conf.h	2023-10-29 05:32:39.828938709 +0000
++++ b/berry/default/berry_conf.h	2023-10-29 05:32:39.828938709 +0000
 @@ -162,7 +162,7 @@
   * otherwise disable the feature.
   * Default: 1

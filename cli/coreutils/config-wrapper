@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+../../coreutils*/configure --prefix="$COSMOS"\
+    --disable-nls --disable-dependency-tracking\
+    --disable-silent-rules --disable-xattr\
+    --disable-rpath --disable-acl --disable-assert\
+    CFLAGS="-Os -I$COSMOS/include/ncurses"
