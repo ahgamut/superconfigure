@@ -13,14 +13,15 @@ The  [`Releases` page](https://github.com/ahgamut/superconfigure/releases)
 should have the most recent builds of executables in this repo, built via Github
 Actions. 
 
-If you'd like to add your own software build scripts, submit a PR!  
+If you'd like to add your own software build scripts, submit a PR! Read up
+`config/README.md` how all of this works.
 
 # How can I build these locally?
 
-The build scripts assume `bash`/Debian/Ubuntu (you may also need sudo access to
-setup a `/zip` folder).  You can follow the steps in
-`.github/workflows/release.yml` on your machine (see `./.github/scripts/setup`
-for details):
+The build scripts assume Debian/Ubuntu, and also use things like `bash`, `find`,
+`wget`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc. (you also need sudo
+access to setup a `/zip` folder).  You can follow the steps in
+`.github/workflows/release.yml` on your machine:
 
 - clone this repository
 - create a folder `/zip` on your system that provides read/write access to
@@ -31,15 +32,22 @@ for details):
 - clone the cosmopolitan libc repository within this repository
 - build the `cosmopolitan` toolchain by running `./.github/scripts/cosmo`
 
+```sh
+git clone https://github.com/ahgamut/superconfigure
+cd superconfigure
+git clone --depth=1 https://github.com/jart/cosmopolitan
+# install build dependencies
+bash ./.github/scripts/setup
+bash ./.github/scripts/cosmo
+```
+
 ## Building the executable collections
 
-You can run any of the shell scripts in `./.github/scripts/build` to get a
-collection of fat binaries
-
-* to build `bash`, `less`, `find`, `tree`, and GNU coreutils run `./.github/scripts/build/cli`
-* to build `vim`, `emacs`, and `nano` run `./.github/scripts/build/editor`
-* to build CPython3.11.4 [`datasette` 1.0.0a6][datasette] run `./.github/scripts/build/datasette`
-* to build the GCC collection for `x86_64` run `./.github/scripts/build/x86_64-gcc`
+* to build `bash`, `less`, `find`, `tree`, and GNU coreutils run `make -j4 cli`
+* to build `vim`, `emacs`, and `nano` run `make -j4 editor`
+* to build CPython3.11.4 with [`datasette` 1.0.0a6][datasette] run `make -j4
+  datasette`
+* to build the GCC collection for `x86_64` run `make -j4 x86_64-gcc`
 
 you can run `./.github/scripts/collectzip` to store all build results in a
 ZIP file.
@@ -47,53 +55,27 @@ ZIP file.
 ## Building collections via `make`
 
 You can build fat binaries using the Makefile as well! After setting up the
-toolchain, if you want to get the `./.github/scripts/web` collection, run 
+toolchain, if you want to get the binaries for the `web` folder, run 
 
 ```sh
-make ARCH=x86_64 web
-make ARCH=aarch64 web
-```
-
-the `./.github/scripts/web` does a little more than the Makefile (helps with
-creating the fat binaries, but using the Makefile helps for debugging or just
-building arch-specific binaries.
-
-Suppose you wanted to build only a specific binary from the Makefile, instead of
-the whole `cli` collection:
-
-```sh
-make ARCH=x86_64 cli/bash-5.2.built.x86_64
-make ARCH=aarch64 cli/bash-5.2.built.aarch64
+# assume ./.github/scripts/setup has already been run
+# assume ./.github/scripts/cosmo has already been run
+export MAXPROC=4
+make -j4 web
+ls -al results/bin/*
 ```
 
 ## Building individual targets without `make`
 
-The Makefile aims to handle the dependencies between the various packages
-that are currently built. If you want to build these individually (and handle
-building the dependencies manually), you can do the following:
-
-Let's say you wanted to build `bash` with Cosmopolitan Libc.
-The steps are:
+Let's say you wanted to build `bash`. The steps are:
 
 ```sh
+# assume ./.github/scripts/setup has already been run
 # assume ./.github/scripts/cosmo has already been run
-
-# build x86_64
-source vars/x86_64
-cd lib/ncurses-6.4 && superconfigure && cd ../../
-cd lib/readline-8.2 && superconfigure && cd ../../
-cd cli/bash-5.2 && superconfigure && cd ../../
-
-# build aarch64
-source vars/aarch64
-cd lib/ncurses-6.4 && superconfigure && cd ../../
-cd lib/readline-8.2 && superconfigure && cd ../../
-cd cli/bash-5.2 && superconfigure && cd ../../
+export MAXPROC=4
+make -j2 o/cli/bash/built.fat
+ls -al results/bin/bash*
 ```
-
-Then you can use a bash function similar to `apelinkpls` in the build scripts to
-create the fat binary.
-
 
 ## Adding to the ZIP Store
 

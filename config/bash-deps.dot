@@ -1,0 +1,36 @@
+
+digraph {
+    rankdir="TB"
+
+    down [label="o/cli/bash/downloaded"]
+    patch [label="o/cli/bash/patched"]
+    dep1 [label="o/cli/bash/deps.x86_64"]
+    dep2 [label="o/cli/bash/deps.aarch64"]
+    conf1 [label="o/cli/bash/configured.x86_64"]
+    conf2 [label="o/cli/bash/configured.aarch64"]
+    build1 [label="o/cli/bash/built.x86_64"]
+    build2 [label="o/cli/bash/built.aarch64"]
+    inst1 [label="o/cli/bash/installed.x86_64"]
+    inst2 [label="o/cli/bash/installed.aarch64"]
+    inst11 [label="o/lib/ncurses/installed.x86_64"]
+    inst12 [label="o/lib/readline/installed.x86_64"]
+    inst21 [label="o/lib/ncurses/installed.aarch64"]
+    inst22 [label="o/lib/readline/installed.aarch64"]
+    fat [label="o/cli/bash/built.fat"]
+
+    down  ->  patch [label="depends on",dir=back]
+    patch  ->  dep1  [label="depends on",dir=back]
+    inst11  ->  dep1 [label="depends on",dir=back]
+    inst12  ->  dep1 [label="depends on",dir=back]
+    dep1  ->  conf1 [label="depends on",dir=back]
+    conf1  ->  build1 [label="depends on",dir=back]
+    build1  ->  inst1 [label="depends on",dir=back]
+    inst1  ->  fat [label="depends on",dir=back]
+    patch  ->  dep2  [label="depends on",dir=back]
+    inst21  ->  dep2 [label="depends on",dir=back]
+    inst22  ->  dep2 [label="depends on",dir=back]
+    dep2  ->  conf2 [label="depends on",dir=back]
+    conf2  ->  build2 [label="depends on",dir=back]
+    build2  ->  inst2 [label="depends on",dir=back]
+    inst2  ->  fat [label="depends on",dir=back]
+}
