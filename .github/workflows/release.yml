@@ -23,7 +23,9 @@ jobs:
         run: bash ./.github/scripts/cosmo
       - name: build ${{ matrix.result }}
         working-directory: /ahgamut/superconfigure
-        run: bash ./.github/scripts/build/${{ matrix.result }}
+        env:
+          COLLECTION: ${{ matrix.result }}
+        run: bash ./.github/scripts/collectbuild ${{ matrix.result }}
       - name: collect into zip
         working-directory: /ahgamut/superconfigure
         env:

@@ -23,5 +23,17 @@ include web/BUILD.mk
 include python/BUILD.mk
 include gui/BUILD.mk
 
-clean:
+include cosmos.mk
+
+zipclean:
+	find /zip -mindepth 1 -delete
+
+clean: zipclean
 	rm -rf o/
+	find cosmos -type f -delete
+	rm -rf results/bin results/libexec
+
+distclean: clean zipclean
+	git clean -f -d -x
+
+.PHONY: clean distclean zipclean

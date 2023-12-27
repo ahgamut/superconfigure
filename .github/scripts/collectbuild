@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -z ${GITHUB_ACTIONS+x} ]; then 
+    # we are not on GA
+    if [[ `nproc` -gt 2 ]]; then
+        numproc=4
+    else
+        numproc=1
+    fi
+else 
+    # we are on GA
+    numproc=2
+fi
+export MAXPROC="${MAXPROC:-$numproc}"
+
+COLLECTION="${1:-$COLLECTION}"
+if [[ x"$COLLECTION" = "x" ]]; then
+    echo "did not specify collection"
+    exit 1
+fi
+
+make -j$MAXPROC $COLLECTION
