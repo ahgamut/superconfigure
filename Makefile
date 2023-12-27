@@ -13,8 +13,8 @@ include config/common.mk
 include config/functions.mk
 
 include cosmo-repo/BUILD.mk
-include lib/BUILD.mk
 
+include lib/BUILD.mk
 include cli/BUILD.mk
 include compiler/BUILD.mk
 include compress/BUILD.mk
@@ -23,7 +23,7 @@ include web/BUILD.mk
 include python/BUILD.mk
 include gui/BUILD.mk
 
-include cosmos.mk
+include cosmo-repo/COSMOS.mk
 
 zipclean:
 	find /zip -mindepth 1 -delete
