@@ -11,3 +11,5 @@ web:\
 	o/web/links/built.fat \
 	o/web/git/built.fat \
 	o/web/rsync/built.fat
+
+.PHONY: web
