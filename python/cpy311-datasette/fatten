@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -e
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- $2)"
+    OLDNAME_AARCH64="$(basename -- $3)"
+    TARG_FOLD="$(dirname $OUTPUT)"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+# datasette
+apelinkpls $RESULTS/bin/datasette.com $COSMOS_X86_64/bin/datasette $COSMOS_AARCH64/bin/datasette
+cd /zip
+
+mkdir -p datasette && cd datasette
+unzip -qo $BASELOC/o/python/cpy311-datasette/build/x86_64/datasette/datasette.com || true
+
+mkdir -p build
+cp -r $BASELOC/o/python/cpy311-datasette/build/x86_64/datasette/dummy/lib*x86_64* ./build || true
+cp -r $BASELOC/o/python/cpy311-datasette/build/aarch64/datasette/dummy/lib*aarch64* ./build || true
+ls -al build/
+
+zip -qr $RESULTS/bin/datasette.com Lib/
+zip -qr $RESULTS/bin/datasette.com build/
+
+cd /zip
+zip -qr $RESULTS/bin/datasette.com usr/share/terminfo
+cd "$BASELOC"
+rm -rf /zip/datasette

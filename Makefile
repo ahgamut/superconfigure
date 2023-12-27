@@ -20,6 +20,7 @@ include compiler/BUILD.mk
 include compress/BUILD.mk
 include editor/BUILD.mk
 include web/BUILD.mk
+include python/BUILD.mk
 
 clean:
 	rm -rf o/

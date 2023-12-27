@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -e
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- $2)"
+    OLDNAME_AARCH64="$(basename -- $3)"
+    TARG_FOLD="$(dirname $OUTPUT)"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+# pypack2
+apelinkpls $RESULTS/bin/pypack2.com $COSMOS_X86_64/bin/pypack2 $COSMOS_AARCH64/bin/pypack2
+cd /zip
+
+mkdir -p pypack2 && cd pypack2
+unzip -qo $BASELOC/o/python/cpy311-pypack2/build/x86_64/pypack2/python.com || true
+
+mkdir -p build
+cp -r $BASELOC/o/python/cpy311-pypack2/build/aarch64/pypack2/dummy/lib* ./build || true
+cp -r $BASELOC/o/python/cpy311-pypack2/build/x86_64/pypack2/dummy/lib* ./build || true
+ls -al build/
+
+zip -qr $RESULTS/bin/pypack2.com Lib/
+zip -qr $RESULTS/bin/pypack2.com build/
+
+cd /zip
+zip -qr $RESULTS/bin/pypack2.com usr/share/terminfo
+cd "$BASELOC"
+rm -rf /zip/pypack2
