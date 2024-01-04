@@ -52,3 +52,6 @@ unzip -qo aarch64-gcc.zip
 
 cd $COSMO
 bash tool/cosmocc/package.sh
+
+cd $COSMO
+make -j$numproc o//tool/build
