@@ -1,5 +1,6 @@
 
 include cli/bash/BUILD.mk
+include cli/dash/BUILD.mk
 include cli/berry/BUILD.mk
 include cli/coreutils/BUILD.mk
 include cli/findutils/BUILD.mk
@@ -14,6 +15,7 @@ include cli/zsh/BUILD.mk
 cli: \
 	o/cosmo-repo/cli/built.fat\
 	o/cli/bash/built.fat \
+	o/cli/dash/built.fat \
 	o/cli/berry/built.fat \
 	o/cli/coreutils/built.fat \
 	o/cli/findutils/built.fat \

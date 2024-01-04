@@ -4,7 +4,7 @@ BERRY_DEPS := lib/ncurses lib/readline
 $(eval $(call SPECIFY_DEPS,cli/berry,$(BERRY_DEPS)))
 
 o/cli/berry/downloaded: \
-	DL_COMMAND = rm -rf berry && git clone --depth=1 https://github.com/berry-lang/berry
+	DL_COMMAND = rm -rf berry && git clone --quiet --depth=1 https://github.com/berry-lang/berry
 
 o/cli/berry/patched: PATCH_COMMAND = patch -p1 -i
 o/cli/berry/patched: PATCH_FILE = $(BASELOC)/cli/berry/minimal.diff
