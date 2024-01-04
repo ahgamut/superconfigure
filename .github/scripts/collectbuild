@@ -12,6 +12,7 @@ else
     numproc=2
 fi
 export MAXPROC="${MAXPROC:-$numproc}"
+echo "maxproc is $MAXPROC"
 
 COLLECTION="${1:-$COLLECTION}"
 if [[ x"$COLLECTION" = "x" ]]; then
