@@ -39,12 +39,12 @@ cd cosmocc
 if [[ -f x86_64-gcc.zip ]]; then
     echo "you already downloaded x86_64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.29/x86_64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.30/x86_64-gcc.zip
 fi
 if [[ -f aarch64-gcc.zip ]]; then
     echo "you already downloaded aarch64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.29/aarch64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.30/aarch64-gcc.zip
 fi
 
 unzip -qo x86_64-gcc.zip
@@ -62,8 +62,8 @@ make m=x86_64 V=0 -s -j$numproc \
     o/x86_64/third_party/zip/zip.com\
     o/x86_64/third_party/zstd/zstd.com
 
-make m=$MODE V=0 -s -j$numproc \
-    o/$MODE/third_party/bzip2/bzip2.com\
-    o/$MODE/third_party/unzip/unzip.com\
-    o/$MODE/third_party/zip/zip.com\
-    o/$MODE/third_party/zstd/zstd.com
+make m=aarch64 V=0 -s -j$numproc \
+    o/aarch64/third_party/bzip2/bzip2.com\
+    o/aarch64/third_party/unzip/unzip.com\
+    o/aarch64/third_party/zip/zip.com\
+    o/aarch64/third_party/zstd/zstd.com
