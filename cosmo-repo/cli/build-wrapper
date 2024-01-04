@@ -21,9 +21,11 @@ make MODE="$MODE" V=0 -s -j$MAXPROC \
     o/$MODE/third_party/tidy/tidy.com\
     o/$MODE/third_party/tree/tree.com\
     o/$MODE/tool/build/assimilate.com\
+    o/$MODE/tool/build/mktemper.com\
     o/$MODE/tool/build/pledge.com\
     o/$MODE/tool/build/verynice.com\
     o/$MODE/tool/net/redbean.com\
+    o/$MODE/tool/viz/cpuid.com\
     o/$MODE/tool/viz/printimage.com
 
 cp o/$MODE/examples/greenbean.com.dbg $COSMOS/bin/greenbean
@@ -42,7 +44,9 @@ cp o/$MODE/third_party/sqlite3/sqlite3.com.dbg $COSMOS/bin/sqlite3
 cp o/$MODE/third_party/tidy/tidy.com.dbg $COSMOS/bin/tidy
 cp o/$MODE/third_party/tree/tree.com.dbg $COSMOS/bin/tree
 cp o/$MODE/tool/build/assimilate.com.dbg $COSMOS/bin/assimilate
+cp o/$MODE/tool/build/mktemper.com.dbg $COSMOS/bin/mktemper
 cp o/$MODE/tool/build/pledge.com.dbg $COSMOS/bin/pledge
 cp o/$MODE/tool/build/verynice.com.dbg $COSMOS/bin/verynice
 cp o/$MODE/tool/net/redbean.com.dbg $COSMOS/bin/redbean
+cp o/$MODE/tool/viz/cpuid.com.dbg $COSMOS/bin/cpuid
 cp o/$MODE/tool/viz/printimage.com.dbg $COSMOS/bin/printimage

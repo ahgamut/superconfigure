@@ -15,4 +15,5 @@ o/cosmo-repo/cli/built.fat: BINS = 	greenbean life nesemu1 script \
 	ttyinfo unbourne wall awk \
 	ctags lua make qjs \
 	tree tidy assimilate sqlite3 \
+	mktemper cpuid \
 	pledge verynice redbean printimage
