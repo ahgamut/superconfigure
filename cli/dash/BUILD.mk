@@ -14,8 +14,8 @@ o/cli/dash/setup: o/cli/dash/patched
 	cd o/cli/dash/dash* && ./autogen.sh
 	touch $@
 
-o/cli/dash/configured.x86_64: o/lib/pcre/setup
-o/cli/dash/configured.aarch64: o/lib/pcre/setup
+o/cli/dash/configured.x86_64: o/cli/dash/setup
+o/cli/dash/configured.aarch64: o/cli/dash/setup
 
 $(eval $(call AUTOTOOLS_BUILD,cli/dash,$(DASH_CONFIG_ARGS),$(DASH_CONFIG_ARGS)))
 
