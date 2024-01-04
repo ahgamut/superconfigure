@@ -2,9 +2,10 @@
 set -e
 
 export COSMOPOLITAN_DISABLE_ZIPOS=0
+export ARCH=""
 
 cd $COSMO
-make V=0 -s -j$MAXPROC \
+make m=$MODE V=0 -s -j$MAXPROC \
     o/$MODE/third_party/bzip2/bzip2.com\
     o/$MODE/third_party/unzip/unzip.com\
     o/$MODE/third_party/zip/zip.com\
