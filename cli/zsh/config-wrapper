@@ -19,5 +19,5 @@ make install V=0 -s -j$MAXPROC
 mkdir -p /zip/etc
 cp $BASELOC/cli/zsh/zshinit /zip/etc
 for rcfile in z{sh{env,rc},profile,log{in,out}}; do
-  echo ". /zip/etc/zshinit $rcfile" > /zip/etc/$rcfile
+  echo ". ./zshinit $rcfile" > /zip/etc/$rcfile
 done
