@@ -10,14 +10,3 @@ diff -r --unified bash-5.2a/lib/sh/oslib.c bash-5.2/lib/sh/oslib.c
    return (mknod (path, (mode | S_IFIFO), 0));
  #else /* !S_IFIFO */
    return (-1);
---- bash-5.2/config.h.in	2021-11-30 15:48:54.000000000 +0000
-+++ -	2023-12-12 02:59:39.685140996 +0000
-@@ -537,7 +537,7 @@
- #undef HAVE_HASH_BANG_EXEC
- 
- /* Define if you have the /dev/fd devices to map open files into the file system. */
--#undef HAVE_DEV_FD
-+#undef HAVE_DEV_FD_PLS_NO
- 
- /* Defined to /dev/fd or /proc/self/fd (linux). */
- #undef DEV_FD_PREFIX

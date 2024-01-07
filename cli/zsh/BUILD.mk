@@ -15,6 +15,6 @@ o/cli/zsh/installed.aarch64: INSTALL_COMMAND = $(DUMMYLINK0)
 
 o/cli/zsh/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
 o/cli/zsh/built.fat: BINS = zsh\
-	usr/share/terminfo \
-	etc/zshinit etc/zshenv etc/zshrc \
+	usr/share/terminfo usr/share/zsh\
+	etc/zshinit etc/zshenv etc/zshrc\
 	etc/profile etc/login etc/logout
