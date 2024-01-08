@@ -6,7 +6,6 @@ export COSMOPOLITAN_DISABLE_ZIPOS=0
 cd $COSMO
 make MODE="$MODE" V=0 -s -j$MAXPROC \
     o/$MODE/examples/greenbean.com\
-    o/$MODE/examples/life.com\
     o/$MODE/examples/nesemu1.com\
     o/$MODE/examples/script.com\
     o/$MODE/examples/ttyinfo.com\
@@ -26,10 +25,10 @@ make MODE="$MODE" V=0 -s -j$MAXPROC \
     o/$MODE/tool/build/verynice.com\
     o/$MODE/tool/net/redbean.com\
     o/$MODE/tool/viz/cpuid.com\
+    o/$MODE/tool/viz/life.com\
     o/$MODE/tool/viz/printimage.com
 
 cp o/$MODE/examples/greenbean.com.dbg $COSMOS/bin/greenbean
-cp o/$MODE/examples/life.com.dbg $COSMOS/bin/life
 cp o/$MODE/examples/nesemu1.com.dbg $COSMOS/bin/nesemu1
 cp o/$MODE/examples/script.com.dbg $COSMOS/bin/script
 cp o/$MODE/examples/ttyinfo.com.dbg $COSMOS/bin/ttyinfo
@@ -49,4 +48,5 @@ cp o/$MODE/tool/build/pledge.com.dbg $COSMOS/bin/pledge
 cp o/$MODE/tool/build/verynice.com.dbg $COSMOS/bin/verynice
 cp o/$MODE/tool/net/redbean.com.dbg $COSMOS/bin/redbean
 cp o/$MODE/tool/viz/cpuid.com.dbg $COSMOS/bin/cpuid
+cp o/$MODE/tool/viz/life.com.dbg $COSMOS/bin/life
 cp o/$MODE/tool/viz/printimage.com.dbg $COSMOS/bin/printimage
