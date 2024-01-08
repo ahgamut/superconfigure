@@ -17,4 +17,4 @@ o/cli/zsh/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
 o/cli/zsh/built.fat: BINS = zsh\
 	usr/share/terminfo usr/share/zsh\
 	etc/zshinit etc/zshenv etc/zshrc\
-	etc/profile etc/login etc/logout
+	etc/zprofile etc/zlogin etc/zlogout
