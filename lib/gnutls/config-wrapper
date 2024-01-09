@@ -13,7 +13,7 @@ export NETTLE_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 export HOGWEED_CFLAGS="-I$COSMOS/include"
 export HOGWEED_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 
-../../gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
+$BASELOC/o/lib/gnutls/gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
     --libexecdir=/zip/$ARCH --prefix=$COSMOS\
     --disable-shared --enable-static\
     --with-gnu-ld --disable-cxx\

@@ -11,10 +11,10 @@ LIBGC_CONFIG_ARGS =  --prefix=$(COSMOS)\
 $(eval $(call DOWNLOAD_SOURCE,lib/libgc,$(LIBGC_SRC)))
 
 o/lib/libgc/configured.x86_64:\
-	CONFIG_COMMAND = ../../gc*/configure $(LIBGC_CONFIG_ARGS)
+	CONFIG_COMMAND = $(BASELOC)/o/lib/libgc/gc*/configure $(LIBGC_CONFIG_ARGS)
 
 o/lib/libgc/configured.aarch64:\
-	CONFIG_COMMAND = ../../gc*/configure $(LIBGC_CONFIG_ARGS)
+	CONFIG_COMMAND = $(BASELOC)/o/lib/libgc/gc*/configure $(LIBGC_CONFIG_ARGS)
 
 
 o/lib/libgc/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)

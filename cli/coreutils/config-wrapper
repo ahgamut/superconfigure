@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-../../coreutils*/configure --prefix="$COSMOS"\
+$BASELOC/o/cli/coreutils/coreutils*/configure --prefix="$COSMOS"\
     --disable-nls --disable-dependency-tracking\
     --disable-silent-rules --disable-xattr\
     --disable-rpath --disable-acl --disable-assert\

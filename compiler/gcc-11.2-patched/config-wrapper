@@ -4,7 +4,7 @@ set -e
 TARGET_ARCH="${TARGET_ARCH:-x86_64}"
 FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
 
-SRC_DIR=$(realpath ../../../gcc-11.2-patched/gcc)
+SRC_DIR=$(realpath $BASELOC/o/compiler/gcc-11.2-patched/gcc)
 
 $SRC_DIR/configure --prefix=$COSMOS\
     --without-headers --srcdir=$SRC_DIR\

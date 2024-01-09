@@ -4,7 +4,7 @@ set -e
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
-../../wget*/configure --prefix="$COSMOS"\
+$BASELOC/o/web/wget/wget*/configure --prefix="$COSMOS"\
     --with-ssl=openssl --with-openssl=yes\
     --sysconfdir=/zip --with-gnu-ld=yes\
     --enable-threads=posix --disable-rpath\

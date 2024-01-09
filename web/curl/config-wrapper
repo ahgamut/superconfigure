@@ -5,7 +5,7 @@ shopt -s expand_aliases
 alias strip=$STRIP
 alias ar=$AR
 
-../../curl*/configure --prefix="$COSMOS"\
+$BASELOC/o/web/curl/curl*/configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --enable-pthreads --with-openssl=$COSMOS\
     --with-ca-path=/zip/usr/share/ssl/root --without-ca-fallback\

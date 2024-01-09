@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-../../tar*/configure --prefix="$COSMOS"\
+$BASELOC/o/compress/tar/tar*/configure --prefix="$COSMOS"\
     --disable-acl --disable-nls --disable-rpath\
     --without-posix-acls --without-selinux\
     --with-packager="cosmo" --without-xattrs\

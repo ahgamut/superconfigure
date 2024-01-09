@@ -11,7 +11,7 @@ export NCURSES_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSESW_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSES_CFLAGS="-I$COSMOS/include -I$COSMOS/include/ncurses"
 
-../../nano*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
+$BASELOC/o/editor/nano/nano*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
     --prefix=$COSMOS\
     --disable-nls --disable-rpath --disable-silent-rules\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses"\

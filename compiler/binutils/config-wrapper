@@ -6,7 +6,7 @@ FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
 
 export PKG_CONFIG=""
 
-../../../binutils/binutils*/configure --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
+$BASELOC/o/compiler/binutils/binutils*/configure --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
     --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
     --disable-silent-rules --disable-libstdcxx --disable-werror --disable-multilib \
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \

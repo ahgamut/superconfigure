@@ -5,7 +5,7 @@ shopt -s expand_aliases
 alias strip=$STRIP
 alias ar=$AR
 
-../../bash*/configure --prefix="$COSMOS"\
+$BASELOC/o/cli/bash/bash*/configure --prefix="$COSMOS"\
     --without-bash-malloc --enable-static-link\
     --disable-rpath --with-installed-readline\
     --disable-nls --enable-threads=posix\

@@ -2,7 +2,7 @@
 set -e
 
 rm -rf ./pypack2
-cp -r ../../pypack2 ./
+cp -r $BASELOC/o/python/cpy311-pypack2/pypack2 ./
 cd pypack2
 
 ./configure --disable-shared --disable-loadable-sqlite-extensions\

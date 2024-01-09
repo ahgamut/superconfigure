@@ -6,7 +6,7 @@ alias strip=$STRIP
 alias ar=$AR
 
 # why
-cp -r ../../vim*/* ./
+cp -r $BASELOC/o/editor/vim/vim*/* ./
 
 ./configure --disable-darwin --disable-smack --disable-selinux\
     --disable-xsmp --enable-luainterp=no --enable-perlinterp=no\

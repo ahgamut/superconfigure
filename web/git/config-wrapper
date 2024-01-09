@@ -13,7 +13,7 @@ export NO_PYTHON=1
 export SHELL_PATH="sh"
 export LIBS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 
-cp -r ../../git*/* .
+cp -r $BASELOC/o/web/git/git*/* .
 
 ./configure --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\

@@ -2,7 +2,7 @@
 set -e
 
 rm -rf ./datasette
-cp -r ../../datasette ./
+cp -r $BASELOC/o/python/cpy311-datasette/datasette ./
 cd datasette
 
 ./configure --disable-shared --disable-loadable-sqlite-extensions\

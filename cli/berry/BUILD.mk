@@ -9,10 +9,10 @@ o/cli/berry/downloaded: \
 o/cli/berry/patched: PATCH_COMMAND = patch -p1 -i
 o/cli/berry/patched: PATCH_FILE = $(BASELOC)/cli/berry/minimal.diff
 
-o/cli/berry/configured.x86_64: CONFIG_COMMAND = cp -r ../../berry/* .
+o/cli/berry/configured.x86_64: CONFIG_COMMAND = cp -r $(BASELOC)/o/cli/berry/berry/* .
 o/cli/berry/installed.x86_64: INSTALL_COMMAND = cp ./berry $(COSMOS)/bin
 
-o/cli/berry/configured.aarch64: CONFIG_COMMAND = cp -r ../../berry/* .
+o/cli/berry/configured.aarch64: CONFIG_COMMAND = cp -r $(BASELOC)/o/cli/berry/berry/* .
 o/cli/berry/installed.aarch64: INSTALL_COMMAND = cp ./berry $(COSMOS)/bin
 
 o/cli/berry/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh

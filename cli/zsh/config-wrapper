@@ -4,7 +4,7 @@ set -e
 alias strip='true'
 export STRIP=""
 
-../../zsh*/configure --prefix="$COSMOS" --disable-dynamic \
+$BASELOC/o/cli/zsh/zsh*/configure --prefix="$COSMOS" --disable-dynamic \
     --datarootdir=/zip/usr/share --with-tcsetpgrp --enable-gdbm \
     --enable-zshenv=/zip/etc/zshenv  --enable-zshrc=/zip/etc/zshrc \
     --enable-zprofile=/zip/etc/zprofile --enable-zlogin=/zip/etc/zlogin \

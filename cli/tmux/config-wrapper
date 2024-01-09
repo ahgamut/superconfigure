@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-../../tmux*/configure --prefix="$COSMOS"\
+$BASELOC/o/cli/tmux/tmux*/configure --prefix="$COSMOS"\
     --enable-static --disable-fuzzing\
     --disable-dependency-tracking\
     --disable-utempter --disable-utf8proc\
