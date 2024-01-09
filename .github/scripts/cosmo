@@ -57,13 +57,13 @@ cd $COSMO
 make -j$numproc o//tool/build
 
 make m=x86_64 V=0 -s -j$numproc \
-    o/x86_64/third_party/bzip2/bzip2.com\
-    o/x86_64/third_party/unzip/unzip.com\
-    o/x86_64/third_party/zip/zip.com\
-    o/x86_64/third_party/zstd/zstd.com
+    o/x86_64/third_party/bzip2\
+    o/x86_64/third_party/unzip\
+    o/x86_64/third_party/zip\
+    o/x86_64/third_party/zstd
 
 make m=aarch64 V=0 -s -j$numproc \
-    o/aarch64/third_party/bzip2/bzip2.com\
-    o/aarch64/third_party/unzip/unzip.com\
-    o/aarch64/third_party/zip/zip.com\
-    o/aarch64/third_party/zstd/zstd.com
+    o/aarch64/third_party/bzip2\
+    o/aarch64/third_party/unzip\
+    o/aarch64/third_party/zip\
+    o/aarch64/third_party/zstd

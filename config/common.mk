@@ -2,10 +2,11 @@
 
 APELINKPLS := $(BASELOC)/config/default_apelink.sh
 DUMMYLINK0 := echo ""
+MAXPROC := ${MAXPROC}
 
 ifeq ($(MAXPROC),)
 export MAXPROC:=4
-ifdef GITHUB_ACTIONS
+ifneq (${GITHUB_ACTIONS},)
 export MAXPROC:=2
 endif
 endif
