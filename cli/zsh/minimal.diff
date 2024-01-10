@@ -299,3 +299,16 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
      LIBLDFLAGS=`echo " $LIBLDFLAGS " | sed "$sed"` ;;
    *) strip_libldflags=false ;;
  esac
+--- zsh-5.9/Src/Modules/regex.mdd	2017-12-04 14:09:36.000000000 +0000
++++ -	2024-01-10 02:59:55.818926888 +0000
+@@ -1,8 +1,5 @@
+ name=zsh/regex
+-link=`if test x$ac_cv_func_regcomp = xyes && \
+-         test x$ac_cv_func_regexec = xyes && \
+-         test x$ac_cv_func_regerror = xyes && \
+-         test x$ac_cv_func_regfree = xyes; then echo dynamic; else echo no; fi`
+-load=no
++link=static
++load=yes
+ 
+ objects="regex.o"
