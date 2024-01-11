@@ -19,10 +19,10 @@ sudo chmod -R 0777 /zip
 sudo mkdir -p /ahgamut
 sudo chmod -R 0777 /ahgamut
 
-cd "$GITHUB_WORKSPACE"
+cd "$GITHUB_WORKSPACE" || exit
 cd ../
 cp -r superconfigure /ahgamut
-cd /ahgamut/superconfigure
+cd /ahgamut/superconfigure || exit
 
 # cosmo
 git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan

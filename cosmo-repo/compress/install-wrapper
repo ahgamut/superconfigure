@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-mkdir -p $COSMO/cosmocc/include/third_party
-cd $COSMO/cosmocc/include/third_party
+mkdir -p "$COSMO"/cosmocc/include/third_party
+cd "$COSMO"/cosmocc/include/third_party
 
 SUBFOLDERS='
 zstd
@@ -10,15 +10,15 @@ bzip2
 '
 
 for SUBFOLDER in $SUBFOLDERS; do
-    mkdir -p $SUBFOLDER
-    cp $COSMO/third_party/$SUBFOLDER/*.h ./$SUBFOLDER || true
-    cp $COSMO/third_party/$SUBFOLDER/*.inc ./$SUBFOLDER || true
+    mkdir -p "$SUBFOLDER"
+    cp "$COSMO"/third_party/"$SUBFOLDER"/*.h ./"$SUBFOLDER" || true
+    cp "$COSMO"/third_party/"$SUBFOLDER"/*.inc ./"$SUBFOLDER" || true
 done
 
-cd $COSMOS
+cd "$COSMOS"
 
-cp $COSMO/o/$MODE/third_party/zstd/zstd.a ./lib/libzstd.a
+cp "$COSMO"/o/"$MODE"/third_party/zstd/zstd.a ./lib/libzstd.a
 echo '#include "third_party/zstd/zstd.h"' > ./include/zstd.h
 
-cp $COSMO/o/$MODE/third_party/bzip2/bzip2.a ./lib/libbz2.a
+cp "$COSMO"/o/"$MODE"/third_party/bzip2/bzip2.a ./lib/libbz2.a
 echo '#include "third_party/bzip2/bzlib.h"' > ./include/bzlib.h

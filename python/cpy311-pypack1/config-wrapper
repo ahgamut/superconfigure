@@ -2,18 +2,18 @@
 set -e
 
 rm -rf ./pypack1
-cp -r $BASELOC/o/python/cpy311-pypack1/pypack1 ./
+cp -r "$BASELOC"/o/python/cpy311-pypack1/pypack1 ./
 cd pypack1
 
 ./configure --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
-    --with-pymalloc --with-openssl=$COSMOS/ssl\
+    --with-pymalloc --with-openssl="$COSMOS"/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
-    --prefix=$COSMOS\
+    --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make V=0 -s -j$MAXPROC
+make V=0 -s -j"$MAXPROC"
 mkdir -p dummy
 cp -r build/lib* ./dummy
-cp ./python $COSMOS/bin/pypack1
+cp ./python "$COSMOS"/bin/pypack1

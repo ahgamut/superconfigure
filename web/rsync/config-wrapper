@@ -4,7 +4,7 @@ set -e
 export OPENSSL_CFLAGS=""
 export OPENSSL_LIBS="-lssl -lcrypto"
 
-$BASELOC/o/web/rsync/rsync*/configure --prefix="$COSMOS"\
+"$BASELOC"/o/web/rsync/rsync*/configure --prefix="$COSMOS"\
     --with-rsyncd-conf=/zip/rsyncd.conf --with-included-popt\
     --with-openssl-conf=/zip/openssl.conf --without-included-zlib\
     --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\

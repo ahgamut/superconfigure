@@ -2,18 +2,18 @@
 set -eux
 
 echo "Initial Setup"
-export BASELOC=$PWD
-export COSMO=$BASELOC/cosmopolitan
-export RESULTS=$BASELOC/results
+export BASELOC="$PWD"
+export COSMO="$BASELOC"/cosmopolitan
+export RESULTS="$BASELOC"/results
 
 # zip them up
 echo "zip file with actually portable executables"
-cd $RESULTS
+cd "$RESULTS"
 
 # rename to remove .com extension
 for COMFILE in $(find . -name "*.com"); do
     NEWFILE="${COMFILE%.*}"
-    mv $COMFILE $NEWFILE
+    mv "$COMFILE" "$NEWFILE"
 done
 
 ZFILE="$BASELOC/${ZFILENAME:-extras}.zip"

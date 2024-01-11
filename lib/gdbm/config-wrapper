@@ -2,7 +2,7 @@
 set -e
 
 export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
-$BASELOC/o/lib/gdbm/gdbm*/configure --prefix="$COSMOS"\
+"$BASELOC"/o/lib/gdbm/gdbm*/configure --prefix="$COSMOS"\
     --disable-memory-mapped-io --enable-libgdbm-compat\
     --disable-shared --enable-static\
     --disable-nls --disable-rpath\

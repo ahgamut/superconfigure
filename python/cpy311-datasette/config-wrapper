@@ -2,18 +2,18 @@
 set -e
 
 rm -rf ./datasette
-cp -r $BASELOC/o/python/cpy311-datasette/datasette ./
+cp -r "$BASELOC"/o/python/cpy311-datasette/datasette ./
 cd datasette
 
 ./configure --disable-shared --disable-loadable-sqlite-extensions\
     --with-lto=no --without-system-expat --without-system-ffi\
-    --with-pymalloc --with-openssl=$COSMOS/ssl\
+    --with-pymalloc --with-openssl="$COSMOS"/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
-    --prefix=$COSMOS\
+    --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
 # run make and/or make install
-make V=0 -s -j$MAXPROC
+make V=0 -s -j"$MAXPROC"
 mkdir -p dummy
 cp -r build/lib* ./dummy
-cp ./datasette $COSMOS/bin
+cp ./datasette "$COSMOS"/bin

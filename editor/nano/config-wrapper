@@ -5,14 +5,14 @@ shopt -s expand_aliases
 export STRIP="/bin/true"
 
 alias strip=$STRIP
-alias ar=$AR
+alias ar="$AR"
 
 export NCURSES_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSESW_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSES_CFLAGS="-I$COSMOS/include -I$COSMOS/include/ncurses"
 
-$BASELOC/o/editor/nano/nano*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
-    --prefix=$COSMOS\
+"$BASELOC"/o/editor/nano/nano*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --prefix="$COSMOS"\
     --disable-nls --disable-rpath --disable-silent-rules\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses"\
     LDFLAGS="-L$COSMOS/lib"\

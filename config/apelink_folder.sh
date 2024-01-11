@@ -10,16 +10,16 @@ if [[ "$EXE" = "ERROR" ]]; then
     exit 1
 fi
 
-if [[ x"$FILELIST" = "x" ]]; then
+if [[ "$FILELIST" = "" ]]; then
     echo "did not specify folders to add!"
     exit 1
 fi
 
 apelinkpls () {
     OUTPUT="$1"
-    OLDNAME_X86_64="$(basename -- $2)"
-    OLDNAME_AARCH64="$(basename -- $3)"
-    TARG_FOLD="$(dirname $OUTPUT)"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
@@ -30,7 +30,7 @@ apelinkpls () {
     cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
-apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
+apelinkpls "$RESULTS"/bin/"$EXE".com "$COSMOS_X86_64"/bin/"$EXE" "$COSMOS_AARCH64"/bin/"$EXE"
 cd /zip
-zip -qr $RESULTS/bin/$EXE.com $FILELIST
-cd $BASELOC
+zip -qr "$RESULTS"/bin/"$EXE".com "$FILELIST"
+cd "$BASELOC"

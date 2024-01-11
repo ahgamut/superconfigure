@@ -2,8 +2,8 @@
 set -e
 
 shopt -s expand_aliases
-alias strip=$STRIP
-alias ar=$AR
+alias strip="$STRIP"
+alias ar="$AR"
 
 export CURL_LDFLAGS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 export CSPRNG_METHOD="getrandom"
@@ -13,7 +13,7 @@ export NO_PYTHON=1
 export SHELL_PATH="sh"
 export LIBS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 
-cp -r $BASELOC/o/web/git/git*/* .
+cp -r "$BASELOC"/o/web/git/git*/* .
 
 ./configure --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\
@@ -24,5 +24,5 @@ cp -r $BASELOC/o/web/git/git*/* .
     --with-sane-tool-path=""\
    CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" 
 
-make -j$MAXPROC
-make install -j$MAXPROC
+make -j"$MAXPROC"
+make install -j"$MAXPROC"

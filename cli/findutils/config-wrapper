@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-$BASELOC/o/cli/findutils/findutils*/configure --prefix="$COSMOS"\
+"$BASELOC"/o/cli/findutils/findutils*/configure --prefix="$COSMOS"\
     --disable-silent-rules --disable-dependency-tracking\
     --disable-asserts --disable-compiler-warnings\
     --disable-nls --disable-rpath\

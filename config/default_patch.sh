@@ -2,7 +2,7 @@
 set -e
 
 PFILE="${1:-ERROR}"
-CURDIR="`pwd`"
+CURDIR="$(pwd)"
 
 if [[ "$PFILE" = "ERROR" ]]; then
     echo "did not specify file to patch!"

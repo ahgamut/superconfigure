@@ -2,7 +2,7 @@
 set -e
 
 URL="${1:-ERROR}"
-CURDIR="`pwd`"
+CURDIR="$(pwd)"
 
 if [[ "$URL" = "ERROR" ]]; then
     echo "did not specify file to download!"
@@ -27,7 +27,7 @@ case "$URL" in
         unzip -qo sources.zip
         ;;
     *github.com/* )
-        outdir=`basename "$CURDIR"`
+        outdir=$(basename "$CURDIR")
         git clone --quiet --depth=1 "$URL" "$outdir"
         ;;
     * )

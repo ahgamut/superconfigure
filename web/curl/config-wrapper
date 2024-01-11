@@ -2,12 +2,12 @@
 set -e
 shopt -s expand_aliases
 
-alias strip=$STRIP
-alias ar=$AR
+alias strip="$STRIP"
+alias ar="$AR"
 
-$BASELOC/o/web/curl/curl*/configure --prefix="$COSMOS"\
+"$BASELOC"/o/web/curl/curl*/configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
-    --enable-pthreads --with-openssl=$COSMOS\
+    --enable-pthreads --with-openssl="$COSMOS"\
     --with-ca-path=/zip/usr/share/ssl/root --without-ca-fallback\
     --without-pic --with-gnu-ld\
     CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"

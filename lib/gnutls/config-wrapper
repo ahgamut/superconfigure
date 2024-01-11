@@ -3,8 +3,8 @@ set -e
 shopt -s expand_aliases
 
 ARCH="${ARCH:-x86_64}"
-alias strip=$STRIP
-alias ar=$AR
+alias strip="$STRIP"
+alias ar="$AR"
 
 export GOBJECT_LIBS=""
 export PKG_CONFIG=""
@@ -13,8 +13,8 @@ export NETTLE_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 export HOGWEED_CFLAGS="-I$COSMOS/include"
 export HOGWEED_LIBS="-L$COSMOS/lib -lhogweed -lnettle -lgmp"
 
-$BASELOC/o/lib/gnutls/gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
-    --libexecdir=/zip/$ARCH --prefix=$COSMOS\
+"$BASELOC"/o/lib/gnutls/gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --libexecdir=/zip/"$ARCH" --prefix="$COSMOS"\
     --disable-shared --enable-static\
     --with-gnu-ld --disable-cxx\
     --disable-nls --disable-rpath --disable-tests\

@@ -3,25 +3,25 @@ set -e
 
 ../../SDL2*/configure \
     --disable-shared --enable-static\
-    --without-pic --prefix=$COSMOS\
+    --without-pic --prefix="$COSMOS"\
     --disable-{pulseaudio,sndio}\
     --disable-video-{kmsdrm,vulkan,opengles2}\
     --with-x --enable-video-x11\
     CFLAGS="-Os" SDL_STATIC_LIBS="-lXext -lX11 -lxcb -lXau"
 
-make V=0 -s -j$MAXPROC
-make install V=0 -s -j$MAXPROC
+make V=0 -s -j"$MAXPROC"
+make install V=0 -s -j"$MAXPROC"
 
 rm -rf test-bins
 mkdir test-bins && cd test-bins
 
 ../../../SDL2*/test/configure \
     --disable-shared --enable-static\
-    --without-pic --prefix=$COSMOS\
+    --without-pic --prefix="$COSMOS"\
     CFLAGS="-Os" SDL_LIBS="$(pkg-config --libs sdl2)"
 
-make V=0 -j$MAXPROC
-make install V=0 -j$MAXPROC
+make V=0 -j"$MAXPROC"
+make install V=0 -j"$MAXPROC"
 
 TESTLIST='
 checkkeys
@@ -35,5 +35,5 @@ testmessage
 '
 
 for EXE in $TESTLIST; do
-    cp $COSMOS/libexec/installed-tests/SDL2/$EXE $COSMOS/bin
+    cp "$COSMOS"/libexec/installed-tests/SDL2/"$EXE" "$COSMOS"/bin
 done

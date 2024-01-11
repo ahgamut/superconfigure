@@ -3,7 +3,7 @@
 export COSMOPOLITAN_DISABLE_ZIPOS=1
 export ARCH=aarch64
 export MODE=aarch64
-export BASELOC=$(realpath $PWD)
+export BASELOC=$(realpath "$PWD")
 export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/results

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export COSMOPOLITAN_DISABLE_ZIPOS=1
-export BASELOC=$(realpath $PWD)
+export BASELOC=$(realpath "$PWD")
 export COSMO=$BASELOC/cosmopolitan
 export COSMOS_X86_64=$BASELOC/cosmos/x86_64
 export COSMOS_AARCH64=$BASELOC/cosmos/aarch64

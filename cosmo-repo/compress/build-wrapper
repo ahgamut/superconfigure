@@ -4,16 +4,16 @@ set -e
 export COSMOPOLITAN_DISABLE_ZIPOS=0
 export ARCH=""
 
-cd $COSMO
-make m=$MODE V=0 -s -j$MAXPROC \
-    o/$MODE/third_party/bzip2/bzip2.com\
-    o/$MODE/third_party/unzip/unzip.com\
-    o/$MODE/third_party/zip/zip.com\
-    o/$MODE/third_party/zstd/zstd.com
+cd "$COSMO"
+make m="$MODE" V=0 -s -j"$MAXPROC" \
+    o/"$MODE"/third_party/bzip2/bzip2.com\
+    o/"$MODE"/third_party/unzip/unzip.com\
+    o/"$MODE"/third_party/zip/zip.com\
+    o/"$MODE"/third_party/zstd/zstd.com
 
-cp o/$MODE/third_party/bzip2/bzip2.com.dbg $COSMOS/bin/bzip2
-cp o/$MODE/third_party/unzip/unzip.com.dbg $COSMOS/bin/unzip
-cp o/$MODE/third_party/zip/zip.com.dbg $COSMOS/bin/zip
-cp o/$MODE/third_party/zstd/zstd.com.dbg $COSMOS/bin/zstd
+cp o/"$MODE"/third_party/bzip2/bzip2.com.dbg "$COSMOS"/bin/bzip2
+cp o/"$MODE"/third_party/unzip/unzip.com.dbg "$COSMOS"/bin/unzip
+cp o/"$MODE"/third_party/zip/zip.com.dbg "$COSMOS"/bin/zip
+cp o/"$MODE"/third_party/zstd/zstd.com.dbg "$COSMOS"/bin/zstd
 
 echo "DONE."

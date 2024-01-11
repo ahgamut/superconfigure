@@ -3,10 +3,10 @@ set -e
 shopt -s expand_aliases
 export STRIP="/bin/true"
 alias strip=$STRIP
-alias ar=$AR
+alias ar="$AR"
 
 # why
-cp -r $BASELOC/o/editor/vim/vim*/* ./
+cp -r "$BASELOC"/o/editor/vim/vim*/* ./
 
 ./configure --disable-darwin --disable-smack --disable-selinux\
     --disable-xsmp --enable-luainterp=no --enable-perlinterp=no\
@@ -17,7 +17,7 @@ cp -r $BASELOC/o/editor/vim/vim*/* ./
     --disable-nls --disable-sysmouse --disable-acl\
     --disable-canberra --disable-libsodium\
     --without-x --with-tlib=tinfo\
-    --with-local-dir=$COSMOS/lib\
+    --with-local-dir="$COSMOS"/lib\
     --sysconfdir=/zip --datarootdir=/zip/usr/share\
-    --prefix=$COSMOS\
+    --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include" LDFLAGS="-L$COSMOS/lib" 

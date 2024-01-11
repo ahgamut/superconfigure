@@ -3,8 +3,8 @@ set -e
 
 # copy headers into cosmocc
 
-mkdir -p $COSMO/cosmocc/include/third_party
-cd $COSMO/cosmocc/include/third_party
+mkdir -p "$COSMO"/cosmocc/include/third_party
+cd "$COSMO"/cosmocc/include/third_party
 
 SUBFOLDERS='
 zlib
@@ -16,12 +16,12 @@ sqlite3
 # cp $COSMO/cosmocc/$ARCH-linux-cosmo/lib/*.a $COSMOS/lib || true
 
 for SUBFOLDER in $SUBFOLDERS; do
-    mkdir -p $SUBFOLDER
-    cp $COSMO/third_party/$SUBFOLDER/*.h ./$SUBFOLDER || true
-    cp $COSMO/third_party/$SUBFOLDER/*.inc ./$SUBFOLDER || true
+    mkdir -p "$SUBFOLDER"
+    cp "$COSMO"/third_party/"$SUBFOLDER"/*.h ./"$SUBFOLDER" || true
+    cp "$COSMO"/third_party/"$SUBFOLDER"/*.inc ./"$SUBFOLDER" || true
 done
 
-cd $COSMOS
+cd "$COSMOS"
 for lib in crypt atomic gio-2.0 gobject-2.0 glib-2.0; do
     printf '\041\074\141\162\143\150\076\012' >"./lib/lib$lib.a"
 done
@@ -35,9 +35,9 @@ fi
 if [ -f ./lib/libz.a ]; then
     echo "already have libz.a"
 else
-    cp $COSMO/o/$MODE/third_party/zlib/zlib.a ./lib/libz.a
-    $AR rcu ./lib/libz.a $COSMO/o/$MODE/third_party/zlib/gz/*.o
+    cp "$COSMO"/o/"$MODE"/third_party/zlib/zlib.a ./lib/libz.a
+    $AR rcu ./lib/libz.a "$COSMO"/o/"$MODE"/third_party/zlib/gz/*.o
 fi
 
-cp $COSMO/o/$MODE/third_party/sqlite3/libsqlite3.a ./lib/libsqlite3.a
+cp "$COSMO"/o/"$MODE"/third_party/sqlite3/libsqlite3.a ./lib/libsqlite3.a
 echo '#include "third_party/sqlite3/sqlite3.h"' > ./include/sqlite3.h

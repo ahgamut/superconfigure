@@ -6,12 +6,12 @@ FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
 
 export PKG_CONFIG=""
 
-$BASELOC/o/compiler/binutils/binutils*/configure --prefix=$COSMOS --disable-shared --disable-dependency-tracking \
+"$BASELOC"/o/compiler/binutils/binutils*/configure --prefix="$COSMOS" --disable-shared --disable-dependency-tracking \
     --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
     --disable-silent-rules --disable-libstdcxx --disable-werror --disable-multilib \
     --enable-deterministic-archives --enable-targets=x86_64-linux-gnu \
     --disable-lto --with-system-zlib --with-static-standard-libraries \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
-    --disable-bootstrap --disable-libada --build=$ARCH-linux-gnu \
-    --target=$FULL_TARGET\
+    --disable-bootstrap --disable-libada --build="$ARCH"-linux-gnu \
+    --target="$FULL_TARGET"\
     CFLAGS="-Os -D_LARGEFILE64_SOURCE=1"

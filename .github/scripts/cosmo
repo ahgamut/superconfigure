@@ -2,27 +2,27 @@
 set -eux
 
 echo "Initial Setup"
-export BASELOC=$PWD
+export BASELOC="$PWD"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
 export RESULTS="${RESULTS:-$BASELOC/results}"
 
 # create the COSMOS and related folders
-cd $BASELOC
-mkdir -p $BASELOC/cosmos
-mkdir -p $RESULTS/bin
+cd "$BASELOC"
+mkdir -p "$BASELOC"/cosmos
+mkdir -p "$RESULTS"/bin
 for arch in x86_64 aarch64; do
-    mkdir -p $BASELOC/cosmos/$arch
-    cd $BASELOC/cosmos/$arch
+    mkdir -p "$BASELOC"/cosmos/$arch
+    cd "$BASELOC"/cosmos/$arch
     mkdir -p include bin lib libexec share x86_64 aarch64
     mkdir -p /zip/$arch
 done
 mkdir -p /zip/usr/share
-cd $BASELOC
+cd "$BASELOC"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
     # we are not on GA
-    if [[ `nproc` -gt 2 ]]; then
-        numproc=$((`nproc` - 2))
+    if [[ $(nproc) -gt 2 ]]; then
+        numproc=$(($(nproc) - 2))
     else
         numproc=1
     fi
@@ -32,7 +32,7 @@ else
 fi
 
 echo "updating compiler binaries"
-cd $COSMO
+cd "$COSMO"
 mkdir -p cosmocc
 cd cosmocc
 
@@ -50,10 +50,10 @@ fi
 unzip -qo x86_64-gcc.zip
 unzip -qo aarch64-gcc.zip
 
-cd $COSMO
+cd "$COSMO"
 bash tool/cosmocc/package.sh cosmocc
 
-cd $COSMO
+cd "$COSMO"
 make -j$numproc o//tool/build
 
 make m=x86_64 V=0 -s -j$numproc \

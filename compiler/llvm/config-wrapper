@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cmake -S $BASELOC/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \
+cmake -S "$BASELOC"/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \
     -DCMAKE_C_COMPILER="$CC" \
     -DCMAKE_CXX_COMPILER="$CXX"\
     -DCMAKE_INSTALL_PREFIX="$COSMOS"\
@@ -38,5 +38,5 @@ cmake -S $BASELOC/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \
     -DLLVM_ENABLE_CURL=OFF\
     -DLLVM_ENABLE_LIBTHREADS=ON
 
-ninja -j$MAXPROC -k5
-cp bin/* $COSMOS/bin
+ninja -j"$MAXPROC" -k5
+cp bin/* "$COSMOS"/bin
