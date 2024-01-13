@@ -1,16 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 EXE="${1:-ERROR}"
 shift 1
 FILELIST="$@"
 
-if [[ "$EXE" = "ERROR" ]]; then
+if [ "$EXE" = "ERROR" ]; then
     echo "did not specify exe to fatten!"
     exit 1
 fi
 
-if [[ "$FILELIST" = "" ]]; then
+if [ "$FILELIST" = "" ]; then
     echo "did not specify folders to add!"
     exit 1
 fi
@@ -32,5 +32,5 @@ apelinkpls () {
 
 apelinkpls "$RESULTS"/bin/"$EXE".com "$COSMOS_X86_64"/bin/"$EXE" "$COSMOS_AARCH64"/bin/"$EXE"
 cd /zip
-zip -qr "$RESULTS"/bin/"$EXE".com "$FILELIST"
+zip -qr "$RESULTS"/bin/"$EXE".com $FILELIST
 cd "$BASELOC"

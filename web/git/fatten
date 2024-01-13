@@ -1,13 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -eux
 
 apelinkpls () {
     OUTPUT="$1"
     OUTPUT_X86_64="$2"
     OUTPUT_AARCH64="$3"
-    OLDNAME_X86_64="$(basename -- $OUTPUT_X86_64)"
-    OLDNAME_AARCH64="$(basename -- $OUTPUT_AARCH64)"
-    TARG_FOLD="$(dirname $OUTPUT)"
+    OLDNAME_X86_64="$(basename -- "$OUTPUT_X86_64")"
+    OLDNAME_AARCH64="$(basename -- "$OUTPUT_AARCH64")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
@@ -18,10 +18,10 @@ apelinkpls () {
     cp "$OUTPUT_AARCH64" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
-cd $BASELOC
+cd "$BASELOC"
 
 # git
-mkdir -p $RESULTS/libexec/git-core/mergetools
+mkdir -p "$RESULTS"/libexec/git-core/mergetools
 
 # these are the unique binaries
 BINLIST='
@@ -38,8 +38,8 @@ libexec/git-core/git-http-push
 '
 for EXE in $BINLIST; do
     cd /zip
-    apelinkpls $RESULTS/$EXE.com $COSMOS_X86_64/$EXE $COSMOS_AARCH64/$EXE
-    zip -qr $RESULTS/$EXE.com usr/share/ssl
+    apelinkpls "$RESULTS"/"$EXE".com "$COSMOS_X86_64"/"$EXE" "$COSMOS_AARCH64"/"$EXE"
+    zip -qr "$RESULTS"/"$EXE".com usr/share/ssl
 done
 
 # these are in /bin but symlinked to git
@@ -51,7 +51,7 @@ bin/git-upload-archive
 
 for SYM in $SYMLIST1; do
     # we symlink to git here because that's what it is going to become eventually
-    ln -sf git $RESULTS/$SYM.com
+    ln -sf git "$RESULTS"/"$SYM".com
 done
 
 
@@ -61,7 +61,7 @@ libexec/git-core/git-shell
 '
 for SYM in $SYMLIST2a; do
     # we symlink to ../../bin/git here because that's what it is going to become eventually
-    ln -sf ../../bin/git-shell $RESULTS/$SYM.com
+    ln -sf ../../bin/git-shell "$RESULTS"/"$SYM".com
 done
 
 # these are in /libexec/git-core but symlinked to git-remote-http
@@ -73,7 +73,7 @@ libexec/git-core/git-remote-http
 
 for SYM in $SYMLIST2a; do
     # we symlink to git-remote-https here because that's what it is going to become eventually
-    ln -sf git-remote-https $RESULTS/$SYM.com
+    ln -sf git-remote-https "$RESULTS"/"$SYM".com
 done
 
 # these are in /libexec/git-core but symlinked to ../../bin/git
@@ -219,7 +219,7 @@ libexec/git-core/git-write-tree
 
 for SYM in $SYMLIST2; do
     # we symlink to ../../bin/git here because that's what it is going to become eventually
-    ln -sf ../../bin/git $RESULTS/$SYM.com
+    ln -sf ../../bin/git "$RESULTS"/"$SYM".com
 done
 
 # These aren't binaries, but some are executable
@@ -273,5 +273,5 @@ libexec/git-core/mergetools/xxdiff
 '
 
 for TXT in $TEXTFILES; do
-    cp $COSMOS_X86_64/$TXT $RESULTS/$TXT.com 
+    cp "$COSMOS_X86_64"/"$TXT" "$RESULTS"/"$TXT".com 
 done

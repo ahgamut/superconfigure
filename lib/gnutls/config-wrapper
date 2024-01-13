@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
-shopt -s expand_aliases
 
 ARCH="${ARCH:-x86_64}"
 alias strip="$STRIP"

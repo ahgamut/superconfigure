@@ -1,10 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 PFILE="${1:-ERROR}"
-CURDIR="$(pwd)"
 
-if [[ "$PFILE" = "ERROR" ]]; then
+if [ "$PFILE" = "ERROR" ]; then
     echo "did not specify file to patch!"
     exit 1
 fi

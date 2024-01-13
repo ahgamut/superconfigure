@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 cmake -S "$BASELOC"/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \

@@ -1,11 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 ../../SDL2*/configure \
     --disable-shared --enable-static\
     --without-pic --prefix="$COSMOS"\
-    --disable-{pulseaudio,sndio}\
-    --disable-video-{kmsdrm,vulkan,opengles2}\
+    --disable-pulseaudio\
+    --disable-sndio\
+    --disable-video-kmsdrm\
+    --disable-video-vulkan\
+    --disable-video-opengles2\
     --with-x --enable-video-x11\
     CFLAGS="-Os" SDL_STATIC_LIBS="-lXext -lX11 -lxcb -lXau"
 

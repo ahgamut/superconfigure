@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 URL="${1:-ERROR}"
 CURDIR="$(pwd)"
 
-if [[ "$URL" = "ERROR" ]]; then
+if [ "$URL" = "ERROR" ]; then
     echo "did not specify file to download!"
     exit 1
 fi

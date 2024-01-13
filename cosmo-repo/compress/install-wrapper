@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 mkdir -p "$COSMO"/cosmocc/include/third_party

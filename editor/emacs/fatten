@@ -1,13 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 FILELIST='emacs emacsclient'
 
 apelinkpls () {
     OUTPUT="$1"
-    OLDNAME_X86_64="$(basename -- $2)"
-    OLDNAME_AARCH64="$(basename -- $3)"
-    TARG_FOLD="$(dirname $OUTPUT)"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
@@ -19,9 +19,9 @@ apelinkpls () {
 }
 
 for EXE in $FILELIST; do
-    apelinkpls $RESULTS/bin/$EXE.com $COSMOS_X86_64/bin/$EXE $COSMOS_AARCH64/bin/$EXE
+    apelinkpls "$RESULTS"/bin/"$EXE".com "$COSMOS_X86_64"/bin/"$EXE" "$COSMOS_AARCH64"/bin/"$EXE"
     cd /zip
-    zip -qr $RESULTS/bin/$EXE.com \
+    zip -qr "$RESULTS"/bin/"$EXE".com \
         usr/share/ssl \
         usr/share/terminfo \
         $(find x86_64 -type f | grep '\.pdmp') \
@@ -30,5 +30,5 @@ for EXE in $FILELIST; do
         grep -v '\.el.gz$' |
         grep -v refcards |
         grep -v images)
-    cd $BASELOC
+    cd "$BASELOC"
 done

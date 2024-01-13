@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 FILELIST="$@"
 
-if [[ "$FILELIST" = "" ]]; then
+if [ "$FILELIST" = "" ]; then
     echo "did not specify files to fatten!"
     exit 1
 fi

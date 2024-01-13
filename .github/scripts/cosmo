@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -eux
 
 echo "Initial Setup"
@@ -21,7 +21,7 @@ cd "$BASELOC"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
     # we are not on GA
-    if [[ $(nproc) -gt 2 ]]; then
+    if [ $(nproc) -gt 2 ]; then
         numproc=$(($(nproc) - 2))
     else
         numproc=1
@@ -36,12 +36,12 @@ cd "$COSMO"
 mkdir -p cosmocc
 cd cosmocc
 
-if [[ -f x86_64-gcc.zip ]]; then
+if [ -f x86_64-gcc.zip ]; then
     echo "you already downloaded x86_64-gcc.zip"
 else
     wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.30/x86_64-gcc.zip
 fi
-if [[ -f aarch64-gcc.zip ]]; then
+if [ -f aarch64-gcc.zip ]; then
     echo "you already downloaded aarch64-gcc.zip"
 else
     wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.30/aarch64-gcc.zip

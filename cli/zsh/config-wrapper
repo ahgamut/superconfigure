@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 alias strip='true'
@@ -18,6 +18,15 @@ make install V=0 -s -j"$MAXPROC"
 # copy config files into /zip
 mkdir -p /zip/etc
 cp "$BASELOC"/cli/zsh/zshinit /zip/etc
-for rcfile in z{sh{env,rc},profile,log{in,out}}; do
-  echo ". /zip/etc/zshinit $rcfile" > /zip/etc/$rcfile
+
+FILELIST='
+zshenv
+zshrc
+zprofile
+zlogin
+zlogout
+'
+
+for rcfile in $FILELIST; do
+  echo ". /zip/etc/zshinit $rcfile" > /zip/etc/"$rcfile"
 done

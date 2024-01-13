@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 export COSMOPOLITAN_DISABLE_ZIPOS=1
 export BASELOC=$(realpath "$PWD")
