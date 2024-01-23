@@ -13,7 +13,7 @@ o/cosmo-repo/cli/installed.aarch64: INSTALL_COMMAND = $(DUMMYLINK0)
 
 o/cosmo-repo/cli/built.fat: BINS = 	greenbean life nesemu1 script \
 	ttyinfo unbourne wall awk \
-	ctags lua make qjs \
+	ctags lua make \
 	tree tidy assimilate sqlite3 \
 	mktemper cpuid \
 	pledge verynice redbean printimage
