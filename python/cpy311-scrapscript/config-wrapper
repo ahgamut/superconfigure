@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+rm -rf ./scrapscript
+cp -r "$BASELOC"/o/python/cpy311-scrapscript/scrapscript ./
+cd scrapscript
+
+./configure --disable-shared --disable-loadable-sqlite-extensions\
+    --with-lto=no --without-system-expat --without-system-ffi\
+    --with-pymalloc\
+    --with-tzpath=/zip/usr/share/zoneinfo\
+    --prefix="$COSMOS"\
+    CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
+
+# run make and/or make install
+make V=0 -s -j"$MAXPROC"
+mkdir -p dummy
+cp -r build/lib* ./dummy
+cp ./python "$COSMOS"/bin/scrapscript
