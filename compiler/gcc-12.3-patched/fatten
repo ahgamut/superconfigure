@@ -20,22 +20,16 @@ apelinkpls () {
 }
 
 FILELIST="
-bin/$FULL_TARGET-addr2line
-bin/$FULL_TARGET-ar
-bin/$FULL_TARGET-as
-bin/$FULL_TARGET-c++filt
-bin/$FULL_TARGET-elfedit
-bin/$FULL_TARGET-gprof
-bin/$FULL_TARGET-ld
-bin/$FULL_TARGET-ld.bfd
-bin/$FULL_TARGET-nm
-bin/$FULL_TARGET-objcopy
-bin/$FULL_TARGET-objdump
-bin/$FULL_TARGET-ranlib
-bin/$FULL_TARGET-readelf
-bin/$FULL_TARGET-size
-bin/$FULL_TARGET-strings
-bin/$FULL_TARGET-strip
+bin/$FULL_TARGET-c++
+bin/$FULL_TARGET-cpp
+bin/$FULL_TARGET-g++
+bin/$FULL_TARGET-gcc
+bin/$FULL_TARGET-gcc-ar
+bin/$FULL_TARGET-gcc-nm
+bin/$FULL_TARGET-gcc-ranlib
+libexec/gcc/$FULL_TARGET/12.3.0/cc1
+libexec/gcc/$FULL_TARGET/12.3.0/cc1plus
+libexec/gcc/$FULL_TARGET/12.3.0/collect2
 "
 
 mkdir -p "$RESULTS"/bin
@@ -45,15 +39,4 @@ for EXE in $FILELIST; do
     apelinkpls "$RESULTS"/"$EXE".com\
         "$COSMOS_X86_64"/"$EXE"\
         "$COSMOS_AARCH64"/"$EXE"
-done
-
-# cosmo toolchain also has these binaries in the specific locations
-DUPELIST2='
-as
-ld
-ld.bfd
-'
-
-for EXE in $DUPELIST2; do
-    cp "$RESULTS"/bin/"$FULL_TARGET"-"$EXE".com "$RESULTS"/libexec/gcc/"$FULL_TARGET"/12.3.0/"$EXE".com
 done

@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
+
+SRC_DIR=$(realpath "$BASELOC"/o/compiler/gcc-12.3-patched/gcc*)
+
+"$SRC_DIR"/configure --prefix="$COSMOS"\
+    --without-headers --srcdir="$SRC_DIR"\
+    --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
+    --with-system-zlib --disable-shared --enable-static --disable-libquadmath \
+    --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
+    --with-static-standard-libraries --disable-libada --disable-libssp \
+    --disable-host-shared --disable-objc-gc --enable-languages=c,c++ --disable-bootstrap \
+    --disable-assembly --disable-werror  -enable-tls \
+    --enable-multilib --enable-multiarch \
+    --disable-libmudflap --disable-libsanitizer --disable-gnu-indirect-function \
+    --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
+    --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
+    --disable-libgomp --disable-libatomic \
+    --enable-sjlj-exceptions --enable-gnu-indirect-function \
+    --with-gnu-as=yes --with-gnu-ld=yes --build="$ARCH"-linux-gnu \
+    --target="$FULL_TARGET" \
+    CFLAGS="-Os -D_LARGEFILE64_SOURCE=1 -DDONT_USE_BUILTIN_SETJMP=1"

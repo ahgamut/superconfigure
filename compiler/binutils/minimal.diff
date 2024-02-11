@@ -1,6 +1,6 @@
---- binutils-2.35.2/opcodes/sysdep.h	2023-09-21 16:36:33.171991187 +0000
-+++ binutils-2.35.2/opcodes/sysdep.h.new	2023-09-21 16:36:03.004941735 +0000
-@@ -62,7 +62,7 @@
+--- binutils-2.42/opcodes/sysdep.h	2024-01-29 00:00:00.000000000 +0000
++++ -	2024-02-11 18:40:16.532179291 +0000
+@@ -46,7 +46,7 @@
     It is faster than setjmp/longjmp on systems where the signal mask is
     saved.  */
  
@@ -9,34 +9,43 @@
  #define OPCODES_SIGJMP_BUF		sigjmp_buf
  #define OPCODES_SIGSETJMP(buf)		sigsetjmp((buf), 0)
  #define OPCODES_SIGLONGJMP(buf,val)	siglongjmp((buf), (val))
---- binutils-2.35.2/config.sub	2021-01-30 08:38:03.000000000 +0000
-+++ binutils-2.35.2/config2.sub	2023-10-12 19:29:26.453824477 +0000
-@@ -132,7 +132,7 @@
- 		maybe_os=$field2-$field3
- 		case $maybe_os in
- 			nto-qnx* | linux-gnu* | linux-android* | linux-dietlibc \
--			| linux-newlib* | linux-musl* | linux-uclibc* | uclinux-uclibc* \
-+			| linux-newlib* | linux-cosmo* | linux-musl* | linux-uclibc* | uclinux-uclibc* \
- 			| uclinux-gnu* | kfreebsd*-gnu* | knetbsd*-gnu* | netbsd*-gnu* \
- 			| netbsd*-eabi* | kopensolaris*-gnu* | cloudabi*-eabi* \
- 			| storm-chaos* | os2-emx* | rtmk-nova*)
-@@ -1355,7 +1355,7 @@
- 	     | chorusrdb* | cegcc* | glidix* \
- 	     | cygwin* | msys* | pe* | moss* | proelf* | rtems* \
- 	     | midipix* | mingw32* | mingw64* | linux-gnu* | linux-android* \
--	     | linux-newlib* | linux-musl* | linux-uclibc* \
-+	     | linux-newlib* | linux-cosmo* | linux-musl* | linux-uclibc* \
- 	     | uxpv* | beos* | mpeix* | udk* | moxiebox* \
- 	     | interix* | uwin* | mks* | rhapsody* | darwin* \
- 	     | openstep* | oskit* | conix* | pw32* | nonstopux* \
---- -	2023-12-24 08:04:21.569201043 +0000
-+++ binutils-2.35.2/bfd/peicode.h	2021-01-30 08:38:03.000000000 +0000
-@@ -1484,7 +1484,7 @@
+--- binutils-2.42/bfd/peicode.h	2024-01-29 00:00:00.000000000 +0000
++++ -	2024-02-11 18:41:30.075243380 +0000
+@@ -1537,7 +1537,7 @@
        if (opthdr == NULL)
  	return NULL;
        if (amt > opt_hdr_size)
 -	memset (opthdr + opt_hdr_size, 0, amt - opt_hdr_size);
 +	memset ((char *)opthdr + opt_hdr_size, 0, amt - opt_hdr_size);
  
-       bfd_set_error (bfd_error_no_error);
-       bfd_coff_swap_aouthdr_in (abfd, opthdr, & internal_a);
+       bfd_coff_swap_aouthdr_in (abfd, opthdr, &internal_a);
+ 
+--- binutils-2.42/config.sub	2024-02-11 18:42:05.933333297 +0000
++++ -	2024-02-11 18:43:04.377630922 +0000
+@@ -1721,7 +1721,7 @@
+ 
+ case $os in
+ 	# Sometimes we do "kernel-libc", so those need to count as OSes.
+-	musl* | newlib* | relibc* | uclibc*)
++	cosmo* | musl* | newlib* | relibc* | uclibc*)
+ 		;;
+ 	# Likewise for "kernel-abi"
+ 	eabi* | gnueabi*)
+@@ -1819,7 +1819,7 @@
+ # (given a valid OS), if there is a kernel.
+ case $kernel-$os-$obj in
+ 	linux-gnu*- | linux-dietlibc*- | linux-android*- | linux-newlib*- \
+-		   | linux-musl*- | linux-relibc*- | linux-uclibc*- | linux-mlibc*- )
++		   | linux-cosmo*- | linux-musl*- | linux-relibc*- | linux-uclibc*- | linux-mlibc*- )
+ 		;;
+ 	uclinux-uclibc*- )
+ 		;;
+@@ -1827,7 +1827,7 @@
+ 		;;
+ 	windows*-msvc*-)
+ 		;;
+-	-dietlibc*- | -newlib*- | -musl*- | -relibc*- | -uclibc*- | -mlibc*- )
++	-dietlibc*- | -newlib*- | -cosmo*- | -musl*- | -relibc*- | -uclibc*- | -mlibc*- )
+ 		# These are just libc implementations, not actual OSes, and thus
+ 		# require a kernel.
+ 		echo "Invalid configuration '$1': libc '$os' needs explicit kernel." 1>&2
