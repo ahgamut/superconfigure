@@ -29,7 +29,14 @@ done
 if [ -f ./include/zlib.h ]; then
     echo "already have zlib.h"
 else
-    echo '#include "third_party/zlib/zlib.h"' >> ./include/zlib.h
+    echo "#ifndef THIRD_PARTY_ZLIB_COSMOS" >./include/zlib.h
+    echo "#define THIRD_PARTY_ZLIB_COSMOS" >>./include/zlib.h
+    echo '#include "third_party/zlib/zlib.h"' >>./include/zlib.h
+    echo "#ifdef THIRD_PARTY_ZLIB_COSMOS_GZ" >>./include/zlib.h
+    echo '#include "third_party/zlib/gz/gzguts.inc"' >> ./include/zlib.h
+    echo "#endif" >>./include/zlib.h
+    echo '#define inflateBackInit(x, y, z) inflateBackInit_((x), (y), (z))' >> ./include/zlib.h
+    echo "#endif" >>./include/zlib.h
 fi
 
 if [ -f ./lib/libz.a ]; then

@@ -1,6 +1,6 @@
 
 LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-15.0.7.tar.gz 
-LLVM_DEPS := compress/zlib
+LLVM_DEPS := cosmo-repo/base
 LLVM_BINS := FileCheck UnicodeNameMappingGenerator bugpoint \
 	clang-15 clang-ast-dump clang-check clang-diff clang-extdef-mapping \
 	clang-format clang-fuzzer-dictionary clang-linker-wrapper \
