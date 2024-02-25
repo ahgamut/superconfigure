@@ -1,12 +1,11 @@
 
 LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-15.0.7.tar.gz 
 LLVM_DEPS := cosmo-repo/base
-LLVM_BINS := FileCheck UnicodeNameMappingGenerator bugpoint \
-	clang-15 clang-ast-dump clang-check clang-diff clang-extdef-mapping \
+LLVM_BINS := clang-15 clang-ast-dump clang-check clang-diff clang-extdef-mapping \
 	clang-format clang-fuzzer-dictionary clang-linker-wrapper \
 	clang-nvlink-wrapper clang-offload-bundler clang-offload-packager \
 	clang-offload-wrapper clang-refactor clang-rename clang-scan-deps \
-	clang-tblgen count diagtool dsymutil llc llvm-PerfectShuffle llvm-ar \
+	clang-tblgen dsymutil llc llvm-PerfectShuffle llvm-ar \
 	llvm-as llvm-bcanalyzer llvm-cat llvm-cfi-verify llvm-config \
 	llvm-cov llvm-cvtres llvm-cxxdump llvm-cxxfilt llvm-cxxmap llvm-diff \
 	llvm-dis llvm-dlang-demangle-fuzzer llvm-dwarfdump llvm-dwarfutil \
@@ -19,8 +18,7 @@ LLVM_BINS := FileCheck UnicodeNameMappingGenerator bugpoint \
 	llvm-sim llvm-size llvm-special-case-list-fuzzer llvm-split llvm-stress \
 	llvm-strings llvm-tapi-diff llvm-tblgen llvm-tli-checker llvm-undname \
 	llvm-xray llvm-yaml-numeric-parser-fuzzer llvm-yaml-parser-fuzzer not \
-	obj2yaml opt sancov sanstats split-file verify-uselistorder yaml-bench \
-	yaml2obj
+	obj2yaml opt split-file yaml-bench yaml2obj
 
 $(eval $(call DOWNLOAD_SOURCE,compiler/llvm,$(LLVM_SRC)))
 $(eval $(call SPECIFY_DEPS,compiler/llvm,$(LLVM_DEPS)))
