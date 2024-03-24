@@ -5,46 +5,46 @@ export COSMOPOLITAN_DISABLE_ZIPOS=0
 
 cd "$COSMO"
 make MODE="$MODE" V=0 -s -j"$MAXPROC" \
-    o/"$MODE"/examples/greenbean.com\
-    o/"$MODE"/examples/nesemu1.com\
-    o/"$MODE"/examples/script.com\
-    o/"$MODE"/examples/ttyinfo.com\
-    o/"$MODE"/examples/unbourne.com\
-    o/"$MODE"/examples/wall.com\
-    o/"$MODE"/third_party/awk/awk.com\
-    o/"$MODE"/third_party/ctags/ctags.com\
-    o/"$MODE"/third_party/lua/lua.com\
-    o/"$MODE"/third_party/make/make.com\
-    o/"$MODE"/third_party/sqlite3/sqlite3.com\
-    o/"$MODE"/third_party/tidy/tidy.com\
-    o/"$MODE"/third_party/tree/tree.com\
-    o/"$MODE"/tool/build/assimilate.com\
-    o/"$MODE"/tool/build/mktemper.com\
-    o/"$MODE"/tool/build/pledge.com\
-    o/"$MODE"/tool/build/verynice.com\
-    o/"$MODE"/tool/net/redbean.com\
-    o/"$MODE"/tool/viz/cpuid.com\
-    o/"$MODE"/tool/viz/life.com\
-    o/"$MODE"/tool/viz/printimage.com
+    o/"$MODE"/examples/greenbean\
+    o/"$MODE"/examples/nesemu1\
+    o/"$MODE"/examples/script\
+    o/"$MODE"/examples/ttyinfo\
+    o/"$MODE"/examples/unbourne\
+    o/"$MODE"/examples/wall\
+    o/"$MODE"/third_party/awk/awk\
+    o/"$MODE"/third_party/ctags/ctags\
+    o/"$MODE"/third_party/lua/lua\
+    o/"$MODE"/third_party/make/make\
+    o/"$MODE"/third_party/sqlite3/sqlite3\
+    o/"$MODE"/third_party/tidy/tidy\
+    o/"$MODE"/third_party/tree/tree\
+    o/"$MODE"/tool/build/assimilate\
+    o/"$MODE"/tool/build/mktemper\
+    o/"$MODE"/tool/build/pledge\
+    o/"$MODE"/tool/build/verynice\
+    o/"$MODE"/tool/net/redbean\
+    o/"$MODE"/tool/viz/cpuid\
+    o/"$MODE"/tool/viz/life\
+    o/"$MODE"/tool/viz/printimage
 
-cp o/"$MODE"/examples/greenbean.com.dbg "$COSMOS"/bin/greenbean
-cp o/"$MODE"/examples/nesemu1.com.dbg "$COSMOS"/bin/nesemu1
-cp o/"$MODE"/examples/script.com.dbg "$COSMOS"/bin/script
-cp o/"$MODE"/examples/ttyinfo.com.dbg "$COSMOS"/bin/ttyinfo
-cp o/"$MODE"/examples/unbourne.com.dbg "$COSMOS"/bin/unbourne
-cp o/"$MODE"/examples/wall.com.dbg "$COSMOS"/bin/wall
-cp o/"$MODE"/third_party/awk/awk.com.dbg "$COSMOS"/bin/awk
-cp o/"$MODE"/third_party/ctags/ctags.com.dbg "$COSMOS"/bin/ctags
-cp o/"$MODE"/third_party/lua/lua.com.dbg "$COSMOS"/bin/lua
-cp o/"$MODE"/third_party/make/make.com.dbg "$COSMOS"/bin/make
-cp o/"$MODE"/third_party/sqlite3/sqlite3.com.dbg "$COSMOS"/bin/sqlite3
-cp o/"$MODE"/third_party/tidy/tidy.com.dbg "$COSMOS"/bin/tidy
-cp o/"$MODE"/third_party/tree/tree.com.dbg "$COSMOS"/bin/tree
-cp o/"$MODE"/tool/build/assimilate.com.dbg "$COSMOS"/bin/assimilate
-cp o/"$MODE"/tool/build/mktemper.com.dbg "$COSMOS"/bin/mktemper
-cp o/"$MODE"/tool/build/pledge.com.dbg "$COSMOS"/bin/pledge
-cp o/"$MODE"/tool/build/verynice.com.dbg "$COSMOS"/bin/verynice
-cp o/"$MODE"/tool/net/redbean.com.dbg "$COSMOS"/bin/redbean
-cp o/"$MODE"/tool/viz/cpuid.com.dbg "$COSMOS"/bin/cpuid
-cp o/"$MODE"/tool/viz/life.com.dbg "$COSMOS"/bin/life
-cp o/"$MODE"/tool/viz/printimage.com.dbg "$COSMOS"/bin/printimage
+cp o/"$MODE"/examples/greenbean.dbg "$COSMOS"/bin/greenbean
+cp o/"$MODE"/examples/nesemu1.dbg "$COSMOS"/bin/nesemu1
+cp o/"$MODE"/examples/script.dbg "$COSMOS"/bin/script
+cp o/"$MODE"/examples/ttyinfo.dbg "$COSMOS"/bin/ttyinfo
+cp o/"$MODE"/examples/unbourne.dbg "$COSMOS"/bin/unbourne
+cp o/"$MODE"/examples/wall.dbg "$COSMOS"/bin/wall
+cp o/"$MODE"/third_party/awk/awk.dbg "$COSMOS"/bin/awk
+cp o/"$MODE"/third_party/ctags/ctags.dbg "$COSMOS"/bin/ctags
+cp o/"$MODE"/third_party/lua/lua.dbg "$COSMOS"/bin/lua
+cp o/"$MODE"/third_party/make/make.dbg "$COSMOS"/bin/make
+cp o/"$MODE"/third_party/sqlite3/sqlite3.dbg "$COSMOS"/bin/sqlite3
+cp o/"$MODE"/third_party/tidy/tidy.dbg "$COSMOS"/bin/tidy
+cp o/"$MODE"/third_party/tree/tree.dbg "$COSMOS"/bin/tree
+cp o/"$MODE"/tool/build/assimilate.dbg "$COSMOS"/bin/assimilate
+cp o/"$MODE"/tool/build/mktemper.dbg "$COSMOS"/bin/mktemper
+cp o/"$MODE"/tool/build/pledge.dbg "$COSMOS"/bin/pledge
+cp o/"$MODE"/tool/build/verynice.dbg "$COSMOS"/bin/verynice
+cp o/"$MODE"/tool/net/redbean.dbg "$COSMOS"/bin/redbean
+cp o/"$MODE"/tool/viz/cpuid.dbg "$COSMOS"/bin/cpuid
+cp o/"$MODE"/tool/viz/life.dbg "$COSMOS"/bin/life
+cp o/"$MODE"/tool/viz/printimage.dbg "$COSMOS"/bin/printimage

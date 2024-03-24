@@ -6,14 +6,14 @@ export ARCH=""
 
 cd "$COSMO"
 make m="$MODE" V=0 -s -j"$MAXPROC" \
-    o/"$MODE"/third_party/bzip2/bzip2.com\
-    o/"$MODE"/third_party/unzip/unzip.com\
-    o/"$MODE"/third_party/zip/zip.com\
-    o/"$MODE"/third_party/zstd/zstd.com
+    o/"$MODE"/third_party/bzip2/bzip2\
+    o/"$MODE"/third_party/unzip/unzip\
+    o/"$MODE"/third_party/zip/zip\
+    o/"$MODE"/third_party/zstd/zstd
 
-cp o/"$MODE"/third_party/bzip2/bzip2.com.dbg "$COSMOS"/bin/bzip2
-cp o/"$MODE"/third_party/unzip/unzip.com.dbg "$COSMOS"/bin/unzip
-cp o/"$MODE"/third_party/zip/zip.com.dbg "$COSMOS"/bin/zip
-cp o/"$MODE"/third_party/zstd/zstd.com.dbg "$COSMOS"/bin/zstd
+cp o/"$MODE"/third_party/bzip2/bzip2.dbg "$COSMOS"/bin/bzip2
+cp o/"$MODE"/third_party/unzip/unzip.dbg "$COSMOS"/bin/unzip
+cp o/"$MODE"/third_party/zip/zip.dbg "$COSMOS"/bin/zip
+cp o/"$MODE"/third_party/zstd/zstd.dbg "$COSMOS"/bin/zstd
 
 echo "DONE."
