@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        result: [compress, llvm, web, aarch64-gcc, x86_64-gcc, cli, datasette, pypack1, editor, gui]
+        result: [compress, web, aarch64-gcc, x86_64-gcc, cli, datasette, pypack1, editor, gui]
     name: ${{ matrix.result }}
     steps:
       - name: Checkout the repository
