@@ -17,4 +17,4 @@ export LD=$PREFIX-ld
 export OBJCOPY=$PREFIX-objcopy
 export AR=$PREFIX-ar
 export STRIP=$PREFIX-strip
-export ZIPCOPY=$COSMO/o/tool/build/zipcopy.com
+export ZIPCOPY=$COSMO/o/tool/build/zipcopy
