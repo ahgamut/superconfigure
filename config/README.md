@@ -21,11 +21,11 @@ To build `bash` with Cosmopolitan Libc, we need to go through the following step
 5. Configure, build, install for `aarch64`
 6. Use Cosmopolitan Libc's `apelink` to combine the `x86_64` and `aarch64` 
 debug binaries to build a fat binary, and add necessary zip store assets.
-7. now we should have a `bash.com` in `results/bin`
+7. now we should have a `bash` in `results/bin`
 
 These steps need to occur in a specific order: 1, 2, 3, (4, 5 can occur
 simultaneously), and then 6. We enforce this order via Makefile dependencies.
-Thus the build steps for `bash.com`, expressed graphically, would look like:
+Thus the build steps for `bash`, expressed graphically, would look like:
 
 ![](./bash-deps.svg)
 
@@ -221,8 +221,8 @@ Here are some examples:
 - What other Makefile functions will be useful? Can the functions be better?
 - Switching between makefile vs shell gets a bit confiusing. How much should be
   inside a Makefile, and how much should be inside a shell script?
-- How easy is it to add Cosmopolitan Libc's `zipobj.com` to ncurses/openssl
+- How easy is it to add Cosmopolitan Libc's `zipobj` to ncurses/openssl
   builds and reduce customization in `FATTEN_COMMAND`?
-- How easy is it to add Cosmopolitan Libc's `pledge.com` to each build?
+- How easy is it to add Cosmopolitan Libc's `pledge` to each build?
 - Can we write a tool to generate these `BUILD.mk` files for more packages? (a
   cookiecutter template type of thing)
