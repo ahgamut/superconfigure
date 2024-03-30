@@ -3,7 +3,7 @@ WGET_SRC := https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz
 
 WGET_DEPS := \
 	lib/openssl lib/libuuid \
-	compress/xz compress/brotli \
+	compress/brotli \
 	cosmo-repo/compress cosmo-repo/base
 
 $(eval $(call DOWNLOAD_SOURCE,web/wget,$(WGET_SRC)))
