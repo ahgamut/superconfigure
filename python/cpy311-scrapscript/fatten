@@ -32,6 +32,6 @@ zip -qr "$RESULTS"/bin/scrapscript.com Lib/
 zip -qr "$RESULTS"/bin/scrapscript.com build/
 
 cd /zip
-zip -qr "$RESULTS"/bin/scrapscript.com usr/share/terminfo usr/share/ssl
+zip -qr "$RESULTS"/bin/scrapscript.com usr/share/terminfo
 cd "$BASELOC"
 rm -rf /zip/scrapscript

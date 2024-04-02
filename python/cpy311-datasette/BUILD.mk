@@ -1,7 +1,7 @@
 
 DATASETTE_DEPS := lib/ncurses lib/readline lib/gdbm \
 				  lib/openssl lib/libexpat lib/libuuid \
-				  lib/libyaml cosmo-repo/compress \
+				  lib/libyaml lib/certs cosmo-repo/compress \
 				  cosmo-repo/base
 
 $(eval $(call SPECIFY_DEPS,python/cpy311-datasette,$(DATASETTE_DEPS)))
