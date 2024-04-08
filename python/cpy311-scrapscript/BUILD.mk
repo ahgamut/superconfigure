@@ -1,7 +1,7 @@
 
 SCRAPSCRIPT_DEPS := lib/ncurses lib/readline lib/gdbm \
 				  lib/libexpat lib/libuuid \
-				  cosmo-repo/compress cosmo-repo/base compress/xz
+				  cosmo-repo/compress cosmo-repo/base
 
 $(eval $(call SPECIFY_DEPS,python/cpy311-scrapscript,$(SCRAPSCRIPT_DEPS)))
 

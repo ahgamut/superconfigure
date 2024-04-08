@@ -3,7 +3,7 @@ CURL_SRC := https://github.com/curl/curl/releases/download/curl-8_4_0/curl-8.4.0
 
 CURL_DEPS := \
 	lib/openssl lib/libssh2 \
-	compress/xz compress/brotli \
+	compress/brotli \
 	cosmo-repo/compress cosmo-repo/base
 
 $(eval $(call DOWNLOAD_SOURCE,web/curl,$(CURL_SRC)))

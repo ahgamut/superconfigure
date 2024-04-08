@@ -32,6 +32,6 @@ zip -qr "$RESULTS"/bin/pypack1.com Lib/
 zip -qr "$RESULTS"/bin/pypack1.com build/
 
 cd /zip
-zip -qr "$RESULTS"/bin/pypack1.com usr/share/terminfo
+zip -qr "$RESULTS"/bin/pypack1.com usr/share/terminfo usr/share/ssl
 cd "$BASELOC"
 rm -rf /zip/pypack1

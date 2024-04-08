@@ -32,6 +32,6 @@ zip -qr "$RESULTS"/bin/datasette.com Lib/
 zip -qr "$RESULTS"/bin/datasette.com build/
 
 cd /zip
-zip -qr "$RESULTS"/bin/datasette.com usr/share/terminfo
+zip -qr "$RESULTS"/bin/datasette.com usr/share/terminfo usr/share/ssl
 cd "$BASELOC"
 rm -rf /zip/datasette

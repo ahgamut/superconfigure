@@ -1,8 +1,8 @@
 
 PYPACK1_DEPS := lib/ncurses lib/readline lib/gdbm \
 				  lib/openssl lib/libexpat lib/libuuid \
-				  lib/libyaml cosmo-repo/compress \
-				  cosmo-repo/base compress/xz \
+				  lib/libyaml lib/certs cosmo-repo/compress \
+				  cosmo-repo/base\
 				  compress/lz4
 
 $(eval $(call SPECIFY_DEPS,python/cpy311-pypack1,$(PYPACK1_DEPS)))

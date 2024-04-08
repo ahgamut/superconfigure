@@ -2,7 +2,7 @@
 LINKS_SRC := http://links.twibright.com/download/links-2.29.tar.gz
 
 LINKS_DEPS := lib/ncurses lib/openssl lib/libuuid \
-			  compress/xz compress/brotli
+			  compress/brotli
 
 LINKS_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --with-ssl=$$(COSMOS)/ssl --disable-ipv6 \

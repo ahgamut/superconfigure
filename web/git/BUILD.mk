@@ -1,6 +1,6 @@
 
 GIT_SRC := https://github.com/git/git/archive/refs/tags/v2.42.0.tar.gz 
-GIT_DEPS := lib/openssl compress/xz \
+GIT_DEPS := lib/openssl \
 			web/curl lib/libexpat \
 			lib/certs \
 			cosmo-repo/base cosmo-repo/compress
