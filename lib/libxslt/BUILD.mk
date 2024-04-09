@@ -5,7 +5,8 @@ LIBXSLT_SRC := https://gitlab.gnome.org/GNOME/libxslt/-/archive/v1.1.39/libxslt-
 LIBXSLT_CONFIG_ARGS = --enable-static --disable-shared\
     --with-debug=no --with-tests=no --with-debugger=no --with-profiler=no \
     --with-crypto=no --with-python=no\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --without-icu --without-pic\
+    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libxslt,$(LIBXSLT_SRC)))

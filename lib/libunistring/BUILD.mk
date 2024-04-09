@@ -1,7 +1,7 @@
 
-LIBUNISTRING_SRC := https://ftp.gnu.org/gnu/libunistring/libunistring-1.1.tar.gz 
+LIBUNISTRING_SRC := https://ftp.gnu.org/gnu/libunistring/libunistring-1.2.tar.gz
 
-LIBUNISTRING_CONFIG_ARGS =  --prefix=$$(COSMOS)\
+LIBUNISTRING_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --disable-shared --enable-static\
     --without-pic --with-gnu-ld\
     --disable-rpath\
