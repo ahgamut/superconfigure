@@ -11,6 +11,8 @@ include lib/libgc/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libunistring/BUILD.mk
 include lib/libuuid/BUILD.mk
+include lib/libxml2/BUILD.mk
+include lib/libxslt/BUILD.mk
 include lib/libyaml/BUILD.mk
 include lib/mpc/BUILD.mk
 include lib/mpfr/BUILD.mk
@@ -31,6 +33,8 @@ lib:\
 	o/lib/libssh2/built.fat\
 	o/lib/libunistring/built.fat\
 	o/lib/libuuid/built.fat\
+	o/lib/libxml2/built.fat\
+	o/lib/libxslt/built.fat\
 	o/lib/libyaml/built.fat\
 	o/lib/mpc/built.fat\
 	o/lib/mpfr/built.fat\
