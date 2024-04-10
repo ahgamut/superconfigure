@@ -8,6 +8,7 @@ LIBTIFF_CONFIG_ARGS = --enable-static --disable-shared\
     CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libtiff,$(LIBTIFF_SRC)))
+$(eval $(call SPECIFY_DEPS,lib/libtiff,lib/libjpeg))
 $(eval $(call AUTOTOOLS_BUILD,lib/libtiff,$(LIBTIFF_CONFIG_ARGS),$(LIBTIFF_CONFIG_ARGS)))
 
 o/lib/libtiff/setup: o/lib/libtiff/patched

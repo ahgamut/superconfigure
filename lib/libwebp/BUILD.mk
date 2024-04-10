@@ -3,10 +3,13 @@
 LIBWEBP_SRC := https://github.com/webmproject/libwebp/archive/refs/tags/v1.3.2.tar.gz
 
 LIBWEBP_CONFIG_ARGS = --enable-static --disable-shared\
-    --prefix=$$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
-    CFLAGS="-Os"
+    --disable-dependency-tracking --disable-libwebpextras\
+    --disable-tiff --without-pic\
+    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libwebp,$(LIBWEBP_SRC)))
+$(eval $(call SPECIFY_DEPS,lib/libwebp,lib/libjpeg))
 $(eval $(call AUTOTOOLS_BUILD,lib/libwebp,$(LIBWEBP_CONFIG_ARGS),$(LIBWEBP_CONFIG_ARGS)))
 
 o/lib/libwebp/setup: o/lib/libwebp/patched

@@ -10,6 +10,7 @@ include lib/libexpat/BUILD.mk
 include lib/libffi/BUILD.mk
 include lib/libgc/BUILD.mk
 include lib/libjpeg/BUILD.mk
+include lib/libpng/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libtiff/BUILD.mk
 include lib/libunistring/BUILD.mk
@@ -36,6 +37,7 @@ lib:\
 	o/lib/libexpat/built.fat\
 	o/lib/libgc/built.fat\
 	o/lib/libjpeg/built.fat\
+	o/lib/libpng/built.fat\
 	o/lib/libssh2/built.fat\
 	o/lib/libtiff/built.fat\
 	o/lib/libunistring/built.fat\
