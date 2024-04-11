@@ -14,6 +14,7 @@ include lib/libpng/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libtiff/BUILD.mk
 include lib/libunistring/BUILD.mk
+include lib/libpng/BUILD.mk
 include lib/libuuid/BUILD.mk
 include lib/libwebp/BUILD.mk
 include lib/libxml2/BUILD.mk
@@ -41,6 +42,7 @@ lib:\
 	o/lib/libssh2/built.fat\
 	o/lib/libtiff/built.fat\
 	o/lib/libunistring/built.fat\
+	o/lib/libpng/built.fat\
 	o/lib/libuuid/built.fat\
 	o/lib/libwebp/built.fat\
 	o/lib/libxml2/built.fat\

@@ -6,8 +6,8 @@ export COSMOCC:=$(COSMO)/cosmocc
 export COSMOS_X86_64:=$(BASELOC)/cosmos/x86_64
 export COSMOS_AARCH64:=$(BASELOC)/cosmos/aarch64
 export RESULTS:=$(BASELOC)/results
-export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy.com
-export APELINK:=$(COSMO)/o/tool/build/apelink.com
+export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy
+export APELINK:=$(COSMO)/o/tool/build/apelink
 
 include config/common.mk
 include config/functions.mk
