@@ -1,5 +1,5 @@
 
-# Documentation from https://gitlab.freedesktop.org/freetype/freetype
+# Documentation: https://gitlab.freedesktop.org/freetype/freetype
 FREETYPE_SRC := https://download.savannah.gnu.org/releases/freetype/freetype-2.13.2.tar.gz
 
 FREETYPE_CONFIG_ARGS = --enable-static --disable-shared --with-tests=no\

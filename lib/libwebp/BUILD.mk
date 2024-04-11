@@ -9,7 +9,7 @@ LIBWEBP_CONFIG_ARGS = --enable-static --disable-shared\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libwebp,$(LIBWEBP_SRC)))
-$(eval $(call SPECIFY_DEPS,lib/libwebp,lib/libjpeg))
+$(eval $(call SPECIFY_DEPS,lib/libwebp,lib/libjpeg,lib/libpng))
 $(eval $(call AUTOTOOLS_BUILD,lib/libwebp,$(LIBWEBP_CONFIG_ARGS),$(LIBWEBP_CONFIG_ARGS)))
 
 o/lib/libwebp/setup: o/lib/libwebp/patched
