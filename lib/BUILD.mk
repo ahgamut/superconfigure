@@ -10,6 +10,7 @@ include lib/libffi/BUILD.mk
 include lib/libgc/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libunistring/BUILD.mk
+include lib/libpng/BUILD.mk
 include lib/libuuid/BUILD.mk
 include lib/libxml2/BUILD.mk
 include lib/libxslt/BUILD.mk
@@ -32,6 +33,7 @@ lib:\
 	o/lib/libgc/built.fat\
 	o/lib/libssh2/built.fat\
 	o/lib/libunistring/built.fat\
+	o/lib/libpng/built.fat\
 	o/lib/libuuid/built.fat\
 	o/lib/libxml2/built.fat\
 	o/lib/libxslt/built.fat\
