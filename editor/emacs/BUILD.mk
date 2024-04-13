@@ -2,7 +2,7 @@
 EMACS_SRC := https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.gz 
 
 $(eval $(call DOWNLOAD_SOURCE,editor/emacs,$(EMACS_SRC)))
-$(eval $(call SPECIFY_DEPS,editor/emacs,lib/ncurses lib/gnutls))
+$(eval $(call SPECIFY_DEPS,editor/emacs,lib/ncurses lib/gnutls lib/libxml2))
 
 o/editor/emacs/configured.x86_64:\
 	CONFIG_COMMAND = $(BASELOC)/editor/emacs/config-wrapper

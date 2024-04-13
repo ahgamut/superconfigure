@@ -1,0 +1,11 @@
+--- gnutls-3.7.10/lib/gnutls.pc.in	2022-03-02 11:38:09.000000000 +0000
++++ -	2024-04-13 19:15:17.472477017 +0000
+@@ -18,7 +18,7 @@
+ Description: Transport Security Layer implementation for the GNU system
+ URL: https://www.gnutls.org/
+ Version: @VERSION@
+-Libs: -L${libdir} -lgnutls
++Libs: -L${libdir} -lgnutls -lhogweed -lnettle -lbrotlidec -lbrotlienc -lbrotlicommon -lgmp -lz
+ Libs.private: @LIBZ_PC@ @LIBINTL@ @LIBSOCKET@ @INET_PTON_LIB@ @LIBPTHREAD@ @LIB_SELECT@ @TSS_LIBS@ @GMP_LIBS@ @LIBUNISTRING@ @LIBATOMIC_LIBS@ @GNUTLS_LIBS_PRIVATE@
+ @GNUTLS_REQUIRES_PRIVATE@
+ Cflags: -I${includedir}

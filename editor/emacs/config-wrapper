@@ -7,9 +7,6 @@ alias strip="$STRIP"
 alias ar="$AR"
 
 export GOBJECT_LIBS=""
-export PKG_CONFIG=""
-export LIBGNUTLS_CFLAGS="-I$COSMOS/include/gnutls -I$COSMOS/include/nettle"
-export LIBGNUTLS_LIBS="-L$COSMOS/lib -lgnutls -lhogweed -lnettle -lgmp"
 
 "$BASELOC"/o/editor/emacs/emacs*/configure --with-gnutls=ifavailable\
     --host="$ARCH"-linux-gnu --with-threads\

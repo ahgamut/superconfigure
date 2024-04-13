@@ -8,6 +8,7 @@ export COSMO=$BASELOC/cosmopolitan
 export COSMOS=$BASELOC/cosmos/$ARCH
 export RESULTS=$BASELOC/results
 export PKG_CONFIG_PATH="$COSMOS/lib/pkgconfig:$COSMOS/share/pkgconfig:$COSMOS/share/pkg-config"
+export PKG_CONFIG_PATH_CUSTOM="$COSMOS/lib/pkgconfig:$COSMOS/share/pkgconfig:$COSMOS/share/pkg-config"
 export ACLOCAL_PATH="$COSMOS/share/aclocal"
 
 PREFIX="$COSMO/cosmocc/bin/$ARCH-unknown-cosmo"
