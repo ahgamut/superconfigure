@@ -22,6 +22,7 @@ include editor/BUILD.mk
 include web/BUILD.mk
 include python/BUILD.mk
 include gui/BUILD.mk
+include lang/BUILD.mk
 
 include cosmo-repo/cosmos.mk
 
