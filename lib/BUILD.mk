@@ -3,6 +3,7 @@ include lib/certs/BUILD.mk
 include lib/freetype/BUILD.mk
 include lib/fribidi/BUILD.mk
 include lib/gdbm/BUILD.mk
+include lib/giflib/BUILD.mk
 include lib/gmp/BUILD.mk
 include lib/gnutls/BUILD.mk
 include lib/isl/BUILD.mk
@@ -32,6 +33,7 @@ lib:\
 	o/lib/freetype/built.fat\
 	o/lib/fribidi/built.fat\
 	o/lib/gdbm/built.fat\
+	o/lib/giflib/built.fat\
 	o/lib/gmp/built.fat\
 	o/lib/gnutls/built.fat\
 	o/lib/isl/built.fat\
