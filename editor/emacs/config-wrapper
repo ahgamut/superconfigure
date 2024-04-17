@@ -7,13 +7,13 @@ alias strip="$STRIP"
 alias ar="$AR"
 
 export GOBJECT_LIBS=""
-export PKG_CONFIG=""
-export LIBGNUTLS_CFLAGS="-I$COSMOS/include/gnutls -I$COSMOS/include/nettle"
-export LIBGNUTLS_LIBS="-L$COSMOS/lib -lgnutls -lhogweed -lnettle -lgmp"
+cp -r "$BASELOC"/o/editor/emacs/emacs*/* ./
 
-"$BASELOC"/o/editor/emacs/emacs*/configure --with-gnutls=ifavailable\
+./configure --with-gnutls=ifavailable\
     --host="$ARCH"-linux-gnu --with-threads\
     --without-dbus --without-selinux\
+    --without-gconf --without-gsettings\
+    --without-gpm --disable-acl\
     --with-file-notification=no --without-modules\
     --sysconfdir=/zip --datarootdir=/zip/usr/share\
     --libexecdir=/zip/"$ARCH" --prefix="$COSMOS"\

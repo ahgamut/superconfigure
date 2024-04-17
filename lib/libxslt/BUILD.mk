@@ -9,11 +9,12 @@ LIBXSLT_CONFIG_ARGS = --enable-static --disable-shared\
     --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
+$(eval $(call SPECIFY_DEPS,lib/libxslt,lib/libxml2))
 $(eval $(call DOWNLOAD_SOURCE,lib/libxslt,$(LIBXSLT_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/libxslt,$(LIBXSLT_CONFIG_ARGS),$(LIBXSLT_CONFIG_ARGS)))
 
-o/lib/libxslt/setup: o/lib/libxslt/patched
-	cd $(BASELOC)/o/lib/libxslt/libxslt* && ./autogen.sh
+o/lib/libxslt/setup: o/lib/libxslt/deps.x86_64
+	cd $(BASELOC)/o/lib/libxslt/libxslt* && ./autogen.sh --help
 	touch $@
 
 o/lib/libxslt/configured.x86_64: o/lib/libxslt/setup

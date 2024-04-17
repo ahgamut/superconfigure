@@ -1,0 +1,20 @@
+--- brotli-1.1.0/scripts/libbrotlidec.pc.in	2024-04-13 19:06:25.087903657 +0000
++++ -	2024-04-13 19:06:30.281392408 +0000
+@@ -7,6 +7,6 @@
+ URL: https://github.com/google/brotli
+ Description: Brotli decoder library
+ Version: @PACKAGE_VERSION@
+-Libs: -L${libdir} -lbrotlidec
++Libs: -L${libdir} -lbrotlidec -lbrotlicommon
+ Requires.private: libbrotlicommon >= 1.1.0
+ Cflags: -I${includedir}
+--- brotli-1.1.0/scripts/libbrotlienc.pc.in	2023-08-29 11:00:29.000000000 +0000
++++ -	2024-04-13 19:06:44.931067439 +0000
+@@ -7,6 +7,6 @@
+ URL: https://github.com/google/brotli
+ Description: Brotli encoder library
+ Version: @PACKAGE_VERSION@
+-Libs: -L${libdir} -lbrotlienc
++Libs: -L${libdir} -lbrotlienc -lbrotlicommon
+ Requires.private: libbrotlicommon >= 1.1.0
+ Cflags: -I${includedir}

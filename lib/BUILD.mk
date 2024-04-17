@@ -7,6 +7,7 @@ include lib/giflib/BUILD.mk
 include lib/gmp/BUILD.mk
 include lib/gnutls/BUILD.mk
 include lib/isl/BUILD.mk
+include lib/jansson/BUILD.mk
 include lib/libevent/BUILD.mk
 include lib/libexpat/BUILD.mk
 include lib/libffi/BUILD.mk
@@ -37,6 +38,7 @@ lib:\
 	o/lib/gmp/built.fat\
 	o/lib/gnutls/built.fat\
 	o/lib/isl/built.fat\
+	o/lib/jansson/built.fat\
 	o/lib/libevent/built.fat\
 	o/lib/libexpat/built.fat\
 	o/lib/libgc/built.fat\

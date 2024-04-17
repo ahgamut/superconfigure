@@ -1,0 +1,21 @@
+--- janet/Makefile	2024-04-17 01:11:42.121517613 +0000
++++ -	2024-04-17 01:13:48.131294616 +0000
+@@ -22,7 +22,7 @@
+ ##### Set global variables #####
+ ################################
+ sinclude config.mk
+-PREFIX?=/usr/local
++PREFIX=$(COSMOS)
+ 
+ JANETCONF_HEADER?=src/conf/janetconf.h
+ INCLUDEDIR?=$(PREFIX)/include
+@@ -43,7 +43,8 @@
+ JANET_BOOT_FLAGS:=. JANET_PATH '$(JANET_PATH)'
+ JANET_TARGET_OBJECTS=build/janet.o build/shell.o
+ JPM_TAG?=master
+-HAS_SHARED?=1
++HAS_SHARED=0
++JANET_NO_AMALG=1
+ DEBUGGER=gdb
+ SONAME_SETTER=-Wl,-soname,
+ 
