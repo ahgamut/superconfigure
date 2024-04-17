@@ -3,7 +3,7 @@ LUA_DEPS := lib/ncurses lib/readline
 $(eval $(call SPECIFY_DEPS,lang/lua,$(LUA_DEPS)))
 
 o/lang/lua/downloaded: \
-	DL_COMMAND = rm -rf lua && git clone --quiet --depth=1 https://github.com/lua/lua lua
+	DL_COMMAND = rm -rf lua && git clone --quiet --depth=1 --branch=v5.4.6 https://github.com/lua/lua lua
 
 o/lang/lua/patched: PATCH_COMMAND = patch -p0 -i
 o/lang/lua/patched: PATCH_FILE = $(BASELOC)/lang/lua/minimal.diff
