@@ -1,0 +1,29 @@
+--- lua/makefile	2024-04-17 00:09:06.885010972 +0000
++++ -	2024-04-17 00:09:44.394895551 +0000
+@@ -70,14 +70,12 @@
+ 
+ 
+ # enable Linux goodies
+-MYCFLAGS= $(LOCAL) -std=c99 -DLUA_USE_LINUX -DLUA_USE_READLINE
++MYCFLAGS= $(LOCAL) -std=c99 -DLUA_USE_POSIX -DLUA_USE_READLINE
+ MYLDFLAGS= $(LOCAL) -Wl,-E
+-MYLIBS= -ldl -lreadline
++MYLIBS= -ldl -lreadline -ltinfo
+ 
+ 
+-CC= gcc
+-CFLAGS= -Wall -O2 $(MYCFLAGS) -fno-stack-protector -fno-common -march=native
++CFLAGS= -Wall -O2 $(MYCFLAGS) -fno-stack-protector -fno-common
+-AR= ar rc
+ RANLIB= ranlib
+ RM= rm -f
+ 
+@@ -112,7 +110,7 @@
+ a:	$(ALL_A)
+ 
+ $(CORE_T): $(CORE_O) $(AUX_O) $(LIB_O)
+-	$(AR) $@ $?
++	$(AR) rc $@ $?
+ 	$(RANLIB) $@
+ 
+ $(LUA_T): $(LUA_O) $(CORE_T)
