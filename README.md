@@ -12,13 +12,13 @@ The built software is split into the following zip files:
 **compress.zip**  
 contains `tar`, `zip`, `unzip`, `bzip2`, `zstd`, `xz`, `brotli`, `gzip`, and `pigz`.  
 **cli.zip**  
-contains `bash`, `zsh`, `grep`, `less`, `lua`, `find`, `GNU coreutils`, and `ninja`.  
+contains `bash`, `zsh`, `grep`, `less`, `lua`, `find`, GNU coreutils, and `ninja`.  
 **editor.zip**  
 contains `vim`, `nano`, and `emacs`.  
 **x86_64-gcc.zip**  
-contains the `gcc-13` and `binutils-2.39` tools targeting 32-bit (x86-64-linux-cosmo).  
+contains the `gcc-12.3` and `binutils-2.42` tools targeting (x86-64-linux-cosmo).  
 **aarch64-gcc.zip**  
-contains the `gcc-13` and `binutils-2.39` tools targeting 64-bit (aarch64-linux-cosmo).  
+contains the `gcc-12.3` and `binutils-2.42` tools targeting (aarch64-linux-cosmo).  
 **datasette.zip**  
 contains `datasette` a build of CPython 3.11 with the datasette library.  
 **pypack1.zip**  
