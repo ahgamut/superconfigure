@@ -16,3 +16,4 @@ make PREFIX=$COSMOS CFLAGS=-Wall OFLAGS=Os libgif.a
 
 # install
 cp libgif.a $COSMOS/lib
+cp gif_*.h $COSMOS/include
