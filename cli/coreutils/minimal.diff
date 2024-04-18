@@ -29,7 +29,7 @@ diff -r --unified coreutils-9.4a/lib/fadvise.h coreutils-9.4/lib/fadvise.h
 +#define   FADVISE_NOREUSE    POSIX_FADV_NOREUSE
 +#define   FADVISE_DONTNEED   POSIX_FADV_DONTNEED
 +#define   FADVISE_WILLNEED   POSIX_FADV_WILLNEED
-+#define   FADVISE_RANDOM     POSIX_FADV_RANDO
++#define   FADVISE_RANDOM     POSIX_FADV_RANDOM
 +typedef int fadvice_t;
  #else
  typedef enum {
