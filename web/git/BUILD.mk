@@ -28,3 +28,5 @@ o/web/git/installed.x86_64: INSTALL_COMMAND = $(DUMMYLINK0)
 o/web/git/installed.aarch64: INSTALL_COMMAND = $(DUMMYLINK0)
 
 o/web/git/built.fat: FATTEN_COMMAND = $(BASELOC)/web/git/fatten
+git: o/web/git/built.fat
+.PHONY: git

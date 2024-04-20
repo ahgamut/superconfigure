@@ -4,13 +4,11 @@
 sudo apt update
 
 # ssl certs
-sudo apt-get install -y ca-certificates libssl-dev
-sudo apt-get install -y qemu qemu-utils qemu-user-static
-sudo apt-get install -y texinfo
-sudo apt-get install -y cmake ninja-build
-sudo apt-get install -y bison
-sudo apt-get install -y zip
-sudo apt-get install -y pkg-config build-essential autoconf bison re2c
+sudo apt-get install -y ca-certificates libssl-dev\
+    qemu qemu-utils qemu-user-static\
+    texinfo groff\
+    cmake ninja-build bison zip\
+    pkg-config build-essential autoconf re2c
 
 # the zip folder
 sudo mkdir -p /zip

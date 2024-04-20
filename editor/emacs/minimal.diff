@@ -78,30 +78,3 @@
  	@[ -f .no-advice-on-failure ] && exit 0; true
  	@v=$$(src/emacs${EXEEXT} --batch --eval \
  	  '(progn (defun f (n) (if (= 0 n) 1 (* n (f (- n 1))))) (princ (f 10)))' \
---- emacs-29.3/Makefile.in	2024-04-20 02:08:39.223737209 +0000
-+++ -	2024-04-20 02:44:28.125616887 +0000
-@@ -377,7 +377,7 @@
- 
- .PHONY: bootstrap-all actual-all advice-on-failure sanity-check
- 
--actual-all: ${SUBDIR} info $(gsettings_SCHEMAS:.xml=.valid) src-depending-on-lisp
-+actual-all: ${SUBDIR} $(gsettings_SCHEMAS:.xml=.valid) src-depending-on-lisp
- 
- # ADVICE-ON-FAILURE-BEGIN:all
- # You could try to:
-@@ -774,11 +774,14 @@
- 	   ${INSTALL_DATA} etc/$${docfile} "$(DESTDIR)${etcdocdir}/$${docfile}"; \
- 	else true; fi
- 
-+install-info:
-+	echo "skip"
-+
- ## FIXME:
- ## If info/dir is missing, but we have install-info, we should let
- ## that handle it.  If info/dir is present and we do not have install-info,
- ## we should check for missing entries and add them by hand.
--install-info: info
-+install-info-erroring: info
- 	umask 022; ${MKDIR_P} "$(DESTDIR)${infodir}"
- 	-unset CDPATH; \
- 	thisdir=`pwd -P`; \
