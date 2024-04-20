@@ -1,0 +1,150 @@
+--- openssh-portable-V_9_7_P1/includes.h	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:26:47.035257688 +0000
+@@ -109,7 +109,9 @@
+ #endif
+ 
+ #include <netinet/in.h>
++#ifndef __COSMOPOLITAN__
+ #include <netinet/in_systm.h> /* For typedefs */
++#endif
+ #ifdef HAVE_RPC_TYPES_H
+ # include <rpc/types.h> /* For INADDR_LOOPBACK */
+ #endif
+--- openssh-portable-V_9_7_P1/defines.h	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:28:04.646443857 +0000
+@@ -55,7 +55,9 @@
+ /*
+  * Definitions for IP type of service (ip_tos)
+  */
++#ifndef __COSMOPOLITAN__
+ #include <netinet/in_systm.h>
++#endif
+ #include <netinet/ip.h>
+ #ifndef IPTOS_LOWDELAY
+ # define IPTOS_LOWDELAY          0x10
+--- openssh-portable-V_9_7_P1/openbsd-compat/bsd-closefrom.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:29:30.941317134 +0000
+@@ -16,6 +16,11 @@
+ 
+ #include "includes.h"
+ 
++#ifdef __COSMOPOLITAN__
++#define HAVE_CLOSEFROM 1
++#undef BROKEN_CLOSEFROM
++#endif
++
+ #if !defined(HAVE_CLOSEFROM) || defined(BROKEN_CLOSEFROM)
+ 
+ #include <sys/types.h>
+--- openssh-portable-V_9_7_P1/openbsd-compat/bsd-misc.h	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:31:53.573831159 +0000
+@@ -65,9 +65,11 @@
+ int utimes(const char *, struct timeval *);
+ #endif /* HAVE_UTIMES */
+ 
++#ifndef __COSMOPOLITAN__
+ #ifndef AT_FDCWD
+ # define AT_FDCWD (-2)
+ #endif
++#endif
+ 
+ #ifndef HAVE_FCHMODAT
+ int fchmodat(int, const char *, mode_t, int);
+--- openssh-portable-V_9_7_P1/openbsd-compat/readpassphrase.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:32:51.874163510 +0000
+@@ -46,7 +46,7 @@
+ #  define _POSIX_VDISABLE       VDISABLE
+ #endif
+ 
+-static volatile sig_atomic_t signo[_NSIG];
++static volatile sig_atomic_t signo[128];
+ 
+ static void handler(int);
+ 
+--- openssh-portable-V_9_7_P1/misc.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:33:34.749807840 +0000
+@@ -51,7 +51,9 @@
+ #include <unistd.h>
+ 
+ #include <netinet/in.h>
++#ifndef __COSMOPOLITAN__
+ #include <netinet/in_systm.h>
++#endif
+ #include <netinet/ip.h>
+ #include <netinet/tcp.h>
+ #include <arpa/inet.h>
+--- openssh-portable-V_9_7_P1/readconf.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:34:11.556850545 +0000
+@@ -22,7 +22,9 @@
+ 
+ #include <net/if.h>
+ #include <netinet/in.h>
++#ifndef __COSMOPOLITAN__
+ #include <netinet/in_systm.h>
++#endif
+ #include <netinet/ip.h>
+ #include <arpa/inet.h>
+ 
+--- openssh-portable-V_9_7_P1/servconf.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:34:42.360317231 +0000
+@@ -20,7 +20,9 @@
+ #endif
+ 
+ #include <netinet/in.h>
++#ifndef __COSMOPOLITAN__
+ #include <netinet/in_systm.h>
++#endif
+ #include <netinet/ip.h>
+ #ifdef HAVE_NET_ROUTE_H
+ #include <net/route.h>
+--- openssh-portable-V_9_7_P1/uidswap.c	2024-03-11 05:20:49.000000000 +0000
++++ -	2024-04-19 23:35:50.184742721 +0000
+@@ -28,6 +28,9 @@
+ #include "uidswap.h"
+ #include "xmalloc.h"
+ 
++#ifdef __COSMOPOLITAN__
++#undef privileged
++#endif
+ /*
+  * Note: all these functions must work in all of the following cases:
+  *    1. euid=0, ruid=0
+--- openssh-portable-V_9_7_P1/Makefile.in	2024-04-19 23:48:00.749630778 +0000
++++ -	2024-04-19 23:48:27.289634745 +0000
+@@ -20,12 +20,12 @@
+ 
+ DESTDIR=
+ VPATH=@srcdir@
+-SSH_PROGRAM=@bindir@/ssh
+-ASKPASS_PROGRAM=$(libexecdir)/ssh-askpass
+-SFTP_SERVER=$(libexecdir)/sftp-server
+-SSH_KEYSIGN=$(libexecdir)/ssh-keysign
+-SSH_PKCS11_HELPER=$(libexecdir)/ssh-pkcs11-helper
+-SSH_SK_HELPER=$(libexecdir)/ssh-sk-helper
++SSH_PROGRAM=../bin/ssh
++ASKPASS_PROGRAM=../libexec/ssh-askpass
++SFTP_SERVER=../libexec/sftp-server
++SSH_KEYSIGN=../libexec/ssh-keysign
++SSH_PKCS11_HELPER=../libexec/ssh-pkcs11-helper
++SSH_SK_HELPER=../libexec/ssh-sk-helper
+ PRIVSEP_PATH=@PRIVSEP_PATH@
+ SSH_PRIVSEP_USER=@SSH_PRIVSEP_USER@
+ STRIP_OPT=@STRIP_OPT@
+--- openssh-portable-V_9_7_P1/Makefile.in	2024-04-19 23:49:05.278999914 +0000
++++ -	2024-04-19 23:53:18.271299258 +0000
+@@ -399,11 +399,11 @@
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-keygen$(EXEEXT) $(DESTDIR)$(bindir)/ssh-keygen$(EXEEXT)
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-keyscan$(EXEEXT) $(DESTDIR)$(bindir)/ssh-keyscan$(EXEEXT)
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) sshd$(EXEEXT) $(DESTDIR)$(sbindir)/sshd$(EXEEXT)
+-	$(INSTALL) -m 4711 $(STRIP_OPT) ssh-keysign$(EXEEXT) $(DESTDIR)$(SSH_KEYSIGN)$(EXEEXT)
+-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-pkcs11-helper$(EXEEXT) $(DESTDIR)$(SSH_PKCS11_HELPER)$(EXEEXT)
+-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-sk-helper$(EXEEXT) $(DESTDIR)$(SSH_SK_HELPER)$(EXEEXT)
++	$(INSTALL) -m 4711 $(STRIP_OPT) ssh-keysign$(EXEEXT) $(DESTDIR)$(bindir)/$(SSH_KEYSIGN)$(EXEEXT)
++	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-pkcs11-helper$(EXEEXT) $(DESTDIR)$(bindir)/$(SSH_PKCS11_HELPER)$(EXEEXT)
++	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-sk-helper$(EXEEXT) $(DESTDIR)$(bindir)/$(SSH_SK_HELPER)$(EXEEXT)
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) sftp$(EXEEXT) $(DESTDIR)$(bindir)/sftp$(EXEEXT)
+-	$(INSTALL) -m 0755 $(STRIP_OPT) sftp-server$(EXEEXT) $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
++	$(INSTALL) -m 0755 $(STRIP_OPT) sftp-server$(EXEEXT) $(DESTDIR)$(bindir)/$(SFTP_SERVER)$(EXEEXT)
+ 	$(INSTALL) -m 644 ssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
+ 	$(INSTALL) -m 644 scp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
+ 	$(INSTALL) -m 644 ssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
