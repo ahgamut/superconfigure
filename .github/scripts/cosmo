@@ -17,6 +17,7 @@ for arch in x86_64 aarch64; do
     mkdir -p /zip/$arch
 done
 mkdir -p /zip/usr/share
+mkdir -p /zip/usr/lib
 cd "$BASELOC"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
