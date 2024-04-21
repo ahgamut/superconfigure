@@ -9,15 +9,15 @@ alias ar="$AR"
 export GOBJECT_LIBS=""
 cp -r "$BASELOC"/o/editor/emacs/emacs*/* ./
 
+autoreconf -fi
 ./configure --with-gnutls=ifavailable\
     --host="$ARCH"-linux-gnu --with-threads\
     --without-dbus --without-selinux\
     --without-gconf --without-gsettings\
     --without-gpm --disable-acl\
+    --without-lcms2 --without-mailutils\
+    --without-pop --without-x \
     --with-file-notification=no --without-modules\
     --sysconfdir=/zip --datarootdir=/zip/usr/share\
     --libexecdir=/zip/"$ARCH" --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include/ncurses"
-
-echo "makefile ERROR_AT_1170"
-cat Makefile
