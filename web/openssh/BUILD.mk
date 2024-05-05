@@ -21,8 +21,8 @@ OPENSSH_CONFIG_ARGS = --prefix=$$(COSMOS) \
 
 o/web/openssh/setup: o/web/openssh/patched
 	cd $(BASELOC)/o/web/openssh/openssh*/ && \
-		autoreconf -fi && \
-		sed -i 's/deflate (/_Cz_deflate (/g' ./configure
+		autoreconf -fi
+	touch $@
 
 o/web/openssh/configured.x86_64: o/web/openssh/setup
 o/web/openssh/configured.aarch64: o/web/openssh/setup
