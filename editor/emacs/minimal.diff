@@ -78,3 +78,44 @@
  	@[ -f .no-advice-on-failure ] && exit 0; true
  	@v=$$(src/emacs${EXEEXT} --batch --eval \
  	  '(progn (defun f (n) (if (= 0 n) 1 (* n (f (- n 1))))) (princ (f 10)))' \
+--- emacs-29.3/Makefile.in	2024-04-20 23:41:06.157311845 +0000
++++ -	2024-04-20 23:43:52.830059515 +0000
+@@ -377,7 +377,7 @@
+ 
+ .PHONY: bootstrap-all actual-all advice-on-failure sanity-check
+ 
+-actual-all: ${SUBDIR} info $(gsettings_SCHEMAS:.xml=.valid) src-depending-on-lisp
++actual-all: ${SUBDIR} $(gsettings_SCHEMAS:.xml=.valid) src-depending-on-lisp
+ 
+ # ADVICE-ON-FAILURE-BEGIN:all
+ # You could try to:
+@@ -698,7 +698,7 @@
+ ## work correctly, and therefore no idea when tar can be replaced.
+ ## See also these comments from 2004 about cp -r working fine:
+ ## https://lists.gnu.org/r/autoconf-patches/2004-11/msg00005.html
+-install-arch-indep: lisp install-info install-man ${INSTALL_ARCH_INDEP_EXTRA}
++install-arch-indep: lisp install-man ${INSTALL_ARCH_INDEP_EXTRA}
+ 	umask 022 && $(MKDIR_P) "$(DESTDIR)$(includedir)"
+ 	$(INSTALL_DATA) src/emacs-module.h "$(DESTDIR)$(includedir)/emacs-module.h"
+ 	-set ${COPYDESTS} ; \
+@@ -1151,8 +1151,7 @@
+ srcdir_doc_info_dir_inputs = \
+   ${srcdir}/doc/emacs/emacs.texi \
+   ${srcdir}/doc/lispintro/emacs-lisp-intro.texi \
+-  ${srcdir}/doc/lispref/elisp.texi \
+-  $(addprefix ${srcdir}/doc/misc/,${texi_misc})
++  ${srcdir}/doc/lispref/elisp.texi
+ info_dir_inputs = \
+   ../build-aux/dir_top \
+   $(subst ${srcdir}/doc/,,${srcdir_doc_info_dir_inputs})
+@@ -1167,7 +1166,9 @@
+ ## FIXME it would be faster to use the install-info program if we have it,
+ ## but then we would need to depend on ${INFOS}, which would
+ ## slow down parallelization.
+-${srcdir}/info/dir: ${info_dir_deps}
++./info/dir:
++	echo "this breaks the makefile"
++	exit 1
+ 	$(AM_V_GEN)${MKDIR_P} ${srcdir}/info
+ 	$(AM_V_at)(cd ${srcdir}/doc && \
+ 	 AWK='${AWK}' ../build-aux/make-info-dir ${info_dir_inputs} \

@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+FILELIST='ssh ssh-add scp sftp ssh-agent ssh-keygen ssh-keyscan'
+LIBLIST='sftp-server ssh-pkcs11-helper ssh-sk-helper'
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+for EXE in $FILELIST; do
+    apelinkpls "$RESULTS"/bin/"$EXE".com "$COSMOS_X86_64"/bin/"$EXE" "$COSMOS_AARCH64"/bin/"$EXE"
+    cd /zip
+    zip -qr "$RESULTS"/bin/"$EXE".com \
+        etc/openssh \
+        usr/share/ssl
+    cd "$BASELOC"
+done
+
+for EXE in $LIBLIST; do
+    apelinkpls "$RESULTS"/libexec/"$EXE".com "$COSMOS_X86_64"/libexec/"$EXE" "$COSMOS_AARCH64"/libexec/"$EXE"
+    cd /zip
+    zip -qr "$RESULTS"/libexec/"$EXE".com \
+        etc/openssh \
+        usr/share/ssl
+    cd "$BASELOC"
+done

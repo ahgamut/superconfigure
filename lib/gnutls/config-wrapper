@@ -17,7 +17,7 @@ export GOBJECT_LIBS=""
     --disable-bash-tests --disable-doc\
     --without-p11-kit --without-tpm --without-tpm2\
     --with-included-libtasn1 --with-included-unistring\
-    --enable-fat\
+    --enable-fat --without-zstd\
     --with-default-trust-store-file=/zip/usr/share/ssl/certs/ca-certificates.crt \
     --with-default-trust-store-dir=/zip/usr/share/ssl/certs \
     --with-default-trust-store-dir=/zip/usr/share/ssl/default.crl \

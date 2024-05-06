@@ -17,6 +17,7 @@ for arch in x86_64 aarch64; do
     mkdir -p /zip/$arch
 done
 mkdir -p /zip/usr/share
+mkdir -p /zip/usr/lib
 cd "$BASELOC"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 
@@ -39,12 +40,12 @@ cd cosmocc
 if [ -f x86_64-gcc.zip ]; then
     echo "you already downloaded x86_64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.33/x86_64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.38/x86_64-gcc.zip
 fi
 if [ -f aarch64-gcc.zip ]; then
     echo "you already downloaded aarch64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.33/aarch64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.38/aarch64-gcc.zip
 fi
 
 unzip -qo x86_64-gcc.zip

@@ -1,0 +1,48 @@
+--- tcl-core-8-6-14/unix/tclUnixFCmd.c	2024-02-21 15:49:48.000000000 +0000
++++ -	2024-04-19 22:50:53.058187640 +0000
+@@ -516,10 +516,12 @@
+ 	    return TCL_ERROR;
+ 	}
+ 	return CopyFileAtts(src, dst, statBufPtr);
++#ifndef __COSMOPOLITAN__
+     case S_IFIFO:
+ 	if (mkfifo(dst, statBufPtr->st_mode) < 0) {	/* INTL: Native. */
+ 	    return TCL_ERROR;
+ 	}
++#endif
+ 	return CopyFileAtts(src, dst, statBufPtr);
+     default:
+ 	return TclUnixCopyFile(src, dst, statBufPtr, 0);
+--- tcl-core-8-6-14/unix/Makefile.in	2024-02-21 15:49:48.000000000 +0000
++++ -	2024-04-19 23:04:47.519003316 +0000
+@@ -38,7 +38,7 @@
+ INSTALL_ROOT		= $(DESTDIR)
+ 
+ # Path for the platform independent Tcl scripting libraries:
+-TCL_LIBRARY		= @TCL_LIBRARY@
++TCL_LIBRARY		= /zip/tcl
+ 
+ # Path to use at runtime to refer to LIB_INSTALL_DIR:
+ LIB_RUNTIME_DIR		= $(libdir)
+--- tcl-core-8-6-14/generic/tclZlib.c	2024-02-21 15:49:48.000000000 +0000
++++ -	2024-04-20 01:17:11.150516862 +0000
+@@ -510,7 +510,7 @@
+     if (GetValue(interp, dictObj, "time", &value) != TCL_OK) {
+ 	goto error;
+     } else if (value != NULL && Tcl_GetLongFromObj(interp, value,
+-	    (long *) &headerPtr->header.time) != TCL_OK) {
++	    (long *) &headerPtr->header.time_) != TCL_OK) {
+ 	goto error;
+     }
+ 
+@@ -591,8 +591,8 @@
+     if (headerPtr->os != 255) {
+ 	SetValue(dictObj, "os", Tcl_NewIntObj(headerPtr->os));
+     }
+-    if (headerPtr->time != 0 /* magic - no time */) {
+-	SetValue(dictObj, "time", Tcl_NewLongObj((long) headerPtr->time));
++    if (headerPtr->time_ != 0 /* magic - no time */) {
++	SetValue(dictObj, "time", Tcl_NewLongObj((long) headerPtr->time_));
+     }
+     if (headerPtr->text != Z_UNKNOWN) {
+ 	SetValue(dictObj, "type",
