@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+# prepare
+cp "$BASELOC"/o/lib/giflib/giflib-*/*.[ch] ./
+cp "$BASELOC"/o/lib/giflib/giflib-*/Make* ./
+cp "$BASELOC"/o/lib/giflib/giflib-*/*version ./
+
+# build
+make PREFIX=$COSMOS CFLAGS=-Wall OFLAGS=Os libgif.a
+
+# binaries?
+# make PREFIX=$COSMOS 'CFLAGS=-Wall -static' OFLAGS=Os gif2rgb
+# make PREFIX=$COSMOS 'CFLAGS=-Wall -static' OFLAGS=Os giffix
+# make PREFIX=$COSMOS 'CFLAGS=-Wall -static' OFLAGS=Os giftool
+
+# install
+cp libgif.a $COSMOS/lib
+cp gif_*.h $COSMOS/include
