@@ -1,0 +1,16 @@
+--- fribidi-1.0.14/doc/Makefile.am	2024-04-25 03:44:01.000000000 +0000
++++ -	2024-05-07 12:49:22.425648958 +0000
+@@ -45,11 +45,8 @@
+ 	@$(RM) $(headers)
+ 	@mv $@.tmp $@
+ 
+-$(man3): c2man.stamp
+-	@if ! test -f $@; then \
+-		$(RM) $<; \
+-		$(MAKE) $(AM_MAKEFLAGS) $<;\
+-	fi
++$(man3):
++	echo "no man pages because no c2man"
+ 	@touch $@
+ 
+ -include $(top_srcdir)/git.mk
