@@ -1,7 +1,7 @@
 
 # Documentation: https://gitlab.freedesktop.org/freetype/freetype
 FREETYPE_SRC := https://download.savannah.gnu.org/releases/freetype/freetype-2.13.2.tar.gz
-FREETYPE_DEPS := cosmo-repo/base
+FREETYPE_DEPS := cosmo-repo/base cosmo-repo/compress
 
 FREETYPE_CONFIG_ARGS = --enable-static --disable-shared --with-tests=no\
     --with-brotli=no --with-harfbuzz=no --with-png=no --with-librsvg=no\

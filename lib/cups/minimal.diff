@@ -1,0 +1,11 @@
+--- cups-2.4.8/configure
++++ -
+@@ -10901,7 +10901,7 @@
+ 
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Avahi client" >&5
+ printf %s "checking for Avahi client... " >&6; }
+-	if $PKGCONFIG --exists avahi-client
++	if $PKGCONFIG --exists avahi-client-no-pls
+ then :
+ 
+ 	    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5

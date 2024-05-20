@@ -1,0 +1,11 @@
+--- alsa-lib-1.2.11/src/async.c	2024-01-29 16:16:07.000000000 +0000
++++ -	2024-05-20 04:17:04.905232616 +0000
+@@ -49,7 +49,7 @@
+ }
+ #else
+ /** async signal number */
+-static const int snd_async_signo = SIGIO;
++static int snd_async_signo = SIGIO;
+ #endif
+ 
+ static LIST_HEAD(snd_async_handlers);
