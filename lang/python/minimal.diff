@@ -1,78 +1,3 @@
---- cpython-3.12.3/Modules/Setup.stdlib.in	2024-04-09 08:09:14.000000000 +0000
-+++ Setup.stdlib.in	2024-05-25 16:13:53.466613806 +0000
-@@ -23,7 +23,7 @@
- 
- # Build modules statically or as shared extensions
- # *shared* / *static*
--*@MODULE_BUILDTYPE@*
-+*static*
- 
- 
- ############################################################################
-@@ -88,10 +88,10 @@
- # pyexpat module uses libexpat
- # either static libexpat.a from Modules/expat or libexpat.so with
- # ./configure --with-system-expat
--@MODULE_PYEXPAT_TRUE@pyexpat pyexpat.c
-+pyexpat pyexpat.c -L$(COSMOS)/lib -lexpat
- 
- # _elementtree libexpat via CAPI hook in pyexpat.
--@MODULE__ELEMENTTREE_TRUE@_elementtree _elementtree.c
-+_elementtree _elementtree.c -L$(COSMOS)/lib -lexpat
- 
- @MODULE__CODECS_CN_TRUE@_codecs_cn cjkcodecs/_codecs_cn.c
- @MODULE__CODECS_HK_TRUE@_codecs_hk cjkcodecs/_codecs_hk.c
-@@ -135,24 +135,24 @@
- #
- 
- # needs -lffi and -ldl
--@MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
-+# @MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
- 
- # needs -lncurses[w], sometimes -ltermcap/tinfo
--@MODULE__CURSES_TRUE@_curses _cursesmodule.c
-+_curses _cursesmodule.c -lncurses -ltinfo
- # needs -lncurses[w] and -lpanel[w]
--@MODULE__CURSES_PANEL_TRUE@_curses_panel _curses_panel.c
-+_curses_panel _curses_panel.c -lpanel -lncurses -ltinfo
- 
- @MODULE__SQLITE3_TRUE@_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
- 
- # needs -lssl and -lcrypt
--@MODULE__SSL_TRUE@_ssl _ssl.c
-+_ssl _ssl.c -L$(COSMOS)/lib -lssl -lcrypto
- # needs -lcrypt
--@MODULE__HASHLIB_TRUE@_hashlib _hashopenssl.c
-+_hashlib _hashopenssl.c -L$(COSMOS)/lib -lcrypto
- 
- # Linux: -luuid, BSD/AIX: libc's uuid_create()
- @MODULE__UUID_TRUE@_uuid _uuidmodule.c
- 
--@MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
-+# @MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
- 
- ############################################################################
- # macOS specific modules
-@@ -172,12 +172,12 @@
- @MODULE__TESTCLINIC_TRUE@_testclinic _testclinic.c
- 
- # Some testing modules MUST be built as shared libraries.
--*shared*
--@MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
--@MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
--@MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
--@MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
-+# *shared*
-+# @MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
-+# @MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
-+# @MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
-+# @MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
- 
- # Limited API template modules; must be built as shared modules.
--@MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
--@MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
-+# @MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
-+# @MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
 --- cpython-3.12.3/Modules/getpath.py	2024-04-09 08:09:14.000000000 +0000
 +++ -	2024-05-25 16:27:50.490484215 +0000
 @@ -342,7 +342,7 @@
@@ -144,3 +69,231 @@
      }
  
      COPY_WSTR("executable", config->executable);
+--- cpython-3.12.3/Modules/Setup.stdlib.in	2024-04-09 08:09:14.000000000 +0000
++++ ./Setup.stdlib.in	2024-05-25 20:24:30.533996941 +0000
+@@ -23,36 +23,36 @@
+ 
+ # Build modules statically or as shared extensions
+ # *shared* / *static*
+-*@MODULE_BUILDTYPE@*
++*static*
+ 
+ 
+ ############################################################################
+ # Modules that should always be present (POSIX and Windows):
+-@MODULE_ARRAY_TRUE@array arraymodule.c
+-@MODULE__ASYNCIO_TRUE@_asyncio _asynciomodule.c
+-@MODULE__BISECT_TRUE@_bisect _bisectmodule.c
+-@MODULE__CONTEXTVARS_TRUE@_contextvars _contextvarsmodule.c
+-@MODULE__CSV_TRUE@_csv _csv.c
+-@MODULE__HEAPQ_TRUE@_heapq _heapqmodule.c
+-@MODULE__JSON_TRUE@_json _json.c
+-@MODULE__LSPROF_TRUE@_lsprof _lsprof.c rotatingtree.c
+-@MODULE__OPCODE_TRUE@_opcode _opcode.c
+-@MODULE__PICKLE_TRUE@_pickle _pickle.c
+-@MODULE__QUEUE_TRUE@_queue _queuemodule.c
+-@MODULE__RANDOM_TRUE@_random _randommodule.c
+-@MODULE__STRUCT_TRUE@_struct _struct.c
+-@MODULE__XXSUBINTERPRETERS_TRUE@_xxsubinterpreters _xxsubinterpretersmodule.c
+-@MODULE__XXINTERPCHANNELS_TRUE@_xxinterpchannels _xxinterpchannelsmodule.c
+-@MODULE__ZONEINFO_TRUE@_zoneinfo _zoneinfo.c
++array arraymodule.c
++_asyncio _asynciomodule.c
++_bisect _bisectmodule.c
++_contextvars _contextvarsmodule.c
++_csv _csv.c
++_heapq _heapqmodule.c
++_json _json.c
++_lsprof _lsprof.c rotatingtree.c
++_opcode _opcode.c
++_pickle _pickle.c
++_queue _queuemodule.c
++_random _randommodule.c
++_struct _struct.c
++_xxsubinterpreters _xxsubinterpretersmodule.c
++_xxinterpchannels _xxinterpchannelsmodule.c
++_zoneinfo _zoneinfo.c
+ 
+ # needs libm
+-@MODULE_AUDIOOP_TRUE@audioop audioop.c
+-@MODULE_MATH_TRUE@math mathmodule.c
+-@MODULE_CMATH_TRUE@cmath cmathmodule.c
+-@MODULE__STATISTICS_TRUE@_statistics _statisticsmodule.c
++audioop audioop.c
++math mathmodule.c
++cmath cmathmodule.c
++_statistics _statisticsmodule.c
+ 
+ # needs libm and on some platforms librt
+-@MODULE__DATETIME_TRUE@_datetime _datetimemodule.c
++_datetime _datetimemodule.c
+ 
+ # _decimal uses libmpdec
+ # either static libmpdec.a from Modules/_decimal/libmpdec or libmpdec.so
+@@ -61,26 +61,26 @@
+ 
+ # compression libs and binascii (optional CRC32 from zlib)
+ # bindings need -lbz2, -lz, or -llzma, respectively
+-@MODULE_BINASCII_TRUE@binascii binascii.c
+-@MODULE__BZ2_TRUE@_bz2 _bz2module.c
+-@MODULE__LZMA_TRUE@_lzma _lzmamodule.c
+-@MODULE_ZLIB_TRUE@zlib zlibmodule.c
++binascii binascii.c
++_bz2 _bz2module.c
++# _lzma _lzmamodule.c
++zlib zlibmodule.c
+ 
+ # dbm/gdbm
+ # dbm needs either libndbm, libgdbm_compat, or libdb 5.x
+-@MODULE__DBM_TRUE@_dbm _dbmmodule.c
++# _dbm _dbmmodule.c
+ # gdbm module needs -lgdbm
+-@MODULE__GDBM_TRUE@_gdbm _gdbmmodule.c
++_gdbm _gdbmmodule.c
+ 
+ # needs -lreadline or -ledit, sometimes termcap, termlib, or tinfo
+-@MODULE_READLINE_TRUE@readline readline.c
++readline readline.c
+ 
+ # hashing builtins, can be disabled with --without-builtin-hashlib-hashes
+-@MODULE__MD5_TRUE@_md5 md5module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_MD5.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
+-@MODULE__SHA1_TRUE@_sha1 sha1module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_SHA1.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
+-@MODULE__SHA2_TRUE@_sha2 sha2module.c -I$(srcdir)/Modules/_hacl/include Modules/_hacl/libHacl_Hash_SHA2.a
+-@MODULE__SHA3_TRUE@_sha3 sha3module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_SHA3.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
+-@MODULE__BLAKE2_TRUE@_blake2 _blake2/blake2module.c _blake2/blake2b_impl.c _blake2/blake2s_impl.c
++_md5 md5module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_MD5.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
++_sha1 sha1module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_SHA1.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
++_sha2 sha2module.c -I$(srcdir)/Modules/_hacl/include Modules/_hacl/libHacl_Hash_SHA2.a
++_sha3 sha3module.c -I$(srcdir)/Modules/_hacl/include _hacl/Hacl_Hash_SHA3.c -D_BSD_SOURCE -D_DEFAULT_SOURCE
++_blake2 _blake2/blake2module.c _blake2/blake2b_impl.c _blake2/blake2s_impl.c
+ 
+ ############################################################################
+ # XML and text
+@@ -88,46 +88,46 @@
+ # pyexpat module uses libexpat
+ # either static libexpat.a from Modules/expat or libexpat.so with
+ # ./configure --with-system-expat
+-@MODULE_PYEXPAT_TRUE@pyexpat pyexpat.c
++pyexpat pyexpat.c -L$(COSMOS)/lib -lexpat
+ 
+ # _elementtree libexpat via CAPI hook in pyexpat.
+-@MODULE__ELEMENTTREE_TRUE@_elementtree _elementtree.c
++_elementtree _elementtree.c -L$(COSMOS)/lib -lexpat
+ 
+-@MODULE__CODECS_CN_TRUE@_codecs_cn cjkcodecs/_codecs_cn.c
+-@MODULE__CODECS_HK_TRUE@_codecs_hk cjkcodecs/_codecs_hk.c
+-@MODULE__CODECS_ISO2022_TRUE@_codecs_iso2022 cjkcodecs/_codecs_iso2022.c
+-@MODULE__CODECS_JP_TRUE@_codecs_jp cjkcodecs/_codecs_jp.c
+-@MODULE__CODECS_KR_TRUE@_codecs_kr cjkcodecs/_codecs_kr.c
+-@MODULE__CODECS_TW_TRUE@_codecs_tw cjkcodecs/_codecs_tw.c
+-@MODULE__MULTIBYTECODEC_TRUE@_multibytecodec cjkcodecs/multibytecodec.c
+-@MODULE_UNICODEDATA_TRUE@unicodedata unicodedata.c
++_codecs_cn cjkcodecs/_codecs_cn.c
++_codecs_hk cjkcodecs/_codecs_hk.c
++_codecs_iso2022 cjkcodecs/_codecs_iso2022.c
++_codecs_jp cjkcodecs/_codecs_jp.c
++_codecs_kr cjkcodecs/_codecs_kr.c
++_codecs_tw cjkcodecs/_codecs_tw.c
++_multibytecodec cjkcodecs/multibytecodec.c
++unicodedata unicodedata.c
+ 
+ ############################################################################
+ # Modules with some UNIX dependencies
+ #
+ 
+ # needs -lcrypt on some systems
+-@MODULE__CRYPT_TRUE@_crypt _cryptmodule.c
+-@MODULE_FCNTL_TRUE@fcntl fcntlmodule.c
+-@MODULE_GRP_TRUE@grp grpmodule.c
+-@MODULE_MMAP_TRUE@mmap mmapmodule.c
++_crypt _cryptmodule.c
++fcntl fcntlmodule.c
++grp grpmodule.c
++mmap mmapmodule.c
+ # FreeBSD: nis/yp APIs are in libc
+ # Linux: glibc has deprecated SUN RPC, APIs are in libnsl and libtirpc (bpo-32521)
+ @MODULE_NIS_TRUE@nis nismodule.c
+ # needs sys/soundcard.h or linux/soundcard.h (Linux, FreeBSD)
+ @MODULE_OSSAUDIODEV_TRUE@ossaudiodev ossaudiodev.c
+-@MODULE__POSIXSUBPROCESS_TRUE@_posixsubprocess _posixsubprocess.c
+-@MODULE_RESOURCE_TRUE@resource resource.c
++_posixsubprocess _posixsubprocess.c
++resource resource.c
+ @MODULE_SELECT_TRUE@select selectmodule.c
+-@MODULE__SOCKET_TRUE@_socket socketmodule.c
++_socket socketmodule.c
+ # AIX has shadow passwords, but does not provide getspent API
+ @MODULE_SPWD_TRUE@spwd spwdmodule.c
+-@MODULE_SYSLOG_TRUE@syslog syslogmodule.c
+-@MODULE_TERMIOS_TRUE@termios termios.c
++syslog syslogmodule.c
++termios termios.c
+ 
+ # multiprocessing
+-@MODULE__POSIXSHMEM_TRUE@_posixshmem _multiprocessing/posixshmem.c
+-@MODULE__MULTIPROCESSING_TRUE@_multiprocessing _multiprocessing/multiprocessing.c _multiprocessing/semaphore.c
++_posixshmem _multiprocessing/posixshmem.c
++_multiprocessing _multiprocessing/multiprocessing.c _multiprocessing/semaphore.c
+ 
+ 
+ ############################################################################
+@@ -135,30 +135,30 @@
+ #
+ 
+ # needs -lffi and -ldl
+-@MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
++# @MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
+ 
+ # needs -lncurses[w], sometimes -ltermcap/tinfo
+-@MODULE__CURSES_TRUE@_curses _cursesmodule.c
++_curses _cursesmodule.c -lncurses -ltinfo
+ # needs -lncurses[w] and -lpanel[w]
+-@MODULE__CURSES_PANEL_TRUE@_curses_panel _curses_panel.c
++_curses_panel _curses_panel.c -lpanel -lncurses -ltinfo
+ 
+-@MODULE__SQLITE3_TRUE@_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
++_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
+ 
+ # needs -lssl and -lcrypt
+-@MODULE__SSL_TRUE@_ssl _ssl.c
++_ssl _ssl.c -L$(COSMOS)/lib -lssl -lcrypto
+ # needs -lcrypt
+-@MODULE__HASHLIB_TRUE@_hashlib _hashopenssl.c
++_hashlib _hashopenssl.c -L$(COSMOS)/lib -lcrypto
+ 
+ # Linux: -luuid, BSD/AIX: libc's uuid_create()
+-@MODULE__UUID_TRUE@_uuid _uuidmodule.c
++_uuid _uuidmodule.c
+ 
+-@MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
++# @MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
+ 
+ ############################################################################
+ # macOS specific modules
+ 
+ # _scproxy needs SystemConfiguration and CoreFoundation framework
+-@MODULE__SCPROXY_TRUE@_scproxy _scproxy.c
++# @MODULE__SCPROXY_TRUE@_scproxy _scproxy.c
+ 
+ 
+ ############################################################################
+@@ -172,12 +172,12 @@
+ @MODULE__TESTCLINIC_TRUE@_testclinic _testclinic.c
+ 
+ # Some testing modules MUST be built as shared libraries.
+-*shared*
+-@MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
+-@MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
+-@MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
+-@MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
++# *shared*
++# @MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
++# @MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
++# @MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
++# @MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
+ 
+ # Limited API template modules; must be built as shared modules.
+-@MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
+-@MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
++# @MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
++# @MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
