@@ -48,12 +48,12 @@ else
     wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.40/aarch64-gcc.zip
 fi
 
-cd "$COSMO"
-bash tool/cosmocc/package.sh cosmocc
-
 cd cosmocc
 unzip -qo x86_64-gcc.zip
 unzip -qo aarch64-gcc.zip
+
+cd "$COSMO"
+bash tool/cosmocc/package.sh cosmocc
 
 cd "$COSMO"
 make -j$numproc o//tool/build
