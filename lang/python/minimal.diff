@@ -297,3 +297,22 @@
 -@MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
 +# @MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
 +# @MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
+--- cpython-3.12.3/Modules/socketmodule.c	2024-04-09 08:09:14.000000000 +0000
++++ -	2024-05-25 23:15:59.584494164 +0000
+@@ -110,6 +110,7 @@
+ #include "pycore_fileutils.h"     // _Py_set_inheritable()
+ #include "pycore_moduleobject.h"  // _PyModule_GetState
+ #include "structmember.h"         // PyMemberDef
++#include <cosmo.h>
+ 
+ #ifdef _Py_MEMORY_SANITIZER
+ # include <sanitizer/msan_interface.h>
+@@ -5443,7 +5444,7 @@
+                 if (family == -1 || CHECK_ERRNO(ENOTSOCK)) {
+ #else
+                 /* getsockname() is not supported for SOL_ALG on Linux. */
+-                if (family == -1 || CHECK_ERRNO(EBADF) || CHECK_ERRNO(ENOTSOCK)) {
++                if (family == -1 || (!IsWindows() && CHECK_ERRNO(EBADF)) || CHECK_ERRNO(ENOTSOCK)) {
+ #endif
+                     set_error();
+                     return -1;
