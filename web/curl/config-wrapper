@@ -7,6 +7,7 @@ alias ar="$AR"
 "$BASELOC"/o/web/curl/curl*/configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --enable-pthreads --with-openssl="$COSMOS"\
-    --with-ca-path=/zip/usr/share/ssl/root --without-ca-fallback\
+    --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share\
+    --with-ca-path=/zip/usr/share/ssl/certs --without-ca-fallback\
     --without-pic --with-gnu-ld\
     CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"

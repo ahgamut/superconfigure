@@ -9,6 +9,7 @@ cd datasette
     --with-lto=no --without-system-expat --without-system-ffi\
     --with-pymalloc --with-openssl="$COSMOS"/ssl\
     --with-tzpath=/zip/usr/share/zoneinfo\
+    --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share\
     --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"
 
