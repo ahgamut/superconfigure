@@ -24,6 +24,7 @@ cli: \
 	o/cli/diffutils/built.fat \
 	o/cli/findutils/built.fat \
 	o/cli/grep/built.fat \
+	o/cli/jq/built.fat \
 	o/cli/less/built.fat \
 	o/cli/make/built.fat \
 	o/cli/ninja/built.fat \
