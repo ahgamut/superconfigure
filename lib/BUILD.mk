@@ -29,6 +29,7 @@ include lib/mpc/BUILD.mk
 include lib/mpfr/BUILD.mk
 include lib/ncurses/BUILD.mk
 include lib/nettle/BUILD.mk
+include lib/oniguruma/BUILD.mk
 include lib/openssl/BUILD.mk
 include lib/pcre/BUILD.mk
 include lib/readline/BUILD.mk

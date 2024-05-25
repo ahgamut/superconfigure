@@ -6,6 +6,7 @@ include cli/dash/BUILD.mk
 include cli/diffutils/BUILD.mk
 include cli/findutils/BUILD.mk
 include cli/grep/BUILD.mk
+include cli/jq/BUILD.mk
 include cli/less/BUILD.mk
 include cli/make/BUILD.mk
 include cli/ninja/BUILD.mk
