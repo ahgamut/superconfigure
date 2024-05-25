@@ -1,0 +1,54 @@
+#!/bin/sh
+set -e
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+###
+# make a temporary Python APE to run compileall
+apelinkpls "$RESULTS"/python-tmp.com "$COSMOS_X86_64"/bin/python3.12 "$COSMOS_AARCH64"/bin/python3.12
+
+cd /zip
+mkdir -p py-tmp && cd py-tmp
+
+cp -r "$COSMOS_X86_64"/lib/python3.12 ./Lib
+cp "$COSMOS_X86_64"/lib/python3.12/_sysconfigdata* ./Lib/
+cp "$COSMOS_AARCH64"/lib/python3.12/_sysconfigdata* ./Lib/
+cp "$BASELOC"/lang/python/sitecustomize.py ./Lib/
+
+# the config-x86_64 directory contains libpython.a, we don't need it
+rm -rf Lib/config-*/
+
+"$RESULTS"/python-tmp.com -m compileall -fqb ./Lib
+rm -f "$RESULTS"/python-tmp.com
+
+###
+# now make the actual python APE
+apelinkpls "$RESULTS"/bin/python.com "$COSMOS_X86_64"/bin/python3.12 "$COSMOS_AARCH64"/bin/python3.12
+
+cd /zip 
+zip -qr "$RESULTS"/bin/python.com usr/share/terminfo usr/share/ssl
+
+cd /zip/py-tmp
+zip -qr "$RESULTS"/bin/python.com Lib/ \
+    -x \*.exe \*.py \*.o \*.so \*.a \*.whl \
+    \*Makefile\*\
+	\*distutils/tests/\* \*lib2to3/tests/\*\
+	\*pydoc_data/\* \*__pycache__\* \*tests\*\
+	\*tkinter/\* \*idlelib/\* \*turtle\* \
+	\*turtledemo/\* \*_pydecimal.py\* \
+	\*ensurepip/\*
+
+cd "$BASELOC"

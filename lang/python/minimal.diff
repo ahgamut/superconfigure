@@ -1,0 +1,146 @@
+--- cpython-3.12.3/Modules/Setup.stdlib.in	2024-04-09 08:09:14.000000000 +0000
++++ Setup.stdlib.in	2024-05-25 16:13:53.466613806 +0000
+@@ -23,7 +23,7 @@
+ 
+ # Build modules statically or as shared extensions
+ # *shared* / *static*
+-*@MODULE_BUILDTYPE@*
++*static*
+ 
+ 
+ ############################################################################
+@@ -88,10 +88,10 @@
+ # pyexpat module uses libexpat
+ # either static libexpat.a from Modules/expat or libexpat.so with
+ # ./configure --with-system-expat
+-@MODULE_PYEXPAT_TRUE@pyexpat pyexpat.c
++pyexpat pyexpat.c -L$(COSMOS)/lib -lexpat
+ 
+ # _elementtree libexpat via CAPI hook in pyexpat.
+-@MODULE__ELEMENTTREE_TRUE@_elementtree _elementtree.c
++_elementtree _elementtree.c -L$(COSMOS)/lib -lexpat
+ 
+ @MODULE__CODECS_CN_TRUE@_codecs_cn cjkcodecs/_codecs_cn.c
+ @MODULE__CODECS_HK_TRUE@_codecs_hk cjkcodecs/_codecs_hk.c
+@@ -135,24 +135,24 @@
+ #
+ 
+ # needs -lffi and -ldl
+-@MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
++# @MODULE__CTYPES_TRUE@_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c @MODULE__CTYPES_MALLOC_CLOSURE@
+ 
+ # needs -lncurses[w], sometimes -ltermcap/tinfo
+-@MODULE__CURSES_TRUE@_curses _cursesmodule.c
++_curses _cursesmodule.c -lncurses -ltinfo
+ # needs -lncurses[w] and -lpanel[w]
+-@MODULE__CURSES_PANEL_TRUE@_curses_panel _curses_panel.c
++_curses_panel _curses_panel.c -lpanel -lncurses -ltinfo
+ 
+ @MODULE__SQLITE3_TRUE@_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
+ 
+ # needs -lssl and -lcrypt
+-@MODULE__SSL_TRUE@_ssl _ssl.c
++_ssl _ssl.c -L$(COSMOS)/lib -lssl -lcrypto
+ # needs -lcrypt
+-@MODULE__HASHLIB_TRUE@_hashlib _hashopenssl.c
++_hashlib _hashopenssl.c -L$(COSMOS)/lib -lcrypto
+ 
+ # Linux: -luuid, BSD/AIX: libc's uuid_create()
+ @MODULE__UUID_TRUE@_uuid _uuidmodule.c
+ 
+-@MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
++# @MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
+ 
+ ############################################################################
+ # macOS specific modules
+@@ -172,12 +172,12 @@
+ @MODULE__TESTCLINIC_TRUE@_testclinic _testclinic.c
+ 
+ # Some testing modules MUST be built as shared libraries.
+-*shared*
+-@MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
+-@MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
+-@MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
+-@MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
++# *shared*
++# @MODULE__TESTIMPORTMULTIPLE_TRUE@_testimportmultiple _testimportmultiple.c
++# @MODULE__TESTMULTIPHASE_TRUE@_testmultiphase _testmultiphase.c
++# @MODULE__TESTMULTIPHASE_TRUE@_testsinglephase _testsinglephase.c
++# @MODULE__CTYPES_TEST_TRUE@_ctypes_test _ctypes/_ctypes_test.c
+ 
+ # Limited API template modules; must be built as shared modules.
+-@MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
+-@MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
++# @MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
++# @MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
+--- cpython-3.12.3/Modules/getpath.py	2024-04-09 08:09:14.000000000 +0000
++++ -	2024-05-25 16:27:50.490484215 +0000
+@@ -342,7 +342,7 @@
+ 
+ # Calling Py_SetPythonHome(), Py_SetPath() or
+ # setting $PYTHONHOME will override venv detection.
+-if not home and not py_setpath:
++if False and not home and not py_setpath:
+     try:
+         # prefix2 is just to avoid calculating dirname again later,
+         # as the path in venv_prefix is the more common case.
+@@ -588,11 +588,11 @@
+     if PREFIX and not prefix:
+         prefix = PREFIX
+         if not any(isfile(joinpath(prefix, f)) for f in STDLIB_LANDMARKS):
+-            warn('Could not find platform independent libraries <prefix>')
++            pass # warn('Could not find platform independent libraries <prefix>')
+ 
+     if not prefix:
+         prefix = abspath('')
+-        warn('Could not find platform independent libraries <prefix>')
++        pass # warn('Could not find platform independent libraries <prefix>')
+ 
+ 
+     # Detect exec_prefix by searching from executable for the platstdlib_dir
+@@ -619,7 +619,7 @@
+                     # keep working.
+                     platstdlib_dir = exec_prefix
+             else:
+-                warn('Could not find platform dependent libraries <exec_prefix>')
++                pass # warn('Could not find platform dependent libraries <exec_prefix>')
+ 
+ 
+     # Fallback: assume exec_prefix == prefix
+--- cpython-3.12.3/Programs/python.c	2024-04-09 08:09:14.000000000 +0000
++++ -	2024-05-25 16:53:09.934576710 +0000
+@@ -1,6 +1,7 @@
+ /* Minimal main program -- everything is loaded from the library */
+ 
+ #include "Python.h"
++#include "tool/args/args.h"
+ 
+ #ifdef MS_WINDOWS
+ int
+@@ -12,6 +13,7 @@
+ int
+ main(int argc, char **argv)
+ {
++    LoadZipArgs(&argc, &argv);
+     return Py_BytesMain(argc, argv);
+ }
+ #endif
+--- cpython-3.12.3/Python/sysmodule.c	2024-04-09 08:09:14.000000000 +0000
++++ sysmodule.c	2024-05-25 18:22:48.051367718 +0000
+@@ -3468,7 +3468,16 @@
+     }
+ 
+     if (config->module_search_paths_set) {
++        PyWideStringList_Insert(&(config->module_search_paths), 0, L"/zip/Lib");
++        PyWideStringList_Insert(&(config->module_search_paths), 1, L"/zip/Lib/site-packages");
+         COPY_LIST("path", config->module_search_paths);
++    } else {
++        PyObject *v = PyList_New(2);
++        if (v == NULL)
++            goto err_occurred;
++        PyList_SET_ITEM(v, 0, PyUnicode_FromString("/zip/Lib"));
++        PyList_SET_ITEM(v, 1, PyUnicode_FromString("/zip/Lib/site-packages"));
++        SET_SYS("path", v);
+     }
+ 
+     COPY_WSTR("executable", config->executable);
