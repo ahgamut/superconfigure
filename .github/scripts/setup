@@ -6,7 +6,7 @@ sudo apt update
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev\
     qemu qemu-utils qemu-user-static\
-    texinfo groff\
+    texinfo groff libtool\
     cmake ninja-build bison zip\
     pkg-config build-essential autoconf re2c
 
