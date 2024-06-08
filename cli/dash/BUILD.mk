@@ -8,7 +8,8 @@ o/cli/dash/downloaded: \
 	DL_COMMAND = rm -rf dash &&\
 		git clone --quiet --depth=1 git://git.kernel.org/pub/scm/utils/dash/dash.git
 
-o/cli/dash/patched: PATCH_COMMAND = $(DUMMYLINK0)
+o/cli/dash/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
+o/cli/dash/patched: PATCH_FILE = $(BASELOC)/cli/dash/minimal.diff
 
 o/cli/dash/setup: o/cli/dash/patched
 	cd o/cli/dash/dash* && ./autogen.sh

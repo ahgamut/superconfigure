@@ -1,0 +1,49 @@
+--- dash/src/parser.c	2024-06-08 10:03:40.609699456 +0000
++++ -	2024-06-08 20:25:36.092772433 +0000
+@@ -886,7 +886,7 @@
+ unsigned getmbc(int c, char *out, int mode)
+ {
+ 	char *const start = out;
+-	mbstate_t mbst = {};
++	mbstate_t mbst = {0};
+ 	unsigned ml = 0;
+ 	size_t ml2;
+ 	wchar_t wc;
+--- dash/src/expand.c	2024-06-08 10:03:40.605699126 +0000
++++ -	2024-06-08 20:25:42.556847457 +0000
+@@ -916,7 +916,7 @@
+ static struct mbpair mbtodest(const char *p, char *q, const char *syntax,
+ 			      size_t len)
+ {
+-	mbstate_t mbs = {};
++	mbstate_t mbs = {0};
+ 	struct mbpair mbp;
+ 	char *q0 = q;
+ 	size_t ml;
+@@ -1189,7 +1189,7 @@
+ 
+ 	if (likely(ifs[0]) && unlikely(wcifs)) {
+ 		if (wc & 0x80) {
+-			mbstate_t mbst = {};
++			mbstate_t mbst = {0};
+ 			wchar_t wc2;
+ 
+ 			if (mbrtowc(&wc2, p, ml, &mbst) != ml)
+@@ -1413,7 +1413,7 @@
+ 
+ void changeifs(const char *ifs)
+ {
+-	mbstate_t mbs = {};
++	mbstate_t mbs = {0};
+ 	wchar_t *nwcifs;
+ 	unsigned mb = 0;
+ 	size_t len = 0;
+@@ -1843,7 +1843,7 @@
+ static __attribute__((noinline)) int ccmatch(char *p, const char *mbc, int ml,
+ 					     char **r)
+ {
+-	mbstate_t mbst = {};
++	mbstate_t mbst = {0};
+ 	wctype_t type;
+ 	wchar_t wc;
+ 	char *q;
