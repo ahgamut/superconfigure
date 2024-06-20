@@ -1,7 +1,7 @@
 
 EMACS_SRC := https://ftp.gnu.org/gnu/emacs/emacs-29.3.tar.gz 
 
-EMACS_DEPS := lib/ncurses lib/gnutls lib/libxml2 lib/jansson
+EMACS_DEPS := lib/ncurses lib/gnutls lib/libxml2 lib/jansson compress/lzlib compress/gzip
 
 $(eval $(call DOWNLOAD_SOURCE,editor/emacs,$(EMACS_SRC)))
 $(eval $(call SPECIFY_DEPS,editor/emacs,$(EMACS_DEPS)))
