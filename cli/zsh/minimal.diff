@@ -312,3 +312,14 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
 +load=yes
  
  objects="regex.o"
+--- zsh-5.9/Src/Modules/mapfile.c	2018-06-24 00:14:58.000000000 +0000
++++ -	2024-06-24 06:05:10.536447780 +0000
+@@ -39,7 +39,7 @@
+  * I don't know what I'm doing.
+  */
+ #if defined(HAVE_SYS_MMAN_H) && defined(HAVE_FTRUNCATE)
+-#if defined(HAVE_MMAP) && defined(HAVE_MUNMAP) && defined(HAVE_MSYNC)
++#if 0 && defined(HAVE_MMAP) && defined(HAVE_MUNMAP) && defined(HAVE_MSYNC)
+ #define USE_MMAP 1
+ 
+ #include <sys/mman.h>
