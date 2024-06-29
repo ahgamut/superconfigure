@@ -40,12 +40,12 @@ cd cosmocc
 if [ -f x86_64-gcc.zip ]; then
     echo "you already downloaded x86_64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.40/x86_64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.44/x86_64-gcc.zip
 fi
 if [ -f aarch64-gcc.zip ]; then
     echo "you already downloaded aarch64-gcc.zip"
 else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.40/aarch64-gcc.zip
+    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.44/aarch64-gcc.zip
 fi
 
 unzip -qo x86_64-gcc.zip
