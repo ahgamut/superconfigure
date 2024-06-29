@@ -11,4 +11,6 @@ o/cosmo-repo/base/built.aarch64: BUILD_COMMAND = $(BASELOC)/cosmo-repo/base/buil
 o/cosmo-repo/base/installed.x86_64: INSTALL_COMMAND = $(BASELOC)/cosmo-repo/base/install-wrapper
 o/cosmo-repo/base/installed.aarch64: INSTALL_COMMAND = $(BASELOC)/cosmo-repo/base/install-wrapper
 
+o/cosmo-repo/base/built.aarch64: o/cosmo-repo/base/installed.x86_64
+
 o/cosmo-repo/base/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
