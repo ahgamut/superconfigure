@@ -23,8 +23,6 @@ contains the `gcc-12.3` and `binutils-2.42` tools targeting (aarch64-linux-cosmo
 contains `datasette` a build of CPython 3.11 with the datasette library.  
 **pypack1.zip**  
 contains `python`, a build of CPython 3.11 with a bunch of cli libraries like `black`, `cookiecutter`.  
-**web.zip**  
-contains `links`, `wget`, `curl`, `git`, and `rsync`.  
 **gui.zip**  
 contains SDL2 test binaries built with `libX11` (experimental, requires X Server to be running on the host system).  
 **lang.zip**  
