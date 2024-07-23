@@ -1,0 +1,42 @@
+#!/bin/sh
+set -e
+
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+FILELIST="
+bin/$FULL_TARGET-c++
+bin/$FULL_TARGET-cpp
+bin/$FULL_TARGET-g++
+bin/$FULL_TARGET-gcc
+bin/$FULL_TARGET-gcc-ar
+bin/$FULL_TARGET-gcc-nm
+bin/$FULL_TARGET-gcc-ranlib
+libexec/gcc/$FULL_TARGET/14.1.0/cc1
+libexec/gcc/$FULL_TARGET/14.1.0/cc1plus
+libexec/gcc/$FULL_TARGET/14.1.0/collect2
+"
+
+mkdir -p "$RESULTS"/bin
+mkdir -p "$RESULTS"/libexec/gcc/"$FULL_TARGET"/14.1.0/install-tools
+
+for EXE in $FILELIST; do
+    apelinkpls "$RESULTS"/"$EXE".com\
+        "$COSMOS_X86_64"/"$EXE"\
+        "$COSMOS_AARCH64"/"$EXE"
+done
