@@ -39,7 +39,7 @@ bin/$FULL_TARGET-strip
 "
 
 mkdir -p "$RESULTS"/bin
-mkdir -p "$RESULTS"/libexec/gcc/"$FULL_TARGET"/12.3.0/install-tools
+mkdir -p "$RESULTS"/libexec/gcc/"$FULL_TARGET"/14.1.0/install-tools
 
 for EXE in $FILELIST; do
     apelinkpls "$RESULTS"/"$EXE".com\
@@ -55,5 +55,5 @@ ld.bfd
 '
 
 for EXE in $DUPELIST2; do
-    cp "$RESULTS"/bin/"$FULL_TARGET"-"$EXE".com "$RESULTS"/libexec/gcc/"$FULL_TARGET"/12.3.0/"$EXE".com
+    cp "$RESULTS"/bin/"$FULL_TARGET"-"$EXE".com "$RESULTS"/libexec/gcc/"$FULL_TARGET"/14.1.0/"$EXE".com
 done
