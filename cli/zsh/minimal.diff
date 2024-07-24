@@ -323,3 +323,72 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
  #define USE_MMAP 1
  
  #include <sys/mman.h>
+--- zsh-5.9/Src/jobs.c	2024-07-24 13:08:37.445678491 +0000
++++ -	2024-07-24 13:08:45.397281262 +0000
+@@ -2321,7 +2321,7 @@
+ 	memset(hackzero + len, 0, hackspace - len);
+ #endif
+ 
+-#ifdef HAVE_PRCTL
++#if 0 && HAVE_PRCTL
+ 	/* try to change /proc/$$/comm which will *
+ 	 * be used when checking with "ps -e"  */
+ #include <sys/prctl.h>
+--- zsh-5.9/config.h.in	2024-07-24 13:10:30.981483768 +0000
++++ -	2024-07-24 13:14:42.203325907 +0000
+@@ -416,7 +416,7 @@
+ #undef HAVE_MKTIME
+ 
+ /* Define to 1 if you have a working `mmap' system call. */
+-#undef HAVE_MMAP
++#undef HAVE_MMAP_NO
+ 
+ /* Define to 1 if you have the `msync' function. */
+ #undef HAVE_MSYNC
+@@ -497,7 +497,7 @@
+ #undef HAVE_POSIX_OPENPT
+ 
+ /* Define to 1 if the system supports `prctl' to change process name */
+-#undef HAVE_PRCTL
++#undef HAVE_PRCTL_NO
+ 
+ /* Define to 1 if you have the `ptsname' function. */
+ #undef HAVE_PTSNAME
+@@ -641,10 +641,10 @@
+ #undef HAVE_SETREGID
+ 
+ /* Define to 1 if you have the `setresgid' function. */
+-#undef HAVE_SETRESGID
++#undef HAVE_SETRESGID_NO
+ 
+ /* Define to 1 if you have the `setresuid' function. */
+-#undef HAVE_SETRESUID
++#undef HAVE_SETRESUID_NO
+ 
+ /* Define to 1 if you have the `setreuid' function. */
+ #undef HAVE_SETREUID
+--- zsh-5.9/Src/options.c	2022-05-08 06:18:22.000000000 +0000
++++ -	2024-07-24 13:17:47.930677808 +0000
+@@ -786,7 +786,7 @@
+ 	/* unsetting PRIVILEGED causes the shell to make itself unprivileged */
+ 
+ /* For simplicity's sake, require both setresgid() and setresuid() up-front. */
+-#if !defined(HAVE_SETRESGID)
++#if 1 || !defined(HAVE_SETRESGID)
+ 	zwarnnam("unsetopt",
+ 	    "PRIVILEGED: can't drop privileges; setresgid() and friends not available");
+ 	return -1;
+--- zsh-5.9/Src/utils.c	2022-05-08 06:18:22.000000000 +0000
++++ -	2024-07-24 13:18:39.188399843 +0000
+@@ -27,6 +27,11 @@
+  *
+  */
+ 
++#ifdef __COSMOPOLITAN__
++#define _COSMO_SOURCE
++#include "libc/str/str.h"
++#endif
++
+ #include "zsh.mdh"
+ #include "utils.pro"
+ 
