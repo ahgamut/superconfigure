@@ -33,24 +33,7 @@ else
 fi
 
 echo "updating compiler binaries"
-cd "$COSMO"
-mkdir -p cosmocc
-cd cosmocc
-
-if [ -f x86_64-gcc.zip ]; then
-    echo "you already downloaded x86_64-gcc.zip"
-else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.44/x86_64-gcc.zip
-fi
-if [ -f aarch64-gcc.zip ]; then
-    echo "you already downloaded aarch64-gcc.zip"
-else
-    wget -q https://github.com/ahgamut/superconfigure/releases/download/z0.0.44/aarch64-gcc.zip
-fi
-
-unzip -qo x86_64-gcc.zip
-unzip -qo aarch64-gcc.zip
-
+# don't need to download gcc binaries because package.sh does it
 cd "$COSMO"
 bash tool/cosmocc/package.sh cosmocc
 
