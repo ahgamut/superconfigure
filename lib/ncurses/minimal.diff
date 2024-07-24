@@ -1,0 +1,12 @@
+--- ncurses-6.4/ncurses/curses.priv.h	2022-10-23 13:29:26.000000000 +0000
++++ -	2024-07-24 12:00:48.710688919 +0000
+@@ -65,6 +65,9 @@
+ #include <stddef.h>		/* for offsetof */
+ #include <stdlib.h>
+ #include <string.h>
++#ifdef __COSMOPOLITAN__
++#include "libc/str/unicode.h"
++#endif
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
