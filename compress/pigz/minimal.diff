@@ -5,17 +5,6 @@ diff -r --unified pigz-2.8a/Makefile pigz-2.8/Makefile
 -CC=gcc
 -CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual
 +# CC=gcc
-+CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -DTHIRD_PARTY_ZLIB_COSMOS_GZ=1
++CFLAGS=-O3 -Wno-unknown-pragmas -Wcast-qual
  LDFLAGS=
  # CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -g -fsanitize=thread
---- pigz-2.8/pigz.c	2023-08-20 05:20:56.000000000 +0000
-+++ -	2024-02-25 07:02:43.814803448 +0000
-@@ -3479,7 +3479,7 @@
-         strm.zalloc = ZALLOC;
-         strm.zfree = ZFREE;
-         strm.opaque = OPAQUE;
--        ret = inflateBackInit(&strm, 15, out_buf);
-+        ret = inflateBackInit_(&strm, 15, out_buf);
-         if (ret == Z_MEM_ERROR)
-             throw(ENOMEM, "not enough memory");
-         if (ret != Z_OK)
