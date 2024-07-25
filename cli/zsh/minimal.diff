@@ -378,17 +378,14 @@ diff -r --unified zsh-5.9a/configure.ac zsh-5.9/configure.ac
  	zwarnnam("unsetopt",
  	    "PRIVILEGED: can't drop privileges; setresgid() and friends not available");
  	return -1;
---- zsh-5.9/Src/utils.c	2022-05-08 06:18:22.000000000 +0000
-+++ -	2024-07-24 13:18:39.188399843 +0000
-@@ -27,6 +27,11 @@
-  *
-  */
+--- zsh-5.9/Src/Modules/termcap.c	2018-12-16 01:39:51.000000000 +0000
++++ -	2024-07-25 17:24:10.596770278 +0000
+@@ -41,7 +41,7 @@
+ /**/
+ #ifdef HAVE_TGETENT
  
-+#ifdef __COSMOPOLITAN__
-+#define _COSMO_SOURCE
-+#include "libc/str/str.h"
-+#endif
-+
- #include "zsh.mdh"
- #include "utils.pro"
- 
+-#ifndef HAVE_BOOLCODES
++#if 0 && HAVE_BOOLCODES
+ static char *boolcodes[] = {
+     "bw", "am", "ut", "cc", "xs", "YA", "YF", "YB", "xt", "xn", "eo",
+     "gn", "hc", "HC", "km", "YC", "hs", "hl", "in", "YG", "da", "db",
