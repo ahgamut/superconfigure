@@ -14,4 +14,4 @@ export PKG_CONFIG=""
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
     --disable-bootstrap --disable-libada --build="$ARCH"-linux-gnu \
     --target="$FULL_TARGET"\
-    CFLAGS="-Os -D_LARGEFILE64_SOURCE=1"
+    CFLAGS="-Os -D_LARGEFILE64_SOURCE=1 -fpermissive -Wno-implicit-function-declaration"

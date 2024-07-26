@@ -17,7 +17,7 @@ SRC_DIR=$(realpath "$BASELOC"/o/compiler/gcc-14.1-patched/gcc*)
     --enable-multilib --enable-multiarch \
     --disable-libmudflap --disable-libsanitizer --disable-gnu-indirect-function \
     --disable-libmpx --enable-initfini-array --disable-libstdcxx --without-libffi \
-    --without-libatomic --disable-gcov --disable-analyzer --disable-libvtv \
+    --without-libatomic --disable-gcov --enable-analyzer --disable-libvtv \
     --disable-libgomp --disable-libatomic \
     --enable-sjlj-exceptions --enable-gnu-indirect-function \
     --with-gnu-as=yes --with-gnu-ld=yes --build="$ARCH"-linux-gnu \
