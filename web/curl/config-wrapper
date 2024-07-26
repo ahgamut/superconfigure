@@ -10,4 +10,4 @@ alias ar="$AR"
     --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share\
     --with-ca-path=/zip/usr/share/ssl/certs --without-ca-fallback\
     --without-pic --with-gnu-ld\
-    CFLAGS="-Os" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"
+    CFLAGS="-Os -std=c11 -D_COSMO_SOURCE" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"

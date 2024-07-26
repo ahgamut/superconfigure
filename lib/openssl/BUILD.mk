@@ -15,7 +15,7 @@ OPENSSL_CONFIG_ARGS = threads \
     --with-rand-seed=getrandom \
     --openssldir=/zip/usr/share/ssl \
     CFLAGS="-Os" \
-    --prefix=$(COSMOS) linux-$(ARCH)
+    --prefix=$(COSMOS) --libdir=$(COSMOS)/lib linux-$(ARCH)
 
 $(eval $(call DOWNLOAD_SOURCE,lib/openssl,$(OPENSSL_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/openssl,lib/certs))
