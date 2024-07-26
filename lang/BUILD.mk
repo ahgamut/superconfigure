@@ -8,7 +8,6 @@ include lang/tcl/BUILD.mk
 
 lang: \
 	o/lang/berry/built.fat \
-	o/lang/janet/built.fat \
 	o/lang/lua/built.fat \
 	o/lang/php/built.fat \
 	o/lang/python/built.fat \

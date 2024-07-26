@@ -6,7 +6,8 @@ TCL_CONFIG_ARGS = --prefix=$(COSMOS) --disable-shared \
 				  --enable-static --enable-threads \
 				  --disable-rpath --disable-load \
 				  --enable--symbols --disable-langinfo \
-				  --disable-dll-unloading
+				  --disable-dll-unloading \
+				  CFLAGS="-Wno-incompatible-pointer-types"
 
 $(eval $(call DOWNLOAD_SOURCE,lang/tcl,$(TCL_SRC)))
 $(eval $(call SPECIFY_DEPS,lang/tcl,$(TCL_DEPS)))

@@ -11,7 +11,7 @@ OPENSSL_CONFIG_ARGS = threads \
 	no-tests no-afalgeng no-docs \
     no-dso no-dynamic-engine no-engine no-pic\
     no-autoalginit no-autoerrinit \
-	--api=1.1.1 no-deprecated \
+	--api=1.1.1 \
     --with-rand-seed=getrandom \
     --openssldir=/zip/usr/share/ssl \
     CFLAGS="-Os" \
