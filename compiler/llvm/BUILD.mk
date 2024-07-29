@@ -5,8 +5,7 @@ LLVM_BINS := clang-18 clang-apply-replacements clang-change-namespace \
     clang-check clang-doc clang-extdef-mapping clang-format clang-include-cleaner \
     clang-include-fixer clang-linker-wrapper clang-move clang-offload-bundler \
     clang-offload-packager clang-pseudo clang-query clang-refactor clang-rename \
-    clang-reorder-fields clang-repl clang-scan-deps clang-tblgen clang-tidy clangd \
-    llvm-ar llvm-tblgen
+    clang-reorder-fields clang-repl clang-scan-deps clang-tblgen clang-tidy clangd
 
 $(eval $(call DOWNLOAD_SOURCE,compiler/llvm,$(LLVM_SRC)))
 $(eval $(call SPECIFY_DEPS,compiler/llvm,$(LLVM_DEPS)))
