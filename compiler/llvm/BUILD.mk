@@ -1,11 +1,14 @@
 
 LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-18.1.8.tar.gz
 LLVM_DEPS := cosmo-repo/base
-LLVM_BINS := clang-18 clang-apply-replacements clang-change-namespace \
-    clang-check clang-doc clang-extdef-mapping clang-format clang-include-cleaner \
-    clang-include-fixer clang-linker-wrapper clang-move clang-offload-bundler \
-    clang-offload-packager clang-pseudo clang-query clang-refactor clang-rename \
-    clang-reorder-fields clang-repl clang-scan-deps clang-tblgen clang-tidy clangd
+LLVM_BINS := clang-18 clang-tidy clangd clang-format \
+			 clang-apply-replacements clang-check clang-doc \
+			 clang-include-fixer clang-linker-wrapper \
+			 clang-offload-packager clang-pseudo clang-refactor clang-rename clang-tblgen  \
+			 llvm-cxxfilt llvm-cxxdump llvm-cxxmap \
+			 llvm-ar llvm-as llvm-nm llvm-objcopy llvm-objdump \
+			 llvm-readobj llvm-size llvm-split \
+			 llvm-symbolizer llvm-stress llvm-strings llvm-tblgen
 
 $(eval $(call DOWNLOAD_SOURCE,compiler/llvm,$(LLVM_SRC)))
 $(eval $(call SPECIFY_DEPS,compiler/llvm,$(LLVM_DEPS)))
