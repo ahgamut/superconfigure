@@ -10,4 +10,4 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --enable-threads=posix --disable-rpath\
     --disable-xattr --disable-nls\
     --disable-pcre --disable-pcre2\
-    CFLAGS="-Os" LIBS="-lbz2 -lz"
+    CFLAGS="-Os -Wno-implicit-function-declaration" LIBS="-lbz2 -lz"

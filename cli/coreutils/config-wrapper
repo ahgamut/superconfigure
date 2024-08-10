@@ -5,4 +5,4 @@ set -e
     --disable-nls --disable-dependency-tracking\
     --disable-silent-rules --disable-xattr\
     --disable-rpath --disable-acl --disable-assert\
-    CFLAGS="-Os -I$COSMOS/include/ncurses"
+    CFLAGS="-Os -I$COSMOS/include/ncurses -Wno-implicit-function-declaration"

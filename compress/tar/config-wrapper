@@ -6,4 +6,4 @@ set -e
     --without-posix-acls --without-selinux\
     --with-packager="cosmo" --without-xattrs\
     --with-gzip=gzip --with-xz=xz --datarootdir=/zip/usr/share\
-    CFLAGS="-Os"
+    CFLAGS="-Os -Wno-implicit-function-declaration"

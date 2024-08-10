@@ -7,4 +7,4 @@ set -e
     --disable-nls --disable-rpath\
     --without-selinux --with-gnu-ld=yes\
     --without-libiconv-prefix --with-packager='cosmo'\
-    CFLAGS="-Os -I$COSMOS/include/ncurses"
+    CFLAGS="-Os -I$COSMOS/include/ncurses -Wno-implicit-function-declaration"
