@@ -8,5 +8,6 @@ cd "$COSMO"
 make m="$MODE" V=0 -s -j"$MAXPROC" \
     o/"$MODE"/third_party/zlib o/"$MODE"/third_party/zlib/gz o/"$MODE"/third_party/zstd\
     o/"$MODE"/third_party/sqlite3 o/"$MODE"/third_party/sqlite3/libsqlite3.a\
-    o/"$MODE"/third_party/bzip2
-
+    o/"$MODE"/third_party/bzip2\
+    o/"$MODE"/third_party/unzip/unzip\
+    o/"$MODE"/third_party/zip/zip

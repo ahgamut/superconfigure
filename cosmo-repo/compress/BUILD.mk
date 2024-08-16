@@ -2,6 +2,8 @@
 o/cosmo-repo/compress/downloaded: DL_COMMAND = $(DUMMYLINK0)
 o/cosmo-repo/compress/patched: PATCH_COMMAND = $(DUMMYLINK0)
 
+$(eval $(call SPECIFY_DEPS,cosmo-repo/compress,cosmo-repo/base))
+
 o/cosmo-repo/compress/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)
 o/cosmo-repo/compress/configured.aarch64: CONFIG_COMMAND = $(DUMMYLINK0)
 
