@@ -19,8 +19,8 @@ o/compiler/llvm/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/compiler/llvm/co
 o/compiler/llvm/built.x86_64: BUILD_COMMAND = ninja -j$(MAXPROC)
 o/compiler/llvm/built.aarch64: BUILD_COMMAND = ninja -j$(MAXPROC)
 
-o/compiler/llvm/installed.x86_64: INSTALL_COMMAND = ninja install
-o/compiler/llvm/installed.aarch64: INSTALL_COMMAND = ninja install
+o/compiler/llvm/installed.x86_64: INSTALL_COMMAND = ninja install && ninja clean
+o/compiler/llvm/installed.aarch64: INSTALL_COMMAND = ninja install && ninja clean
 
 o/compiler/llvm/built.fat: BINS = $(LLVM_BINS)
 
