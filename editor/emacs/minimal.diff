@@ -119,3 +119,24 @@
  	$(AM_V_GEN)${MKDIR_P} ${srcdir}/info
  	$(AM_V_at)(cd ${srcdir}/doc && \
  	 AWK='${AWK}' ../build-aux/make-info-dir ${info_dir_inputs} \
+--- emacs-29.3/src/pdumper.c	2024-01-06 12:56:31.000000000 +0000
++++ -	2024-08-17 02:34:10.096033224 +0000
+@@ -49,6 +49,10 @@
+ # include "dmpstruct.h"
+ #endif
+ 
++#ifdef __COSMOPOLITAN__
++#include "cosmo.h"
++#endif
++
+ /*
+   TODO:
+ 
+@@ -4869,7 +4873,7 @@
+ #if defined CYGWIN || VM_SUPPORTED == VM_MS_WINDOWS || defined _AIX
+   return true;
+ #else
+-  return false;
++  return IsWindows();
+ #endif
+ }
