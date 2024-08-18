@@ -24,11 +24,11 @@ o/compiler/x86_64-gcc/configured.aarch64: \
 o/compiler/x86_64-gcc/built.x86_64: \
 	BUILD_COMMAND = make all-gcc -j$(MAXPROC)
 o/compiler/x86_64-gcc/installed.x86_64: \
-	INSTALL_COMMAND = make -i -s install
+	INSTALL_COMMAND = make install-gcc
 o/compiler/x86_64-gcc/built.aarch64: \
 	BUILD_COMMAND = make all-gcc -j$(MAXPROC)
 o/compiler/x86_64-gcc/installed.aarch64: \
-	INSTALL_COMMAND = make -i -s install
+	INSTALL_COMMAND = make install-gcc
 
 $(eval $(call SPECIFY_DEPS,compiler/x86_64-gcc,compiler/x86_64-binutils compiler/gcc-14.1-patched))
 
@@ -51,11 +51,11 @@ o/compiler/aarch64-gcc/configured.aarch64: \
 o/compiler/aarch64-gcc/built.x86_64: \
 	BUILD_COMMAND = make all-gcc -j$(MAXPROC)
 o/compiler/aarch64-gcc/installed.x86_64: \
-	INSTALL_COMMAND = make -i -s install
+	INSTALL_COMMAND = make install-gcc
 o/compiler/aarch64-gcc/built.aarch64: \
 	BUILD_COMMAND = make all-gcc -j$(MAXPROC)
 o/compiler/aarch64-gcc/installed.aarch64: \
-	INSTALL_COMMAND = make -i -s install
+	INSTALL_COMMAND = make install-gcc
 
 $(eval $(call SPECIFY_DEPS,compiler/aarch64-gcc,compiler/aarch64-binutils compiler/gcc-14.1-patched))
 
