@@ -1,0 +1,21 @@
+--- sox-14.4.2/src/formats.c	2014-10-27 02:55:50.000000000 +0000
++++ -	2024-08-20 04:13:04.063587777 +0000
+@@ -422,7 +422,6 @@
+   /* To fix this #error, either simply remove the #error line and live without
+    * file-type detection with pipes, or add support for your compiler in the
+    * lines above.  Test with cat monkey.wav | ./sox --info - */
+-  #error FIX NEEDED HERE
+   #define NO_REWIND_PIPE
+   (void)fp;
+ #endif
+--- sox-14.4.2/src/formats.c	2024-08-20 04:15:47.668768052 +0000
++++ -	2024-08-20 04:17:28.837352955 +0000
+@@ -859,7 +859,7 @@
+         goto error;
+       }
+       ft->fp =
+-#ifdef HAVE_FMEMOPEN
++#if 0 && HAVE_FMEMOPEN
+         buffer? fmemopen(buffer, buffer_size, "w+b") :
+         buffer_ptr? open_memstream(buffer_ptr, buffer_size_ptr) :
+ #endif

@@ -3,6 +3,7 @@ include lib/alsa/BUILD.mk
 include lib/certs/BUILD.mk
 include lib/cups/BUILD.mk
 include lib/fontconfig/BUILD.mk
+include lib/flac/BUILD.mk
 include lib/freetype/BUILD.mk
 include lib/fribidi/BUILD.mk
 include lib/gdbm/BUILD.mk
@@ -11,16 +12,20 @@ include lib/gmp/BUILD.mk
 include lib/gnutls/BUILD.mk
 include lib/isl/BUILD.mk
 include lib/jansson/BUILD.mk
+include lib/lame/BUILD.mk
 include lib/libevent/BUILD.mk
 include lib/libexpat/BUILD.mk
 include lib/libffi/BUILD.mk
 include lib/libgc/BUILD.mk
 include lib/libjpeg/BUILD.mk
+include lib/libmad/BUILD.mk
+include lib/libogg/BUILD.mk
 include lib/libpng/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libtiff/BUILD.mk
 include lib/libunistring/BUILD.mk
 include lib/libuuid/BUILD.mk
+include lib/libvorbis/BUILD.mk
 include lib/libwebp/BUILD.mk
 include lib/libxml2/BUILD.mk
 include lib/libxslt/BUILD.mk
@@ -47,6 +52,7 @@ lib:\
 	o/lib/libexpat/built.fat\
 	o/lib/libgc/built.fat\
 	o/lib/libjpeg/built.fat\
+	o/lib/libogg/built.fat\
 	o/lib/libpng/built.fat\
 	o/lib/libssh2/built.fat\
 	o/lib/libtiff/built.fat\
@@ -56,6 +62,10 @@ lib:\
 	o/lib/libxml2/built.fat\
 	o/lib/libxslt/built.fat\
 	o/lib/libyaml/built.fat\
+	o/lib/libmad/built.fat\
+	o/lib/libogg/built.fat\
+	o/lib/lame/built.fat\
+	o/lib/libvorbis/built.fat\
 	o/lib/mpc/built.fat\
 	o/lib/mpfr/built.fat\
 	o/lib/ncurses/built.fat\

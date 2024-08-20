@@ -1,0 +1,26 @@
+--- libmad-0.15.1b/configure	2004-02-05 09:34:07.000000000 +0000
++++ -	2024-08-20 03:34:38.781553880 +0000
+@@ -19099,8 +19099,8 @@
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+-	    optimize="$optimize -fforce-addr"
++	    # optimize="$optimize -fforce-mem"
++	    # optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"
+ 	    optimize="$optimize -fthread-jumps"
+--- libmad-0.15.1b/configure.ac	2004-01-23 09:41:32.000000000 +0000
++++ -	2024-08-20 03:34:51.327191209 +0000
+@@ -140,8 +140,8 @@
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+-	    optimize="$optimize -fforce-addr"
++	    # optimize="$optimize -fforce-mem"
++	    # optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"
+ 	    optimize="$optimize -fthread-jumps"
