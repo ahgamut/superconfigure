@@ -1,7 +1,7 @@
 
-LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-18.1.8.tar.gz
+LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-19.1.0-rc3.tar.gz
 LLVM_DEPS := cosmo-repo/base
-LLVM_BINS := clang-18 clang-tidy clangd clang-format \
+LLVM_BINS := clang-19 clang-tidy clangd clang-format \
 			 clang-apply-replacements clang-check clang-doc \
 			 clang-include-fixer clang-linker-wrapper \
 			 clang-offload-packager clang-refactor clang-rename clang-tblgen  \
