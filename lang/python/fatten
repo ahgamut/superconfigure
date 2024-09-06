@@ -33,6 +33,8 @@ rm -rf Lib/config-*/
 
 "$RESULTS"/python-tmp.com -m compileall -fqb ./Lib
 rm -f "$RESULTS"/python-tmp.com
+rm -f "$RESULTS"/python3.12.x86_64
+rm -f "$RESULTS"/python3.12.aarch64
 
 ###
 # now make the actual python APE
