@@ -6,10 +6,14 @@ export COSMOPOLITAN_DISABLE_ZIPOS=0
 cd "$COSMO"
 make MODE="$MODE" V=0 -s -j"$MAXPROC" \
     o/"$MODE"/examples/greenbean\
+    o/"$MODE"/examples/hangman\
     o/"$MODE"/examples/nesemu1\
+    o/"$MODE"/examples/romanize\
+    o/"$MODE"/examples/rusage\
     o/"$MODE"/examples/script\
     o/"$MODE"/examples/ttyinfo\
     o/"$MODE"/examples/wall\
+    o/"$MODE"/examples/whois\
     o/"$MODE"/third_party/awk/awk\
     o/"$MODE"/third_party/ctags/ctags\
     o/"$MODE"/third_party/lua/lua\
@@ -24,13 +28,18 @@ make MODE="$MODE" V=0 -s -j"$MAXPROC" \
     o/"$MODE"/tool/net/redbean\
     o/"$MODE"/tool/viz/cpuid\
     o/"$MODE"/tool/viz/life\
-    o/"$MODE"/tool/viz/printimage
+    o/"$MODE"/tool/viz/printimage\
+    o/"$MODE"/tool/viz/printvideo
 
 cp o/"$MODE"/examples/greenbean.dbg "$COSMOS"/bin/greenbean
+cp o/"$MODE"/examples/hangman.dbg "$COSMOS"/bin/hangman
 cp o/"$MODE"/examples/nesemu1.dbg "$COSMOS"/bin/nesemu1
+cp o/"$MODE"/examples/romanize.dbg "$COSMOS"/bin/romanize
+cp o/"$MODE"/examples/rusage.dbg "$COSMOS"/bin/rusage
 cp o/"$MODE"/examples/script.dbg "$COSMOS"/bin/script
 cp o/"$MODE"/examples/ttyinfo.dbg "$COSMOS"/bin/ttyinfo
 cp o/"$MODE"/examples/wall.dbg "$COSMOS"/bin/wall
+cp o/"$MODE"/examples/whois.dbg "$COSMOS"/bin/whois
 cp o/"$MODE"/third_party/awk/awk.dbg "$COSMOS"/bin/awk
 cp o/"$MODE"/third_party/ctags/ctags.dbg "$COSMOS"/bin/ctags
 cp o/"$MODE"/third_party/lua/lua.dbg "$COSMOS"/bin/lua
@@ -46,3 +55,4 @@ cp o/"$MODE"/tool/net/redbean.dbg "$COSMOS"/bin/redbean
 cp o/"$MODE"/tool/viz/cpuid.dbg "$COSMOS"/bin/cpuid
 cp o/"$MODE"/tool/viz/life.dbg "$COSMOS"/bin/life
 cp o/"$MODE"/tool/viz/printimage.dbg "$COSMOS"/bin/printimage
+cp o/"$MODE"/tool/viz/printvideo.dbg "$COSMOS"/bin/printvideo
