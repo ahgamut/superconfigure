@@ -14,6 +14,7 @@ make MODE="$MODE" V=0 -s -j"$MAXPROC" \
     o/"$MODE"/examples/ttyinfo\
     o/"$MODE"/examples/wall\
     o/"$MODE"/examples/whois\
+    o/"$MODE"/net/turfwar/blackholed\
     o/"$MODE"/third_party/awk/awk\
     o/"$MODE"/third_party/ctags/ctags\
     o/"$MODE"/third_party/lua/lua\
@@ -40,6 +41,7 @@ cp o/"$MODE"/examples/script.dbg "$COSMOS"/bin/script
 cp o/"$MODE"/examples/ttyinfo.dbg "$COSMOS"/bin/ttyinfo
 cp o/"$MODE"/examples/wall.dbg "$COSMOS"/bin/wall
 cp o/"$MODE"/examples/whois.dbg "$COSMOS"/bin/whois
+cp o/"$MODE"/net/turfwar/blackholed.dbg "$COSMOS"/bin/blackholed
 cp o/"$MODE"/third_party/awk/awk.dbg "$COSMOS"/bin/awk
 cp o/"$MODE"/third_party/ctags/ctags.dbg "$COSMOS"/bin/ctags
 cp o/"$MODE"/third_party/lua/lua.dbg "$COSMOS"/bin/lua
