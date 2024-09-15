@@ -48,24 +48,24 @@ o/%/downloaded: %
 	@$(MKDIR) o/$< && \
 		cd o/$< && \
 		$(DL_COMMAND) $(DL_FILE)  
-	touch $@
+	@touch $@
 
 o/%/checked: CHECK_COMMAND = $(CHECK_DEFAULT)
 o/%/checked: o/%/downloaded %/check.signature
-	echo "checking" $(dir $<)
+	@echo "checking" $(dir $<)
 	@$(MKDIR) $(dir $<) && \
 		cp $(word 2,$^) $(dir $<) && \
 		cd $(dir $<) && \
 		$(CHECK_COMMAND)
-	touch $@
+	@touch $@
 
 o/%/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
 o/%/patched: o/%/checked
-	echo "patching " $(PATCH_FILE)
+	@echo "patching " $(PATCH_FILE)
 	@$(MKDIR) $(dir $<) && \
 		cd $(dir $<) && \
 		$(PATCH_COMMAND) $(PATCH_FILE) 
-	touch $@
+	@touch $@
 
 o/%.x86_64: COSMOS=$(COSMOS_X86_64)
 o/%.x86_64: ARCH=x86_64
@@ -90,56 +90,58 @@ o/%.aarch64: OBJCOPY=$(COSMOCC)/bin/aarch64-unknown-cosmo-objcopy
 o/%/deps.x86_64: DEPS_COMMAND = $(DEPS_DEFAULT)
 o/%/deps.x86_64: o/%/patched
 	@$(DEPS_COMMAND) $^ 
-	touch $@
+	@touch $@
 
 o/%/deps.aarch64: DEPS_COMMAND = $(DEPS_DEFAULT)
 o/%/deps.aarch64: o/%/patched
 	@$(DEPS_COMMAND) $^ 
-	touch $@
+	@touch $@
 
 o/%/configured.x86_64: CONFIG_COMMAND = $(CONFIG_DEFAULT)
 o/%/configured.x86_64: o/%/deps.x86_64
 	@source $(BASELOC)/config/vars-x86_64 && \
+		rm -rf $(dir $<)/build/x86_64 && \
 		$(MKDIR) $(dir $<)/build/x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(CONFIG_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/configured.aarch64: CONFIG_COMMAND = $(CONFIG_DEFAULT)
 o/%/configured.aarch64: o/%/deps.aarch64
 	@source $(BASELOC)/config/vars-aarch64 && \
+		rm -rf $(dir $<)/build/aarch64 && \
 		$(MKDIR) $(dir $<)/build/aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(CONFIG_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/built.x86_64: BUILD_COMMAND = $(BUILD_DEFAULT)
 o/%/built.x86_64: o/%/configured.x86_64
 	@source $(BASELOC)/config/vars-x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(BUILD_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/installed.x86_64: INSTALL_COMMAND = $(INSTALL_DEFAULT)
 o/%/installed.x86_64: o/%/built.x86_64
 	@source $(BASELOC)/config/vars-x86_64 && \
 		cd $(dir $<)/build/x86_64 && \
 		$(INSTALL_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/built.aarch64: BUILD_COMMAND = $(BUILD_DEFAULT)
 o/%/built.aarch64: o/%/configured.aarch64
 	@source $(BASELOC)/config/vars-aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(BUILD_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/installed.aarch64: INSTALL_COMMAND = $(INSTALL_DEFAULT)
 o/%/installed.aarch64: o/%/built.aarch64
 	@source $(BASELOC)/config/vars-aarch64 && \
 		cd $(dir $<)/build/aarch64 && \
 		$(INSTALL_COMMAND) 
-	touch $@
+	@touch $@
 
 o/%/built.fat: FATTEN_COMMAND = $(APELINKPLS)
 o/%/built.fat: BINS =
@@ -148,6 +150,6 @@ o/%/built.fat: o/%/installed.x86_64 o/%/installed.aarch64
 	@source $(BASELOC)/config/vars-fat && \
 		echo "running apelink for a list of files" && \
 		$(FATTEN_COMMAND) $(BINS) 
-	touch $@
+	@touch $@
 
 o/%: o/%/built.fat

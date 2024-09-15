@@ -2,7 +2,7 @@
 set -e
 
 CURDIR="$(pwd)"
-sha256sum --check --status check.signature || exit 1
+sha256sum --check check.signature || exit 1
 SRC_FILE=$(cat check.signature | sed 's/^[0-9a-f]*\s*//g')
 
 echo "check successful. extracting from $SRC_FILE"
