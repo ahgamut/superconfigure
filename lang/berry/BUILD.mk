@@ -6,6 +6,7 @@ $(eval $(call SPECIFY_DEPS,lang/berry,$(BERRY_DEPS)))
 o/lang/berry/downloaded: \
 	DL_COMMAND = rm -rf berry && git clone --quiet --depth=1 https://github.com/berry-lang/berry
 
+o/lang/berry/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/lang/berry/patched: PATCH_COMMAND = patch -p1 -i
 o/lang/berry/patched: PATCH_FILE = $(BASELOC)/lang/berry/minimal.diff
 

@@ -10,6 +10,9 @@ o/python/cpy311-datasette/downloaded: \
 	DL_COMMAND = rm -rf ./datasette && \
 		git clone --quiet --depth=1 --branch=datasette https://github.com/ahgamut/cpython datasette
 
+o/python/cpy311-datasette/checked: \
+	CHECK_COMMAND = $(DUMMYLINK0)
+
 o/python/cpy311-datasette/patched: \
 	PATCH_COMMAND = $(DUMMYLINK0)
 

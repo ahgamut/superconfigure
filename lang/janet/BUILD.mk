@@ -2,6 +2,7 @@
 o/lang/janet/downloaded: \
 	DL_COMMAND = rm -rf janet && git clone --quiet --depth=1 --branch=v1.34.0 https://github.com/janet-lang/janet
 
+o/lang/janet/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/lang/janet/patched: PATCH_COMMAND = $(DUMMYLINK0)
 
 o/lang/janet/configured.x86_64: \

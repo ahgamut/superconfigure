@@ -10,6 +10,9 @@ o/python/cpy311-pypack2/downloaded: \
 	DL_COMMAND = rm -rf ./pypack2 && \
 		git clone --quiet --depth=1 --branch=pypack2 https://github.com/ahgamut/cpython pypack2
 
+o/python/cpy311-pypack2/checked: \
+	CHECK_COMMAND = $(DUMMYLINK0)
+
 o/python/cpy311-pypack2/patched: \
 	PATCH_COMMAND = $(DUMMYLINK0)
 

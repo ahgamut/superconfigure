@@ -1,6 +1,7 @@
 o/compiler/gcc-14.1-patched/downloaded:\
 	DL_COMMAND = test -d gcc || git clone --depth=1 --branch=portcosmo-14.1 https://github.com/ahgamut/gcc gcc
 
+o/compiler/gcc-14.1-patched/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/compiler/gcc-14.1-patched/patched: PATCH_COMMAND = $(DUMMYLINK0)
 
 o/compiler/gcc-14.1-patched/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)

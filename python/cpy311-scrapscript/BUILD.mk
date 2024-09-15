@@ -9,6 +9,9 @@ o/python/cpy311-scrapscript/downloaded: \
 	DL_COMMAND = rm -rf ./scrapscript && \
 		git clone --quiet --depth=1 --branch=scrapscript https://github.com/ahgamut/cpython scrapscript
 
+o/python/cpy311-scrapscript/checked: \
+	CHECK_COMMAND = $(DUMMYLINK0)
+
 o/python/cpy311-scrapscript/patched: \
 	PATCH_COMMAND = $(DUMMYLINK0)
 

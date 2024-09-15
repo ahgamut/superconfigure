@@ -11,6 +11,9 @@ o/python/cpy311-pypack1/downloaded: \
 	DL_COMMAND = rm -rf ./pypack1 && \
 		git clone --quiet --depth=1 --branch=pypack1 https://github.com/ahgamut/cpython pypack1
 
+o/python/cpy311-pypack1/checked: \
+	CHECK_COMMAND = $(DUMMYLINK0)
+
 o/python/cpy311-pypack1/patched: \
 	PATCH_COMMAND = $(DUMMYLINK0)
 
