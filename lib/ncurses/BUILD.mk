@@ -1,4 +1,3 @@
-
 NCURSES_SRC := https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz
 
 NCURSES_CONFIG_ARGS = --without-libtool --without-shared\

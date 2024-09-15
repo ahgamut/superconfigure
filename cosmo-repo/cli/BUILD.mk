@@ -1,5 +1,6 @@
 
 o/cosmo-repo/cli/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/cosmo-repo/cli/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/cosmo-repo/cli/patched: PATCH_COMMAND = $(DUMMYLINK0)
 
 $(eval $(call SPECIFY_DEPS,cosmo-repo/cli,cosmo-repo/base))

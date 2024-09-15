@@ -12,19 +12,15 @@ fi
 case "$URL" in
     *.tar.gz* )
         wget -qO sources.tar.gz "$URL"
-        tar xf sources.tar.gz
         ;;
     *.tar.xz* )
         wget -qO sources.tar.xz "$URL"
-        tar xf sources.tar.xz
         ;;
     *.tar.bz2* )
         wget -qO sources.tar.bz2 "$URL"
-        tar xf sources.tar.bz2
         ;;
     *.zip* )
         wget -qO sources.zip "$URL"
-        unzip -qo sources.zip
         ;;
     *github.com/* )
         outdir=$(basename "$CURDIR")

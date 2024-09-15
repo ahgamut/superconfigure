@@ -40,10 +40,10 @@ If you'd like to add your own software build scripts, submit a PR! Read up
 
 # How can I build these locally?
 
-The build scripts assume Debian/Ubuntu, and also use things like `bash`, `find`,
-`wget`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc. (you also need sudo
-access to setup a `/zip` folder).  You can follow the steps in
-`.github/workflows/release.yml` on your machine:
+The build scripts assume Debian/Ubuntu, and also use things like `bash`,
+`find`, `wget`, `cat`, `sed`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc.
+(you also need sudo access to setup a `/zip` folder).  You can follow the steps
+in `.github/workflows/release.yml` on your machine:
 
 - clone this repository
 - create a folder `/zip` on your system that provides read/write access to

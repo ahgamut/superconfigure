@@ -1,5 +1,6 @@
 
 o/cosmo-repo/base/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/cosmo-repo/base/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/cosmo-repo/base/patched: PATCH_COMMAND = $(DUMMYLINK0)
 
 o/cosmo-repo/base/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)

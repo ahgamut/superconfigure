@@ -16,6 +16,8 @@ MKDIR:=$(shell which mkdir) -p
 DL_DEFAULT := $(BASELOC)/config/default_dl.sh
 # if DL_FILE is not provided, this will error out
 
+CHECK_DEFAULT := $(BASELOC)/config/check_sha.sh
+
 PATCH_DEFAULT := $(BASELOC)/config/default_patch.sh
 # PATCH_FILE defaults to minimal.diff in the right spot
 # if minimal.diff doesn't exist, the above script is ok
@@ -48,8 +50,17 @@ o/%/downloaded: %
 		$(DL_COMMAND) $(DL_FILE)  
 	touch $@
 
+o/%/checked: CHECK_COMMAND = $(CHECK_DEFAULT)
+o/%/checked: o/%/downloaded %/check.signature
+	echo "checking" $(dir $<)
+	@$(MKDIR) $(dir $<) && \
+		cp $(word 2,$^) $(dir $<) && \
+		cd $(dir $<) && \
+		$(CHECK_COMMAND)
+	touch $@
+
 o/%/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
-o/%/patched: o/%/downloaded
+o/%/patched: o/%/checked
 	echo "patching " $(PATCH_FILE)
 	@$(MKDIR) $(dir $<) && \
 		cd $(dir $<) && \

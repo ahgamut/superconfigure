@@ -4,6 +4,8 @@ DASH_CONFIG_ARGS = --enable-static --disable-lineno\
 				   --without-libedit\
 				   --prefix=$$(COSMOS)
 
+o/cli/dash/checked: CHECK_COMMAND = $(DUMMYLINK0)
+
 o/cli/dash/downloaded: \
 	DL_COMMAND = rm -rf dash &&\
 		git clone --quiet --depth=1 git://git.kernel.org/pub/scm/utils/dash/dash.git
