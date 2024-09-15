@@ -3,6 +3,7 @@ digraph {
     rankdir="TB"
 
     down [label="o/cli/bash/downloaded"]
+    check [label="o/cli/bash/checked"]
     patch [label="o/cli/bash/patched"]
     dep1 [label="o/cli/bash/deps.x86_64"]
     dep2 [label="o/cli/bash/deps.aarch64"]
@@ -18,7 +19,8 @@ digraph {
     inst22 [label="o/lib/readline/installed.aarch64"]
     fat [label="o/cli/bash/built.fat"]
 
-    down  ->  patch [label="depends on",dir=back]
+    down  ->  check [label="depends on",dir=back]
+    check  ->  patch [label="depends on",dir=back]
     patch  ->  dep1  [label="depends on",dir=back]
     inst11  ->  dep1 [label="depends on",dir=back]
     inst12  ->  dep1 [label="depends on",dir=back]

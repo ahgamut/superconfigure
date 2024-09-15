@@ -14,17 +14,18 @@ building `bash`.
 To build `bash` with Cosmopolitan Libc, we need to go through the following steps:
 
 1. Download `bash` source
-2. (possibly) Patch the source code to enable building with Cosmopolitan Libc
-3. Confirm the dependencies for `bash` (`ncurses` and `readline`) have been
+2. verify checksum of the downloaded source
+3. (possibly) Patch the source code to enable building with Cosmopolitan Libc
+4. Confirm the dependencies for `bash` (`ncurses` and `readline`) have been
   installed
-4. Configure, build, install for `x86_64`
-5. Configure, build, install for `aarch64`
-6. Use Cosmopolitan Libc's `apelink` to combine the `x86_64` and `aarch64` 
+5. Configure, build, install for `x86_64`
+6. Configure, build, install for `aarch64`
+7. Use Cosmopolitan Libc's `apelink` to combine the `x86_64` and `aarch64` 
 debug binaries to build a fat binary, and add necessary zip store assets.
-7. now we should have a `bash` in `results/bin`
+8. now we should have a `bash` in `results/bin`
 
-These steps need to occur in a specific order: 1, 2, 3, (4, 5 can occur
-simultaneously), and then 6. We enforce this order via Makefile dependencies.
+These steps need to occur in a specific order: 1, 2, 3, 4, (5, 6 can occur
+simultaneously), and then 7. We enforce this order via Makefile dependencies.
 Thus the build steps for `bash`, expressed graphically, would look like:
 
 ![](./bash-deps.svg)
@@ -53,10 +54,24 @@ o/cli/bash/downloaded: DL_FILE =
 `.tar.xz`, `.tar.bz2`, and `.zip` file. The command will fail if `$(DL_FILE)` is
 not provided.
 
-2. (possibly) Patch the source code to enable building with Cosmopolitan Libc
+2. verify checksum of downloaded source
 
 ```Makefile
-o/cli/bash/patched: o/cli/bash/downloaded
+o/cli/bash/checked: cli/bash/check.signature
+o/cli/bash/checked: o/cli/bash/downloaded
+```
+
+Before extracting the source files, we verify the SHA256 checksum of the
+downloaded file with a `check.signature` stored alongside the `BUILD.mk` file.
+**Note:** every `BUILD.mk` must have a `check.signature` in the same folder
+(even if it is an empty file to start with) otherwise the Makefile won't work.
+The source tarball is extracted only if the verification succeeds.
+
+
+3. (possibly) Patch the source code to enable building with Cosmopolitan Libc
+
+```Makefile
+o/cli/bash/patched: o/cli/bash/checked
 o/cli/bash/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
 o/cli/bash/patched: PATCH_FILE =
 ```
@@ -67,7 +82,7 @@ is usually set to a `minimal.diff` file located next to a `BUILD.mk`. The
 command will fail if `$(PATCH_FILE)` is not provided, but will exit without
 error if the provided `$(PATCH_FILE)` doesn't exist.
 
-3. Confirm the dependencies for `bash` (`ncurses` and `readline`) have been
+4. Confirm the dependencies for `bash` (`ncurses` and `readline`) have been
   installed
 
 ```Makefile
@@ -78,8 +93,8 @@ o/cli/bash/deps.x86_64: DEPS_COMMAND = $(DEPS_DEFAULT)
 `$(DEPS_DEFAULT)` is just an `echo ""`, this target usually is just to ensure
 the dependencies have been installed correctly.
 
-4. Configure, build, install for `x86_64`
-5. Configure, build, install for `aarch64`
+5. Configure, build, install for `x86_64`
+6. Configure, build, install for `aarch64`
 
 ```Makefile
 # similar for both x86_64 and aarch64
@@ -98,7 +113,7 @@ override `CONFIG_COMMAND` one way or another.
 
 `$(INSTALL_DEFAULT)` is just `make install -j$(MAXPROC)`.
 
-6. Use Cosmopolitan Libc's `apelink` to combine the `x86_64` and `aarch64` 
+7. Use Cosmopolitan Libc's `apelink` to combine the `x86_64` and `aarch64` 
 debug binaries to build a fat binary, and add necessary zip store assets.
 
 ```Makefile
