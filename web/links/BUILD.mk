@@ -20,4 +20,4 @@ $(eval $(call SPECIFY_DEPS,web/links,$(LINKS_DEPS)))
 $(eval $(call AUTOTOOLS_BUILD,web/links,$(LINKS_CONFIG_ARGS),$(LINKS_CONFIG_ARGS)))
 
 o/web/links/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/web/links/built.fat: BINS = links ssl usr/share/terminfo
+o/web/links/built.fat: BINS = links usr/share/ssl usr/share/terminfo
