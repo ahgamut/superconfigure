@@ -16,6 +16,7 @@ $(eval $(call DOWNLOAD_SOURCE,compiler/binutils,$(BINUTILS_SRC)))
 # x86_64-binutils
 
 o/compiler/x86_64-binutils/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/compiler/x86_64-binutils/checked: DL_COMMAND = $(DUMMYLINK0)
 o/compiler/x86_64-binutils/patched: PATCH_COMMAND = $(DUMMYLINK0)
 o/compiler/x86_64-binutils/configured.x86_64: \
 	CONFIG_COMMAND = export TARGET_ARCH=x86_64 && $(BASELOC)/compiler/binutils/config-wrapper
@@ -33,6 +34,7 @@ x86_64-binutils: o/compiler/x86_64-binutils/built.fat
 # aarch64-binutils
 
 o/compiler/aarch64-binutils/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/compiler/aarch64-binutils/checked: DL_COMMAND = $(DUMMYLINK0)
 o/compiler/aarch64-binutils/patched: PATCH_COMMAND = $(DUMMYLINK0)
 o/compiler/aarch64-binutils/configured.x86_64: \
 	CONFIG_COMMAND = export TARGET_ARCH=aarch64 && $(BASELOC)/compiler/binutils/config-wrapper
