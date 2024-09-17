@@ -17,6 +17,7 @@ o/compiler/gcc-14.1-patched/built.fat: FATTEN_COMMAND = $(DUMMYLINK0)
 # x86_64-gcc
 
 o/compiler/x86_64-gcc/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/compiler/x86_64-gcc/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/compiler/x86_64-gcc/patched: PATCH_COMMAND = $(DUMMYLINK0)
 o/compiler/x86_64-gcc/configured.x86_64: \
 	CONFIG_COMMAND = export TARGET_ARCH=x86_64 && $(BASELOC)/compiler/gcc-14.1-patched/config-wrapper
@@ -44,6 +45,7 @@ x86_64-gcc: \
 # aarch64-gcc
 
 o/compiler/aarch64-gcc/downloaded: DL_COMMAND = $(DUMMYLINK0)
+o/compiler/aarch64-gcc/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/compiler/aarch64-gcc/patched: PATCH_COMMAND = $(DUMMYLINK0)
 o/compiler/aarch64-gcc/configured.x86_64: \
 	CONFIG_COMMAND = export TARGET_ARCH=aarch64 && $(BASELOC)/compiler/gcc-14.1-patched/config-wrapper
