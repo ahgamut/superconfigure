@@ -43,3 +43,19 @@ diff -r --unified rsync-3.2.7a/rsync.h rsync-3.2.7/rsync.h
  	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
  	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
  	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */
+--- rsync-3.2.7/io.c	2024-09-19 09:39:41.860270653 +0000
++++ -	2024-09-19 09:41:40.411142872 +0000
+@@ -314,12 +314,12 @@
+ 
+ 	assert(fd != iobuf.out_fd);
+ 
++   write_failed:
+ 	n = write(fd, buf, len);
+ 	if ((size_t)n == len)
+ 		return;
+ 	if (n < 0) {
+ 		if (errno != EINTR && errno != EWOULDBLOCK && errno != EAGAIN) {
+-		  write_failed:
+ 			rsyserr(FERROR, errno,
+ 				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
+ 				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
