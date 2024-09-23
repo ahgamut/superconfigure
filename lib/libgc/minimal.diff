@@ -1,15 +1,3 @@
-diff -urN ./gc-8.2.4/configure /home/ahgamut/sources/gc-8.2.4/configure
---- ./gc-8.2.4/configure	2023-05-26 18:57:16.000000000 +0000
-+++ ./gc-8.2.4/configure    2023-11-09 05:30:07.671209178 +0000
-@@ -17184,7 +17184,7 @@
- # We should set -fexceptions if we are using gcc and might be used
- # inside something like gcj.  This is the zeroth approximation:
- if test :"$GCC": = :yes: ; then
--    gc_cflags="${gc_cflags} -fexceptions"
-+    gc_cflags="${gc_cflags} "
- else
-     case "$host" in
-       hppa*-*-hpux* )
 diff -urN ./gc-8.2.4/include/private/gcconfig.h /home/ahgamut/sources/gc-8.2.4/include/private/gcconfig.h
 --- ./gc-8.2.4/include/private/gcconfig.h	2023-05-26 18:56:18.000000000 +0000
 +++ ./gc-8.2.4/include/private/gcconfig.h	    2023-11-09 05:30:49.391450600 +0000
