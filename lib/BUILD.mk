@@ -21,6 +21,7 @@ include lib/libjpeg/BUILD.mk
 include lib/libmad/BUILD.mk
 include lib/libogg/BUILD.mk
 include lib/libpng/BUILD.mk
+include lib/libpsl/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libtiff/BUILD.mk
 include lib/libunistring/BUILD.mk
@@ -54,6 +55,7 @@ lib:\
 	o/lib/libjpeg/built.fat\
 	o/lib/libogg/built.fat\
 	o/lib/libpng/built.fat\
+	o/lib/libpsl/built.fat\
 	o/lib/libssh2/built.fat\
 	o/lib/libtiff/built.fat\
 	o/lib/libunistring/built.fat\
@@ -73,7 +75,5 @@ lib:\
 	o/lib/openssl/built.fat\
 	o/lib/pcre/built.fat\
 	o/lib/readline/built.fat
-
-# o/lib/libffi/built.fat
 
 .PHONY: lib
