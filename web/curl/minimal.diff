@@ -1,7 +1,6 @@
-diff -r --unified curl-8.4.0a/lib/curl_config.h.in curl-8.4.0/lib/curl_config.h.in
---- curl-8.4.0a/lib/curl_config.h.in	2023-10-09 06:22:28.000000000 +0000
-+++ curl-8.4.0/lib/curl_config.h.in	2023-12-05 00:01:27.879844543 +0000
-@@ -513,7 +513,7 @@
+--- curl-8.10.1/lib/curl_config.h.in	2024-10-09 11:55:49.122745516 +0000
++++ sample.in	2024-10-09 11:56:51.906663426 +0000
+@@ -519,7 +519,7 @@
  #undef HAVE_PIPE
  
  /* If you have a fine poll */
@@ -10,48 +9,3 @@ diff -r --unified curl-8.4.0a/lib/curl_config.h.in curl-8.4.0/lib/curl_config.h.
  
  /* Define to 1 if you have the <poll.h> header file. */
  #undef HAVE_POLL_H
-diff -r --unified curl-8.4.0a/lib/rand.c curl-8.4.0/lib/rand.c
---- curl-8.4.0a/lib/rand.c	2023-10-05 07:58:50.000000000 +0000
-+++ curl-8.4.0/lib/rand.c	2023-12-05 00:01:27.879844543 +0000
-@@ -152,15 +152,16 @@
- #endif
- 
- #if defined(RANDOM_FILE) && !defined(WIN32)
-+#pragma message("using getrandom instead of reading from RANDOM_FILE")
-   if(!seeded) {
-     /* if there's a random file to read a seed from, use it */
--    int fd = open(RANDOM_FILE, O_RDONLY);
--    if(fd > -1) {
-+    // int fd = open(RANDOM_FILE, O_RDONLY);
-+    if(1 /* || fd > -1 */) {
-       /* read random data into the randseed variable */
--      ssize_t nread = read(fd, &randseed, sizeof(randseed));
-+      ssize_t nread = getrandom(&randseed, sizeof(randseed), 0);
-       if(nread == sizeof(randseed))
-         seeded = TRUE;
--      close(fd);
-+      // close(fd);
-     }
-   }
- #endif
-diff -r --unified curl-8.4.0a/lib/select.c curl-8.4.0/lib/select.c
---- curl-8.4.0a/lib/select.c	2023-10-05 07:58:50.000000000 +0000
-+++ curl-8.4.0/lib/select.c	2023-12-05 00:01:27.879844543 +0000
-@@ -32,6 +32,7 @@
- #include <unistd.h>
- #endif
- 
-+#undef HAVE_POLL_FINE
- #if !defined(HAVE_SELECT) && !defined(HAVE_POLL_FINE)
- #error "We can't compile without select() or poll() support."
- #endif
-@@ -48,6 +49,9 @@
- #include "timediff.h"
- #include "warnless.h"
- 
-+#ifdef HAVE_POLL_FINE
-+#undef HAVE_POLL_FINE
-+#endif
- /*
-  * Internal function used for waiting a specific amount of ms
-  * in Curl_socket_check() and Curl_poll() when no file descriptor
