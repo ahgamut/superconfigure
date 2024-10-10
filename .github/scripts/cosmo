@@ -37,6 +37,11 @@ echo "updating compiler binaries"
 cd "$COSMO"
 bash tool/cosmocc/package.sh cosmocc
 
+# package.sh builds a bunch of MODEs, we only need x86_64 and aarch64
+cd "$COSMO"
+rm -rf o/aarch64-tiny/ o/aarch64-dbg/ o/aarch64-optlinux/ \
+    o/x86_64-tiny/ o/x86_64-dbg o/x86_64-optlinux/
+
 cd "$COSMO"
 make -j$numproc o//tool/build
 
