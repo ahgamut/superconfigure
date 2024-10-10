@@ -24,7 +24,7 @@ cp -r superconfigure /ahgamut
 cd /ahgamut/superconfigure || exit
 
 # cosmo
-git clone https://github.com/ahgamut/cosmopolitan --depth=1 --branch=superconf cosmopolitan
+git clone https://github.com/jart/cosmopolitan --depth=1
 
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
