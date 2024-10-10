@@ -4,13 +4,13 @@ set -e
 alias strip="$STRIP"
 alias ar="$AR"
 
-export CURL_LDFLAGS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
+export CURL_LDFLAGS="-lcurl -lpsl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 export CSPRNG_METHOD="getrandom"
 export NO_PERL=1
 export NO_POLL=1
 export NO_PYTHON=1
 export SHELL_PATH="sh"
-export LIBS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
+export LIBS="-lcurl -lpsl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 
 cp -r "$BASELOC"/o/web/git/git*/* .
 
