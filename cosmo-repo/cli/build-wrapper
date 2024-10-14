@@ -5,6 +5,7 @@ export COSMOPOLITAN_DISABLE_ZIPOS=0
 
 cd "$COSMO"
 make MODE="$MODE" V=0 -s -j"$MAXPROC" \
+    o/"$MODE"/examples/art\
     o/"$MODE"/examples/greenbean\
     o/"$MODE"/examples/hangman\
     o/"$MODE"/examples/nesemu1\
@@ -32,6 +33,7 @@ make MODE="$MODE" V=0 -s -j"$MAXPROC" \
     o/"$MODE"/tool/viz/printimage\
     o/"$MODE"/tool/viz/printvideo
 
+cp o/"$MODE"/examples/art.dbg "$COSMOS"/bin/art
 cp o/"$MODE"/examples/greenbean.dbg "$COSMOS"/bin/greenbean
 cp o/"$MODE"/examples/hangman.dbg "$COSMOS"/bin/hangman
 cp o/"$MODE"/examples/nesemu1.dbg "$COSMOS"/bin/nesemu1
