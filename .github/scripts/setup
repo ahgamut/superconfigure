@@ -5,7 +5,7 @@ sudo apt update
 
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev\
-    qemu-user qemu-user-binfmt qemu-utils qemu-user-static\
+    qemu-user qemu-system-x86 qemu-system-arm qemu-utils qemu-user-static\
     texinfo groff libtool\
     cmake ninja-build bison zip\
     pkg-config build-essential autoconf re2c
