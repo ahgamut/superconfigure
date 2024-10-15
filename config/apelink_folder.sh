@@ -31,6 +31,8 @@ apelinkpls () {
 }
 
 apelinkpls "$RESULTS"/bin/"$EXE".com "$COSMOS_X86_64"/bin/"$EXE" "$COSMOS_AARCH64"/bin/"$EXE"
+
+echo "adding zip assets to $EXE"
 cd /zip
 zip -qr "$RESULTS"/bin/"$EXE".com $FILELIST
 cd "$BASELOC"
