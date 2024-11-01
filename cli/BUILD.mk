@@ -13,7 +13,6 @@ include cli/ninja/BUILD.mk
 include cli/patch/BUILD.mk
 include cli/sed/BUILD.mk
 include cli/sox/BUILD.mk
-include cli/tmux/BUILD.mk
 include cli/zsh/BUILD.mk
 
 cli: \
@@ -32,7 +31,6 @@ cli: \
 	o/cli/patch/built.fat \
 	o/cli/sox/built.fat \
 	o/cli/sed/built.fat \
-	o/cli/tmux/built.fat \
 	o/cli/zsh/built.fat
 
 .PHONY: cli
