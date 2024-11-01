@@ -5,6 +5,7 @@ include cli/coreutils/BUILD.mk
 include cli/dash/BUILD.mk
 include cli/diffutils/BUILD.mk
 include cli/findutils/BUILD.mk
+include cli/gperf/BUILD.mk
 include cli/grep/BUILD.mk
 include cli/jq/BUILD.mk
 include cli/less/BUILD.mk
@@ -23,6 +24,7 @@ cli: \
 	o/cli/dash/built.fat \
 	o/cli/diffutils/built.fat \
 	o/cli/findutils/built.fat \
+	o/cli/gperf/built.fat \
 	o/cli/grep/built.fat \
 	o/cli/jq/built.fat \
 	o/cli/less/built.fat \
