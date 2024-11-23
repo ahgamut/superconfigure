@@ -13,11 +13,15 @@ include lib/gnutls/BUILD.mk
 include lib/isl/BUILD.mk
 include lib/jansson/BUILD.mk
 include lib/lame/BUILD.mk
+include lib/libassuan/BUILD.mk
 include lib/libevent/BUILD.mk
 include lib/libexpat/BUILD.mk
 include lib/libffi/BUILD.mk
 include lib/libgc/BUILD.mk
+include lib/libgcrypt/BUILD.mk
+include lib/libgpg-error/BUILD.mk
 include lib/libjpeg/BUILD.mk
+include lib/libksba/BUILD.mk
 include lib/libmad/BUILD.mk
 include lib/libogg/BUILD.mk
 include lib/libpng/BUILD.mk
@@ -35,9 +39,11 @@ include lib/mpc/BUILD.mk
 include lib/mpfr/BUILD.mk
 include lib/ncurses/BUILD.mk
 include lib/nettle/BUILD.mk
+include lib/npth/BUILD.mk
 include lib/oniguruma/BUILD.mk
 include lib/openssl/BUILD.mk
 include lib/pcre/BUILD.mk
+include lib/pinentry/BUILD.mk
 include lib/readline/BUILD.mk
 
 lib:\

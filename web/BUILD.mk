@@ -1,6 +1,7 @@
 
 include web/curl/BUILD.mk
 include web/git/BUILD.mk
+include web/gnupg/BUILD.mk
 include web/links/BUILD.mk
 include web/openssh/BUILD.mk
 include web/rsync/BUILD.mk

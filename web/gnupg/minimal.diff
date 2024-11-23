@@ -1,0 +1,70 @@
+--- gnupg-2.4.6/g10/t-stutter.c	2024-05-15 10:33:38.000000000 +0000
++++ -	2024-11-23 19:31:37.752112227 +0000
+@@ -195,7 +195,7 @@
+ /* Whether we need to resynchronize the CFB after writing the random
+    data (this is the case for encrypted packets, but not encrypted and
+    integrity protected packets).  */
+-static int sync;
++static int sync2;
+ 
+ static int
+ block_offset (int i)
+@@ -255,7 +255,7 @@
+ 
+   rc = openpgp_cipher_open (&cipher_hd, dek.algo,
+ 			    GCRY_CIPHER_MODE_CFB,
+-			    (! sync /* ed->mdc_method || dek.algo >= 100 */ ?
++			    (! sync2 /* ed->mdc_method || dek.algo >= 100 */ ?
+                              0 : GCRY_CIPHER_ENABLE_SYNC));
+   if (rc)
+     log_fatal ("Failed to open cipher: %s\n", gpg_strerror (rc));
+@@ -485,10 +485,10 @@
+            is 1.  */
+         log_assert (raw_data[hdrlen] == 1);
+         hdrlen ++;
+-        sync = 0;
++        sync2 = 0;
+       }
+     else
+-      sync = 1;
++      sync2 = 1;
+ 
+     msg = &raw_data[hdrlen];
+     msg_len = raw_data_len - hdrlen;
+--- gnupg-2.4.6/common/asshelp.c	2024-05-15 10:33:38.000000000 +0000
++++ -	2024-11-24 04:01:17.700919261 +0000
+@@ -45,6 +45,10 @@
+ #include "membuf.h"
+ #include "asshelp.h"
+ 
++#ifdef __COSMOPOLITAN__
++#include <cosmo.h>
++#endif
++
+ /* The type we use for lock_agent_spawning.  */
+ #ifdef HAVE_W32_SYSTEM
+ # define lock_spawn_t HANDLE
+@@ -522,18 +526,19 @@
+       if (!(err = lock_spawning (&lock, gnupg_homedir (), lock_name, verbose))
+           && assuan_socket_connect (ctx, sockname, 0, connect_flags))
+         {
+-#ifdef HAVE_W32_SYSTEM
++          if(IsWindows()) {
+           err = gnupg_spawn_process_detached (program? program : program_name,
+                                               argv, NULL);
+-#else /*!W32*/
++          }
++          else {
+           pid_t pid;
+ 
+           err = gnupg_spawn_process_fd (program? program : program_name,
+                                         argv, -1, -1, -1, &pid);
+           if (!err)
+             err = gnupg_wait_process (program? program : program_name,
+-                                      pid, 1, NULL);
+-#endif /*!W32*/
++                                               pid, 1, NULL);
++          }
+           if (err)
+             log_error ("failed to start %s '%s': %s\n",
+                        printed_name, program? program : program_name,

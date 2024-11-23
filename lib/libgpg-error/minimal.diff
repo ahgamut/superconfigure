@@ -1,0 +1,10 @@
+--- libgpg-error-1.51/src/mkerrcodes.c	2016-11-16 12:22:03.000000000 +0000
++++ -	2024-11-23 18:24:52.399129446 +0000
+@@ -22,6 +22,7 @@
+    system, while this file will be run on the build system.  */
+ 
+ #include <stdio.h>
++#include <errno.h>
+ 
+ #include "mkerrcodes.h"
+ 

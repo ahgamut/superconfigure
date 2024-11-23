@@ -1,0 +1,13 @@
+--- npth-1.8/src/npth.h.in	2024-11-12 09:12:03.000000000 +0000
++++ -	2024-11-23 18:15:42.350964105 +0000
+@@ -61,6 +61,10 @@
+ #endif
+ #endif
+ 
++#ifdef __COSMOPOLITAN__
++#define _NPTH_NO_RWLOCK 1
++#endif
++
+ #ifdef __cplusplus
+ extern "C" {
+ #if 0 /* (Keep Emacsens' auto-indent happy.) */
