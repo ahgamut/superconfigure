@@ -10,7 +10,7 @@ if [ "$URL" = "ERROR" ]; then
 fi
 
 case "$URL" in
-    *.tar.gz* )
+    *.tar.gz* | *.tgz* )
         wget -qO sources.tar.gz "$URL"
         ;;
     *.tar.xz* )
