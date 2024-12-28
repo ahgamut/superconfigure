@@ -19,6 +19,6 @@ autoreconf -fi
     --without-pop --without-x \
     --with-file-notification=no --without-modules\
     --with-native-compilation=no --without-compress-install\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
-    --libexecdir=/zip/"$ARCH" --prefix="$COSMOS"\
+    --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
+    --libexecdir="$COSMOS/libexec" --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include/ncurses"

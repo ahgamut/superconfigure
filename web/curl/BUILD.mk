@@ -13,4 +13,4 @@ o/web/curl/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/web/curl/config-wrappe
 o/web/curl/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/web/curl/config-wrapper
 
 o/web/curl/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/web/curl/built.fat: BINS = curl usr/share/ssl
+o/web/curl/built.fat: BINS = curl share/ssl

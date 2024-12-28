@@ -8,7 +8,7 @@ SRC_DIR=$(realpath "$BASELOC"/o/compiler/gcc-14.1-patched/gcc*)
 
 "$SRC_DIR"/configure --prefix="$COSMOS"\
     --without-headers --srcdir="$SRC_DIR"\
-    --datarootdir=/zip/usr/share --sysconfdir=/zip/usr/share\
+    --datarootdir="$COSMOS/share" --sysconfdir="$COSMOS/share"\
     --with-system-zlib --disable-shared --enable-static --disable-libquadmath \
     --disable-decimal-float --disable-libitm --disable-fixed-point --disable-lto \
     --with-static-standard-libraries --disable-libada --disable-libssp \

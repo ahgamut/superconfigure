@@ -9,4 +9,4 @@ o/web/rsync/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/web/rsync/config-wrap
 o/web/rsync/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/web/rsync/config-wrapper
 
 o/web/rsync/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/web/rsync/built.fat: BINS = rsync usr/share/ssl
+o/web/rsync/built.fat: BINS = rsync share/ssl

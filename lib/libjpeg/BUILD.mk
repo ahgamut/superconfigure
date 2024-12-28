@@ -3,7 +3,7 @@
 LIBJPEG_SRC := http://www.ijg.org/files/jpegsrc.v9f.tar.gz
 
 LIBJPEG_CONFIG_ARGS = --enable-static --disable-shared\
-    --prefix=$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --prefix=$(COSMOS) --sysconfdir=$(COSMOS)/etc --datarootdir=$(COSMOS)/share\
     CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libjpeg,$(LIBJPEG_SRC)))

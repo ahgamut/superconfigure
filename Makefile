@@ -34,7 +34,7 @@ include cosmo-repo/cosmos.mk
 include custom.mk
 
 zipclean:
-	find /zip -mindepth 1 -delete
+	echo "not using /zip"
 
 clean: zipclean
 	rm -rf o/

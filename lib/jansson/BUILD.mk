@@ -5,7 +5,7 @@ JANSSON_CONFIG_ARGS = --disable-shared --enable-static\
     --prefix=$$(COSMOS)\
 	--disable-urandom --disable-windows-cryptoapi\
 	--disable-Bsymbolic --without-pic\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/share --datarootdir=$$(COSMOS)/share\
     CFLAGS="-Os"
 
 

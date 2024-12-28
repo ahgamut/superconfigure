@@ -6,6 +6,6 @@ $BASELOC/o/lang/python/cpython*/configure --disable-shared --disable-loadable-sq
     --with-pymalloc --with-openssl="$COSMOS"/ssl\
     --disable-test-modules\
     --with-tzpath=/zip/usr/share/zoneinfo\
-    --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share\
+    --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
     --prefix="$COSMOS"\
     CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses -I$COSMOS/include/uuid"

@@ -18,4 +18,4 @@ o/lang/tcl/configured.aarch64: \
 	CONFIG_COMMAND = cp -r $(BASELOC)/o/lang/tcl/tcl*/* ./ && ./unix/configure $(TCL_CONFIG_ARGS)
 
 o/lang/tcl/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/lang/tcl/built.fat: BINS = tclsh8.6 tcl tcl8
+o/lang/tcl/built.fat: BINS = tclsh8.6 share/tcl share/tcl8

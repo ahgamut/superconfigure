@@ -17,9 +17,9 @@ cp -r "$BASELOC"/o/web/git/git*/* .
 ./configure --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\
     --without-tcltk --without-python \
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir="$COSMOS/etc" --datarootdir="$COSMOS/share"\
     --with-pager=less --with-editor=vim  --with-shell=sh\
-    --with-gitconfig=/zip/gitconfig --with-gitattributes=/zip/gitattributes\
+    --with-gitconfig="$COSMOS/gitconfig" --with-gitattributes="$COSMOS/gitattributes"\
     --with-sane-tool-path=""\
    CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" 
 

@@ -8,7 +8,5 @@ alias ar="$AR"
     --without-bash-malloc --enable-static-link\
     --disable-rpath --with-installed-readline\
     --disable-nls --enable-threads=posix\
-    --datarootdir=/zip/usr/share\
-    --sysconfdir=/zip/etc\
     --with-gnu-ld --with-curses\
     CFLAGS="-Os -I$COSMOS/include/ncurses"

@@ -8,7 +8,7 @@ OPENSSL_CONFIG_ARGS = no-shared no-asm\
     no-dso no-dynamic-engine no-engine no-pic\
     no-autoalginit no-autoerrinit\
     --with-rand-seed=getrandom\
-    --openssldir=/zip/usr/share/ssl\
+    --openssldir=$(COSMOS)/share/ssl\
     CFLAGS="-Os"\
     --prefix=$(COSMOS) linux-$(ARCH)
 

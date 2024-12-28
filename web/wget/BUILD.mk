@@ -13,4 +13,4 @@ o/web/wget/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/web/wget/config-wrappe
 o/web/wget/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/web/wget/config-wrapper
 
 o/web/wget/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/web/wget/built.fat: BINS = wget usr/share/ssl wgetrc
+o/web/wget/built.fat: BINS = wget share/ssl share/wgetrc

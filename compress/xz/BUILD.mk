@@ -8,7 +8,7 @@ XZ_CONFIG_ARGS =  --prefix=$$(COSMOS)\
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld\
     --enable-sandbox=no\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS) --datarootdir=$$(COSMOS)/share\
     CFLAGS="-Os -std=gnu99"
 
 $(eval $(call AUTOTOOLS_BUILD,compress/xz,$(XZ_CONFIG_ARGS),$(XZ_CONFIG_ARGS)))

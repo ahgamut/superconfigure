@@ -4,7 +4,7 @@ LIBXML2_SRC := https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.12.6/libxml2-
 
 LIBXML2_CONFIG_ARGS = --enable-static --disable-shared\
     --with-debug=no --with-zlib=no --with-lzma=no --with-sax1=no --with-python=no\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$(COSMOS)/etc --datarootdir=$(COSMOS)/share\
     --prefix=$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libxml2,$(LIBXML2_SRC)))

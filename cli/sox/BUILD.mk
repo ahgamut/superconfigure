@@ -3,7 +3,7 @@ SOX_SRC := https://sourceforge.net/projects/sox/files/sox/14.4.2/sox-14.4.2.tar.
 
 SOX_DEPS := lib/libvorbis lib/libogg lib/flac lib/lame lib/libmad
 
-SOX_CONFIG_ARGS = --prefix=$$(COSMOS) --datarootdir=/zip/share\
+SOX_CONFIG_ARGS = --prefix=$$(COSMOS) --datarootdir=$$(COSMOS)/share\
     --disable-shared --enable-static --disable-dependency-tracking\
 	--without-pic --disable-stack-protector\
     --build=$$(ARCH)-linux-gnu\

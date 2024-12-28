@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-apelinkpls () {
+apelinkold () {
     OUTPUT="$1"
     OLDNAME_X86_64="$(basename -- "$2")"
     OLDNAME_AARCH64="$(basename -- "$3")"
@@ -18,9 +18,9 @@ apelinkpls () {
 
 ###
 # make a temporary Python APE to run compileall
-apelinkpls "$RESULTS"/python-tmp.com "$COSMOS_X86_64"/bin/python3.12 "$COSMOS_AARCH64"/bin/python3.12
+apelinkold "$RESULTS"/python-tmp.com "$COSMOS_X86_64"/bin/python3.12 "$COSMOS_AARCH64"/bin/python3.12
 
-cd /zip
+cd "$RESULTS"
 mkdir -p py-tmp && cd py-tmp
 
 cp -r "$COSMOS_X86_64"/lib/python3.12 ./Lib
@@ -38,12 +38,32 @@ rm -f "$RESULTS"/python3.12.aarch64
 
 ###
 # now make the actual python APE
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"\
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
 apelinkpls "$RESULTS"/bin/python.com "$COSMOS_X86_64"/bin/python3.12 "$COSMOS_AARCH64"/bin/python3.12
 
-cd /zip 
-zip -qr "$RESULTS"/bin/python.com usr/share/terminfo usr/share/ssl
+cd "$COSMOS_X86_64"
+zip -qr "$RESULTS"/bin/python.com share/terminfo share/ssl
 
-cd /zip/py-tmp
+cd "$RESULTS/py-tmp"
 zip -qr "$RESULTS"/bin/python.com Lib/ \
     -x \*.exe \*.py \*.o \*.so \*.a \*.whl \
     \*Makefile\*\
@@ -53,4 +73,6 @@ zip -qr "$RESULTS"/bin/python.com Lib/ \
 	\*turtledemo/\* \*_pydecimal.py\* \
 	\*ensurepip/\*
 
+cd "$RESULTS"
+rm -rf "$RESULTS/py-tmp"
 cd "$BASELOC"

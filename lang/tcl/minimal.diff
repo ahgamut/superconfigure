@@ -20,7 +20,7 @@
  
  # Path for the platform independent Tcl scripting libraries:
 -TCL_LIBRARY		= @TCL_LIBRARY@
-+TCL_LIBRARY		= /zip/tcl
++TCL_LIBRARY		= $(COSMOS)/share/tcl
  
  # Path to use at runtime to refer to LIB_INSTALL_DIR:
  LIB_RUNTIME_DIR		= $(libdir)

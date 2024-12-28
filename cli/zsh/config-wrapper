@@ -5,19 +5,19 @@ alias strip='true'
 export STRIP=""
 
 "$BASELOC"/o/cli/zsh/zsh*/configure --prefix="$COSMOS" --disable-dynamic \
-    --datarootdir=/zip/usr/share --with-tcsetpgrp --enable-gdbm \
-    --enable-zshenv=/zip/etc/zshenv  --enable-zshrc=/zip/etc/zshrc \
-    --enable-zprofile=/zip/etc/zprofile --enable-zlogin=/zip/etc/zlogin \
-    --enable-zlogout=/zip/etc/zlogout \
+    --datarootdir="$COSMOS"/share --with-tcsetpgrp --enable-gdbm \
+    --enable-zshenv="$COSMOS"/etc/zshenv  --enable-zshrc="$COSMOS"/etc/zshrc \
+    --enable-zprofile="$COSMOS"/etc/zprofile --enable-zlogin="$COSMOS"/etc/zlogin \
+    --enable-zlogout="$COSMOS"/etc/zlogout \
     LDFLAGS="" \
     CFLAGS="-Os -I$COSMOS/include/ncurses -I$COSMOS/include/gdbm"
 
 make V=0 -s -j"$MAXPROC"
 make install V=0 -s -j"$MAXPROC"
 
-# copy config files into /zip
-mkdir -p /zip/etc
-cp "$BASELOC"/cli/zsh/zshinit /zip/etc
+# copy config files into "$COSMOS"
+mkdir -p "$COSMOS"/etc
+cp "$BASELOC"/cli/zsh/zshinit "$COSMOS"/etc
 
 FILELIST='
 zshenv
@@ -28,5 +28,5 @@ zlogout
 '
 
 for rcfile in $FILELIST; do
-  echo ". /zip/etc/zshinit $rcfile" > /zip/etc/"$rcfile"
+  echo ". $COSMOS/etc/zshinit $rcfile" > "$COSMOS/etc/$rcfile"
 done

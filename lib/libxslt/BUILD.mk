@@ -6,7 +6,7 @@ LIBXSLT_CONFIG_ARGS = --enable-static --disable-shared\
     --with-debug=no --with-tests=no --with-debugger=no --with-profiler=no \
     --with-crypto=no --with-python=no\
     --without-icu --without-pic\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call SPECIFY_DEPS,lib/libxslt,lib/libxml2))

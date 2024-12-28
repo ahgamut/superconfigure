@@ -3,8 +3,8 @@ LIBPSL_SRC := https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libp
 
 LIBPSL_CONFIG_ARGS = --disable-shared --enable-static\
 					 --prefix=$$(COSMOS)\
-					 --sysconfdir=/zip/usr/share\
-					 --datarootdir=/zip/usr/share\
+					 --sysconfdir=$$(COSMOS)/share\
+					 --datarootdir=$$(COSMOS)/share\
 					 --disable-runtime
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libpsl,$(LIBPSL_SRC)))

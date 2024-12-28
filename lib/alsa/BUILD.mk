@@ -1,7 +1,7 @@
 ALSA_SRC := https://github.com/alsa-project/alsa-lib/archive/refs/tags/v1.2.11.tar.gz
 
 ALSA_CONFIG_ARGS = --enable-static --disable-shared\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
 	--disable-aload --disable-mixer \
 	--disable-pcm --disable-rawmidi \
 	--disable-hwdep --disable-seq \

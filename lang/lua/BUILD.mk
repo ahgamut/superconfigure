@@ -21,4 +21,4 @@ o/lang/lua/installed.aarch64: \
 	INSTALL_COMMAND = cp lua $(COSMOS)/bin
 
 o/lang/lua/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/lang/lua/built.fat: BINS = lua usr/share/terminfo
+o/lang/lua/built.fat: BINS = lua share/terminfo

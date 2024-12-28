@@ -16,4 +16,4 @@ o/cli/tmux/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/cli/tmux/config-wrappe
 o/cli/tmux/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/cli/tmux/config-wrapper
 
 o/cli/tmux/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/cli/tmux/built.fat: BINS = tmux usr/share/terminfo
+o/cli/tmux/built.fat: BINS = tmux share/terminfo

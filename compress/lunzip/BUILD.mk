@@ -4,7 +4,7 @@ LUNZIP_SRC := https://download.savannah.gnu.org/releases/lzip/lunzip/lunzip-1.14
 $(eval $(call DOWNLOAD_SOURCE,compress/lunzip,$(LUNZIP_SRC)))
 
 LUNZIP_CONFIG_ARGS =  --prefix=$$(COSMOS)\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS) --datarootdir=$$(COSMOS)/share\
     CC="$$(CC)" CXX="$$(CXX)" CXXFLAGS="-Os -fexceptions"
 
 $(eval $(call AUTOTOOLS_BUILD,compress/lunzip,$(LUNZIP_CONFIG_ARGS),$(LUNZIP_CONFIG_ARGS)))

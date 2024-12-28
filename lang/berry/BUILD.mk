@@ -17,4 +17,4 @@ o/lang/berry/configured.aarch64: CONFIG_COMMAND = cp -r $(BASELOC)/o/lang/berry/
 o/lang/berry/installed.aarch64: INSTALL_COMMAND = cp ./berry $(COSMOS)/bin
 
 o/lang/berry/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/lang/berry/built.fat: BINS = berry usr/share/terminfo
+o/lang/berry/built.fat: BINS = berry share/terminfo

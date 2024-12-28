@@ -6,7 +6,7 @@ export OPENSSL_LIBS="-lssl -lcrypto"
 
 "$BASELOC"/o/web/wget/wget*/configure --prefix="$COSMOS"\
     --with-ssl=openssl --with-openssl=yes\
-    --sysconfdir=/zip --with-gnu-ld=yes\
+    --sysconfdir="$COSMOS"/share --with-gnu-ld=yes\
     --enable-threads=posix --disable-rpath\
     --disable-xattr --disable-nls\
     --disable-pcre --disable-pcre2\

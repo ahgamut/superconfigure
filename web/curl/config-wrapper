@@ -7,8 +7,8 @@ alias ar="$AR"
 "$BASELOC"/o/web/curl/curl*/configure --prefix="$COSMOS"\
     --enable-shared=no --enable-static=yes\
     --enable-pthreads --with-openssl="$COSMOS"\
-    --sysconfdir=/zip/usr/share --datarootdir=/zip/usr/share\
-    --with-ca-path=/zip/usr/share/ssl/certs --without-ca-fallback\
+    --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
+    --with-ca-path="$COSMOS/share/ssl/certs" --without-ca-fallback\
     --without-pic --with-gnu-ld\
     CPPFLAGS="-D_COSMO_SOURCE"\
     CFLAGS="-Os -std=c11" LIBS="-lbrotlidec -lbrotlienc -lbrotlicommon -lz"

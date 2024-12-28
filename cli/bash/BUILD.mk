@@ -9,4 +9,4 @@ o/cli/bash/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/cli/bash/config-wrappe
 o/cli/bash/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/cli/bash/config-wrapper
 
 o/cli/bash/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/cli/bash/built.fat: BINS = bash usr/share/terminfo
+o/cli/bash/built.fat: BINS = bash share/terminfo

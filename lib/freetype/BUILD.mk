@@ -5,7 +5,7 @@ FREETYPE_DEPS := cosmo-repo/base cosmo-repo/compress
 
 FREETYPE_CONFIG_ARGS = --enable-static --disable-shared --with-tests=no\
     --with-brotli=no --with-harfbuzz=no --with-png=no --with-librsvg=no\
-    --prefix=$$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --prefix=$$(COSMOS) --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/freetype,$(FREETYPE_SRC)))

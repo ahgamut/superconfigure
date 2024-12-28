@@ -7,8 +7,9 @@ alias ar="$AR"
 
 export GOBJECT_LIBS=""
 
-"$BASELOC"/o/lib/gnutls/gnutls*/configure --sysconfdir=/zip --datarootdir=/zip/usr/share\
-    --libexecdir=/zip/"$ARCH" --prefix="$COSMOS"\
+# TODO: zip libexec
+"$BASELOC"/o/lib/gnutls/gnutls*/configure --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
+    --libexecdir="$COSMOS/libexec" --prefix="$COSMOS"\
     --disable-shared --enable-static\
     --with-gnu-ld --disable-cxx\
     --disable-nls --disable-rpath --disable-tests\
@@ -18,8 +19,8 @@ export GOBJECT_LIBS=""
     --without-p11-kit --without-tpm --without-tpm2\
     --with-included-libtasn1 --with-included-unistring\
     --enable-fat --without-zstd\
-    --with-default-trust-store-file=/zip/usr/share/ssl/certs/ca-certificates.crt \
-    --with-default-trust-store-dir=/zip/usr/share/ssl/certs \
-    --with-default-trust-store-dir=/zip/usr/share/ssl/default.crl \
-    --with-unbound-root-key-file=/zip/usr/share/unbound/root.key \
+    --with-default-trust-store-file="$COSMOS/share"/ssl/certs/ca-certificates.crt \
+    --with-default-trust-store-dir="$COSMOS/share"/ssl/certs \
+    --with-default-trust-store-dir="$COSMOS/share"/ssl/default.crl \
+    --with-unbound-root-key-file="$COSMOS/share"/unbound/root.key \
     CFLAGS="-Os"

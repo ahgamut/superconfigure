@@ -7,5 +7,5 @@ export COMPATINCLUDEDIR="$COSMOS/include/gdbm"
     --disable-shared --enable-static\
     --disable-nls --disable-rpath\
     --without-pic --with-gnu-ld --without-readline\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
     CFLAGS="-Os"

@@ -5,7 +5,7 @@ LIBEXPAT_CONFIG_ARGS =  --enable-static --disable-shared\
     --without-pic --with-gnu-ld\
     --disable-tests --disable-examples --without-docbook\
     --with-getrandom\
-    --prefix=$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share \
+    --prefix=$(COSMOS) --sysconfdir=$(COSMOS)/etc --datarootdir=$(COSMOS)/share \
     CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libexpat,$(LIBEXPAT_SRC)))

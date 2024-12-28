@@ -5,7 +5,7 @@ LIBTIFF_SRC := https://gitlab.com/libtiff/libtiff/-/archive/v4.6.0/libtiff-v4.6.
 LIBTIFF_CONFIG_ARGS = --enable-static --disable-shared\
     --disable-rpath --disable-tools --disable-contrib\
     --disable-docs --disable-sphinx\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libtiff,$(LIBTIFF_SRC)))

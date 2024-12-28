@@ -6,19 +6,25 @@ apelinkpls () {
     OLDNAME_X86_64="$(basename -- "$2")"
     OLDNAME_AARCH64="$(basename -- "$3")"
     TARG_FOLD="$(dirname "$OUTPUT")"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
-        "$2" \
-        "$3"
-    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
-    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"\
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
 # scrapscript
 apelinkpls "$RESULTS"/bin/scrapscript.com "$COSMOS_X86_64"/bin/scrapscript "$COSMOS_AARCH64"/bin/scrapscript
-cd /zip
+cd "$RESULTS"
 
 mkdir -p scrapscript && cd scrapscript
 unzip -qo "$BASELOC"/o/python/cpy311-scrapscript/build/x86_64/scrapscript/python.com || true
@@ -31,7 +37,7 @@ ls -al build/
 zip -qr "$RESULTS"/bin/scrapscript.com Lib/
 zip -qr "$RESULTS"/bin/scrapscript.com build/
 
-cd /zip
-zip -qr "$RESULTS"/bin/scrapscript.com usr/share/terminfo
+cd "$COSMOS_X86_64"
+zip -qr "$RESULTS"/bin/scrapscript.com share/terminfo
 cd "$BASELOC"
-rm -rf /zip/scrapscript
+rm -rf "$RESULTS"/scrapscript

@@ -5,7 +5,7 @@ LIBWEBP_SRC := https://github.com/webmproject/libwebp/archive/refs/tags/v1.3.2.t
 LIBWEBP_CONFIG_ARGS = --enable-static --disable-shared\
     --disable-dependency-tracking --disable-libwebpextras\
     --disable-tiff --without-pic\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libwebp,$(LIBWEBP_SRC)))

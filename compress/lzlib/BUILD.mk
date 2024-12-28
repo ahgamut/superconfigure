@@ -5,7 +5,7 @@ $(eval $(call DOWNLOAD_SOURCE,compress/lzlib,$(LZLIB_SRC)))
 
 LZLIB_CONFIG_ARGS =  --prefix=$$(COSMOS)\
 	--disable-shared --enable-static\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/share --datarootdir=$$(COSMOS)/share\
     CC="$$(CC)" CXX="$$(CXX)" CXXFLAGS="-Os -fexceptions"
 
 $(eval $(call AUTOTOOLS_BUILD,compress/lzlib,$(LZLIB_CONFIG_ARGS),$(LZLIB_CONFIG_ARGS)))

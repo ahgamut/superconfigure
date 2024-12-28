@@ -14,10 +14,7 @@ for arch in x86_64 aarch64; do
     mkdir -p "$BASELOC"/cosmos/$arch
     cd "$BASELOC"/cosmos/$arch
     mkdir -p include bin lib libexec share x86_64 aarch64
-    mkdir -p /zip/$arch
 done
-mkdir -p /zip/usr/share
-mkdir -p /zip/usr/lib
 cd "$BASELOC"
 
 if [ -z ${GITHUB_ACTIONS+x} ]; then 

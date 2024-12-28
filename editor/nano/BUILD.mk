@@ -12,4 +12,4 @@ o/editor/nano/configured.aarch64:\
 
 o/editor/nano/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
 o/editor/nano/built.fat: \
-	BINS = nano usr/share/terminfo usr/share/nano
+	BINS = nano share/terminfo share/nano

@@ -6,7 +6,7 @@ LINKS_DEPS := lib/ncurses lib/openssl lib/libuuid \
 
 LINKS_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --with-ssl=$$(COSMOS)/ssl --disable-ipv6 \
-    --datadir=/zip/usr/share --sysconfdir=/zip/usr/share\
+    --datadir=$$(COSMOS)/share --sysconfdir=$$(COSMOS)/share\
     --without-openmp  --without-svgalib  --without-x\
     --without-fb      --without-directfb --without-pmshell\
     --without-windows --without-atheos   --without-haiku\
@@ -20,4 +20,4 @@ $(eval $(call SPECIFY_DEPS,web/links,$(LINKS_DEPS)))
 $(eval $(call AUTOTOOLS_BUILD,web/links,$(LINKS_CONFIG_ARGS),$(LINKS_CONFIG_ARGS)))
 
 o/web/links/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
-o/web/links/built.fat: BINS = links usr/share/ssl usr/share/terminfo
+o/web/links/built.fat: BINS = links share/ssl share/terminfo

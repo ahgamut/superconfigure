@@ -2,7 +2,7 @@ FONTCONFIG_SRC := https://www.freedesktop.org/software/fontconfig/release/fontco
 FONTCONFIG_DEPS := lib/freetype lib/libexpat lib/libxml2
 
 FONTCONFIG_CONFIG_ARGS = --enable-static --disable-shared\
-					   --prefix=$$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+					   --prefix=$$(COSMOS) --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     					CFLAGS="-Os"
 
 o/lib/fontconfig/setup: o/lib/fontconfig/patched

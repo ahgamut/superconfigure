@@ -6,19 +6,25 @@ apelinkpls () {
     OLDNAME_X86_64="$(basename -- "$2")"
     OLDNAME_AARCH64="$(basename -- "$3")"
     TARG_FOLD="$(dirname "$OUTPUT")"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
-        "$2" \
-        "$3"
-    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
-    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"\
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
 
 # datasette
 apelinkpls "$RESULTS"/bin/datasette.com "$COSMOS_X86_64"/bin/datasette "$COSMOS_AARCH64"/bin/datasette
-cd /zip
+cd "$RESULTS"
 
 mkdir -p datasette && cd datasette
 unzip -qo "$BASELOC"/o/python/cpy311-datasette/build/x86_64/datasette/datasette.com || true
@@ -31,7 +37,7 @@ ls -al build/
 zip -qr "$RESULTS"/bin/datasette.com Lib/
 zip -qr "$RESULTS"/bin/datasette.com build/
 
-cd /zip
-zip -qr "$RESULTS"/bin/datasette.com usr/share/terminfo usr/share/ssl
+cd "$COSMOS_X86_64"
+zip -qr "$RESULTS"/bin/datasette.com share/terminfo share/ssl
 cd "$BASELOC"
-rm -rf /zip/datasette
+rm -rf "$RESULTS"/datasette

@@ -6,19 +6,24 @@ apelinkpls () {
     OLDNAME_X86_64="$(basename -- "$2")"
     OLDNAME_AARCH64="$(basename -- "$3")"
     TARG_FOLD="$(dirname "$OUTPUT")"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    "$RENAMESTR" -f "$COSMOS_X86_64" -t "/zip" \
+        -f "$COSMOS_AARCH64" -t "/zip" \
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
     "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
         -l "$COSMO/o/aarch64/ape/ape.elf" \
         -M "$COSMO/ape/ape-m1.c" \
         -o "$OUTPUT" \
-        "$2" \
-        "$3"
-    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
-    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+        "$TARG_FOLD/$OLDNAME_X86_64.x86_64"\
+        "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
 }
-
 # pypack1
 apelinkpls "$RESULTS"/bin/pypack1.com "$COSMOS_X86_64"/bin/pypack1 "$COSMOS_AARCH64"/bin/pypack1
-cd /zip
+cd "$RESULTS"
 
 mkdir -p pypack1 && cd pypack1
 unzip -qo "$BASELOC"/o/python/cpy311-pypack1/build/x86_64/pypack1/python.com || true
@@ -31,7 +36,7 @@ ls -al build/
 zip -qr "$RESULTS"/bin/pypack1.com Lib/
 zip -qr "$RESULTS"/bin/pypack1.com build/
 
-cd /zip
-zip -qr "$RESULTS"/bin/pypack1.com usr/share/terminfo usr/share/ssl
+cd "$COSMOS_X86_64"
+zip -qr "$RESULTS"/bin/pypack1.com share/terminfo share/ssl
 cd "$BASELOC"
-rm -rf /zip/pypack1
+rm -rf "$RESULTS"/pypack1
