@@ -13,7 +13,7 @@ $(eval $(call SPECIFY_DEPS,lib/libwebp,lib/libjpeg,lib/libpng))
 $(eval $(call AUTOTOOLS_BUILD,lib/libwebp,$(LIBWEBP_CONFIG_ARGS),$(LIBWEBP_CONFIG_ARGS)))
 
 o/lib/libwebp/setup: o/lib/libwebp/patched
-	cd $(BASELOC)/o/lib/libwebp/libwebp-* && ./autogen.sh
+	cd $(BASELOC)/o/lib/libwebp/libwebp-* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/lib/libwebp/configured.x86_64: o/lib/libwebp/setup

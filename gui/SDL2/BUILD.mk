@@ -10,7 +10,8 @@ $(eval $(call DOWNLOAD_SOURCE,gui/SDL2,$(SDL2_SRC)))
 $(eval $(call SPECIFY_DEPS,gui/SDL2,$(SDL2_DEPS)))
 
 o/gui/SDL2/setup: o/gui/SDL2/patched
-	cd $(BASELOC)/o/gui/SDL2/SDL2* && aclocal --force && autoconf --force
+	cd $(BASELOC)/o/gui/SDL2/SDL2* && aclocal --force $(ERRLOG) &&\
+		autoconf --force $(ERRLOG)
 	touch $@
 
 o/gui/SDL2/configured.x86_64: o/gui/SDL2/setup

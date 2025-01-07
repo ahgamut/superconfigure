@@ -11,7 +11,7 @@ $(eval $(call DOWNLOAD_SOURCE,lib/pcre,$(PCRE_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/pcre,$(PCRE_CONFIG_ARGS),$(PCRE_CONFIG_ARGS)))
 
 o/lib/pcre/setup: o/lib/pcre/patched
-	cd $(BASELOC)/o/lib/pcre/pcre* && ./autogen.sh
+	cd $(BASELOC)/o/lib/pcre/pcre* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/lib/pcre/configured.x86_64: o/lib/pcre/setup

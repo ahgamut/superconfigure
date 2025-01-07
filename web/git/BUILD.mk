@@ -9,7 +9,7 @@ $(eval $(call DOWNLOAD_SOURCE,web/git,$(GIT_SRC)))
 $(eval $(call SPECIFY_DEPS,web/git,$(GIT_DEPS)))
 
 o/web/git/setup: o/web/git/patched
-	cd o/web/git/git* && autoconf || true
+	cd o/web/git/git* && autoconf $(ERRLOG) || true
 	touch $@
 
 o/web/git/configured.x86_64: o/web/git/setup

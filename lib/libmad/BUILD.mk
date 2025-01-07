@@ -7,7 +7,7 @@ LIBMAD_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --build=$$(ARCH)-linux-gnu
 
 o/lib/libmad/setup: o/lib/libmad/patched
-	@cd $(BASELOC)/o/lib/libmad/libmad*/ && autoreconf -fvi || true
+	@cd $(BASELOC)/o/lib/libmad/libmad*/ && autoreconf -fvi $(ERRLOG) || true
 	touch $@
 
 o/lib/libmad/configured.x86_64: o/lib/libmad/setup

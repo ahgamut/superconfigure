@@ -7,7 +7,7 @@ LIBYAML_CONFIG_ARGS =  --without-pic --with-gnu-ld\
     CFLAGS="-Os"
 
 o/lib/libyaml/setup: o/lib/libyaml/patched
-	cd o/lib/libyaml/libyaml* && autoreconf -fvi
+	cd o/lib/libyaml/libyaml* && autoreconf -fvi $(ERRLOG)
 	touch $@
 
 o/lib/libyaml/configured.x86_64: o/lib/libyaml/setup

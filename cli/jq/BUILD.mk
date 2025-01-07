@@ -11,7 +11,7 @@ $(eval $(call SPECIFY_DEPS,cli/jq,$(JQ_DEPS)))
 $(eval $(call AUTOTOOLS_BUILD,cli/jq,$(JQ_CONFIG_ARGS),$(JQ_CONFIG_ARGS)))
 
 o/cli/jq/setup: o/cli/jq/patched
-	cd $(BASELOC)/o/cli/jq/jq* && autoreconf -fi
+	cd $(BASELOC)/o/cli/jq/jq* && autoreconf -fi $(ERRLOG)
 	touch $@
 
 o/cli/jq/configured.x86_64: o/cli/jq/setup

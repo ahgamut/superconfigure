@@ -5,7 +5,7 @@ o/lang/php/downloaded: \
 o/lang/php/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/lang/php/patched: PATCH_COMMAND = $(DUMMYLINK0)
 o/lang/php/setup:  o/lang/php/patched
-	cd $(BASELOC)/o/lang/php/php && ./buildconf --force
+	cd $(BASELOC)/o/lang/php/php && ./buildconf --force $(ERRLOG)
 	touch $@
 
 PHP_DEPS := lib/libxml2 cosmo-repo/base lib/openssl

@@ -6,7 +6,7 @@ FONTCONFIG_CONFIG_ARGS = --enable-static --disable-shared\
     					CFLAGS="-Os"
 
 o/lib/fontconfig/setup: o/lib/fontconfig/patched
-	cd $(BASELOC)/o/lib/fontconfig/fontconfig* && autoreconf -fi
+	cd $(BASELOC)/o/lib/fontconfig/fontconfig* && autoreconf -fi $(ERRLOG)
 	touch $@
 
 o/lib/fontconfig/configured.x86_64: o/lib/fontconfig/setup

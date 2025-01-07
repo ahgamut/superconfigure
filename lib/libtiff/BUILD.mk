@@ -13,7 +13,7 @@ $(eval $(call SPECIFY_DEPS,lib/libtiff,lib/libjpeg))
 $(eval $(call AUTOTOOLS_BUILD,lib/libtiff,$(LIBTIFF_CONFIG_ARGS),$(LIBTIFF_CONFIG_ARGS)))
 
 o/lib/libtiff/setup: o/lib/libtiff/patched
-	cd $(BASELOC)/o/lib/libtiff/libtiff-* && ./autogen.sh
+	cd $(BASELOC)/o/lib/libtiff/libtiff-* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/lib/libtiff/configured.x86_64: o/lib/libtiff/setup

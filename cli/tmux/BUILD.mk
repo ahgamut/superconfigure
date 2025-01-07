@@ -6,7 +6,7 @@ $(eval $(call DOWNLOAD_SOURCE,cli/tmux,$(TMUX_SRC)))
 $(eval $(call SPECIFY_DEPS,cli/tmux,$(TMUX_DEPS)))
 
 o/cli/tmux/setup: o/cli/tmux/patched
-	cd $(BASELOC)/o/cli/tmux/tmux* && ./autogen.sh
+	cd $(BASELOC)/o/cli/tmux/tmux* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/cli/tmux/configured.x86_64: o/cli/tmux/setup

@@ -7,7 +7,7 @@ $(eval $(call DOWNLOAD_SOURCE,lib/oniguruma,$(ONIGURUMA_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/oniguruma,$(ONIGURUMA_CONFIG_ARGS),$(ONIGURUMA_CONFIG_ARGS)))
 
 o/lib/oniguruma/setup: o/lib/oniguruma/patched
-	cd $(BASELOC)/o/lib/oniguruma/oniguruma* && autoreconf -fi
+	cd $(BASELOC)/o/lib/oniguruma/oniguruma* && autoreconf -fi $(ERRLOG)
 	touch $@
 
 o/lib/oniguruma/configured.x86_64: o/lib/oniguruma/setup

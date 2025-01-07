@@ -10,7 +10,9 @@ export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy
 export APELINK:=$(COSMO)/o/tool/build/apelink
 
 # basic functions
-include config/common.mk
+include config/variables.mk
+include config/errlog.mk
+include config/rules.mk
 include config/functions.mk
 
 # recipes for each subfolder

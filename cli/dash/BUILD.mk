@@ -14,7 +14,7 @@ o/cli/dash/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
 o/cli/dash/patched: PATCH_FILE = $(BASELOC)/cli/dash/minimal.diff
 
 o/cli/dash/setup: o/cli/dash/patched
-	cd o/cli/dash/dash* && ./autogen.sh
+	cd o/cli/dash/dash* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/cli/dash/configured.x86_64: o/cli/dash/setup
