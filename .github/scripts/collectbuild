@@ -1,6 +1,7 @@
 #!/bin/sh
+set -eu
 
-if [ -z "${GITHUB_ACTIONS}" ]; then 
+if [ -z "${GITHUB_ACTIONS:-}" ]; then 
     # we are not on GA
     if [ $(nproc) -gt 2 ]; then
         numproc=4
@@ -12,12 +13,21 @@ else
     numproc=2
 fi
 export MAXPROC="${MAXPROC:-$numproc}"
-echo "maxproc is $MAXPROC"
 
-COLLECTION="${1:-$COLLECTION}"
-if [ "$COLLECTION" = "" ]; then
-    echo "did not specify collection"
+TARGET="${1:-ERROR}"
+COLLECTION="${2:-no}"
+if [ "$TARGET" = "ERROR" ]; then
+    echo "build target missing!"
     exit 1
 fi
+TARGET="$(echo $TARGET | sed 's:/*$::')"
 
-make -j"$MAXPROC" "$COLLECTION"
+if [ "x$COLLECTION" == "xyes" ]; then
+    echo "should build $TARGET"
+    make $TARGET
+else
+    if [ -f "$TARGET/BUILD.mk" -a -f "$TARGET/check.signature" ]; then
+        echo "should build o/$TARGET/built.fat"
+        make o/$TARGET/built.fat
+    fi
+fi

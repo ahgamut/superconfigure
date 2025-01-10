@@ -1,6 +1,10 @@
 on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - "z*"
   workflow_dispatch:
-  create:
   release:
     types: [created]
 
@@ -24,7 +28,7 @@ jobs:
       - name: build ${{ matrix.result }}
         working-directory: /ahgamut/superconfigure
         env:
-          COLLECTION: ${{ matrix.result }}
+          COLLECTION: yes
         run: bash ./.github/scripts/collectbuild ${{ matrix.result }}
       - name: collect into zip
         working-directory: /ahgamut/superconfigure

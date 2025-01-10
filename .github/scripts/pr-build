@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+NEAREST_TAG="$(git describe --tags HEAD | awk -F'-' -e '{print $1}')"
+PREVIOUS_COMMIT="$(git log -n 1 --pretty=%H)"
+
+REFERENCE_COMMIT="${1:-$PREVIOUS_COMMIT}"
+echo "reference point is $REFERENCE_COMMIT"
+echo "targets changed since then: "
+
+export COLLECTION=no
+git diff $REFERENCE_COMMIT --dirstat=files,0 |\
+    awk -F'% ' -e '{print $2}' |\
+    grep -v '\.github' |\
+    grep -v 'config' |\
+    xargs -n 1 ./.github/scripts/collectbuild
