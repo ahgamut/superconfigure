@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master
+        with:
+          fetch-depth: 10
       - name: support ape bins and SSL things
         run: bash ./.github/scripts/setup
       - name: build Cosmo (minimal)

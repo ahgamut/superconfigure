@@ -2,8 +2,6 @@ on:
   push:
     tags:
       - z*
-    branches:
-      - 'main'
   workflow_dispatch:
   release:
     types: [created]
