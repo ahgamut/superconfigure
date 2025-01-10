@@ -22,12 +22,12 @@ if [ "$TARGET" = "ERROR" ]; then
 fi
 TARGET="$(echo $TARGET | sed 's:/*$::')"
 
-if [ "x$COLLECTION" == "xyes" ]; then
+if [ "x$COLLECTION" = "xyes" ]; then
     echo "should build $TARGET"
-    make $TARGET
+    make -j$numproc $TARGET
 else
     if [ -f "$TARGET/BUILD.mk" -a -f "$TARGET/check.signature" ]; then
         echo "should build o/$TARGET/built.fat"
-        make o/$TARGET/built.fat
+        make LOG=stdout -j$numproc o/$TARGET/built.fat
     fi
 fi
