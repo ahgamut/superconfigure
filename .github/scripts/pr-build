@@ -2,7 +2,7 @@
 set -eu
 
 NEAREST_TAG="$(git describe --tags HEAD | awk -F'-' -e '{print $1}')"
-PREVIOUS_COMMIT="$(git log -n 1 --pretty=%H)"
+PREVIOUS_COMMIT="$(git log -n 1 --pretty=%H HEAD~1)"
 
 REFERENCE_COMMIT="${1:-$PREVIOUS_COMMIT}"
 echo "reference point is $REFERENCE_COMMIT"
