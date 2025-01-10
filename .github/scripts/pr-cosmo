@@ -39,8 +39,7 @@ cd "$COSMO"
 # make calls download-cosmocc.sh, which writes to .cosmocc
 make V=0 -s -j$numproc o//tool/build
 make m=x86_64 V=0 -s -j$numproc o/x86_64/ape
-make m=aarch64 V=0 -s -j$numproc o/arch64/ape
+make m=aarch64 V=0 -s -j$numproc o/aarch64/ape
 
 cd "$COSMO"
 ln -sf .cosmocc/current cosmocc
-ls cosmocc/bin

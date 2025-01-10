@@ -1,4 +1,3 @@
-
 COREUTILS_SRC := https://ftp.gnu.org/gnu/coreutils/coreutils-9.4.tar.gz 
 COREUTILS_DEPS := lib/gmp lib/ncurses cosmo-repo/base
 
