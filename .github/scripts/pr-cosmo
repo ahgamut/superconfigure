@@ -36,11 +36,11 @@ else
 fi
 
 cd "$COSMO"
-wget "$URL1" -qO cosmocc-latest.zip
-mkdir -p cosmocc
-ln -sf cosmocc .cosmocc # avoid downloading twice
-cd cosmocc
-unzip ../cosmocc-latest.zip
+# make calls download-cosmocc.sh, which writes to .cosmocc
+make V=0 -s -j$numproc o//tool/build
+make m=x86_64 V=0 -s -j$numproc o/x86_64/ape
+make m=aarch64 V=0 -s -j$numproc o/arch64/ape
 
 cd "$COSMO"
-make -j$numproc o//tool/build
+ln -sf .cosmocc/current cosmocc
+ls cosmocc/bin
