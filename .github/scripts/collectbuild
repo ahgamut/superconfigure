@@ -15,7 +15,7 @@ fi
 export MAXPROC="${MAXPROC:-$numproc}"
 
 TARGET="${1:-ERROR}"
-COLLECTION="${2:-no}"
+COLLECTION="${COLLECTION:-no}"
 if [ "$TARGET" = "ERROR" ]; then
     echo "build target missing!"
     exit 1
