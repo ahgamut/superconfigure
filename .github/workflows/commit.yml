@@ -13,15 +13,12 @@ jobs:
       - name: support ape bins and SSL things
         run: bash ./.github/scripts/setup
       - name: build Cosmo (minimal)
-        working-directory: /ahgamut/superconfigure
         run: bash ./.github/scripts/pr-cosmo
       - name: build updates from commit
-        working-directory: /ahgamut/superconfigure
         env:
           COLLECTION: no
         run: bash ./.github/scripts/pr-build
       - name: collect into zip
-        working-directory: /ahgamut/superconfigure
         env:
           ZFILENAME: "updates"
         run: bash ./.github/scripts/collectzip
@@ -29,6 +26,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact
-          path: "/ahgamut/superconfigure/updates-dbg.zip"
+          path: "updates-dbg.zip"
           compression-level: 0
           if-no-files-found: error
