@@ -33,17 +33,19 @@ include cosmo-repo/cosmos.mk
 # custom recipes here
 include custom.mk
 
-zipclean:
-	echo "not using /zip"
+clean-results:
+	echo "removing APE binaries in the results/ folder"
+	rm -rf results/bin results/libexec
 
-clean: zipclean
+clean-cosmos:
+	echo "removing files from cosmos"
+	find cosmos -type f -delete
+
+clean: clean-cosmos clean-results
+	echo "removing the o/ folder"
 	rm -rf o/
-	find cosmos -type f -delete
-	rm -rf results/bin results/libexec
 
-build-clean: zipclean
-	find cosmos -type f -delete
-	rm -rf results/bin results/libexec
+build-clean: clean-cosmo clean-results
 	find o -name 'x86_64' | grep 'build/x86_64' | xargs rm -rf
 	find o -name 'aarch64' | grep 'build/aarch64' | xargs rm -rf
 	find o -name 'deps.x86_64' -delete
@@ -56,7 +58,7 @@ build-clean: zipclean
 	find o -name 'installed.aarch64' -delete
 	find o -name 'built.fat' -delete
 
-distclean: clean zipclean
+distclean: clean
 	git clean -f -d -x
 
-.PHONY: clean distclean zipclean build-clean
+.PHONY: clean distclean build-clean clean-cosmos clean-results
