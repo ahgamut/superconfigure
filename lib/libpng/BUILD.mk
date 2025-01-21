@@ -5,6 +5,7 @@ LIBPNG_CONFIG_ARGS = --prefix=$$(COSMOS)\
 	--disable-arm-neon\
     --without-pic --with-gnu-ld\
     --disable-rpath\
+    --with-zlib-prefix=_Cz_\
     CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libpng,$(LIBPNG_SRC)))
