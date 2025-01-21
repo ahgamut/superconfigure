@@ -148,3 +148,55 @@
  	$(INSTALL) -m 644 ssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
  	$(INSTALL) -m 644 scp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
  	$(INSTALL) -m 644 ssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
+--- openssh-portable-V_9_7_P1/configure.ac	2024-03-11 13:20:49.000000000 +0800
++++ -	2024-03-11 13:20:49.000000000 +0800
+@@ -1446,7 +1446,7 @@
+     AC_MSG_RESULT([yes])
+     AC_DEFINE([WITH_ZLIB], [1], [Enable zlib])
+     AC_CHECK_HEADER([zlib.h], ,[AC_MSG_ERROR([*** zlib.h missing - please install first or check config.log ***])])
+-    AC_CHECK_LIB([z], [deflate], [],
++    AC_CHECK_LIB([z], [_Cz_deflate], [],
+	[
+		saved_CPPFLAGS="$CPPFLAGS"
+		saved_LDFLAGS="$LDFLAGS"
+@@ -1457,7 +1457,7 @@
+			LDFLAGS="-L/usr/local/lib ${saved_LDFLAGS}"
+		fi
+		CPPFLAGS="-I/usr/local/include ${saved_CPPFLAGS}"
+-		AC_TRY_LINK_FUNC([deflate], [AC_DEFINE([HAVE_LIBZ])],
++		AC_TRY_LINK_FUNC([_Cz_deflate], [AC_DEFINE([HAVE_LIBZ])],
+			[
+				AC_MSG_ERROR([*** zlib missing - please install first or check config.log ***])
+			]
+--- openssh-portable-V_9_7_P1/kex.c	2024-03-11 13:20:49.000000000 +0800
++++ -	2024-03-11 13:20:49.000000000 +0800
+@@ -1630,7 +1630,7 @@
+ 	 * Check that the versions match.  In future this might accept
+ 	 * several versions and set appropriate flags to handle them.
+ 	 */
+-	if (sscanf(peer_version_string, "SSH-%d.%d-%[^\n]\n",
++	if (sscanf(peer_version_string, "SSH-%d.%d-%s\n",
+ 	    &remote_major, &remote_minor, remote_version) != 3) {
+ 		error("Bad remote protocol version identification: '%.100s'",
+ 		    peer_version_string);
+--- openssh-portable-V_9_7_P1/ssh-keyscan.c	2024-03-11 13:20:49.000000000 +0800
++++ -	2024-03-11 13:20:49.000000000 +0800
+@@ -554,7 +554,7 @@
+ 	ssh_packet_set_timeout(c->c_ssh, timeout, 1);
+ 	ssh_set_app_data(c->c_ssh, c);	/* back link */
+ 	c->c_ssh->compat = 0;
+-	if (sscanf(buf, "SSH-%d.%d-%[^\n]\n",
++	if (sscanf(buf, "SSH-%d.%d-%s\n",
+ 	    &remote_major, &remote_minor, remote_version) == 3)
+ 		compat_banner(c->c_ssh, remote_version);
+ 	if (!ssh2_capable(remote_major, remote_minor)) {
+--- openssh-portable-V_9_7_P1/readpass.c	2024-03-11 13:20:49.000000000 +0800
++++ -	2024-03-11 13:20:49.000000000 +0800
+@@ -46,6 +46,7 @@
+ #include "log.h"
+ #include "ssh.h"
+ #include "uidswap.h"
++#include "libc/stdio/readpassphrase.h"
+ 
+ static char *
+ ssh_askpass(char *askpass, const char *msg, const char *env_hint)

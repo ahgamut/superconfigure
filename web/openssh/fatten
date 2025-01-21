@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 FILELIST='ssh ssh-add scp sftp ssh-agent ssh-keygen ssh-keyscan'
