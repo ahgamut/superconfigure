@@ -4,6 +4,7 @@ OPENSSH_DEPS := lib/openssl cosmo-repo/base
 
 OPENSSH_CONFIG_ARGS = --prefix=$$(COSMOS) \
 	--sysconfdir=$$(COSMOS)/etc/openssh \
+    --with-zlib=$$(COSMOS) \
     --disable-strip --disable-etc-default-login \
     --disable-fd-passing --disable-lastlog \
     --disable-utmp --disable-utmpx \
