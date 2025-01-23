@@ -38,3 +38,32 @@ diff -r --unified SDL2-2.28.5-old/src/thread/pthread/SDL_systhread.c SDL2-2.28.5
 -Libs: -L${libdir} @SDL_RLD_FLAGS@ @SDL_LIBS@ @PKGCONFIG_LIBS_PRIV@ @SDL_STATIC_LIBS@
 +Libs: -L${libdir}  -lSDL2   -lm  -lX11 -lXext -lxcb -lXau -lpthread
  Cflags: -I${includedir} -I${includedir}/SDL2 @SDL_CFLAGS@
+--- SDL2-2.28.5/src/cpuinfo/SDL_cpuinfo.c	2023-11-02 17:03:38.000000000 +0000
++++ -	2025-01-23 11:58:03.767987037 +0000
+@@ -41,6 +41,8 @@
+ #include "SDL_cpuinfo.h"
+ #include "SDL_assert.h"
+ 
++#undef HAVE_SYSCTLBYNAME
++
+ #ifdef HAVE_SYSCONF
+ #include <unistd.h>
+ #endif
+@@ -343,7 +345,7 @@
+ #endif
+     int hasVectorUnit = 0;
+     size_t length = sizeof(hasVectorUnit);
+-    int error = sysctl(selectors, 2, &hasVectorUnit, &length, NULL, 0);
++    int error = -1; // sysctl(selectors, 2, &hasVectorUnit, &length, NULL, 0);
+     if (0 == error) {
+         altivec = (hasVectorUnit != 0);
+     }
+@@ -1092,7 +1094,7 @@
+             Uint64 memsize = 0;
+             size_t len = sizeof(memsize);
+ 
+-            if (sysctl(mib, 2, &memsize, &len, NULL, 0) == 0) {
++            if (-1 /* sysctl(mib, 2, &memsize, &len, NULL, 0) */ == 0) {
+                 SDL_SystemRAM = (int)(memsize / (1024 * 1024));
+             }
+         }
