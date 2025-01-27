@@ -18,3 +18,13 @@ diff -r --unified readline-8.2a/input.c readline-8.2/input.c
    return 0;
  }
  
+--- readline-8.2a/readline.pc.in	2019-04-09 02:22:47.000000000 +0800
++++ readline-8.2/readline.pc.in	2019-04-09 02:22:47.000000000 +0800
+@@ -7,6 +7,5 @@
+ Description: Gnu Readline library for command line editing
+ URL: http://tiswww.cwru.edu/php/chet/readline/rltop.html
+ Version: @LIBVERSION@
+-Requires.private: @TERMCAP_PKG_CONFIG_LIB@
+-Libs: -L${libdir} -lreadline
++Libs: -L${libdir} -lreadline -l@TERMCAP_PKG_CONFIG_LIB@
+ Cflags: -I${includedir}

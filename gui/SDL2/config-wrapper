@@ -6,10 +6,12 @@ set -e
     --without-pic --prefix="$COSMOS"\
     --disable-pulseaudio\
     --disable-sndio\
+    --disable-nas\
     --disable-video-kmsdrm\
     --disable-video-vulkan\
     --disable-video-opengles2\
     --with-x --enable-video-x11\
+    --x-includes="$COSMOS/include" --x-libraries="$COSMOS/lib" \
     CFLAGS="-Os" SDL_STATIC_LIBS="-lXext -lX11 -lxcb -lXau"
 
 make V=0 -s -j"$MAXPROC"

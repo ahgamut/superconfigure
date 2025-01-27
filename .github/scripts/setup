@@ -5,9 +5,9 @@ sudo apt update
 
 # ssl certs
 sudo apt-get install -y ca-certificates libssl-dev\
-    qemu-user qemu-system-x86 qemu-system-arm qemu-utils qemu-user-static\
+    qemu-user-static\
     texinfo groff libtool\
-    cmake ninja-build bison zip\
+    cmake ninja-build bison flex zip\
     pkg-config build-essential autoconf re2c
 
 # github workspace can be the build folder,

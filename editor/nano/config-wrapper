@@ -8,12 +8,11 @@ alias ar="$AR"
 
 export NCURSES_CONFIG="$COSMOS/bin/ncurses6-config"
 export NCURSESW_CONFIG="$COSMOS/bin/ncurses6-config"
-export NCURSES_CFLAGS="-I$COSMOS/include -I$COSMOS/include/ncurses"
+export NCURSESW_CFLAGS="-I$COSMOS/include/ncurses"
+export NCURSESW_LIBS="-L$COSMOS/lib -lncurses -ltinfo"
 
 "$BASELOC"/o/editor/nano/nano*/configure --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
     --prefix="$COSMOS"\
     --disable-nls --disable-rpath --disable-silent-rules\
-    CFLAGS="-Os -I$COSMOS/include -I$COSMOS/include/ncurses"\
-    LDFLAGS="-L$COSMOS/lib"\
-    NCURSES_LIBS="-L$COSMOS/lib -lncurses -ltinfo"\
-    NCURSESW_LIBS="-L$COSMOS/lib -lncurses -ltinfo"
+    CFLAGS="-Os -I$COSMOS/include"\
+    LDFLAGS="-L$COSMOS/lib"
