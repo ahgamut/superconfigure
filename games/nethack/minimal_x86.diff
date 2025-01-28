@@ -1,7 +1,7 @@
-diff -ruN sys/unix/hints/linux-a sys/unix/hints/linux
---- sys/unix/hints/linux-a	2024-12-13 16:28:16.706787898 -0300
-+++ sys/unix/hints/linux	2024-12-13 16:28:16.730121390 -0300
-@@ -12,8 +12,8 @@
+diff -ruN sys/unix/hints/linux sys/unix/hints/linux-a
+--- sys/unix/hints/linux	2024-12-13 16:28:16.706787898 -0300
++++ sys/unix/hints/linux-a	2024-12-13 16:28:16.730121390 -0300
+@@ -11,8 +11,8 @@
 
  #PREFIX=/usr
  PREFIX=$(wildcard ~)/nh/install
@@ -11,3 +11,4 @@ diff -ruN sys/unix/hints/linux-a sys/unix/hints/linux
 +SYSCONFDIR=$(wildcard ~)/work/superconfigure/superconfigure/cosmos/x86_64
  SHELLDIR = $(PREFIX)/usr/bin
  INSTDIR=$(HACKDIR)
+ VARDIR = $(HACKDIR)
