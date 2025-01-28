@@ -1,0 +1,13 @@
+diff -ruN sys/unix/hints/linux-a sys/unix/hints/linux
+--- sys/unix/hints/linux-a	2024-12-13 16:28:16.706787898 -0300
++++ sys/unix/hints/linux	2024-12-13 16:28:16.730121390 -0300
+@@ -12,8 +12,8 @@
+
+ #PREFIX=/usr
+ PREFIX=$(wildcard ~)/nh/install
+-HACKDIR=$(PREFIX)/games/lib/$(GAME)dir
+-SYSCONFDIR=/zip
++HACKDIR=$(wildcard ~)/work/superconfigure/superconfigure/cosmos/aarch64/bin/
++SYSCONFDIR=$(wildcard ~)/work/superconfigure/superconfigure/cosmos/aarch64
+ SHELLDIR = $(PREFIX)/usr/bin
+ INSTDIR=$(HACKDIR)
