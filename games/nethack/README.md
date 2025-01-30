@@ -1,0 +1,9 @@
+We had to make several decisions to be able to compile `NetHack` with superconfigure/cosmopolitan. 
+- First of all we used the Linux files to build it as you can see in the ```config-wrapper``` where we run this command ```sh sys/unix/setup.sh sys/unix/hints/linux```.
+
+- If you take a look at the ```minimal.diff``` you can see that we had to remove the ```chdir()``` operation. This change was necessary to ensure that the program looks for its required files in the directory where it is executed, rather than switching to another directory. The goal is for the executable to run immediately without requiring any installation steps from the user.
+- Following Cosmopolitan's philosophy of distributing assets inside the binary, we also changed the path of ```nhdat```, an essential file required to run ```NetHack```. We placed it in ```zip/nhdat```, meaning it is now embedded within the binary, and the program should look for it there. We applied the same approach to the ```sysconf``` file, another crucial file for running ```NetHack```, placing it inside the binary and directing the program to retrieve it from ```zip/sysconf```.
+
+- Some other changes we made involved files like `perm`, `record`, `logfile`, and a folder called `save`. We decided to create them if they do not exist once the program is running. An important detail is that all these files and the folder are created in the directory where the program is executed, not where the binary is located.
+
+- There are two other `minimal.diff` files called `minimal_x86.diff` and `minimal_aarch64.diff`. In these two diffs, we modify the `HACKDIR` so that when the `built.fat` runs, it can find the binaries in the correct location. Essentially, we change the installation directory/path, which is what the `HACKDIR` represents. The `config-wrapper` applies each of these diffs to configure both architectures.
