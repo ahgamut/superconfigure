@@ -1,11 +1,7 @@
 #!/bin/sh
 
-MINIMAL_DIFF=$1
-
 set -e
 
 cp -r "$BASELOC"/o/games/nethack/NetHack*/* ./
-
-patch -p0 -i "/home/runner/work/superconfigure/superconfigure/games/nethack/$MINIMAL_DIFF"
 
 sh sys/unix/setup.sh sys/unix/hints/linux

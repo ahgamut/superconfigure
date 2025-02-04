@@ -48,12 +48,14 @@ diff -ruN NetHack-3.6.7a/include/unixconf.h NetHack-3.6.7/include/unixconf.h
 diff -ruN NetHack-3.6.7a/sys/unix/hints/linux NetHack-3.6.7/sys/unix/hints/linux
 --- NetHack-3.6.7a/sys/unix/hints/linux	2024-12-13 16:28:16.706787898 -0300
 +++ NetHack-3.6.7/sys/unix/hints/linux	2024-12-13 16:28:16.730121390 -0300
-@@ -12,19 +12,19 @@
+@@ -11,20 +11,20 @@
+ 
  #PREFIX=/usr
  PREFIX=$(wildcard ~)/nh/install
- HACKDIR=$(PREFIX)/games/lib/$(GAME)dir
+-HACKDIR=$(PREFIX)/games/lib/$(GAME)dir
 -SHELLDIR = $(PREFIX)/games
-+SYSCONFDIR=/zip
++HACKDIR=$(COSMOS)/bin/
++SYSCONFDIR=$(COSMOS)
 +SHELLDIR = $(PREFIX)/usr/bin
  INSTDIR=$(HACKDIR)
  VARDIR = $(HACKDIR)
