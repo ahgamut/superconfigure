@@ -1,0 +1,33 @@
+--- leptonica-1.85.0/src/environ.h	2024-02-04 04:24:20.000000000 +0000
++++ -	2025-02-06 07:31:38.380526208 +0000
+@@ -196,6 +196,11 @@
+ #define  HAVE_FMEMOPEN    1
+ #endif  /* ! HAVE_CONFIG_H etc. */
+ 
++#if defined(__COSMOPOLITAN__)
++#undef HAVE_FMEMOPEN
++#define HAVE_FMEMOPEN 0
++#endif
++
+ /*-------------------------------------------------------------------------*
+  * fstatat() is defined by POSIX, but some systems do not support it.      *
+  * One example is older macOS systems (pre-10.10).                         *
+--- leptonica-1.85.0/cmake/Configure.cmake	2023-03-16 19:23:54.000000000 +0000
++++ -	2025-02-06 07:37:39.464676361 +0000
+@@ -33,6 +33,8 @@
+         file(APPEND ${AUTOCONFIG_SRC} "#cmakedefine HAVE_${name} 1\n")
+         file(APPEND ${AUTOCONFIG_SRC} "\n")
+     endforeach()
++    file(APPEND ${AUTOCONFIG_SRC} "#cmakedefine HAVE_FMEMOPEN 0\n")
++    file(APPEND ${AUTOCONFIG_SRC} "\n")
+ endfunction(check_functions)
+ 
+ ########################################
+@@ -67,7 +69,6 @@
+ check_includes(include_files_list)
+ 
+ set(functions_list
+-    fmemopen
+     fstatat
+ )
+ check_functions(functions_list)

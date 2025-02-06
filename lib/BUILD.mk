@@ -13,6 +13,7 @@ include lib/gnutls/BUILD.mk
 include lib/isl/BUILD.mk
 include lib/jansson/BUILD.mk
 include lib/lame/BUILD.mk
+include lib/leptonica/BUILD.mk
 include lib/libassuan/BUILD.mk
 include lib/libevent/BUILD.mk
 include lib/libexpat/BUILD.mk

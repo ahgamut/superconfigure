@@ -14,6 +14,7 @@ include cli/ninja/BUILD.mk
 include cli/patch/BUILD.mk
 include cli/sed/BUILD.mk
 include cli/sox/BUILD.mk
+include cli/tesseract/BUILD.mk
 include cli/zsh/BUILD.mk
 
 cli: \
