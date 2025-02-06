@@ -1,0 +1,116 @@
+diff -ruN NetHack-3.6.7a/include/config.h NetHack-3.6.7/include/config.h
+--- NetHack-3.6.7a/include/config.h	2024-12-13 16:28:16.700121185 -0300
++++ NetHack-3.6.7/include/config.h	2024-12-13 16:28:16.746788171 -0300
+@@ -343,7 +343,6 @@
+ #define INSURANCE /* allow crashed game recovery */
+ 
+ #ifndef MAC
+-#define CHDIR /* delete if no chdir() available */
+ #endif
+ 
+ #ifdef CHDIR
+diff -ruN NetHack-3.6.7a/include/dlb.h NetHack-3.6.7/include/dlb.h
+--- NetHack-3.6.7a/include/dlb.h	2024-12-13 16:28:16.700121185 -0300
++++ NetHack-3.6.7/include/dlb.h	2024-12-13 16:28:16.740121459 -0300
+@@ -38,7 +38,7 @@
+ /* library definitions */
+ #ifndef DLBFILE
+ #ifndef VERSION_IN_DLB_FILENAME
+-#define DLBFILE "nhdat" /* name of library */
++#define DLBFILE "/zip/nhdat" /* name of library */
+ #else
+ #define MAX_DLB_FILENAME 256
+ #define DLBFILE dlbfilename
+diff -ruN NetHack-3.6.7a/include/tradstdc.h NetHack-3.6.7/include/tradstdc.h
+--- NetHack-3.6.7a/include/tradstdc.h	2024-12-13 16:28:16.700121185 -0300
++++ NetHack-3.6.7/include/tradstdc.h	2024-12-13 16:28:16.736788103 -0300
+@@ -432,7 +432,7 @@
+ #if !defined(__linux__) || defined(GCC_URWARN)
+ /* disable gcc's __attribute__((__warn_unused_result__)) since explicitly
+    discarding the result by casting to (void) is not accepted as a 'use' */
+-#define __warn_unused_result__ /*empty*/
++#define __warn_unused_result__ __unused__
+ #define warn_unused_result /*empty*/
+ #endif
+ #endif
+diff -ruN NetHack-3.6.7a/include/unixconf.h NetHack-3.6.7/include/unixconf.h
+--- NetHack-3.6.7a/include/unixconf.h	2024-12-13 16:28:16.700121185 -0300
++++ NetHack-3.6.7/include/unixconf.h	2024-12-13 16:28:16.726788034 -0300
+@@ -133,7 +133,7 @@
+  * "extra output" method is used, but not all systems provide access to
+  * a fine-grained timer.
+  */
+-/* #define TIMED_DELAY */ /* usleep() */
++#define TIMED_DELAY /* usleep() */
+ #endif
+ #if defined(MACOSX) && !defined(TIMED_DELAY)
+ #define TIMED_DELAY
+diff -ruN NetHack-3.6.7a/sys/unix/hints/linux NetHack-3.6.7/sys/unix/hints/linux
+--- NetHack-3.6.7a/sys/unix/hints/linux	2024-12-13 16:28:16.706787898 -0300
++++ NetHack-3.6.7/sys/unix/hints/linux	2024-12-13 16:28:16.730121390 -0300
+@@ -11,20 +11,20 @@
+ 
+ #PREFIX=/usr
+ PREFIX=$(wildcard ~)/nh/install
+-HACKDIR=$(PREFIX)/games/lib/$(GAME)dir
+-SHELLDIR = $(PREFIX)/games
++HACKDIR=$(COSMOS)/bin/
++SYSCONFDIR=$(COSMOS)
++SHELLDIR = $(PREFIX)/usr/bin
+ INSTDIR=$(HACKDIR)
+ VARDIR = $(HACKDIR)
+ 
+ 
+ 
+-POSTINSTALL=cp -n sys/unix/sysconf $(INSTDIR)/sysconf; $(CHOWN) $(GAMEUID) $(INSTDIR)/sysconf; $(CHGRP) $(GAMEGRP) $(INSTDIR)/sysconf; chmod $(VARFILEPERM) $(INSTDIR)/sysconf;
++POSTINSTALL=sudo cp -n sys/unix/sysconf $(SYSCONFDIR)/sysconf; sudo $(CHOWN) $(GAMEUID) $(SYSCONFDIR)/sysconf; sudo $(CHGRP) $(GAMEGRP) $(SYSCONFDIR)/sysconf; sudo chmod 0666 $(SYSCONFDIR)/sysconf; sudo cp -n $(HACKDIR)/nhdat $(SYSCONFDIR)/nhdat;
+ 
+-CFLAGS=-g -O -I../include -DNOTPARMDECL
++CFLAGS+=-Os -D_XOPEN_SOURCE_EXTENDED -D__COSMOPOLITAN__ -I../include -I$(COSMOS)/include/ncurses -DNOTPARMDECL
+ CFLAGS+=-DDLB
+ CFLAGS+=-DCOMPRESS=\"/bin/gzip\" -DCOMPRESS_EXTENSION=\".gz\"
+-CFLAGS+=-DSYSCF -DSYSCF_FILE=\"$(HACKDIR)/sysconf\" -DSECURE
+-CFLAGS+=-DTIMED_DELAY
++CFLAGS+=-DSYSCF -DSYSCF_FILE=\"/zip/sysconf\" -DSECURE
+ CFLAGS+=-DHACKDIR=\"$(HACKDIR)\"
+ CFLAGS+=-DDUMPLOG
+ CFLAGS+=-DCONFIG_ERROR_SECURE=FALSE
+@@ -37,7 +37,7 @@
+ 
+ LINK=$(CC)
+ # Only needed for GLIBC stack trace:
+-LFLAGS=-rdynamic
++LFLAGS=$$(LDFLAGS) -rdynamic
+ 
+ WINSRC = $(WINTTYSRC) $(WINCURSESSRC)
+ WINOBJ = $(WINTTYOBJ) $(WINCURSESOBJ)
+diff -ruN NetHack-3.6.7a/src/files.c NetHack-3.6.7/src/files.c
+--- NetHack-3.6.7a/src/files.c 2024-11-21 20:34:21.595301085 -0300
++++ NetHack-3.6.7/src/files.c   2024-11-21 20:35:45.300398773 -0300
+@@ -1012,6 +1012,17 @@
+ {
+     const char *fq_save;
+     int fd;
++    mode_t old_mask;
++
++    old_mask = umask(0);
++    if(mkdir("save", 0755) != 0){
++           if (errno != EEXIST) {
++		    umask(old_mask);
++                   return -1;
++           }
++       }
++
++    umask(old_mask);
+
+     fq_save = fqname(SAVEF, SAVEPREFIX, 0);
+ #if defined(MICRO) || defined(WIN32)   
+@@ -1733,7 +1744,7 @@
+ #endif
+     filename = fqname(filename, whichprefix, 0);
+ #ifdef USE_FCNTL
+-    lockfd = open(filename, O_RDWR);
++    lockfd = open(filename, O_RDWR | O_CREAT, 0666);
+     if (lockfd == -1) {
+         HUP raw_printf("Cannot open file %s.  Is NetHack installed correctly?",
+                        filename);

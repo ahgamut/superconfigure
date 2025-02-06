@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+cp -r "$BASELOC"/o/games/nethack/NetHack*/* ./
+
+sh sys/unix/setup.sh sys/unix/hints/linux
