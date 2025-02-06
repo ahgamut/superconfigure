@@ -17,7 +17,7 @@ diff -ruN NetHack-3.6.7a/include/dlb.h NetHack-3.6.7/include/dlb.h
  #ifndef DLBFILE
  #ifndef VERSION_IN_DLB_FILENAME
 -#define DLBFILE "nhdat" /* name of library */
-+#define DLBFILE "/zip/nhdat" /* name of library */
++#define DLBFILE NHDAT_LOCATION /* name of library */
  #else
  #define MAX_DLB_FILENAME 256
  #define DLBFILE dlbfilename
@@ -45,25 +45,26 @@ diff -ruN NetHack-3.6.7a/include/unixconf.h NetHack-3.6.7/include/unixconf.h
  #endif
  #if defined(MACOSX) && !defined(TIMED_DELAY)
  #define TIMED_DELAY
-diff -ruN NetHack-3.6.7a/sys/unix/hints/linux NetHack-3.6.7/sys/unix/hints/linux
---- NetHack-3.6.7a/sys/unix/hints/linux	2024-12-13 16:28:16.706787898 -0300
-+++ NetHack-3.6.7/sys/unix/hints/linux	2024-12-13 16:28:16.730121390 -0300
-@@ -11,20 +11,20 @@
+--- NetHack-3.6.7/sys/unix/hints/linux	2023-02-15 21:52:57.000000000 +0000
++++ -	2025-02-06 04:36:52.725034545 +0000
+@@ -10,21 +10,22 @@
+ 
  
  #PREFIX=/usr
- PREFIX=$(wildcard ~)/nh/install
+-PREFIX=$(wildcard ~)/nh/install
 -HACKDIR=$(PREFIX)/games/lib/$(GAME)dir
 -SHELLDIR = $(PREFIX)/games
-+HACKDIR=$(COSMOS)/bin/
-+SYSCONFDIR=$(COSMOS)
-+SHELLDIR = $(PREFIX)/usr/bin
++PREFIX=$(COSMOS)
++HACKDIR=$(COSMOS)/games/nh
++SYSCONFDIR=$(COSMOS)/share/nh
++SHELLDIR = $(PREFIX)/games
  INSTDIR=$(HACKDIR)
  VARDIR = $(HACKDIR)
  
  
  
 -POSTINSTALL=cp -n sys/unix/sysconf $(INSTDIR)/sysconf; $(CHOWN) $(GAMEUID) $(INSTDIR)/sysconf; $(CHGRP) $(GAMEGRP) $(INSTDIR)/sysconf; chmod $(VARFILEPERM) $(INSTDIR)/sysconf;
-+POSTINSTALL=sudo cp -n sys/unix/sysconf $(SYSCONFDIR)/sysconf; sudo $(CHOWN) $(GAMEUID) $(SYSCONFDIR)/sysconf; sudo $(CHGRP) $(GAMEGRP) $(SYSCONFDIR)/sysconf; sudo chmod 0666 $(SYSCONFDIR)/sysconf; sudo cp -n $(HACKDIR)/nhdat $(SYSCONFDIR)/nhdat;
++POSTINSTALL=cp -n sys/unix/sysconf $(SYSCONFDIR)/sysconf; $(CHOWN) $(GAMEUID) $(SYSCONFDIR)/sysconf; $(CHGRP) $(GAMEGRP) $(SYSCONFDIR)/sysconf; chmod 0666 $(SYSCONFDIR)/sysconf; cp -n $(HACKDIR)/nhdat $(SYSCONFDIR)/nhdat;
  
 -CFLAGS=-g -O -I../include -DNOTPARMDECL
 +CFLAGS+=-Os -D_XOPEN_SOURCE_EXTENDED -D__COSMOPOLITAN__ -I../include -I$(COSMOS)/include/ncurses -DNOTPARMDECL
@@ -71,16 +72,17 @@ diff -ruN NetHack-3.6.7a/sys/unix/hints/linux NetHack-3.6.7/sys/unix/hints/linux
  CFLAGS+=-DCOMPRESS=\"/bin/gzip\" -DCOMPRESS_EXTENSION=\".gz\"
 -CFLAGS+=-DSYSCF -DSYSCF_FILE=\"$(HACKDIR)/sysconf\" -DSECURE
 -CFLAGS+=-DTIMED_DELAY
-+CFLAGS+=-DSYSCF -DSYSCF_FILE=\"/zip/sysconf\" -DSECURE
++CFLAGS+=-DSYSCF -DSYSCF_FILE=\"$(SYSCONFDIR)/sysconf\" -DSECURE
++CFLAGS+=-DNHDAT_LOCATION=\"$(SYSCONFDIR)/nhdat\"
  CFLAGS+=-DHACKDIR=\"$(HACKDIR)\"
  CFLAGS+=-DDUMPLOG
  CFLAGS+=-DCONFIG_ERROR_SECURE=FALSE
-@@ -37,7 +37,7 @@
+@@ -37,7 +38,7 @@
  
  LINK=$(CC)
  # Only needed for GLIBC stack trace:
 -LFLAGS=-rdynamic
-+LFLAGS=$$(LDFLAGS) -rdynamic
++LFLAGS=
  
  WINSRC = $(WINTTYSRC) $(WINCURSESSRC)
  WINOBJ = $(WINTTYOBJ) $(WINCURSESOBJ)
