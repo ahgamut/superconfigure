@@ -15,7 +15,7 @@ sudo apt-get install -y ca-certificates libssl-dev\
 cd "$GITHUB_WORKSPACE" || exit
 
 # cosmo
-git clone https://github.com/ahgamut/cosmopolitan --branch=rename-str --depth=1
+git clone https://github.com/jart/cosmopolitan --depth=1
 
 sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
