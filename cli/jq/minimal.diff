@@ -1,0 +1,9 @@
+diff -r --unified jq-jq-1.7.1a/configure.ac jq-jq-1.7.1/configure.ac
+--- jq-jq-1.7.1a/configure.ac	2023-12-13 22:20:22.000000000 +0300
++++ jq-jq-1.7.1/configure.ac	2025-03-10 02:03:43.661550218 +0300
+@@ -1,4 +1,4 @@
+-m4_define([jq_version], m4_esyscmd_s([scripts/version])))
++m4_define([jq_version], [1.7.1]))
+ 
+ AC_INIT([jq],[jq_version],[https://github.com/jqlang/jq/issues],[jq],[https://jqlang.github.io/jq])
+ 
