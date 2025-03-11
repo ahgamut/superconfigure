@@ -10,9 +10,9 @@ binary using Cosmopolitan Libc's `apelink` program.
 # What's included in the build
 The built software is split into the following zip files:  
 **compress.zip**  
-contains `tar`, `zip`, `unzip`, `bzip2`, `zstd`, `xz`, `brotli`, `gzip`.  
+contains `tar`, `zip`, `unzip`, `bzip2`, `zstd`, `brotli`, `gzip`.  
 **cli.zip**  
-contains `bash`, `zsh`, `grep`, `less`, `lua`, `find`, GNU coreutils, and `ninja`.  
+contains `bash`, `zsh`, `grep`, `less`, `find`, GNU coreutils, and `ninja`.  
 **editor.zip**  
 contains `vim`, `nano`, and `emacs`.  
 **x86_64-gcc.zip**  
@@ -40,14 +40,11 @@ If you'd like to add your own software build scripts, submit a PR! Read up
 
 # How can I build these locally?
 
-The build scripts assume Debian/Ubuntu, and also use things like `bash`,
-`find`, `wget`, `cat`, `sed`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc.
-(you also need sudo access to setup a `/zip` folder).  You can follow the steps
-in `.github/workflows/release.yml` on your machine:
+The build scripts assume Debian/Ubuntu, and also use things like `bash`, `find`,
+`wget`, `cat`, `sed`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc. You can
+follow the steps in `.github/workflows/release.yml` on your machine:
 
 - clone this repository
-- create a folder `/zip` on your system that provides read/write access to
-  everyone
 - install necessary build dependencies:
     - `qemu` to run aarch64 ELF binaries
     - SSL certificates
