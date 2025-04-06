@@ -1,0 +1,40 @@
+--- gdb-16.2/gdb/configure	2025-02-01 10:14:30.000000000 +0000
++++ -	2025-04-06 12:58:43.290720255 +0000
+@@ -30146,7 +30146,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF
+ 
+ 
+--- gdb-16.2/config.sub	2025-02-01 10:14:30.000000000 +0000
++++ -	2025-04-06 13:00:01.823593919 +0000
+@@ -1828,7 +1828,7 @@
+ # (given a valid OS), if there is a kernel.
+ case $kernel-$os-$obj in
+ 	linux-gnu*- | linux-android*- | linux-dietlibc*- | linux-llvm*- \
+-		    | linux-mlibc*- | linux-musl*- | linux-newlib*- \
++		    | linux-mlibc*- | linux-musl*- | linux-cosmo*- | linux-newlib*- \
+ 		    | linux-relibc*- | linux-uclibc*- )
+ 		;;
+ 	uclinux-uclibc*- )
+@@ -1837,7 +1837,7 @@
+ 		;;
+ 	windows*-msvc*-)
+ 		;;
+-	-dietlibc*- | -llvm*- | -mlibc*- | -musl*- | -newlib*- | -relibc*- \
++	-dietlibc*- | -llvm*- | -mlibc*- | -musl*- | -cosmo*- | -newlib*- | -relibc*- \
+ 		    | -uclibc*- )
+ 		# These are just libc implementations, not actual OSes, and thus
+ 		# require a kernel.
+--- gdb-16.2/gdbsupport/configure	2024-12-29 02:50:07.000000000 +0000
++++ -	2025-04-06 13:08:23.599897614 +0000
+@@ -14130,7 +14130,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF

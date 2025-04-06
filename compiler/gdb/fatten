@@ -1,0 +1,59 @@
+#!/bin/sh
+set -e
+
+TARGET_ARCH="${TARGET_ARCH:-x86_64}"
+FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
+
+apelinkpls () {
+    OUTPUT="$1"
+    OLDNAME_X86_64="$(basename -- "$2")"
+    OLDNAME_AARCH64="$(basename -- "$3")"
+    TARG_FOLD="$(dirname "$OUTPUT")"
+    "$APELINK" -l "$COSMO/o/x86_64/ape/ape.elf" \
+        -l "$COSMO/o/aarch64/ape/ape.elf" \
+        -M "$COSMO/ape/ape-m1.c" \
+        -o "$OUTPUT" \
+        "$2" \
+        "$3"
+    cp "$2" "$TARG_FOLD/$OLDNAME_X86_64.x86_64"
+    cp "$3" "$TARG_FOLD/$OLDNAME_AARCH64.aarch64"
+}
+
+FILELIST="
+bin/$FULL_TARGET-addr2line
+bin/$FULL_TARGET-ar
+bin/$FULL_TARGET-as
+bin/$FULL_TARGET-c++filt
+bin/$FULL_TARGET-elfedit
+bin/$FULL_TARGET-gprof
+bin/$FULL_TARGET-ld
+bin/$FULL_TARGET-ld.bfd
+bin/$FULL_TARGET-nm
+bin/$FULL_TARGET-objcopy
+bin/$FULL_TARGET-objdump
+bin/$FULL_TARGET-ranlib
+bin/$FULL_TARGET-readelf
+bin/$FULL_TARGET-size
+bin/$FULL_TARGET-strings
+bin/$FULL_TARGET-strip
+"
+
+mkdir -p "$RESULTS"/bin
+mkdir -p "$RESULTS"/libexec/gcc/"$FULL_TARGET"/14.1.0/install-tools
+
+for EXE in $FILELIST; do
+    apelinkpls "$RESULTS"/"$EXE".com\
+        "$COSMOS_X86_64"/"$EXE"\
+        "$COSMOS_AARCH64"/"$EXE"
+done
+
+# cosmo toolchain also has these binaries in the specific locations
+DUPELIST2='
+as
+ld
+ld.bfd
+'
+
+for EXE in $DUPELIST2; do
+    cp "$RESULTS"/bin/"$FULL_TARGET"-"$EXE".com "$RESULTS"/libexec/gcc/"$FULL_TARGET"/14.1.0/"$EXE".com
+done
