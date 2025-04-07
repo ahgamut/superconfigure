@@ -7,14 +7,17 @@ FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
 export PKG_CONFIG=""
 
 "$BASELOC"/o/compiler/gdb/gdb*/configure --prefix="$COSMOS" \
-    --disable-shared --disable-dependency-tracking \
     --datarootdir="$COSMOS/share" --sysconfdir="$COSMOS/share"\
-    --disable-gold --disable-ld \
-    --enable-compressed-debug-sections=all \
+    --disable-shared --enable-static --disable-dependency-tracking \
+    --disable-gold --disable-ld --without-pic \
+    --disable-plugins --disable-nls --disable-rpath \
+    --enable-compressed-debug-sections=all --enable-threading \
     --disable-silent-rules --disable-libstdcxx --disable-werror \
-    --disable-lto --with-system-zlib --with-system-readline \
-    --with-static-standard-libraries \
+    --with-system-zlib --with-system-readline \
+    --disable-lto \
+    --with-static-standard-libraries --enable-multilib \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
-    --disable-bootstrap --disable-libada --build="$ARCH"-linux-gnu \
-    --target="$FULL_TARGET"\
+    --disable-bootstrap --disable-libada \
+    --enable-targets=x86_64-linux-gnu,aarch64-linux-gnu \
+    --build="$ARCH"-linux-gnu --target="$FULL_TARGET"\
     CFLAGS="-Os -D_LARGEFILE64_SOURCE=1 -fpermissive -Wno-implicit-function-declaration"
