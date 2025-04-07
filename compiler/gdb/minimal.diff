@@ -38,3 +38,85 @@
 -#define PTRACE_TYPE_ARG1 $1
 +#define PTRACE_TYPE_ARG1 int
  _ACEOF
+
+
+--- gdb-16.2/gdbserver/configure	2025-02-01 10:14:30.000000000 +0000
++++ -	2025-04-07 04:28:59.659002469 +0000
+@@ -13579,7 +13579,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF
+ 
+ 
+--- gdb-16.2/gdb/nat/gdb_ptrace.h	2024-12-29 02:50:07.000000000 +0000
++++ -	2025-04-07 04:38:23.558379155 +0000
+@@ -139,7 +139,7 @@
+ #else
+ /* Wrapper that avoids adding a pointless cast to all callers.  */
+ # define ptrace(request, pid, addr, data) \
+-	 ptrace ((PTRACE_TYPE_ARG1) request, pid, addr, data)
++	 ptrace ((int) request, pid, addr, data)
+ #endif
+ 
+ #endif /* GDB_NAT_GDB_PTRACE_H */
+--- gdb-16.2/gdb/configure	2025-04-07 04:35:34.060640137 +0000
++++ -	2025-04-07 04:40:37.297547256 +0000
+@@ -26996,11 +26996,9 @@
+ #ifdef __cplusplus
+ extern "C"
+ #endif
+-char waddstr ();
+ int
+ main ()
+ {
+-return waddstr ();
+   ;
+   return 0;
+ }
+--- gdb-16.2/gdbserver/linux-low.h	2025-02-01 10:14:30.000000000 +0000
++++ -	2025-04-07 04:46:25.201579345 +0000
+@@ -32,6 +32,10 @@
+ #include "tracepoint.h"
+ 
+ #include <list>
++#ifndef _COSMO_SOURCE
++#define _COSMO_SOURCE
++#include "libc/calls/calls.h"
++#endif
+ 
+ #define PTRACE_XFER_TYPE long
+ 
+--- gdb-16.2/gdb/configure	2025-04-07 04:57:12.990116630 +0000
++++ -	2025-04-07 05:04:28.783024256 +0000
+@@ -27196,7 +27196,7 @@
+     as_fn_error $? "system readline is not new enough" "$LINENO" 5
+   fi
+ 
+-  READLINE=-lreadline
++  READLINE=-lreadline -lncurses -ltinfo
+   READLINE_DEPS=
+   READLINE_CFLAGS=
+   READLINE_TEXI_INCFLAG=
+--- gdb-16.2/gdb/Makefile.in	2025-02-01 10:14:30.000000000 +0000
++++ -	2025-04-07 05:15:10.381105805 +0000
+@@ -187,7 +187,7 @@
+ # Where is the READLINE library?  Typically in ../readline/readline.
+ READLINE_DIR = ../readline/readline
+ READLINE_SRC = $(srcdir)/$(READLINE_DIR)
+-READLINE = @READLINE@
++READLINE = -lreadline
+ READLINE_DEPS = @READLINE_DEPS@
+ READLINE_CFLAGS = @READLINE_CFLAGS@
+ 
+@@ -913,7 +913,7 @@
+ NAT_FILE = @NAT_FILE@
+ NATDEPFILES = @NATDEPFILES@
+ NAT_CDEPS = @NAT_CDEPS@
+-LOADLIBES = @LOADLIBES@
++LOADLIBES = -lncurses -ltinfo
+ MH_CFLAGS = @MH_CFLAGS@
+ XM_CLIBS = @XM_CLIBS@
+ NAT_GENERATED_FILES = @NAT_GENERATED_FILES@

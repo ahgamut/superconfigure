@@ -1,5 +1,5 @@
 
-GDB_SRC := https://ftp.gnu.org/gnu/gdb/gdb-16.2.tar.gz
+GDB_SRC := https://mirrors.ocf.berkeley.edu/gnu/gdb/gdb-16.2.tar.gz
 
 o/compiler/gdb/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)
 o/compiler/gdb/built.x86_64: BUILD_COMMAND = $(DUMMYLINK0)
@@ -15,7 +15,7 @@ $(eval $(call DOWNLOAD_SOURCE,compiler/gdb,$(GDB_SRC)))
 
 # x86_64-gdb
 
-$(eval $(call SPECIFY_DEPS,compiler/x86_64-gdb,lib/readline lib/gmp lib/mpfr lib/isl lib/mpc cosmo-repo/compress))
+$(eval $(call SPECIFY_DEPS,compiler/x86_64-gdb,compiler/gdb lib/readline lib/gmp lib/mpfr lib/isl lib/mpc cosmo-repo/compress))
 
 o/compiler/x86_64-gdb/downloaded: DL_COMMAND = $(DUMMYLINK0)
 o/compiler/x86_64-gdb/checked: CHECK_COMMAND = $(DUMMYLINK0)
@@ -34,7 +34,7 @@ x86_64-gdb: o/compiler/x86_64-gdb/built.fat
 
 # aarch64-gdb
 
-$(eval $(call SPECIFY_DEPS,compiler/aarch64-gdb,lib/readline lib/gmp lib/mpfr lib/isl lib/mpc cosmo-repo/compress))
+$(eval $(call SPECIFY_DEPS,compiler/aarch64-gdb,compiler/gdb lib/readline lib/gmp lib/mpfr lib/isl lib/mpc cosmo-repo/compress))
 
 o/compiler/aarch64-gdb/downloaded: DL_COMMAND = $(DUMMYLINK0)
 o/compiler/aarch64-gdb/checked: CHECK_COMMAND = $(DUMMYLINK0)

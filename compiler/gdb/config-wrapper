@@ -2,22 +2,22 @@
 set -e
 
 TARGET_ARCH="${TARGET_ARCH:-x86_64}"
-FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-cosmo}"
-
-export PKG_CONFIG=""
+FULL_TARGET="${FULL_TARGET:-$TARGET_ARCH-linux-gnu}"
 
 "$BASELOC"/o/compiler/gdb/gdb*/configure --prefix="$COSMOS" \
     --datarootdir="$COSMOS/share" --sysconfdir="$COSMOS/share"\
+    --with-system-gdbinit-dir="$COSMOS/share" \
+    --with-gdb-datadir="$COSMOS/share" \
     --disable-shared --enable-static --disable-dependency-tracking \
     --disable-gold --disable-ld --without-pic \
     --disable-plugins --disable-nls --disable-rpath \
     --enable-compressed-debug-sections=all --enable-threading \
     --disable-silent-rules --disable-libstdcxx --disable-werror \
-    --with-system-zlib --with-system-readline \
-    --disable-lto \
+    --with-system-zlib --with-system-readline --without-python \
+    --disable-lto --enable-tui \
     --with-static-standard-libraries --enable-multilib \
     --disable-libquadmath --disable-pgo-build --disable-libssp --disable-gprofng \
     --disable-bootstrap --disable-libada \
     --enable-targets=x86_64-linux-gnu,aarch64-linux-gnu \
     --build="$ARCH"-linux-gnu --target="$FULL_TARGET"\
-    CFLAGS="-Os -D_LARGEFILE64_SOURCE=1 -fpermissive -Wno-implicit-function-declaration"
+    CFLAGS="-Os -I$COSMOS/include/ncurses -fpermissive -Wno-implicit-function-declaration"
