@@ -1,16 +1,6 @@
---- gdb-16.2/gdb/configure	2025-02-01 10:14:30.000000000 +0000
-+++ -	2025-04-06 12:58:43.290720255 +0000
-@@ -30146,7 +30146,7 @@
- shift
- 
- cat >>confdefs.h <<_ACEOF
--#define PTRACE_TYPE_ARG1 $1
-+#define PTRACE_TYPE_ARG1 int
- _ACEOF
- 
- 
+diff -urN gdb-16.2/config.sub gdb-16.2-patched/config.sub
 --- gdb-16.2/config.sub	2025-02-01 10:14:30.000000000 +0000
-+++ -	2025-04-06 13:00:01.823593919 +0000
++++ gdb-16.2-patched/config.sub	2025-04-07 14:03:32.767339466 +0000
 @@ -1828,7 +1828,7 @@
  # (given a valid OS), if there is a kernel.
  case $kernel-$os-$obj in
@@ -29,79 +19,9 @@
  		    | -uclibc*- )
  		# These are just libc implementations, not actual OSes, and thus
  		# require a kernel.
---- gdb-16.2/gdbsupport/configure	2024-12-29 02:50:07.000000000 +0000
-+++ -	2025-04-06 13:08:23.599897614 +0000
-@@ -14130,7 +14130,7 @@
- shift
- 
- cat >>confdefs.h <<_ACEOF
--#define PTRACE_TYPE_ARG1 $1
-+#define PTRACE_TYPE_ARG1 int
- _ACEOF
-
-
---- gdb-16.2/gdbserver/configure	2025-02-01 10:14:30.000000000 +0000
-+++ -	2025-04-07 04:28:59.659002469 +0000
-@@ -13579,7 +13579,7 @@
- shift
- 
- cat >>confdefs.h <<_ACEOF
--#define PTRACE_TYPE_ARG1 $1
-+#define PTRACE_TYPE_ARG1 int
- _ACEOF
- 
- 
---- gdb-16.2/gdb/nat/gdb_ptrace.h	2024-12-29 02:50:07.000000000 +0000
-+++ -	2025-04-07 04:38:23.558379155 +0000
-@@ -139,7 +139,7 @@
- #else
- /* Wrapper that avoids adding a pointless cast to all callers.  */
- # define ptrace(request, pid, addr, data) \
--	 ptrace ((PTRACE_TYPE_ARG1) request, pid, addr, data)
-+	 ptrace ((int) request, pid, addr, data)
- #endif
- 
- #endif /* GDB_NAT_GDB_PTRACE_H */
---- gdb-16.2/gdb/configure	2025-04-07 04:35:34.060640137 +0000
-+++ -	2025-04-07 04:40:37.297547256 +0000
-@@ -26996,11 +26996,9 @@
- #ifdef __cplusplus
- extern "C"
- #endif
--char waddstr ();
- int
- main ()
- {
--return waddstr ();
-   ;
-   return 0;
- }
---- gdb-16.2/gdbserver/linux-low.h	2025-02-01 10:14:30.000000000 +0000
-+++ -	2025-04-07 04:46:25.201579345 +0000
-@@ -32,6 +32,10 @@
- #include "tracepoint.h"
- 
- #include <list>
-+#ifndef _COSMO_SOURCE
-+#define _COSMO_SOURCE
-+#include "libc/calls/calls.h"
-+#endif
- 
- #define PTRACE_XFER_TYPE long
- 
---- gdb-16.2/gdb/configure	2025-04-07 04:57:12.990116630 +0000
-+++ -	2025-04-07 05:04:28.783024256 +0000
-@@ -27196,7 +27196,7 @@
-     as_fn_error $? "system readline is not new enough" "$LINENO" 5
-   fi
- 
--  READLINE=-lreadline
-+  READLINE=-lreadline -lncurses -ltinfo
-   READLINE_DEPS=
-   READLINE_CFLAGS=
-   READLINE_TEXI_INCFLAG=
+diff -urN gdb-16.2/gdb/Makefile.in gdb-16.2-patched/gdb/Makefile.in
 --- gdb-16.2/gdb/Makefile.in	2025-02-01 10:14:30.000000000 +0000
-+++ -	2025-04-07 05:15:10.381105805 +0000
++++ gdb-16.2-patched/gdb/Makefile.in	2025-04-07 14:03:32.791339493 +0000
 @@ -187,7 +187,7 @@
  # Where is the READLINE library?  Typically in ../readline/readline.
  READLINE_DIR = ../readline/readline
@@ -120,3 +40,241 @@
  MH_CFLAGS = @MH_CFLAGS@
  XM_CLIBS = @XM_CLIBS@
  NAT_GENERATED_FILES = @NAT_GENERATED_FILES@
+diff -urN gdb-16.2/gdb/amd64-linux-nat.c gdb-16.2-patched/gdb/amd64-linux-nat.c
+--- gdb-16.2/gdb/amd64-linux-nat.c	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdb/amd64-linux-nat.c	2025-04-07 14:31:52.521264576 +0000
+@@ -23,7 +23,6 @@
+ #include "elf/common.h"
+ #include <sys/uio.h>
+ #include "nat/gdb_ptrace.h"
+-#include <asm/prctl.h>
+ #include <sys/reg.h>
+ #include "gregset.h"
+ #include "gdb_proc_service.h"
+diff -urN gdb-16.2/gdb/configure gdb-16.2-patched/gdb/configure
+--- gdb-16.2/gdb/configure	2025-02-01 10:14:30.000000000 +0000
++++ gdb-16.2-patched/gdb/configure	2025-04-07 14:03:32.787339489 +0000
+@@ -26996,11 +26996,9 @@
+ #ifdef __cplusplus
+ extern "C"
+ #endif
+-char waddstr ();
+ int
+ main ()
+ {
+-return waddstr ();
+   ;
+   return 0;
+ }
+@@ -27198,7 +27196,7 @@
+     as_fn_error $? "system readline is not new enough" "$LINENO" 5
+   fi
+ 
+-  READLINE=-lreadline
++  READLINE=-lreadline -lncurses -ltinfo
+   READLINE_DEPS=
+   READLINE_CFLAGS=
+   READLINE_TEXI_INCFLAG=
+@@ -30146,7 +30144,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF
+ 
+ 
+diff -urN gdb-16.2/gdb/linux-thread-db.c gdb-16.2-patched/gdb/linux-thread-db.c
+--- gdb-16.2/gdb/linux-thread-db.c	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdb/linux-thread-db.c	2025-04-07 14:36:43.309593737 +0000
+@@ -547,10 +547,12 @@
+ static const char *
+ dladdr_to_soname (const void *addr)
+ {
++  /*
+   Dl_info info;
+ 
+   if (dladdr (addr, &info) != 0)
+     return info.dli_fname;
++   */
+   return NULL;
+ }
+ 
+diff -urN gdb-16.2/gdb/nat/gdb_ptrace.h gdb-16.2-patched/gdb/nat/gdb_ptrace.h
+--- gdb-16.2/gdb/nat/gdb_ptrace.h	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdb/nat/gdb_ptrace.h	2025-04-07 14:44:32.738126431 +0000
+@@ -137,9 +137,10 @@
+ 	  ptrace (request, pid, addr, data, 0)
+ # endif
+ #else
++long (ptrace)(int, ...);
+ /* Wrapper that avoids adding a pointless cast to all callers.  */
+ # define ptrace(request, pid, addr, data) \
+-	 ptrace ((PTRACE_TYPE_ARG1) request, pid, addr, data)
++	 ptrace ((int) request, pid, addr, data)
+ #endif
+ 
+ #endif /* GDB_NAT_GDB_PTRACE_H */
+diff -urN gdb-16.2/gdb/nat/linux-nat.h gdb-16.2-patched/gdb/nat/linux-nat.h
+--- gdb-16.2/gdb/nat/linux-nat.h	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdb/nat/linux-nat.h	2025-04-07 14:40:12.821831405 +0000
+@@ -20,6 +20,12 @@
+ #ifndef GDB_NAT_LINUX_NAT_H
+ #define GDB_NAT_LINUX_NAT_H
+ 
++#ifndef _COSMO_SOURCE
++#define _COSMO_SOURCE
++#endif
++#include "libc/sysv/consts/sig.h"
++#include "libc/sysv/consts/nr.h"
++#include "libc/sysv/consts/arch.h"
+ #include "gdbsupport/function-view.h"
+ #include "target/waitstatus.h"
+ 
+diff -urN gdb-16.2/gdb/nat/linux-personality.h gdb-16.2-patched/gdb/nat/linux-personality.h
+--- gdb-16.2/gdb/nat/linux-personality.h	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdb/nat/linux-personality.h	2025-04-07 14:19:17.840410271 +0000
+@@ -20,6 +20,9 @@
+ #ifndef GDB_NAT_LINUX_PERSONALITY_H
+ #define GDB_NAT_LINUX_PERSONALITY_H
+ 
++extern int  (sys_personality)(long);
++# define personality(x) \
++    sys_personality((x))
+ class maybe_disable_address_space_randomization
+ {
+ public:
+diff -urN gdb-16.2/gdbserver/configure gdb-16.2-patched/gdbserver/configure
+--- gdb-16.2/gdbserver/configure	2025-02-01 10:14:30.000000000 +0000
++++ gdb-16.2-patched/gdbserver/configure	2025-04-07 14:03:32.771339471 +0000
+@@ -13579,7 +13579,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF
+ 
+ 
+diff -urN gdb-16.2/gdbserver/linux-low.cc gdb-16.2-patched/gdbserver/linux-low.cc
+--- gdb-16.2/gdbserver/linux-low.cc	2025-02-01 10:14:30.000000000 +0000
++++ gdb-16.2-patched/gdbserver/linux-low.cc	2025-04-07 14:22:04.944599486 +0000
+@@ -6303,7 +6303,7 @@
+   CORE_ADDR phdr_memaddr, relocation;
+   int num_phdr, i;
+   unsigned char *phdr_buf;
+-  const int phdr_size = is_elf64 ? sizeof (Elf64_Phdr) : sizeof (Elf32_Phdr);
++  const int phdr_size = sizeof (Elf64_Phdr);
+ 
+   if (get_phdr_phnum_from_proc_auxv (pid, is_elf64, &phdr_memaddr, &num_phdr))
+     return 0;
+@@ -6327,10 +6327,11 @@
+       }
+     else
+       {
++    return 0;/*
+ 	Elf32_Phdr *const p = (Elf32_Phdr *) (phdr_buf + i * phdr_size);
+ 
+ 	if (p->p_type == PT_PHDR)
+-	  relocation = phdr_memaddr - p->p_vaddr;
++	  relocation = phdr_memaddr - p->p_vaddr; */
+       }
+ 
+   if (relocation == -1)
+@@ -6359,10 +6360,11 @@
+ 	}
+       else
+ 	{
++        return 0; /*
+ 	  Elf32_Phdr *const p = (Elf32_Phdr *) (phdr_buf + i * phdr_size);
+ 
+ 	  if (p->p_type == PT_DYNAMIC)
+-	    return p->p_vaddr + relocation;
++	    return p->p_vaddr + relocation; */
+ 	}
+     }
+ 
+@@ -6378,7 +6380,7 @@
+ get_r_debug (const int pid, const int is_elf64)
+ {
+   CORE_ADDR dynamic_memaddr;
+-  const int dyn_size = is_elf64 ? sizeof (Elf64_Dyn) : sizeof (Elf32_Dyn);
++  const int dyn_size = sizeof (Elf64_Dyn);
+   unsigned char buf[sizeof (Elf64_Dyn)];  /* The larger of the two.  */
+   CORE_ADDR map = -1;
+ 
+@@ -6428,7 +6430,8 @@
+ 	}
+       else
+ 	{
+-	  Elf32_Dyn *const dyn = (Elf32_Dyn *) buf;
++        return -1;
++	  /* Elf32_Dyn *const dyn = (Elf32_Dyn *) buf;
+ #if defined DT_MIPS_RLD_MAP || defined DT_MIPS_RLD_MAP_REL
+ 	  union
+ 	    {
+@@ -6446,7 +6449,7 @@
+ 	      else
+ 		break;
+ 	    }
+-#endif	/* DT_MIPS_RLD_MAP */
++#endif	// DT_MIPS_RLD_MAP
+ #ifdef DT_MIPS_RLD_MAP_REL
+ 	  if (dyn->d_tag == DT_MIPS_RLD_MAP_REL)
+ 	    {
+@@ -6456,14 +6459,14 @@
+ 	      else
+ 		break;
+ 	    }
+-#endif	/* DT_MIPS_RLD_MAP_REL */
++#endif	// DT_MIPS_RLD_MAP_REL
+ 
+ 	  if (dyn->d_tag == DT_DEBUG && map == -1)
+ 	    map = dyn->d_un.d_val;
+ 
+ 	  if (dyn->d_tag == DT_NULL)
+ 	    break;
+-	}
++	*/}
+ 
+       dynamic_memaddr += dyn_size;
+     }
+diff -urN gdb-16.2/gdbserver/linux-low.h gdb-16.2-patched/gdbserver/linux-low.h
+--- gdb-16.2/gdbserver/linux-low.h	2025-02-01 10:14:30.000000000 +0000
++++ gdb-16.2-patched/gdbserver/linux-low.h	2025-04-07 14:38:28.813713352 +0000
+@@ -18,7 +18,15 @@
+ 
+ #ifndef GDBSERVER_LINUX_LOW_H
+ #define GDBSERVER_LINUX_LOW_H
++#ifndef _COSMO_SOURCE
++#define _COSMO_SOURCE
++#endif
++#include "libc/sysv/consts/nr.h"
++#include "libc/sysv/consts/sig.h"
++#include "libc/calls/calls.h"
++#include "elf.h"
+ 
++#include "elf/common.h"
+ #include "nat/linux-nat.h"
+ #include "nat/gdb_thread_db.h"
+ #include <signal.h>
+@@ -32,7 +40,6 @@
+ #include "tracepoint.h"
+ 
+ #include <list>
+-
+ #define PTRACE_XFER_TYPE long
+ 
+ #ifdef HAVE_LINUX_REGSETS
+diff -urN gdb-16.2/gdbsupport/configure gdb-16.2-patched/gdbsupport/configure
+--- gdb-16.2/gdbsupport/configure	2024-12-29 02:50:07.000000000 +0000
++++ gdb-16.2-patched/gdbsupport/configure	2025-04-07 14:03:32.767339466 +0000
+@@ -14130,7 +14130,7 @@
+ shift
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PTRACE_TYPE_ARG1 $1
++#define PTRACE_TYPE_ARG1 int
+ _ACEOF
+ 
+ 
