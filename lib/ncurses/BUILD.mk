@@ -6,6 +6,7 @@ NCURSES_CONFIG_ARGS = --without-libtool --without-shared\
     --without-tests --with-termlib --with-ticlib\
     --without-dlsym --without-pcre2 --without-sysmouse\
     --with-curses-h --disable-stripping --enable-widec\
+	--with-fallbacks=xterm,xterm-256color,screen-256color,linux,vt100,ansi77\
     --disable-lib-suffixes\
     --prefix=$$(COSMOS)\
     CFLAGS="-Os"
