@@ -41,6 +41,7 @@ clean-results:
 clean-cosmos:
 	echo "removing files from cosmos"
 	find cosmos -type f -delete
+	find cosmos -type l -delete
 
 clean: clean-cosmos clean-results
 	echo "removing the o/ folder"
