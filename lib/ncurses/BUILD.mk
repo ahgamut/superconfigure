@@ -1,14 +1,21 @@
 NCURSES_SRC := https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz
 
 NCURSES_CONFIG_ARGS = --without-libtool --without-shared\
-    --without-manpages --without-tests --without-tack\
+	--with-normal --without-debug\
+	--disable-relink --disable-rpath\
+	--disable-termcap --disable-mixed-case\
     --without-ada --without-cxx --without-cxx-binding\
     --without-tests --with-termlib --with-ticlib\
-    --without-dlsym --without-pcre2 --without-sysmouse\
+    --without-dlsym --without-pcre2 --with-sysmouse\
+    --without-manpages --without-tests --without-tack\
     --with-curses-h --disable-stripping --enable-widec\
+	--enable-ext-colors --enable-ext-mouse --enable-sp-funcs\
+	--enable-colorfgbg --enable-tcap-names\
+	--with-pkg-config --enable-pc-files\
 	--with-fallbacks=xterm,xterm-256color,screen-256color,linux,vt100,ansi77\
-    --disable-lib-suffixes\
     --prefix=$$(COSMOS)\
+	--with-default-terminfo-dir=$$(COSMOS)/share/terminfo\
+	--with-pkgconfig-libdir=$$(COSMOS)/lib/pkgconfig\
     CFLAGS="-Os"
 
 

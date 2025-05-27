@@ -20,11 +20,11 @@
 -		putenv("TERM=vt220");
 +	/* Curses needs TERM; if it is unset, try falling back to a VT100. */
 +#ifdef __COSMOPOLITAN__
-+	if (getenv("TERM") == NULL || IsWindows()) {
++	if (getenv("TERM") == NULL) {
 +#else
 +	if (getenv("TERM") == NULL) {
 +#endif
-+		putenv("TERM=vt100");
++		putenv("TERM=rxvt");
 +    }
  
  	/* Enter into curses mode.  Abort if this fails. */
