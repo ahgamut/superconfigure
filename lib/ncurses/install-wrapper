@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+make install -j"$MAXPROC"
+
+# set symlinks
+cd "$COSMOS/lib"
+ln -sf libncursesw.a libncurses.a
+ln -sf libformw.a libform.a
+ln -sf libmenuw.a libmenu.a
+ln -sf libpanelw.a libpanel.a
+ln -sf libticw.a libtic.a
+ln -sf libtinfow.a libtinfo.a
+
+# even for headers
+cd "$COSMOS/include"
+rm -rf ncurses
+ln -sf ncursesw ncurses
+
+cd "$BASELOC"

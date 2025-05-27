@@ -36,7 +36,7 @@ diff -urN gdb-16.2/gdb/Makefile.in gdb-16.2-patched/gdb/Makefile.in
  NATDEPFILES = @NATDEPFILES@
  NAT_CDEPS = @NAT_CDEPS@
 -LOADLIBES = @LOADLIBES@
-+LOADLIBES = -lncurses -ltinfo
++LOADLIBES = -lncursesw -ltinfow
  MH_CFLAGS = @MH_CFLAGS@
  XM_CLIBS = @XM_CLIBS@
  NAT_GENERATED_FILES = @NAT_GENERATED_FILES@
@@ -71,7 +71,7 @@ diff -urN gdb-16.2/gdb/configure gdb-16.2-patched/gdb/configure
    fi
  
 -  READLINE=-lreadline
-+  READLINE=-lreadline -lncurses -ltinfo
++  READLINE=-lreadline -lncursesw -ltinfow
    READLINE_DEPS=
    READLINE_CFLAGS=
    READLINE_TEXI_INCFLAG=

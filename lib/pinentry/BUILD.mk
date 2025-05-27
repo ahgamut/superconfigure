@@ -6,8 +6,8 @@ PINENTRY_DEPS := lib/npth lib/libgpg-error lib/libgcrypt \
 
 PINENTRY_CONFIG_ARGS = --prefix="$$(COSMOS)"\
 					CFLAGS="-Os -I$$(COSMOS)/include/ncurses" \
-					LIBCURSES="-lncurses -tinfo"\
-					LIBNCURSES="-lncurses -tinfo"\
+					LIBCURSES="-lncursesw -ltinfow"\
+					LIBNCURSES="-lncursesw -ltinfow"\
 					--enable-static --disable-shared \
 					--without-pic --disable-doc \
 					--disable-pinentry-tty \

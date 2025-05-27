@@ -15,7 +15,7 @@ cp -r "$BASELOC"/o/editor/vim/vim*/* ./
     --disable-xim --disable-fontset --enable-gui=no\
     --disable-nls --disable-sysmouse --disable-acl\
     --disable-canberra --disable-libsodium\
-    --without-x --with-tlib=tinfo\
+    --without-x --with-tlib=tinfow\
     --with-local-dir="$COSMOS"/lib\
     --sysconfdir="$COSMOS/share" --datarootdir="$COSMOS/share"\
     --prefix="$COSMOS"\

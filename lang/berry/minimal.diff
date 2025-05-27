@@ -8,7 +8,7 @@ index a84af6b..cbb5303 100755
  DEBUG_FLAGS = -O0 -g -DBE_DEBUG
  TEST_FLAGS  = $(DEBUG_FLAGS) --coverage -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined
 -LIBS        = -lm
-+LIBS        = -static -lm -ldl -lreadline -lncurses -ltinfo
++LIBS        = -static -lm -ldl -lreadline -lncursesw -ltinfow
  TARGET      = berry
 -CC          = gcc
 +CC          = $(COSMO)/cosmocc/bin/$(ARCH)-unknown-cosmo-cc
