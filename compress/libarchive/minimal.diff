@@ -1,0 +1,23 @@
+--- libarchive-3.8.0/libarchive_fe/passphrase.c	2025-05-20 09:00:39.000000000 +0000
++++ -	2025-05-27 18:43:07.921222119 +0000
+@@ -64,7 +64,7 @@
+ #include "err.h"
+ #include "passphrase.h"
+ 
+-#ifndef HAVE_READPASSPHRASE
++#if 1 || (!HAVE_READPASSPHRASE)
+ 
+ #define RPP_ECHO_OFF    0x00		/* Turn off echo (default). */
+ #define RPP_ECHO_ON     0x01		/* Leave echo on. */
+@@ -148,10 +148,7 @@
+ #endif
+ 
+ #define M(a,b) (a > b ? a : b)
+-#define MAX_SIGNO M(M(M(SIGALRM, SIGHUP), \
+-                      M(SIGINT, SIGPIPE)), \
+-                    M(M(SIGQUIT, SIGTERM), \
+-                      M(M(SIGTSTP, SIGTTIN), SIGTTOU)))
++#define MAX_SIGNO 255
+ 
+ static volatile sig_atomic_t signo[MAX_SIGNO + 1];
+ 
