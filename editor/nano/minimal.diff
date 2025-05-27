@@ -1,12 +1,31 @@
-diff -r --unified nano-7.2a/src/definitions.h nano-7.2/src/definitions.h
---- nano-8.4a/src/definitions.h	2023-01-18 08:19:15.000000000 +0000
-+++ nano-8.4/src/definitions.h	2023-12-04 23:47:59.674963938 +0000
-@@ -61,7 +61,7 @@
- #include <sys/stat.h>
+--- nano-8.4/src/nano.c	2025-03-21 07:50:25.000000000 +0000
++++ -	2025-05-27 20:00:46.678434401 +0000
+@@ -42,6 +42,10 @@
+ #include <sys/vt.h>
+ #endif
  
- /* Prefer wide ncurses over normal ncurses over curses. */
--#if defined(HAVE_NCURSESW_NCURSES_H)
-+#if 0 && defined(HAVE_NCURSESW_NCURSES_H)
- #include <ncursesw/ncurses.h>
- #elif defined(HAVE_NCURSES_H)
- #include <ncurses.h>
++#ifdef __COSMOPOLITAN__
++#include <cosmo.h>
++#endif
++
+ #ifdef ENABLE_MULTIBUFFER
+ #define read_them_all  TRUE
+ #else
+@@ -2150,9 +2154,14 @@
+ 		}
+ 	}
+ 
+-	/* Curses needs TERM; if it is unset, try falling back to a VT220. */
+-	if (getenv("TERM") == NULL)
+-		putenv("TERM=vt220");
++	/* Curses needs TERM; if it is unset, try falling back to a VT100. */
++#ifdef __COSMOPOLITAN__
++	if (getenv("TERM") == NULL || IsWindows()) {
++#else
++	if (getenv("TERM") == NULL) {
++#endif
++		putenv("TERM=vt100");
++    }
+ 
+ 	/* Enter into curses mode.  Abort if this fails. */
+ 	if (initscr() == NULL)
