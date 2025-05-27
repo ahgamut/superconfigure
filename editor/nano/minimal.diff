@@ -1,6 +1,6 @@
 diff -r --unified nano-7.2a/src/definitions.h nano-7.2/src/definitions.h
---- nano-7.2a/src/definitions.h	2023-01-18 08:19:15.000000000 +0000
-+++ nano-7.2/src/definitions.h	2023-12-04 23:47:59.674963938 +0000
+--- nano-8.4a/src/definitions.h	2023-01-18 08:19:15.000000000 +0000
++++ nano-8.4/src/definitions.h	2023-12-04 23:47:59.674963938 +0000
 @@ -61,7 +61,7 @@
  #include <sys/stat.h>
  

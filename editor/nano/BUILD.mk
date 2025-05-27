@@ -1,5 +1,5 @@
 
-NANO_SRC := https://www.nano-editor.org/dist/v7/nano-7.2.tar.gz 
+NANO_SRC := https://www.nano-editor.org/dist/v8/nano-8.4.tar.gz 
 
 $(eval $(call DOWNLOAD_SOURCE,editor/nano,$(NANO_SRC)))
 $(eval $(call SPECIFY_DEPS,editor/nano,lib/ncurses lib/readline))
