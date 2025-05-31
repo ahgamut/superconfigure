@@ -20,7 +20,7 @@
 -		putenv("TERM=vt220");
 +	/* Curses needs TERM; if it is unset, try falling back to a VT100. */
 +#ifdef __COSMOPOLITAN__
-+	if (getenv("TERM") == NULL || IsWindows()) {
++	if (getenv("TERM") == NULL) {
 +#else
 +	if (getenv("TERM") == NULL) {
 +#endif
@@ -29,3 +29,12 @@
  
  	/* Enter into curses mode.  Abort if this fails. */
  	if (initscr() == NULL)
+--- nano-8.4/src/nano.c	2025-05-31 04:32:44.880314981 +0000
++++ -	2025-05-31 04:34:37.291807046 +0000
+@@ -2446,6 +2446,7 @@
+ 
+ #ifdef ENABLE_MOUSE
+ 	/* Initialize mouse support. */
++   SET(USE_MOUSE);
+ 	mouse_init();
+ #endif
