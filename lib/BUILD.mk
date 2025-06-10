@@ -27,6 +27,7 @@ include lib/libmad/BUILD.mk
 include lib/libogg/BUILD.mk
 include lib/libpng/BUILD.mk
 include lib/libpsl/BUILD.mk
+include lib/libsodium/BUILD.mk
 include lib/libssh2/BUILD.mk
 include lib/libtiff/BUILD.mk
 include lib/libunistring/BUILD.mk
