@@ -15,6 +15,7 @@ include cli/patch/BUILD.mk
 include cli/sed/BUILD.mk
 include cli/sox/BUILD.mk
 include cli/tesseract/BUILD.mk
+include cli/which/BUILD.mk
 include cli/zsh/BUILD.mk
 
 cli: \
@@ -34,6 +35,7 @@ cli: \
 	o/cli/patch/built.fat \
 	o/cli/sox/built.fat \
 	o/cli/sed/built.fat \
+        o/cli/which/built.fat \
 	o/cli/zsh/built.fat
 
 .PHONY: cli
