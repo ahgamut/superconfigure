@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+alias strip='true'
+
+# copy config
+cp "$BASELOC"/cli/toybox/cosmo.config "$BASELOC"/o/cli/toybox/toybox-0.8.12/.config
+
+# copy all files to arch dir
+cp -r "$BASELOC"/o/cli/toybox/toybox-0.8.12/. .
