@@ -1,6 +1,7 @@
 
 include cli/bash/BUILD.mk
 include cli/bc/BUILD.mk
+include cli/cmake/BUILD.mk
 include cli/coreutils/BUILD.mk
 include cli/dash/BUILD.mk
 include cli/diffutils/BUILD.mk

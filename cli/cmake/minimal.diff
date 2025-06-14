@@ -1,0 +1,173 @@
+--- cmake-4.0.3/Source/kwsys/CMakeLists.txt	2025-06-12 14:31:35.000000000 +0000
++++ -	2025-06-14 16:56:32.347534683 +0000
+@@ -138,7 +138,7 @@
+   # Enable all components.
+   set(KWSYS_USE_Base64 1)
+   set(KWSYS_USE_Directory 1)
+-  set(KWSYS_USE_DynamicLoader 1)
++  set(KWSYS_USE_DynamicLoader 0)
+   set(KWSYS_USE_Encoding 1)
+   set(KWSYS_USE_Glob 1)
+   set(KWSYS_USE_MD5 1)
+--- ./cmake-4.0.3/Utilities/cmlibuv/include/uv.h	2025-06-12 14:31:35.000000000 +0000
++++ -	2025-06-14 17:03:22.020986355 +0000
+@@ -187,12 +187,14 @@
+   XX(GETNAMEINFO, getnameinfo)                                                \
+   XX(RANDOM, random)                                                          \
+ 
+-typedef enum {
+-#define XX(code, _) UV_ ## code = UV__ ## code,
++typedef int uv_errno_t;
++
++// typedef enum {
++#define XX(code, _) uv_errno_t UV_ ## code = UV__ ## code;
+   UV_ERRNO_MAP(XX)
+ #undef XX
+-  UV_ERRNO_MAX = UV__EOF - 1
+-} uv_errno_t;
++  uv_errno_t UV_ERRNO_MAX = UV__EOF - 1;
++// } uv_errno_t;
+ 
+ typedef enum {
+   UV_UNKNOWN_HANDLE = 0,
+
+--- cmake-4.0.3/Utilities/cmlibuv/src/uv-common.c	2025-06-14 17:11:14.264665056 +0000
++++ -	2025-06-14 17:11:18.077715410 +0000
+@@ -257,8 +257,12 @@
+ #ifdef _WIN32
+     addr->sin6_scope_id = atoi(zone_index);
+ #else
++#ifdef __COSMOPOLITAN__
++    addr->sin6_scope_id = 0;
++#else
+     addr->sin6_scope_id = if_nametoindex(zone_index);
+ #endif
++#endif
+   }
+ 
+   return uv_inet_pton(AF_INET6, ip, &addr->sin6_addr);
+
+--- cmake-4.0.3/Source/CMakeLists.txt	2025-06-12 14:31:35.000000000 +0000
++++ -	2025-06-14 17:16:00.430155414 +0000
+@@ -186,8 +186,6 @@
+   cmDependsCompiler.h
+   cmDocumentation.cxx
+   cmDocumentationFormatter.cxx
+-  cmDynamicLoader.cxx
+-  cmDynamicLoader.h
+   cmDyndepCollation.cxx
+   cmDyndepCollation.h
+   cmELF.h
+
+--- cmake-4.0.3/Source/cmakemain.cxx	2025-06-14 17:22:39.045441436 +0000
++++ -	2025-06-14 17:22:46.170723652 +0000
+@@ -43,7 +43,7 @@
+ 
+ #ifndef CMAKE_BOOTSTRAP
+ #  include "cmDocumentation.h"
+-#  include "cmDynamicLoader.h"
++// #  include "cmDynamicLoader.h"
+ #endif
+ 
+ #include "cmsys/Encoding.hxx"
+@@ -1177,7 +1177,7 @@
+     }
+   }
+   int ret = do_cmake(ac, av);
+-#ifndef CMAKE_BOOTSTRAP
++#if 0 && CMAKE_BOOTSTRAP
+   cmDynamicLoader::FlushCache();
+ #endif
+   if (uv_loop_t* loop = uv_default_loop()) {
+
+--- cmake-4.0.3/Source/cmCTest.cxx	2025-06-14 17:23:14.801481974 +0000
++++ -	2025-06-14 17:23:18.774038193 +0000
+@@ -47,7 +47,7 @@
+ #include "cmCTestTestHandler.h"
+ #include "cmCTestTypes.h"
+ #include "cmCommandLineArgument.h"
+-#include "cmDynamicLoader.h"
++// #include "cmDynamicLoader.h"
+ #include "cmExecutionStatus.h"
+ #include "cmGeneratedFileStream.h"
+ #include "cmGlobalGenerator.h"
+@@ -2731,7 +2731,7 @@
+ int cmCTest::RunCMakeAndTest()
+ {
+   int retv = this->Impl->BuildAndTest.Run();
+-#ifndef CMAKE_BOOTSTRAP
++#if 0 && CMAKE_BOOTSTRAP
+   cmDynamicLoader::FlushCache();
+ #endif
+   return retv;
+
+--- cmake-4.0.3/Source/cmUVProcessChain.cxx	2025-06-14 17:39:24.462581122 +0000
++++ -	2025-06-14 17:39:28.063869837 +0000
+@@ -573,6 +573,7 @@
+ #else
+   if (this->Finished && this->TermSignal) {
+     switch (this->TermSignal) {
++#if 0
+ #  ifdef SIGSEGV
+       case SIGSEGV:
+         return std::make_pair(ExceptionCode::Fault, "Segmentation fault");
+@@ -721,6 +722,7 @@
+         return std::make_pair(ExceptionCode::Other, "SIGUNUSED");
+ #    endif
+ #  endif
++#endif
+       default: {
+         char buf[256];
+         snprintf(buf, sizeof(buf), "Signal %d", this->TermSignal);
+
+--- cmake-4.0.3/Utilities/cmlibuv/src/unix/udp.c	2025-06-14 17:43:22.070850509 +0000
++++ -	2025-06-14 17:43:26.759616301 +0000
+@@ -950,6 +950,9 @@
+                                           const char* interface_addr,
+                                           const struct sockaddr_in* source_addr,
+                                           uv_membership membership) {
++#ifdef __COSMOPOLITAN__
++  return UV_EINVAL;
++#else
+   struct ip_mreq_source mreq;
+   int optname;
+   int err;
+@@ -987,6 +990,7 @@
+   }
+ 
+   return 0;
++#endif
+ }
+ 
+ 
+@@ -995,6 +999,9 @@
+                                           const char* interface_addr,
+                                           const struct sockaddr_in6* source_addr,
+                                           uv_membership membership) {
++#ifdef __COSMOPOLITAN__
++    return UV_EINVAL;
++#else
+   struct group_source_req mreq;
+   struct sockaddr_in6 addr6;
+   int optname;
+@@ -1036,6 +1043,7 @@
+   }
+ 
+   return 0;
++#endif
+ }
+ #endif
+ 
+--- cmake-4.0.3/Utilities/cmlibuv/src/unix/getaddrinfo.c	2025-06-14 17:45:03.138965102 +0000
++++ -	2025-06-14 17:45:07.071929113 +0000
+@@ -230,8 +230,8 @@
+   if (buffer == NULL || size == NULL || *size == 0)
+     return UV_EINVAL;
+ 
+-  if (if_indextoname(ifindex, ifname_buf) == NULL)
+-    return UV__ERR(errno);
++  if (1 /* if_indextoname(ifindex, ifname_buf) == NULL */)
++    return UV_ENOSYS;
+ 
+   len = strnlen(ifname_buf, sizeof(ifname_buf));
+ 
