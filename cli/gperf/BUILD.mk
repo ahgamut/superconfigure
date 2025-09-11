@@ -1,5 +1,5 @@
 
-GPERF_SRC := http://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz
+GPERF_SRC := http://mirrors.ocf.berkeley.edu/pub/gnu/gperf/gperf-3.1.tar.gz
 
 GPERF_CONFIG_ARGS = --prefix="$$(COSMOS)"\
 					CFLAGS="-Os"

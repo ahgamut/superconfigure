@@ -1,6 +1,6 @@
 
 
-MPC_SRC := https://ftp.gnu.org/gnu/mpc/mpc-1.3.0.tar.gz 
+MPC_SRC := https://mirrors.ocf.berkeley.edu/gnu/mpc/mpc-1.3.0.tar.gz 
 
 MPC_CONFIG_ARGS =  --prefix=$$(COSMOS)\
     --disable-shared --disable-dependency-tracking --disable-silent-rules

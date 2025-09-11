@@ -1,5 +1,5 @@
 
-SED_SRC := https://ftp.gnu.org/gnu/sed/sed-4.9.tar.gz 
+SED_SRC := https://mirrors.ocf.berkeley.edu/gnu/sed/sed-4.9.tar.gz 
 
 SED_CONFIG_ARGS = --prefix="$$(COSMOS)"\
     --disable-silent-rules --disable-dependency-tracking \

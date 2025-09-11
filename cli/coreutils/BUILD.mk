@@ -1,4 +1,4 @@
-COREUTILS_SRC := https://ftp.gnu.org/gnu/coreutils/coreutils-9.4.tar.gz 
+COREUTILS_SRC := https://mirrors.ocf.berkeley.edu/gnu/coreutils/coreutils-9.4.tar.gz 
 COREUTILS_DEPS := lib/gmp lib/ncurses cosmo-repo/base
 
 COREUTILS_BINS := [ b2sum base32 base64 basename basenc cat chcon chgrp chmod \

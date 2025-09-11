@@ -1,5 +1,5 @@
 
-FINDUTILS_SRC := https://ftp.gnu.org/gnu/findutils/findutils-4.9.0.tar.xz 
+FINDUTILS_SRC := https://mirrors.ocf.berkeley.edu/gnu/findutils/findutils-4.9.0.tar.xz 
 FINDUTILS_DEPS := cosmo-repo/base
 FINDUTILS_BINS := find locate xargs
 

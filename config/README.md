@@ -143,14 +143,14 @@ dependencies.
 Instead of writing:
 
 ```Makefile
-o/cli/bash/downloaded: DL_FILE = https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz
+o/cli/bash/downloaded: DL_FILE = https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.2.tar.gz
 o/cli/bash/patched: PATCH_FILE = $(BASELOC)/cli/bash/minimal.diff
 ```
 
 We can write:
 
 ```Makefile
-BASH_SRC := https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz 
+BASH_SRC := https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.2.tar.gz 
 $(eval $(call DOWNLOAD_SOURCE,cli/bash,$(BASH_SRC)))
 ```
 

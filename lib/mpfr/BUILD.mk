@@ -1,6 +1,6 @@
 
 
-MPFR_SRC := https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.0.tar.xz 
+MPFR_SRC := https://mirrors.ocf.berkeley.edu/gnu/mpfr/mpfr-4.2.0.tar.xz 
 
 MPFR_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --disable-shared --disable-dependency-tracking --disable-silent-rules

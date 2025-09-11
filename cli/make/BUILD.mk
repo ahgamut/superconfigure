@@ -1,5 +1,5 @@
 
-GMAKE_SRC := https://ftp.gnu.org/gnu/make/make-4.4.tar.gz 
+GMAKE_SRC := https://mirrors.ocf.berkeley.edu/gnu/make/make-4.4.tar.gz 
 
 GMAKE_CONFIG_ARGS = --prefix="$$(COSMOS)"\
     --disable-nls --disable-rpath \

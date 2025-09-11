@@ -1,5 +1,5 @@
 
-PATCH_SRC := https://ftp.gnu.org/gnu/patch/patch-2.7.tar.gz
+PATCH_SRC := https://mirrors.ocf.berkeley.edu/gnu/patch/patch-2.7.tar.gz
 PATCH_CONFIG_ARGS = --prefix=$$(COSMOS) CFLAGS="-Os"
 
 $(eval $(call DOWNLOAD_SOURCE,cli/patch,$(PATCH_SRC)))

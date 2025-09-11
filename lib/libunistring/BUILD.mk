@@ -1,5 +1,5 @@
 
-LIBUNISTRING_SRC := https://ftp.gnu.org/gnu/libunistring/libunistring-1.2.tar.gz
+LIBUNISTRING_SRC := https://mirrors.ocf.berkeley.edu/gnu/libunistring/libunistring-1.2.tar.gz
 
 LIBUNISTRING_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --disable-shared --enable-static\

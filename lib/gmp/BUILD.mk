@@ -1,5 +1,5 @@
 
-GMP_SRC := https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz 
+GMP_SRC := https://mirrors.ocf.berkeley.edu/gnu/gmp/gmp-6.3.0.tar.xz 
 
 GMP_CONFIG_ARGS = --prefix=$$(COSMOS)\
     --disable-shared --disable-dependency-tracking\

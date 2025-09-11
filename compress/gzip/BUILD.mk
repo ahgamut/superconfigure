@@ -1,5 +1,5 @@
 
-GZIP_SRC := https://ftp.gnu.org/gnu/gzip/gzip-1.13.tar.gz
+GZIP_SRC := https://mirrors.ocf.berkeley.edu/gnu/gzip/gzip-1.13.tar.gz
 
 GZIP_CONFIG_ARGS = --prefix=$$(COSMOS) --datarootdir=$$(COSMOS)/share CFLAGS="-Os"
 

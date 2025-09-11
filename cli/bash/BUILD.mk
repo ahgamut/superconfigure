@@ -1,5 +1,5 @@
 
-BASH_SRC := https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz 
+BASH_SRC := https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.2.tar.gz 
 BASH_DEPS := lib/ncurses lib/readline
 
 $(eval $(call DOWNLOAD_SOURCE,cli/bash,$(BASH_SRC)))

@@ -1,5 +1,5 @@
 
-TAR_SRC := https://ftp.gnu.org/gnu/tar/tar-1.35.tar.gz 
+TAR_SRC := https://mirrors.ocf.berkeley.edu/gnu/tar/tar-1.35.tar.gz 
 
 $(eval $(call DOWNLOAD_SOURCE,compress/tar,$(TAR_SRC)))
 $(eval $(call SPECIFY_DEPS,compress/tar,cosmo-repo/base compress/brotli compress/gzip cosmo-repo/compress))

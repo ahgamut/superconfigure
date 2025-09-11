@@ -1,4 +1,4 @@
-DIFFUTILS_SRC := https://ftp.gnu.org/gnu/diffutils/diffutils-3.10.tar.xz
+DIFFUTILS_SRC := https://mirrors.ocf.berkeley.edu/gnu/diffutils/diffutils-3.10.tar.xz
 DIFFUTILS_CONFIG_ARGS = --prefix=$$(COSMOS) CFLAGS="-Os -Wno-implicit-function-declaration" \
 						--disable-nls --disable-rpath
 

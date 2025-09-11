@@ -1,6 +1,6 @@
 
 
-NETTLE_SRC := https://ftp.gnu.org/gnu/nettle/nettle-3.9.tar.gz 
+NETTLE_SRC := https://mirrors.ocf.berkeley.edu/gnu/nettle/nettle-3.9.tar.gz 
 
 NETTLE_CONFIG_ARGS = --disable-shared --enable-fat\
     --disable-openssl --disable-assembler\

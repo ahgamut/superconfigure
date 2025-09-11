@@ -1,5 +1,5 @@
 
-READLINE_SRC := https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
+READLINE_SRC := https://mirrors.ocf.berkeley.edu/gnu/readline/readline-8.2.tar.gz
 
 READLINE_CONFIG_ARGS = --disable-shared --enable-static\
     --enable-multibyte --prefix=$$(COSMOS)\

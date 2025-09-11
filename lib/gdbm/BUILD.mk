@@ -1,6 +1,6 @@
 
 
-GDBM_SRC := https://ftp.gnu.org/gnu/gdbm/gdbm-1.23.tar.gz 
+GDBM_SRC := https://mirrors.ocf.berkeley.edu/gnu/gdbm/gdbm-1.23.tar.gz 
 
 $(eval $(call DOWNLOAD_SOURCE,lib/gdbm,$(GDBM_SRC)))
 

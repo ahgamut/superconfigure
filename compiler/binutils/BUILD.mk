@@ -1,5 +1,5 @@
 
-BINUTILS_SRC := https://ftp.gnu.org/gnu/binutils/binutils-2.42.tar.gz
+BINUTILS_SRC := https://mirrors.ocf.berkeley.edu/gnu/binutils/binutils-2.42.tar.gz
 
 o/compiler/binutils/configured.x86_64: CONFIG_COMMAND = $(DUMMYLINK0)
 o/compiler/binutils/built.x86_64: BUILD_COMMAND = $(DUMMYLINK0)

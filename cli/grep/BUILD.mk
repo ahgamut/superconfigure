@@ -1,5 +1,5 @@
 
-GREP_SRC := https://ftp.gnu.org/gnu/grep/grep-3.11.tar.gz 
+GREP_SRC := https://mirrors.ocf.berkeley.edu/gnu/grep/grep-3.11.tar.gz 
 GREP_DEPS := lib/ncurses lib/readline lib/pcre
 GREP_CONFIG_ARGS =  --prefix="$$(COSMOS)"\
     CFLAGS="-Os"

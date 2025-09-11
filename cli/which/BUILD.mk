@@ -1,4 +1,4 @@
-WHICH_SRC := https://ftp.gnu.org/gnu/which/which-2.23.tar.gz
+WHICH_SRC := https://mirrors.ocf.berkeley.edu/gnu/which/which-2.23.tar.gz
 WHICH_CONFIG_ARGS := --prefix="$$(COSMOS)"
 
 $(eval $(call DOWNLOAD_SOURCE,cli/which,$(WHICH_SRC)))

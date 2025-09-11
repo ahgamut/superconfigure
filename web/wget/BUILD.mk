@@ -1,5 +1,5 @@
 
-WGET_SRC := https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz 
+WGET_SRC := https://mirrors.ocf.berkeley.edu/gnu/wget/wget-1.21.tar.gz 
 
 WGET_DEPS := \
 	lib/openssl lib/libuuid \
