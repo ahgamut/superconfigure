@@ -12,7 +12,16 @@ fi
 cached_wget () {
     URL="$1"
     RESULT="$2"
+    fdir=$(dirname "$URL")
     fname=$(basename "$URL")
+    ext0="${fname##.*}"
+    ext1="${RESULT##.*}"
+    while [ "$ext0" != "$ext1" ]; do
+        fname=$(basename "$fdir")
+        fdir=$(dirname "$fdir")
+        ext0="${fname##.*}"
+        ext1="${RESULT##.*}"
+    done
     if ! [ -f "$HOME/.cache/$fname" ]; then
         wget -q -P "$HOME/.cache" "$URL"
     fi
