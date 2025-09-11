@@ -1,4 +1,3 @@
-
 XPDF_SRC := https://dl.xpdfreader.com/xpdf-4.05.tar.gz
 XPDF_DEPS := lib/libpng lib/freetype
 
