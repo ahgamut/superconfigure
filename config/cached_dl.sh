@@ -11,26 +11,26 @@ fi
 
 cached_wget () {
     URL="$1"
+    RESULT="$2"
     fname=$(basename "$URL")
-    fext="${fname##*.}"
     if ! [ -f "$HOME/.cache/$fname" ]; then
         wget -q -P "$HOME/.cache" "$URL"
     fi
-    cp "$HOME/.cache/$fname" "sources.$fext"
+    cp "$HOME/.cache/$fname" "$RESULT"
 }
 
 case "$URL" in
     *.tar.gz* | *.tgz* )
-        cached_wget "$URL"
+        cached_wget "$URL" sources.tar.gz
         ;;
     *.tar.xz* )
-        cached_wget "$URL"
+        cached_wget "$URL" sources.tar.xz
         ;;
     *.tar.bz2* )
-        cached_wget "$URL"
+        cached_wget "$URL" sources.tar.bz2
         ;;
     *.zip* )
-        cached_wget "$URL"
+        cached_wget "$URL" sources.zip
         ;;
     *github.com/* )
         outdir=$(basename "$CURDIR")
