@@ -4,7 +4,7 @@ FREETYPE_SRC := https://download.savannah.gnu.org/releases/freetype/freetype-2.1
 FREETYPE_DEPS := cosmo-repo/base cosmo-repo/compress
 
 FREETYPE_CONFIG_ARGS = --enable-static --disable-shared --with-tests=no\
-    --with-brotli=no --with-harfbuzz=no --with-png=no --with-librsvg=no\
+    --with-brotli=no --with-harfbuzz=no --with-png=no --with-librsvg=no --with-bzip2=no\
     --prefix=$$(COSMOS) --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
     CFLAGS="-Os"
 

@@ -18,6 +18,7 @@ include cli/sox/BUILD.mk
 include cli/tesseract/BUILD.mk
 include cli/toybox/BUILD.mk
 include cli/which/BUILD.mk
+include cli/xpdf/BUILD.mk
 include cli/zsh/BUILD.mk
 
 cli: \
