@@ -39,6 +39,7 @@ cli: \
 	o/cli/sox/built.fat \
 	o/cli/sed/built.fat \
 	o/cli/which/built.fat \
+	o/cli/xpdf/built.fat \
 	o/cli/zsh/built.fat
 
 .PHONY: cli
