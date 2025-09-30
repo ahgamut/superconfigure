@@ -13,6 +13,9 @@ case "$SRC_FILE" in
     sources.tar.xz )
         tar xf sources.tar.xz
         ;;
+    sources.tar.lz )
+        tar xf sources.tar.lz
+        ;;
     sources.tar.bz2 )
         tar xf sources.tar.bz2
         ;;

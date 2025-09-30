@@ -16,6 +16,9 @@ case "$URL" in
     *.tar.xz* )
         wget -qO sources.tar.xz "$URL"
         ;;
+    *.tar.lz* )
+        wget -qO sources.tar.lz "$URL"
+        ;;
     *.tar.bz2* )
         wget -qO sources.tar.bz2 "$URL"
         ;;

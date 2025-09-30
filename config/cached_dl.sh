@@ -35,6 +35,9 @@ case "$URL" in
     *.tar.xz* )
         cached_wget "$URL" sources.tar.xz
         ;;
+    *.tar.lz* )
+        cached_wget "$URL" sources.tar.lz
+        ;;
     *.tar.bz2* )
         cached_wget "$URL" sources.tar.bz2
         ;;
