@@ -1,0 +1,46 @@
+--- nasm-3.00/include/compiler.h	2025-10-04 04:33:03.238046619 +0000
++++ -	2025-10-04 04:33:40.321515696 +0000
+@@ -187,22 +187,11 @@
+ /* If <stdbool.h> exists, include it explicitly to prevent it from
+    begin included later, causing the "bool" macro to be defined. */
+ #  include <stdbool.h>
+-#  ifdef bool
+-/* Force bool to be a typedef instead of a macro. What a "clever" hack
+-   this is... */
+-    typedef bool                /* The macro definition of bool */
+-#  undef bool
+-        bool;                   /* No longer the macro definition */
+-#  endif
+-# elif defined(HAVE___BOOL)
+-   typedef _Bool bool;
+-#  define false 0
+-#  define true 1
+ # else
+ /* This is a bit dangerous, because casting to this ersatz bool
+    will not produce the same result as the standard (bool) cast.
+    Instead, use the bool() constructor-style macro defined below. */
+-typedef enum bool { false, true } bool;
++// typedef enum bool { false, true } bool;
+ # endif
+ /* This amounts to a C++-style conversion cast to bool.  This works
+    because C ignores an argument-taking macro when used without an
+--- nasm-3.00/include/bytesex.h	2025-10-03 19:41:41.000000000 +0000
++++ -	2025-10-04 04:35:41.287638345 +0000
+@@ -215,7 +215,7 @@
+ } __attribute__((packed));
+ static inline uint32_t getu32(const void *p)
+ {
+-    return l32toh(((const struct unaligned32 *)p)->v);
++    return le32toh(((const struct unaligned32 *)p)->v);
+ }
+ static inline uint32_t setu32(void *p, uint32_t v)
+ {
+@@ -253,7 +253,7 @@
+ static inline uint32_t getu32(const void *p)
+ {
+     const uint32_t _unaligned *pp = p;
+-    return l32toh(*pp);
++    return le32toh(*pp);
+ }
+ static inline uint32_t setu32(void *p, uint32_t v)
+ {
