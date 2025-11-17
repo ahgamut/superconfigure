@@ -2,8 +2,10 @@
 GMP_SRC := https://mirrors.ocf.berkeley.edu/gnu/gmp/gmp-6.3.0.tar.xz 
 
 GMP_CONFIG_ARGS = --prefix=$$(COSMOS)\
-    --disable-shared --disable-dependency-tracking\
-    --disable-silent-rules --enable-fat\
+    --disable-shared --enable-static\
+	--disable-dependency-tracking --disable-fat\
+	--disable-assembly --disable-cxx\
+    --disable-silent-rules --disable-alloca\
     --build=$$(ARCH)-linux-gnu
 
 $(eval $(call DOWNLOAD_SOURCE,lib/gmp,$(GMP_SRC)))
