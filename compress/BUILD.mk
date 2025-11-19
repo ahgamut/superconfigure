@@ -1,4 +1,5 @@
 
+include compress/bzip3/BUILD.mk
 include compress/brotli/BUILD.mk
 include compress/gzip/BUILD.mk
 include compress/libarchive/BUILD.mk
@@ -10,6 +11,7 @@ include compress/tar/BUILD.mk
 
 compress: \
 	o/cosmo-repo/compress/built.fat\
+	o/compress/bzip3/built.fat\
 	o/compress/brotli/built.fat\
 	o/compress/gzip/built.fat\
 	o/compress/lzip/built.fat\
