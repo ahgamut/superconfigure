@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+cmake -S "$BASELOC"/o/compress/lz4/lz4*/build/cmake/ -B ./ -G 'Unix Makefiles' \
+    -DCMAKE_INSTALL_PREFIX="$COSMOS"\
+    -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON\
+    -DLZ4_POSITION_INDEPENDENT_LIB=OFF
