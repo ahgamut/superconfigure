@@ -38,7 +38,6 @@ cli: \
 	o/cli/make/built.fat \
 	o/cli/ninja/built.fat \
 	o/cli/patch/built.fat \
-	o/cli/sox/built.fat \
 	o/cli/sed/built.fat \
 	o/cli/which/built.fat \
 	o/cli/xpdf/built.fat \
