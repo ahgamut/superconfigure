@@ -4,7 +4,7 @@ LLVM_DEPS := cosmo-repo/base
 LLVM_BINS := clang-20 clang-tidy clangd clang-format \
 			 clang-apply-replacements clang-check clang-doc \
 			 clang-include-fixer clang-linker-wrapper \
-			 clang-offload-packager clang-refactor clang-rename clang-tblgen  \
+			 clang-offload-packager clang-refactor \
 			 llvm-cxxfilt \
 			 llvm-ar llvm-nm llvm-objcopy llvm-objdump \
 			 llvm-readobj llvm-size llvm-split \
