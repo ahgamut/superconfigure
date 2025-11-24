@@ -1,35 +1,17 @@
---- llvm-project-llvmorg-19.1.0-rc3/llvm/CMakeLists.txt
-+++ -
-@@ -58,7 +58,7 @@ set(LLVM_LIBDIR_SUFFIX "" CACHE STRING "Define suffix of library directory name
- include(GNUInstallDirs)
- 
- # This C++ standard is required to build LLVM.
--set(LLVM_REQUIRED_CXX_STANDARD 17)
-+set(LLVM_REQUIRED_CXX_STANDARD 20)
- 
- # If we find that the cache contains CMAKE_CXX_STANDARD it means that it's a old CMakeCache.txt
- # and we can just inform the user and then reset it.
---- llvm-project-llvmorg-19.1.0-rc3/llvm/include/llvm/ADT/bit.h
-+++ -
-@@ -24,12 +24,13 @@
- #endif
- 
- #if defined(_MSC_VER) && !defined(_DEBUG)
--#include <cstdlib>  // for _byteswap_{ushort,ulong,uint64}
-+#include <cstdlib> // for _byteswap_{ushort,ulong,uint64}
- #endif
+--- llvm-project-llvmorg-20.1.8/llvm/include/llvm/ADT/bit.h	2025-07-08 23:06:32.000000000 +0000
++++ -	2025-11-24 00:10:43.673845333 +0000
+@@ -29,7 +29,7 @@
  
  #if defined(__linux__) || defined(__GNU__) || defined(__HAIKU__) ||            \
      defined(__Fuchsia__) || defined(__EMSCRIPTEN__) || defined(__NetBSD__) ||  \
 -    defined(__OpenBSD__) || defined(__DragonFly__)
-+    defined(__OpenBSD__) || defined(__DragonFly__) ||                          \
-+    defined(__COSMOPOLITAN__)
++    defined(__OpenBSD__) || defined(__DragonFly__) || defined(__COSMOPOLITAN__)
  #include <endian.h>
  #elif defined(_AIX)
  #include <sys/machine.h>
---- llvm-project-llvmorg-19.1.0-rc3/llvm/lib/Support/Unix/Path.inc
-+++ -
-@@ -55,6 +55,8 @@ extern char **environ;
+--- llvm-project-llvmorg-20.1.8/llvm/lib/Support/Unix/Path.inc	2025-07-08 23:06:32.000000000 +0000
++++ -	2025-11-24 00:16:01.897591508 +0000
+@@ -50,6 +50,8 @@
  #elif defined(__MVS__)
  #include "llvm/Support/AutoConvert.h"
  #include <sys/ps.h>
@@ -38,7 +20,7 @@
  #endif
  
  // Both stdio.h and cstdio are included via different paths and
-@@ -112,7 +114,7 @@ typedef uint_t uint;
+@@ -107,7 +109,7 @@
  #endif
  
  #if defined(__NetBSD__) || defined(__DragonFly__) || defined(__GNU__) ||       \
@@ -47,32 +29,17 @@
  #define STATVFS_F_FLAG(vfs) (vfs).f_flag
  #else
  #define STATVFS_F_FLAG(vfs) (vfs).f_flags
-@@ -126,9 +128,10 @@ namespace fs {
- 
- const file_t kInvalidFile = -1;
- 
--#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||      \
--    defined(__FreeBSD_kernel__) || defined(__linux__) || defined(__CYGWIN__) || \
--    defined(__DragonFly__) || defined(_AIX) || defined(__GNU__) ||              \
-+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||     \
-+    defined(__FreeBSD_kernel__) || defined(__linux__) ||                       \
-+    defined(__CYGWIN__) || defined(__DragonFly__) || defined(_AIX) ||          \
-+    defined(__GNU__) ||                                                        \
-     (defined(__sun__) && defined(__svr4__) || defined(__HAIKU__))
+@@ -124,7 +126,8 @@
+ #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||      \
+     defined(__FreeBSD_kernel__) || defined(__linux__) || defined(__CYGWIN__) || \
+     defined(__DragonFly__) || defined(_AIX) || defined(__GNU__) ||              \
+-    (defined(__sun__) && defined(__svr4__) || defined(__HAIKU__))
++    (defined(__sun__) && defined(__svr4__) || defined(__HAIKU__)) || \
++    defined(__COSMOPOLITAN__)
  static int test_dir(char ret[PATH_MAX], const char *dir, const char *bin) {
    struct stat sb;
-@@ -233,8 +236,8 @@ std::string getMainExecutable(const char *argv0, void *MainAddr) {
-   // Fall back to argv[0] if auxiliary vectors are not available.
-   if (getprogpath(exe_path, argv0) != NULL)
-     return exe_path;
--#elif defined(_AIX) || defined(__DragonFly__) || defined(__FreeBSD_kernel__) || \
--    defined(__NetBSD__)
-+#elif defined(_AIX) || defined(__DragonFly__) ||                               \
-+    defined(__FreeBSD_kernel__) || defined(__NetBSD__)
-   const char *curproc = "/proc/curproc/file";
-   char exe_path[PATH_MAX];
-   if (sys::fs::exists(curproc)) {
-@@ -334,6 +337,8 @@ std::string getMainExecutable(const char *argv0, void *MainAddr) {
+   char fullpath[PATH_MAX];
+@@ -329,6 +332,8 @@
    char link_path[PATH_MAX];
    if (realpath(DLInfo.dli_fname, link_path))
      return link_path;
@@ -81,7 +48,7 @@
  #else
  #error GetMainExecutable is not implemented on this host yet.
  #endif
-@@ -555,6 +560,8 @@ static bool is_local_impl(struct STATVFS &Vfs) {
+@@ -550,6 +555,8 @@
    // The file system can have an arbitrary structure on z/OS; must go with the
    // conservative answer.
    return false;
@@ -90,119 +57,47 @@
  #else
    return !!(STATVFS_F_FLAG(Vfs) & MNT_LOCAL);
  #endif
---- llvm-project-llvmorg-19.1.0-rc3/llvm/lib/Support/Unix/Threading.inc
-+++ -
-@@ -374,7 +374,8 @@ static int computeHostNumPhysicalCores() {
+--- llvm-project-llvmorg-20.1.8/llvm/lib/Support/Unix/Threading.inc	2025-07-08 23:06:32.000000000 +0000
++++ -	2025-11-24 00:17:30.965483297 +0000
+@@ -383,7 +383,7 @@
    }
    return CPU_COUNT(&Enabled);
  }
 -#elif (defined(__linux__) && defined(__s390x__)) || defined(_AIX)
-+#elif (defined(__linux__) && defined(__s390x__)) || defined(_AIX) ||           \
-+    defined(__COSMOPOLITAN__)
++#elif (defined(__linux__) && defined(__s390x__)) || defined(_AIX) || defined(__COSMOPOLITAN__)
  static int computeHostNumPhysicalCores() {
    return sysconf(_SC_NPROCESSORS_ONLN);
  }
---- llvm-project-llvmorg-19.1.0-rc3/llvm/lib/TextAPI/TextStubCommon.cpp
-+++ -
-@@ -220,7 +220,7 @@ QuotingType ScalarTraits<SwiftVersion>::mustQuote(StringRef) {
- void ScalarTraits<UUID>::output(const UUID &Value, void *, raw_ostream &OS) {}
+--- llvm-project-llvmorg-20.1.8/llvm/lib/Support/Unix/Signals.inc	2025-07-08 23:06:32.000000000 +0000
++++ -	2025-11-24 00:20:35.474179322 +0000
+@@ -817,7 +817,7 @@
+   OS << "Stack dump without symbol names (ensure you have llvm-symbolizer in "
+         "your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point "
+         "to it):\n";
+-#if HAVE_DLOPEN && !defined(_AIX)
++#if HAVE_DLOPEN && !defined(_AIX) && !defined(__COSMOPOLITAN__)
+   int width = 0;
+   for (int i = 0; i < depth; ++i) {
+     Dl_info dlinfo;
+--- llvm-project-llvmorg-20.1.8/llvm/lib/Support/Unix/Path.inc	2025-11-24 00:18:24.072322435 +0000
++++ -	2025-11-24 00:23:37.537441140 +0000
+@@ -320,7 +320,7 @@
+       return std::string(real_path);
+     break; // Found entry, but realpath failed.
+   }
+-#elif defined(HAVE_DLOPEN)
++#elif defined(HAVE_DLOPEN) && !defined(__COSMOPOLITAN__)
+   // Use dladdr to get executable path if available.
+   Dl_info DLInfo;
+   int err = dladdr(MainAddr, &DLInfo);
+--- llvm-project-llvmorg-20.1.8/llvm/tools/dsymutil/DwarfLinkerForBinary.cpp	2025-11-24 01:31:14.542389566 +0000
++++ -	2025-11-24 01:31:29.964541057 +0000
+@@ -176,7 +176,7 @@
+   std::string Message = FE->message();
+   Error E = FE->takeError();
+   Error NewE = handleErrors(std::move(E), [&](std::unique_ptr<ECError> EC) {
+-    if (EC->convertToErrorCode() != std::errc::no_such_file_or_directory)
++    if (EC->convertToErrorCode() != std::make_error_code(std::errc::no_such_file_or_directory))
+       return Error(std::move(EC));
  
- StringRef ScalarTraits<UUID>::input(StringRef Scalar, void *, UUID &Value) {
--  Value = {};
-+  Value = UUID{};
-   return {};
- }
- 
---- llvm-project-llvmorg-19.1.0-rc3/llvm/unittests/Analysis/MLModelRunnerTest.cpp
-+++ -
-@@ -242,7 +242,7 @@ TEST(ReleaseModelRunner, ModelSelector) {
-   // expect the model implementation to fail at a point.
- }
- 
--#if defined(LLVM_ON_UNIX)
-+#if defined(LLVM_ON_UNIX) && !defined(__COSMOPOLITAN__)
- TEST(InteractiveModelRunner, Evaluation) {
-   LLVMContext Ctx;
-   // Test the interaction with an external advisor by asking for advice twice.
---- llvm-project-llvmorg-19.1.0-rc3/llvm/unittests/Support/DynamicLibrary/CMakeLists.txt
-+++ -
-@@ -1,3 +1,7 @@
-+if (NOT BUILD_SHARED_LIBS)
-+  return()
-+endif()
-+
- # Needed by LLVM's CMake checks because this file defines multiple targets.
- set(LLVM_OPTIONAL_SOURCES ExportedFuncs.cpp PipSqueak.cpp)
- 
---- llvm-project-llvmorg-19.1.0-rc3/third-party/unittest/CMakeLists.txt
-+++ -
-@@ -62,6 +62,8 @@ add_llvm_library(llvm_gtest
-   ${BUILDTREE_ONLY}
- )
- 
-+target_link_options(llvm_gtest PUBLIC -Wl,-allow-multiple-definition)
-+
- # The googletest and googlemock sources don't presently use the 'override'
- # keyword, which leads to lots of warnings from -Wsuggest-override. Disable
- # that warning here for any targets that link to gtest.
---- llvm-project-llvmorg-19.1.0-rc3/third-party/unittest/googletest/include/gtest/internal/gtest-port-arch.h
-+++ -
-@@ -63,7 +63,7 @@
- #endif
- #else
- #define GTEST_OS_WINDOWS_DESKTOP 1
--#endif  // _WIN32_WCE
-+#endif // _WIN32_WCE
- #elif defined __OS2__
- #define GTEST_OS_OS2 1
- #elif defined __APPLE__
-@@ -117,6 +117,8 @@
- #define GTEST_OS_NXP_QN9090 1
- #elif defined(NRF52)
- #define GTEST_OS_NRF52 1
--#endif  // __CYGWIN__
-+#elif defined(__COSMOPOLITAN__)
-+#define GTEST_OS_COSMOPOLITAN
-+#endif // __CYGWIN__
- 
--#endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
-+#endif // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
---- llvm-project-llvmorg-19.1.0-rc3/third-party/unittest/googletest/include/gtest/internal/gtest-port.h
-+++ -
-@@ -116,6 +116,7 @@
- // NOT define them.
- //
- //   GTEST_OS_AIX      - IBM AIX
-+//   GTEST_OS_COSMOPOLITAN - Cosmopolitan Libc
- //   GTEST_OS_CYGWIN   - Cygwin
- //   GTEST_OS_DRAGONFLY - DragonFlyBSD
- //   GTEST_OS_FREEBSD  - FreeBSD
-@@ -590,7 +591,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
-      defined(GTEST_OS_NETBSD) || defined(GTEST_OS_FUCHSIA) ||         \
-      defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_GNU_KFREEBSD) || \
-      defined(GTEST_OS_OPENBSD) || defined(GTEST_OS_HAIKU) ||          \
--     defined(GTEST_OS_GNU_HURD))
-+     defined(GTEST_OS_GNU_HURD) || defined(GTEST_OS_COSMOPOLITAN))
- #define GTEST_HAS_PTHREAD 1
- #else
- #define GTEST_HAS_PTHREAD 0
-@@ -660,7 +661,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
-      defined(GTEST_OS_QNX) || defined(GTEST_OS_FREEBSD) ||            \
-      defined(GTEST_OS_NETBSD) || defined(GTEST_OS_FUCHSIA) ||         \
-      defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_GNU_KFREEBSD) || \
--     defined(GTEST_OS_HAIKU) || defined(GTEST_OS_GNU_HURD))
-+     defined(GTEST_OS_HAIKU) || defined(GTEST_OS_GNU_HURD) ||         \
-+     defined(GTEST_OS_COSMOPOLITAN))
- // Death tests require a file system to work properly.
- #if GTEST_HAS_FILE_SYSTEM
- #define GTEST_HAS_DEATH_TEST 1
-@@ -689,7 +691,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
- #if defined(GTEST_OS_LINUX) || defined(GTEST_OS_GNU_KFREEBSD) || \
-     defined(GTEST_OS_DRAGONFLY) || defined(GTEST_OS_FREEBSD) ||  \
-     defined(GTEST_OS_NETBSD) || defined(GTEST_OS_OPENBSD) ||     \
--    defined(GTEST_OS_GNU_HURD) || defined(GTEST_OS_MAC)
-+    defined(GTEST_OS_GNU_HURD) || defined(GTEST_OS_MAC) ||       \
-+    defined(GTEST_OS_COSMOPOLITAN)
- #define GTEST_CAN_STREAM_RESULTS_ 1
- #else
- #define GTEST_CAN_STREAM_RESULTS_ 0
+     Linker.reportWarning(Message, DMO.getObjectFilename());
