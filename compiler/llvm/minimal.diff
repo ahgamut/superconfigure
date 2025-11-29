@@ -101,3 +101,822 @@
        return Error(std::move(EC));
  
      Linker.reportWarning(Message, DMO.getObjectFilename());
+--- llvm-project-llvmorg-20.1.8/README.md
++++ - 
+@@ -1,3 +1,43 @@
++# `-fportcosmo`: patching `clang` to build C software with Cosmopolitan Libc
++
++This patch is the LLVM equivalent of my [gcc patch][gccpatch] to simplify
++building software with Cosmopolitan Libc. It may not be necessary to patch
++compilers now that [most constants in Cosmopolitan Libc are compile-time
++again][cosmoconst], but I think this was still a useful exercise, and now I know
++something about LLVM internals. You can clone the repo and build `clang` as
++usual to get this feature.
++
++## How does it work?
++
++`-fportcosmo` works by rewriting the AST. Think of it as a "context-sensitive
++LISP-y `defmacro` error handler", that activates before `clang` can trigger a
++`switch case is not constant` or `initializer element is not constant` error.
++
++* the error is triggered because `clang` expects the case or initializer to be a
++  compile-time constant, which it isn't
++* this patch ignores the error when `-fportcosmo`, and immediately rewrites the
++  necessary statements before further analysis occurs in the `Sema` calls.
++* this patch walks through the AST rewriting necessary subtrees: `switch`
++  statements are rewritten into `if` statements (with appropriate `goto`s to
++  handle fallthroughs/`break` statements, and `struct` initializers are appended
++  with one-time initializations (via `__attribute__((constructor))` for globals
++  or an `if` for locals). No other part of the code being compiled is affected.
++
++For an extended explanation, refer to the three READMEs [with my
++gcc plugin][plugin].  Note that this patch currently does not work with: 
++
++* `constexpr` initializations
++* `enum`s (rewrite to `#define`s instead), or 
++* wacky situtations where `SIGTERM` is used as an array index within an
++  initializer
++
++Finally, remember this patch is just a convenience -- you could always rewrite
++the `switch` statements and `struct` initializers manually.
++
++[gccpatch]: github.com/ahgamut/gcc/tree/portcosmo-14.1
++[cosmoconst]: https://github.com/jart/cosmopolitan/commit/5ddb5c2adad79407fb800fce47f389611f90a511
++[plugin]: https://github.com/ahgamut/cosmo-gcc-plugin
++
+ # The LLVM Compiler Infrastructure
+ 
+ [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/llvm/llvm-project/badge)](https://securityscorecards.dev/viewer/?uri=github.com/llvm/llvm-project)
+--- llvm-project-llvmorg-20.1.8/clang/include/clang/AST/Stmt.h
++++ - 
+@@ -220,6 +220,10 @@ protected:
+     LLVM_PREFERRED_TYPE(bool)
+     unsigned HasVar : 1;
+ 
++    /// True if a non-const case exists inside the SwitchStmt.
++    LLVM_PREFERRED_TYPE(bool)
++    unsigned NonConstCaseExists : 1;
++
+     /// If the SwitchStmt is a switch on an enum value, records whether all
+     /// the enum values were covered by CaseStmts.  The coverage information
+     /// value is meant to be a hint for possible clients.
+@@ -2582,6 +2586,11 @@ public:
+     return SwitchStmtBits.AllEnumCasesCovered;
+   }
+ 
++  /// True if this SwitchStmt has not-compile-time const case values
++  bool nonConstCaseExists() const { return SwitchStmtBits.NonConstCaseExists; }
++
++  void setNonConstCaseExists() { SwitchStmtBits.NonConstCaseExists = true; }
++
+   SourceLocation getBeginLoc() const { return getSwitchLoc(); }
+   SourceLocation getEndLoc() const LLVM_READONLY {
+     return getBody() ? getBody()->getEndLoc()
+--- llvm-project-llvmorg-20.1.8/clang/include/clang/Basic/DiagnosticSemaKinds.td
++++ - 
+@@ -12908,4 +12908,12 @@ def err_acc_update_as_body
+ // AMDGCN builtins diagnostics
+ def err_amdgcn_global_load_lds_size_invalid_value : Error<"invalid size value">;
+ def note_amdgcn_global_load_lds_size_valid_value : Note<"size must be %select{1, 2, or 4|1, 2, 4, 12 or 16}0">;
++
++// PortCosmo diagnostics
++def note_expr_not_ice : Note<
++  "expression is not an integer constant expression">;
++def note_nonconst_switch : Note<"rewriting switch with non-const cases">;
++def err_nonconst_switch : Error<"switch statement contains non-const cases, pass -fportcosmo">;
++def note_nonconst_initializer : Note<
++  "rewriting initializer with non-const elements">;
+ } // end of sema component.
+--- llvm-project-llvmorg-20.1.8/clang/include/clang/Basic/LangOptions.def
++++ - 
+@@ -142,6 +142,7 @@ LANGOPT(ZVector           , 1, 0, "System z vector extensions")
+ LANGOPT(Exceptions        , 1, 0, "exception handling")
+ LANGOPT(ObjCExceptions    , 1, 0, "Objective-C exceptions")
+ LANGOPT(CXXExceptions     , 1, 0, "C++ exceptions")
++LANGOPT(PortCosmo         , 1, 0, "Patch Cosmopolitan Libc magic numbers")
+ LANGOPT(EHAsynch          , 1, 0, "C/C++ EH Asynch exceptions")
+ ENUM_LANGOPT(ExceptionHandling, ExceptionHandlingKind, 3,
+              ExceptionHandlingKind::None, "exception handling")
+--- llvm-project-llvmorg-20.1.8/clang/include/clang/Driver/Options.td
++++ - 
+@@ -3621,6 +3621,10 @@ defm disable_block_signature_string : BoolFOption<"disable-block-signature-strin
+   NegFlag<SetFalse, [], [ClangOption], "Don't disable">,
+   BothFlags<[], [CC1Option], " block signature string)">>;
+ 
++def fportcosmo : Flag<["-"], "fportcosmo">, Group<f_Group>,
++  Visibility<[ClangOption, CC1Option, CLOption]>,
++  HelpText<"Enable AST Rewriting for Cosmopolitan Libc magic numbers.">,
++  MarshallingInfoFlag<LangOpts<"PortCosmo">>;
+ def fomit_frame_pointer : Flag<["-"], "fomit-frame-pointer">, Group<f_Group>,
+   Visibility<[ClangOption, FlangOption]>,
+   HelpText<"Omit the frame pointer from functions that don't need it. "
+--- llvm-project-llvmorg-20.1.8/clang/include/clang/Sema/Sema.h
++++ - 
+@@ -501,6 +501,7 @@ class Sema final : public SemaBase {
+   // 33. Types (SemaType.cpp)
+   // 34. FixIt Helpers (SemaFixItUtils.cpp)
+   // 35. Function Effects (SemaFunctionEffects.cpp)
++  // 36. AST Rewriting for -fportcosmo (SemaPortCosmo.cpp)
+ 
+   /// \name Semantic Analysis
+   /// Implementations are in Sema.cpp
+@@ -10669,6 +10670,7 @@ public:
+ 
+   StmtResult ActOnDeclStmt(DeclGroupPtrTy Decl, SourceLocation StartLoc,
+                            SourceLocation EndLoc);
++  StmtResult RewriteStaticDeclStmt(Stmt *S);
+   void ActOnForEachDeclStmt(DeclGroupPtrTy Decl);
+ 
+ 
+@@ -10729,6 +10731,8 @@ public:
+                                     SourceLocation RParenLoc);
+   StmtResult ActOnFinishSwitchStmt(SourceLocation SwitchLoc, Stmt *Switch,
+                                    Stmt *Body);
++  StmtResult RewriteSwitchToIfStmt(SourceLocation SwitchLoc, Stmt *Switch,
++                                   Stmt *Body, bool CaseListIsIncomplete);
+ 
+   /// DiagnoseAssignmentEnum - Warn if assignment to enum is a constant
+   /// integer not in the range of enum values.
+--- llvm-project-llvmorg-20.1.8/clang/lib/AST/Stmt.cpp
++++ - 
+@@ -1068,6 +1068,7 @@ SwitchStmt::SwitchStmt(const ASTContext &Ctx, Stmt *Init, VarDecl *Var,
+   SwitchStmtBits.HasInit = HasInit;
+   SwitchStmtBits.HasVar = HasVar;
+   SwitchStmtBits.AllEnumCasesCovered = false;
++  SwitchStmtBits.NonConstCaseExists = false;
+ 
+   setCond(Cond);
+   setBody(nullptr);
+@@ -1084,6 +1085,7 @@ SwitchStmt::SwitchStmt(EmptyShell Empty, bool HasInit, bool HasVar)
+   SwitchStmtBits.HasInit = HasInit;
+   SwitchStmtBits.HasVar = HasVar;
+   SwitchStmtBits.AllEnumCasesCovered = false;
++  SwitchStmtBits.NonConstCaseExists = false;
+ }
+ 
+ SwitchStmt *SwitchStmt::Create(const ASTContext &Ctx, Stmt *Init, VarDecl *Var,
+--- llvm-project-llvmorg-20.1.8/clang/lib/CodeGen/CGDeclCXX.cpp
++++ - 
+@@ -653,6 +653,9 @@ CodeGenModule::EmitCXXGlobalVarDeclInitFunc(const VarDecl *D,
+          getTarget().getTriple().isOSBinFormatWasm())) {
+       Fn->setComdat(C);
+     }
++  } else if (getLangOpts().PortCosmo) {
++    // TODO (ahgamut): check if other branches affect init order
++    AddGlobalCtor(Fn, 0);
+   } else {
+     I = DelayedCXXInitPosition.find(D); // Re-do lookup in case of re-hash.
+     if (I == DelayedCXXInitPosition.end()) {
+--- llvm-project-llvmorg-20.1.8/clang/lib/CodeGen/CodeGenModule.cpp
++++ - 
+@@ -5579,7 +5579,11 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D,
+       if (D->getType()->isReferenceType())
+         T = D->getType();
+ 
+-      if (getLangOpts().CPlusPlus) {
++      if (getLangOpts().PortCosmo) {
++        Init = EmitNullConstant(T);
++        if (!IsDefinitionAvailableExternally)
++          NeedsGlobalCtor = true;
++      } else if (getLangOpts().CPlusPlus) {
+         Init = EmitNullConstant(T);
+         if (!IsDefinitionAvailableExternally)
+           NeedsGlobalCtor = true;
+--- llvm-project-llvmorg-20.1.8/clang/lib/Driver/ToolChains/Clang.cpp
++++ - 
+@@ -5207,6 +5207,11 @@ void Clang::ConstructJob(Compilation &C, const JobAction &JA,
+     }
+   }
+ 
++  for (const Arg *A : Args.filtered(options::OPT_fportcosmo)) {
++    CmdArgs.push_back("-fportcosmo");
++    A->claim();
++  }
++
+   // Unconditionally claim the printf option now to avoid unused diagnostic.
+   if (const Arg *PF = Args.getLastArg(options::OPT_mprintf_kind_EQ))
+     PF->claim();
+--- llvm-project-llvmorg-20.1.8/clang/lib/Sema/CMakeLists.txt
++++ - 
+@@ -75,6 +75,7 @@ add_clang_library(clangSema
+   SemaOpenCL.cpp
+   SemaOpenMP.cpp
+   SemaOverload.cpp
++  SemaPortCosmo.cpp
+   SemaPPC.cpp
+   SemaPseudoObject.cpp
+   SemaRISCV.cpp
+--- llvm-project-llvmorg-20.1.8/clang/lib/Sema/SemaDecl.cpp
++++ - 
+@@ -13718,7 +13718,11 @@ void Sema::AddInitializerToDecl(Decl *RealDecl, Expr *Init, bool DirectInit) {
+     // C99 6.7.8p4: All the expressions in an initializer for an object that has
+     // static storage duration shall be constant expressions or string literals.
+     } else if (VDecl->getStorageClass() == SC_Static) {
+-      CheckForConstantInitializer(Init);
++      if (getLangOpts().PortCosmo) {
++        // TODO (ahgamut): diagnostic note / warning here
++      } else {
++        CheckForConstantInitializer(Init);
++      }
+ 
+       // C89 is stricter than C99 for aggregate initializers.
+       // C89 6.5.7p3: All the expressions [...] in an initializer list
+@@ -13857,7 +13861,7 @@ void Sema::AddInitializerToDecl(Decl *RealDecl, Expr *Init, bool DirectInit) {
+ 
+     // C99 6.7.8p4. All file scoped initializers need to be constant.
+     // Avoid duplicate diagnostics for constexpr variables.
+-    if (!getLangOpts().CPlusPlus && !VDecl->isInvalidDecl() &&
++    if (!getLangOpts().CPlusPlus && !getLangOpts().PortCosmo && !VDecl->isInvalidDecl() &&
+         !VDecl->isConstexpr())
+       CheckForConstantInitializer(Init);
+   }
+--- /dev/null
++++ llvm-project-llvmorg-20.1.8/clang/lib/Sema/SemaPortCosmo.cpp
+@@ -0,0 +1,484 @@
++//===--- SemaPortCosmo.cpp - AST Rewriting for -fportcosmo
++//------------------===//
++//
++// Licensed under ISC License.
++// See https://www.isc.org/licenses/ for license information.
++// SPDX-License-Identifier: ISC License
++//
++//===-------------------------------------------------------------------------------===//
++//
++//  This file implements AST Rewriting when compiling with -fportcosmo.
++//
++//===-------------------------------------------------------------------------------===//
++
++#include "CheckExprLifetime.h"
++#include "TreeTransform.h"
++#include "clang/AST/ASTContext.h"
++#include "clang/AST/ASTLambda.h"
++#include "clang/AST/CXXInheritance.h"
++#include "clang/AST/CharUnits.h"
++#include "clang/AST/DeclObjC.h"
++#include "clang/AST/DynamicRecursiveASTVisitor.h"
++#include "clang/AST/EvaluatedExprVisitor.h"
++#include "clang/AST/ExprCXX.h"
++#include "clang/AST/ExprObjC.h"
++#include "clang/AST/IgnoreExpr.h"
++#include "clang/AST/StmtCXX.h"
++#include "clang/AST/StmtObjC.h"
++#include "clang/AST/TypeLoc.h"
++#include "clang/AST/TypeOrdering.h"
++#include "clang/Basic/TargetInfo.h"
++#include "clang/Lex/Preprocessor.h"
++#include "clang/Sema/EnterExpressionEvaluationContext.h"
++#include "clang/Sema/Initialization.h"
++#include "clang/Sema/Lookup.h"
++#include "clang/Sema/Ownership.h"
++#include "clang/Sema/Scope.h"
++#include "clang/Sema/ScopeInfo.h"
++#include "clang/Sema/SemaCUDA.h"
++#include "clang/Sema/SemaObjC.h"
++#include "clang/Sema/SemaOpenMP.h"
++#include "llvm/ADT/ArrayRef.h"
++#include "llvm/ADT/DenseMap.h"
++#include "llvm/ADT/STLExtras.h"
++#include "llvm/ADT/STLForwardCompat.h"
++#include "llvm/ADT/SmallVector.h"
++#include "llvm/ADT/StringExtras.h"
++#include <sstream>
++
++using namespace clang;
++using namespace sema;
++
++struct PortCosmoSwitchToIf : TreeTransform<PortCosmoSwitchToIf> {
++
++  using CmpExpr2Label = std::pair<Expr *, Stmt *>;
++  SmallVector<CmpExpr2Label> c2ls;
++  VarDecl *swCondVarDecl;
++  ExprResult swCondVarRHS;
++  LabelStmt *swDefaultLabel;
++  LabelStmt *swEndLabel;
++
++  unsigned int switchDepth;
++  unsigned int forDepth;
++  unsigned int whileDepth;
++  unsigned int doWhileDepth;
++
++  PortCosmoSwitchToIf(Sema &SemaRef) : TreeTransform(SemaRef) {
++    swCondVarDecl = nullptr;
++    swEndLabel = nullptr;
++    swDefaultLabel = nullptr;
++    switchDepth = 0;
++    forDepth = 0;
++    whileDepth = 0;
++    doWhileDepth = 0;
++  }
++  bool AlwaysRebuild() { return true; }
++  bool ReplacingOriginal() { return false; }
++
++  LabelStmt *createCaseLabel(CaseStmt *S, StmtResult SubStmt) const {
++    std::stringstream caseNameStream;
++    caseNameStream << "__portcosmo_ifsw_case_";
++    caseNameStream << S->getCaseLoc().getHashValue();
++    std::string caseName = caseNameStream.str();
++    IdentifierInfo &caseInfo = SemaRef.PP.getIdentifierTable().get(caseName);
++    LabelDecl *swCaseLabelDecl =
++        LabelDecl::Create(SemaRef.getASTContext(), SemaRef.CurContext,
++                          S->getCaseLoc(), &caseInfo);
++    return new (SemaRef.getASTContext())
++        LabelStmt(S->getCaseLoc(), swCaseLabelDecl, SubStmt.get());
++  }
++
++  LabelStmt *createDefaultLabel(DefaultStmt *S, StmtResult SubStmt) const {
++    std::stringstream defaultNameStream;
++    defaultNameStream << "__portcosmo_ifsw_dflt_";
++    defaultNameStream << S->getColonLoc().getHashValue();
++    std::string defaultName = defaultNameStream.str();
++    IdentifierInfo &defaultInfo =
++        SemaRef.PP.getIdentifierTable().get(defaultName);
++    LabelDecl *swDefaultLabelDecl =
++        LabelDecl::Create(SemaRef.getASTContext(), SemaRef.CurContext,
++                          S->getColonLoc(), &defaultInfo);
++    return new (SemaRef.getASTContext())
++        LabelStmt(S->getColonLoc(), swDefaultLabelDecl, SubStmt.get());
++  }
++
++  LabelStmt *createEndLabel(SwitchStmt *S) const {
++    std::stringstream endNameStream;
++    endNameStream << "__portcosmo_ifsw_end_";
++    endNameStream << S->getEndLoc().getHashValue();
++    std::string endName = endNameStream.str();
++    IdentifierInfo &endInfo = SemaRef.PP.getIdentifierTable().get(endName);
++    LabelDecl *swEndLabelDecl = LabelDecl::Create(
++        SemaRef.getASTContext(), SemaRef.CurContext, S->getEndLoc(), &endInfo);
++    NullStmt *tmp = new (SemaRef.getASTContext()) NullStmt(S->getEndLoc());
++    return new (SemaRef.getASTContext())
++        LabelStmt(S->getEndLoc(), swEndLabelDecl, tmp);
++  }
++
++  VarDecl *createTempCondVarDecl(SwitchStmt *S, QualType CondType) const {
++    std::stringstream LHSNameStream;
++    LHSNameStream << "__portcosmo_ifsw_";
++    LHSNameStream << S->getBeginLoc().getHashValue();
++    std::string LHSName = LHSNameStream.str();
++    const IdentifierInfo &varInfo =
++        SemaRef.PP.getIdentifierTable().get(LHSName);
++    return VarDecl::Create(
++        SemaRef.getASTContext(), SemaRef.CurContext, S->getBeginLoc(),
++        S->getLParenLoc(), &varInfo, CondType,
++        SemaRef.getASTContext().CreateTypeSourceInfo(CondType), SC_Auto);
++  }
++
++  /// Transforms
++  StmtResult TransformForStmt(ForStmt *S) {
++    forDepth += 1;
++    StmtResult R = TreeTransform<PortCosmoSwitchToIf>::TransformForStmt(S);
++    forDepth -= 1;
++    return R;
++  }
++
++  StmtResult TransformWhileStmt(WhileStmt *S) {
++    whileDepth += 1;
++    StmtResult R = TreeTransform<PortCosmoSwitchToIf>::TransformWhileStmt(S);
++    whileDepth -= 1;
++    return R;
++  }
++
++  StmtResult TransformDoStmt(DoStmt *S) {
++    doWhileDepth += 1;
++    StmtResult R = TreeTransform<PortCosmoSwitchToIf>::TransformDoStmt(S);
++    doWhileDepth -= 1;
++    return R;
++  }
++
++  StmtResult TransformSwitchStmt(SwitchStmt *S) {
++    if (switchDepth != 0 || !S->nonConstCaseExists()) {
++      return TreeTransform<PortCosmoSwitchToIf>::TransformSwitchStmt(S);
++    }
++    switchDepth += 1;
++
++    StmtResult Init = getDerived().TransformStmt(S->getInit());
++    if (Init.isInvalid())
++      return StmtError();
++
++    Sema::ConditionResult Cond =
++        TransformCondition(S->getSwitchLoc(), S->getConditionVariable(),
++                           S->getCond(), Sema::ConditionKind::Switch);
++    if (Cond.isInvalid())
++      return StmtError();
++
++    // Cond is valid, so second has to exist
++    assert(Cond.get().second != nullptr);
++    swCondVarRHS = Cond.get().second;
++    QualType CondType = swCondVarRHS.get()->getType();
++
++    if (Cond.get().first) {
++      swCondVarDecl = Cond.get().first;
++    } else {
++      swCondVarDecl = createTempCondVarDecl(S, CondType);
++      swCondVarDecl->setImplicit();
++      swCondVarDecl->setInit(Cond.get().second);
++    }
++
++    swEndLabel = createEndLabel(S);
++
++    StmtResult Body = getDerived().TransformStmt(S->getBody());
++    if (Body.isInvalid())
++      return StmtError();
++
++    std::vector<Stmt *> rparts;
++    DeclGroupRef DGRef = DeclGroupRef::Create(SemaRef.getASTContext(),
++                                              cast<Decl *>(&swCondVarDecl), 1);
++    DeclStmt *cvarinit = new (SemaRef.getASTContext())
++        DeclStmt(DGRef, S->getBeginLoc(), S->getBeginLoc());
++
++    rparts.push_back(cvarinit);
++    for (auto &p : c2ls) {
++      LabelStmt *lst = cast<LabelStmt>(p.second);
++      GotoStmt *targ = new (SemaRef.getASTContext())
++          GotoStmt(lst->getDecl(), S->getBeginLoc(), S->getBeginLoc());
++      IfStmt *ifp = IfStmt::Create(
++          SemaRef.getASTContext(), S->getBeginLoc(), IfStatementKind::Ordinary,
++          nullptr, nullptr, p.first, S->getBeginLoc(), S->getBeginLoc(), targ);
++      rparts.push_back(ifp);
++    }
++    if (swDefaultLabel) {
++      GotoStmt *targ = new (SemaRef.getASTContext()) GotoStmt(
++          swDefaultLabel->getDecl(), S->getBeginLoc(), S->getBeginLoc());
++      rparts.push_back(targ);
++    }
++    GotoStmt *etarg = new (SemaRef.getASTContext())
++        GotoStmt(swEndLabel->getDecl(), S->getBeginLoc(), S->getBeginLoc());
++    rparts.push_back(etarg);
++    rparts.push_back(Body.get());
++    rparts.push_back(swEndLabel);
++
++    return RebuildCompoundStmt(S->getBeginLoc(), rparts, S->getEndLoc(), false);
++  }
++
++  StmtResult TransformCaseStmt(CaseStmt *S) {
++    ExprResult LHS, RHS;
++    ExprResult caseAsCompare;
++
++    DeclRefExpr *swCVDE = DeclRefExpr::Create(
++        SemaRef.getASTContext(), swCondVarDecl->getQualifierLoc(),
++        SourceLocation(), swCondVarDecl, false, S->getColonLoc(),
++        swCondVarDecl->getType(), ExprValueKind::VK_LValue);
++    LHS = getDerived().TransformExpr(S->getLHS());
++    if (LHS.isInvalid())
++      return StmtError();
++
++    if (S->caseStmtIsGNURange()) {
++      RHS = getDerived().TransformExpr(S->getRHS());
++      if (RHS.isInvalid())
++        return StmtError();
++      // create the comparison expression (range might be ill-defined)
++      ExprResult ER0 = RebuildBinaryOperator(
++          S->getCaseLoc(), BinaryOperatorKind::BO_LE, LHS.get(), swCVDE);
++      ExprResult ER1 = RebuildBinaryOperator(
++          S->getColonLoc(), BinaryOperatorKind::BO_GE, RHS.get(), swCVDE);
++      caseAsCompare = RebuildBinaryOperator(S->getEllipsisLoc(),
++                                            BinaryOperatorKind::BO_LAnd,
++                                            ER0.get(), ER1.get());
++    } else {
++      // create the comparison expression (this is just an equality statement)
++      caseAsCompare = RebuildBinaryOperator(
++          S->getCaseLoc(), BinaryOperatorKind::BO_EQ, LHS.get(), swCVDE);
++    }
++
++    if (caseAsCompare.isInvalid()) {
++      return StmtError();
++    }
++
++    StmtResult SubStmt = getDerived().TransformStmt(S->getSubStmt());
++    if (SubStmt.isInvalid())
++      return StmtError();
++
++    StmtResult curCaseLabel = createCaseLabel(S, SubStmt);
++    if (curCaseLabel.isInvalid()) {
++      return StmtError();
++    }
++    c2ls.push_back(std::make_pair<Expr *, Stmt *>(caseAsCompare.get(),
++                                                  curCaseLabel.get()));
++    return curCaseLabel;
++  }
++
++  StmtResult TransformDefaultStmt(DefaultStmt *S) {
++    StmtResult SubStmt = getDerived().TransformStmt(S->getSubStmt());
++    if (SubStmt.isInvalid())
++      return StmtError();
++
++    swDefaultLabel = createDefaultLabel(S, SubStmt);
++    return swDefaultLabel;
++  }
++
++  StmtResult TransformBreakStmt(BreakStmt *S) {
++    if (forDepth || whileDepth || doWhileDepth) {
++      return S;
++    }
++    return RebuildGotoStmt(S->getBeginLoc(), S->getEndLoc(),
++                           swEndLabel->getDecl());
++  }
++
++  StmtResult TransformAttributedStmt(AttributedStmt *S, StmtDiscardKind SDK) {
++    StmtResult SubStmt = getDerived().TransformStmt(S->getSubStmt(), SDK);
++    if (SubStmt.isInvalid())
++      return StmtError();
++
++    bool AttrsChanged = false;
++    SmallVector<const Attr *, 1> Attrs;
++
++    for (const auto *I : S->getAttrs()) {
++      const Attr *R = TransformStmtAttr(S->getSubStmt(), SubStmt.get(), I);
++      if (!R) {
++        continue;
++      }
++      if (isa<FallThroughAttr>(R)) {
++        AttrsChanged = true;
++        continue;
++      }
++      AttrsChanged |= (I != R);
++      Attrs.push_back(R);
++    }
++
++    if (SubStmt.get() == S->getSubStmt() && !AttrsChanged)
++      return S;
++
++    if (Attrs.empty())
++      return SubStmt;
++
++    return RebuildAttributedStmt(S->getAttrLoc(), Attrs, SubStmt.get());
++  }
++};
++
++StmtResult Sema::RewriteSwitchToIfStmt(SourceLocation SwitchLoc, Stmt *Switch,
++                                       Stmt *BodyStmt,
++                                       bool CaseListIsIncomplete) {
++  SwitchStmt *SS = cast<SwitchStmt>(Switch);
++  PortCosmoSwitchToIf mod(*this);
++  StmtResult ifswitch = mod.TransformSwitchStmt(SS);
++  if (ifswitch.isInvalid()) {
++    return StmtError();
++  }
++  LLVM_DEBUG({
++    llvm::dbgs() << "Transformed AST\n";
++    ifswitch.get()->dump();
++  });
++  return ifswitch;
++}
++
++static StmtResult createInitStructMemcpy(VarDecl *dst, VarDecl *src,
++                                         VarDecl *flag, Sema &SemaRef) {
++  DeclRefExpr *dstRHS = DeclRefExpr::Create(
++      SemaRef.getASTContext(), dst->getQualifierLoc(), SourceLocation(),
++      cast<ValueDecl>(dst), false, dst->getBeginLoc(), dst->getType(),
++      ExprValueKind::VK_LValue);
++  DeclRefExpr *srcRHS = DeclRefExpr::Create(
++      SemaRef.getASTContext(), dst->getQualifierLoc(), SourceLocation(),
++      cast<ValueDecl>(src), false, dst->getBeginLoc(), src->getType(),
++      ExprValueKind::VK_LValue);
++  DeclRefExpr *flagRHS = DeclRefExpr::Create(
++      SemaRef.getASTContext(), dst->getQualifierLoc(), SourceLocation(),
++      cast<ValueDecl>(flag), false, dst->getBeginLoc(), flag->getType(),
++      ExprValueKind::VK_LValue);
++  //
++  QualType SizeType = SemaRef.Context.getSizeType();
++  llvm::APInt Size(
++      SemaRef.Context.getTypeSize(SizeType),
++      SemaRef.Context.getTypeSizeInChars(src->getType()).getQuantity());
++  //
++  const QualType flagType = SemaRef.Context.UnsignedShortTy;
++  llvm::APInt flagOne(SemaRef.Context.getTypeSize(flagType), 1);
++  Expr *One = IntegerLiteral::Create(SemaRef.Context, flagOne, flagType,
++                                     SourceLocation());
++  // flag != 1
++  Expr *flag_NE_1 = BinaryOperator::Create(
++      SemaRef.Context, flagRHS, One, BO_NE, flagType, VK_PRValue, OK_Ordinary,
++      SourceLocation(), SemaRef.CurFPFeatureOverrides());
++  // flag = 1
++  Expr *flag_SET_1 = BinaryOperator::Create(
++      SemaRef.Context, flagRHS, One, BO_Assign, flagType, VK_LValue,
++      OK_Ordinary, SourceLocation(), SemaRef.CurFPFeatureOverrides());
++  // &src
++  Expr *From;
++  if (src->getType()->isArrayType()) {
++    From = srcRHS;
++  } else {
++    From = UnaryOperator::Create(SemaRef.Context, srcRHS, UO_AddrOf,
++                                 SemaRef.Context.getPointerType(src->getType()),
++                                 VK_PRValue, OK_Ordinary, dst->getBeginLoc(),
++                                 false, SemaRef.CurFPFeatureOverrides());
++  }
++  // &dst
++  Expr *To;
++  if (dst->getType()->isArrayType()) {
++    To = dstRHS;
++  } else {
++    To = UnaryOperator::Create(SemaRef.Context, dstRHS, UO_AddrOf,
++                               SemaRef.Context.getPointerType(dst->getType()),
++                               VK_LValue, OK_Ordinary, dst->getBeginLoc(),
++                               false, SemaRef.CurFPFeatureOverrides());
++  }
++  // memcpy
++  StringRef MemCpyName = "__builtin_memcpy";
++  LookupResult R(SemaRef, &SemaRef.Context.Idents.get(MemCpyName),
++                 dst->getBeginLoc(), Sema::LookupOrdinaryName);
++  SemaRef.LookupName(R, SemaRef.TUScope, true);
++  FunctionDecl *MemCpy = R.getAsSingle<FunctionDecl>();
++  if (!MemCpy)
++    return StmtError();
++  ExprResult MemCpyRef =
++      SemaRef.BuildDeclRefExpr(MemCpy, SemaRef.Context.BuiltinFnTy, VK_PRValue,
++                               dst->getBeginLoc(), nullptr);
++  assert(MemCpyRef.isUsable() && "Builtin reference cannot fail");
++  // memcpy(&dst, &src, sizeof(src))
++  Expr *CallArgs[] = {To, From,
++                      IntegerLiteral::Create(SemaRef.Context, Size, SizeType,
++                                             dst->getBeginLoc())};
++  ExprResult Call =
++      SemaRef.BuildCallExpr(nullptr, MemCpyRef.get(), dst->getBeginLoc(),
++                            CallArgs, dst->getBeginLoc());
++  if (Call.isInvalid()) {
++    return StmtError();
++  }
++  // { flag = 1; memcpy(dst, src, sizeof(src)); }
++  Stmt *ifParts[] = {flag_SET_1, Call.get()};
++  CompoundStmt *ifPartsCombi = CompoundStmt::Create(
++      SemaRef.Context, ifParts, SemaRef.CurFPFeatureOverrides(),
++      dst->getBeginLoc(), dst->getEndLoc());
++  // if (flag != 1) { flag = 1; memcpy(dst, src, sizeof(src)); }
++  StmtResult result = IfStmt::Create(
++      SemaRef.Context, dst->getBeginLoc(), IfStatementKind::Ordinary, nullptr,
++      nullptr, flag_NE_1, dst->getEndLoc(), dst->getEndLoc(),
++      cast<Stmt>(ifPartsCombi));
++  return result;
++}
++
++StmtResult Sema::RewriteStaticDeclStmt(Stmt *S) {
++  DeclStmt *DS = cast<DeclStmt>(S);
++  DeclGroupRef DG = DS->getDeclGroup();
++  std::stringstream nameStream;
++  std::vector<Stmt *> rparts;
++  const QualType flagType = Context.UnsignedShortTy;
++  llvm::APInt flagZero(Context.getTypeSize(flagType), 0);
++  VarDecl *vd = nullptr;
++  QualType varType;
++  DeclGroupRef dgr;
++  DeclStmt *dcr = nullptr;
++  DeclContext *DC = nullptr;
++  unsigned int declCount = 0;
++
++  auto addDecl = [&](VarDecl *v) {
++    v->setDeclContext(DC);
++    DC->addDecl(v);
++    dgr = DeclGroupRef::Create(Context, cast<Decl *>(&v), 1);
++    dcr = new (Context) DeclStmt(dgr, v->getBeginLoc(), v->getEndLoc());
++    rparts.push_back(dcr);
++  };
++
++  for (auto it = DG.begin(); it != DG.end(); ++it) {
++    if (!isa<VarDecl>(*it)) {
++      continue;
++    }
++    vd = cast<VarDecl>(*it);
++    varType = vd->getType();
++    DC = vd->getDeclContext();
++    nameStream.str("");
++    nameStream.clear();
++    if (vd->isStaticLocal() &&
++        !vd->getInit()->isConstantInitializer(Context, false)) {
++      // a local, not-static temporary with the data
++      nameStream << "__pc_init_";
++      nameStream << std::string(vd->getName()) << "_";
++      nameStream << declCount;
++      const IdentifierInfo &varInfo =
++          SemaRef.PP.getIdentifierTable().get(nameStream.str());
++      VarDecl *vlocal = VarDecl::Create(
++          Context, CurContext, vd->getBeginLoc(), vd->getEndLoc(), &varInfo,
++          varType, Context.CreateTypeSourceInfo(varType), SC_Auto);
++      vlocal->setInit(vd->getInit());
++      addDecl(vlocal);
++      // static local flag set to zero
++      nameStream << "_f";
++      const IdentifierInfo &flagInfo =
++          PP.getIdentifierTable().get(nameStream.str());
++      VarDecl *vflag = VarDecl::Create(
++          Context, CurContext, vd->getBeginLoc(), vd->getEndLoc(), &flagInfo,
++          flagType, Context.CreateTypeSourceInfo(flagType), SC_Static);
++      vflag->setInit(IntegerLiteral::Create(Context, flagZero, flagType,
++                                            vd->getBeginLoc()));
++      addDecl(vflag);
++      // remove the initializer from original decl (and const if any)
++      varType.removeLocalConst();
++      vd->setType(varType);
++      vd->setInit(nullptr);
++      // if (flag != 1) { flag = 1; memcpy(&dst, &src, sizeof(src)); }
++      StmtResult ifsinit = createInitStructMemcpy(vd, vlocal, vflag, *this);
++      if (ifsinit.isInvalid()) {
++        return StmtError();
++      }
++      rparts.push_back(ifsinit.get());
++    }
++    declCount += 1;
++  }
++  return ActOnCompoundStmt(DS->getBeginLoc(), DS->getEndLoc(), rparts, false);
++}
+--- llvm-project-llvmorg-20.1.8/clang/lib/Sema/SemaStmt.cpp
++++ - 
+@@ -80,7 +80,32 @@ StmtResult Sema::ActOnDeclStmt(DeclGroupPtrTy dg, SourceLocation StartLoc,
+   // If we have an invalid decl, just return an error.
+   if (DG.isNull()) return StmtError();
+ 
+-  return new (Context) DeclStmt(DG, StartLoc, EndLoc);
++  DeclStmt *res = new (Context) DeclStmt(DG, StartLoc, EndLoc);
++  if (getLangOpts().PortCosmo && !getLangOpts().CPlusPlus) {
++    // C++ can rewrite the local structs, but it also adds
++    // calls to __cxa_guard_acquire / release, which cause
++    // issues at the linker stage when the struct is in C.
++    bool needsInitRewrite = false;
++    for (auto it = DG.begin(); it != DG.end(); ++it) {
++      if (!isa<VarDecl>(*it)) {
++          continue;
++      }
++      VarDecl *vd = dyn_cast<VarDecl>(*it);
++      if (!vd->hasInit()) {
++          continue;
++      }
++      Expr *Init = vd->getInit();
++      if (vd->isStaticLocal() && !Init->isConstantInitializer(Context, false)) {
++        needsInitRewrite = true;
++        break;
++      }
++    }
++    if (needsInitRewrite) {
++       Diag(StartLoc, diag::note_nonconst_initializer);
++       return RewriteStaticDeclStmt(res);
++    }
++  }
++  return res;
+ }
+ 
+ void Sema::ActOnForEachDeclStmt(DeclGroupPtrTy dg) {
+@@ -515,6 +540,17 @@ Sema::ActOnCaseExpr(SourceLocation CaseLoc, ExprResult Val) {
+   if (!CondExpr)
+     return ExprError();
+   QualType CondType = CondExpr->getType();
++  SwitchStmt *sws = (SwitchStmt*)getCurFunction()->SwitchStack.back().getPointer();
++  class NoteNonConstDiagnoser : public VerifyICEDiagnoser {
++  public:
++    SemaDiagnosticBuilder diagnoseNotICEType(Sema &S, SourceLocation Loc,
++                                             QualType T) override {
++      return diagnoseNotICE(S, Loc);
++    }
++    SemaDiagnosticBuilder diagnoseNotICE(Sema &S, SourceLocation Loc) override {
++      return S.Diag(Loc, diag::note_nonconst_switch);
++    }
++  } Diagnoser;
+ 
+   auto CheckAndFinish = [&](Expr *E) {
+     if (CondType->isDependentType() || E->isTypeDependent())
+@@ -529,14 +565,23 @@ Sema::ActOnCaseExpr(SourceLocation CaseLoc, ExprResult Val) {
+     }
+ 
+     ExprResult ER = E;
+-    if (!E->isValueDependent())
+-      ER = VerifyIntegerConstantExpression(E, AllowFold);
+-    if (!ER.isInvalid())
+-      ER = DefaultLvalueConversion(ER.get());
+-    if (!ER.isInvalid())
+-      ER = ImpCastExprToType(ER.get(), CondType, CK_IntegralCast);
+-    if (!ER.isInvalid())
+-      ER = ActOnFinishFullExpr(ER.get(), ER.get()->getExprLoc(), false);
++    if (getLangOpts().PortCosmo) {
++      if (!E->isValueDependent())
++        ER = VerifyIntegerConstantExpression(E, nullptr, Diagnoser, AllowFold);
++      if (ER.isInvalid()) {
++        sws->setNonConstCaseExists();
++        ER = E;
++      }
++    } else {
++      if (!E->isValueDependent())
++        ER = VerifyIntegerConstantExpression(E, AllowFold);
++      if (!ER.isInvalid())
++        ER = DefaultLvalueConversion(ER.get());
++      if (!ER.isInvalid())
++        ER = ImpCastExprToType(ER.get(), CondType, CK_IntegralCast);
++      if (!ER.isInvalid())
++        ER = ActOnFinishFullExpr(ER.get(), ER.get()->getExprLoc(), false);
++    }
+     return ER;
+   };
+ 
+@@ -1327,6 +1372,16 @@ Sema::ActOnFinishSwitchStmt(SourceLocation SwitchLoc, Stmt *Switch,
+ 
+   SS->setBody(BodyStmt, SwitchLoc);
+ 
++  if (SS->nonConstCaseExists()) {
++    if (getLangOpts().PortCosmo) {
++      Diag(SS->getBeginLoc(), diag::note_nonconst_switch);
++      return RewriteSwitchToIfStmt(SwitchLoc, Switch, BodyStmt,
++                                   CaseListIsIncomplete);
++    } else {
++      return StmtError(Diag(SS->getBeginLoc(), diag::err_nonconst_switch));
++    }
++  }
++
+   Expr *CondExpr = SS->getCond();
+   if (!CondExpr) return StmtError();
+ 
