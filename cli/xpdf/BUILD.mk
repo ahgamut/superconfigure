@@ -1,4 +1,4 @@
-XPDF_SRC := https://dl.xpdfreader.com/xpdf-4.05.tar.gz
+XPDF_SRC := https://dl.xpdfreader.com/old/xpdf-4.05.tar.gz
 XPDF_DEPS := lib/libpng lib/freetype
 
 XPDF_CONFIG_ARGS = -DCMAKE_BUILD_SHARED=OFF\
