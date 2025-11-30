@@ -14,26 +14,7 @@
  ptrdiff_t hash_lookup (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object *);
  ptrdiff_t hash_put (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object,
  		    Lisp_Object);
---- emacs-29.3/src/config.in	2024-03-24 13:15:25.000000000 +0000
-+++ -	2024-04-14 03:19:26.073075075 +0000
-@@ -1790,7 +1790,7 @@
- #undef INTERNAL_TERMINAL
- 
- /* Define to read input using SIGIO. */
--#undef INTERRUPT_INPUT
-+#undef INTERRUPT_INPUT0
- 
- /* Returns true if character is any form of separator. */
- #undef IS_ANY_SEP
-@@ -2094,7 +2094,7 @@
- #undef UNIX98_PTYS
- 
- /* Define to 1 if FIONREAD is usable. */
--#undef USABLE_FIONREAD
-+#undef USABLE_FIONREAD0
- 
- /* Define to 1 if SIGIO is usable. */
- #undef USABLE_SIGIO
+
 --- emacs-29.3/src/filelock.c	2024-01-06 12:56:31.000000000 +0000
 +++ -	2024-04-14 03:25:59.736648094 +0000
 @@ -298,7 +298,7 @@
@@ -140,3 +121,15 @@
 +  return IsWindows();
  #endif
  }
+
+--- emacs-29.3/src/keyboard.c	2024-01-06 12:56:31.000000000 +0000
++++ -	2025-11-30 06:14:34.415308277 +0000
+@@ -12042,7 +12042,7 @@
+ /* Use interrupt input by default, if it works and noninterrupt input
+    has deficiencies.  */
+ 
+-#ifdef INTERRUPT_INPUT
++#if 0 && INTERRUPT_INPUT
+   interrupt_input = 1;
+ #else
+   interrupt_input = 0;
