@@ -1,14 +1,7 @@
 
 LLVM_SRC := https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-20.1.8.tar.gz
 LLVM_DEPS := cosmo-repo/base
-LLVM_BINS := clang-20 clang-tidy clangd clang-format \
-			 clang-apply-replacements clang-check clang-doc \
-			 clang-include-fixer clang-linker-wrapper \
-			 clang-offload-packager clang-refactor \
-			 llvm-cxxfilt \
-			 llvm-ar llvm-nm llvm-objcopy llvm-objdump \
-			 llvm-readobj llvm-size llvm-split \
-			 llvm-symbolizer llvm-stress llvm-strings llvm-tblgen
+LLVM_BINS := clang-20 clang-format
 
 $(eval $(call DOWNLOAD_SOURCE,compiler/llvm,$(LLVM_SRC)))
 $(eval $(call SPECIFY_DEPS,compiler/llvm,$(LLVM_DEPS)))

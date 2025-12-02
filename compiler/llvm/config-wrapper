@@ -12,7 +12,7 @@ cmake -S "$BASELOC"/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \
     -DCMAKE_INSTALL_OLDINCLUDEDIR="$COSMOS/include"\
     -DBacktrace_INCLUDE_DIR="$COSMOS/include" \
     -DC_INCLUDE_DIRS="$COSMOS/include" \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra"\
+    -DLLVM_ENABLE_PROJECTS="clang"\
     -DCMAKE_BUILD_TYPE=MinSizeRel\
     -DLLVM_TARGETS_TO_BUILD="X86;AArch64"\
     -DLLVM_PARALLEL_COMPILE_JOBS="$MAXPROC"\
@@ -22,7 +22,7 @@ cmake -S "$BASELOC"/o/compiler/llvm/llvm-project*/llvm -B ./ -G Ninja \
     -DLLVM_BUILD_BENCHMARKS=OFF\
     -DLLVM_INCLUDE_EXAMPLES=OFF\
     -DLLVM_BUILD_EXAMPLES=OFF\
-    -DLLVM_BUILD_TOOLS=ON\
+    -DLLVM_BUILD_TOOLS=OFF\
     -DLLVM_INCLUDE_TESTS=OFF\
     -DLLVM_BUILD_TESTS=OFF\
     -DCLANG_INCLUDE_TESTS=OFF\
