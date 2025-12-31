@@ -31,6 +31,7 @@ cli: \
 	o/cli/coreutils/built.fat \
 	o/cli/dash/built.fat \
 	o/cli/diffutils/built.fat \
+	o/cli/ent/built.fat \
 	o/cli/findutils/built.fat \
 	o/cli/gperf/built.fat \
 	o/cli/grep/built.fat \
