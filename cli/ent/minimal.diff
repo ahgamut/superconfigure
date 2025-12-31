@@ -1,0 +1,11 @@
+--- ent_random_sequence_tester/src/Makefile	2025-12-31 01:43:57.687862526 +0000
++++ -	2025-12-31 01:44:01.644919315 +0000
+@@ -3,7 +3,7 @@
+ 
+ VERSION = 1.4
+ 
+-CC = gcc
++#CC = gcc
+ #CFLAGS = -g -Wall
+ CFLAGS = -O3 -Wall -DVERSION=\"$(VERSION)\"
+ 
