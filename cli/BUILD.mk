@@ -6,6 +6,7 @@ include cli/coreutils/BUILD.mk
 include cli/dash/BUILD.mk
 include cli/ddrescue/BUILD.mk
 include cli/diffutils/BUILD.mk
+include cli/ect/BUILD.mk
 include cli/ent/BUILD.mk
 include cli/findutils/BUILD.mk
 include cli/gperf/BUILD.mk
