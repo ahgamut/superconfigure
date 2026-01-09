@@ -8,6 +8,7 @@ include cli/ddrescue/BUILD.mk
 include cli/diffutils/BUILD.mk
 include cli/ect/BUILD.mk
 include cli/ent/BUILD.mk
+include cli/file/BUILD.mk
 include cli/findutils/BUILD.mk
 include cli/gperf/BUILD.mk
 include cli/grep/BUILD.mk
@@ -33,6 +34,7 @@ cli: \
 	o/cli/dash/built.fat \
 	o/cli/diffutils/built.fat \
 	o/cli/ent/built.fat \
+	o/cli/file/built.fat \
 	o/cli/findutils/built.fat \
 	o/cli/gperf/built.fat \
 	o/cli/grep/built.fat \
