@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+mkdir -p "$COSMOS"/share/misc "$COSMOS"/bin
+cp ./src/file "$COSMOS"/bin
+cp ./magic/magic.mgc "$COSMOS"/share/misc
