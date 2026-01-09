@@ -1,14 +1,3 @@
 #!/bin/sh
 set -e
-
-old=$(pwd)
-cd "$BASELOC"/o/cli/file/file-*/
-
-libtoolize --force
-aclocal
-autoheader
-automake --force-missing --add-missing
-autoconf
-
-cd $old
 "$BASELOC"/o/cli/file/file-*/configure --disable-shared --prefix="$COSMOS"
