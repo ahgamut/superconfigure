@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+cd $BASELOC/o/cli/file/file-*/
+
+libtoolize --force
+aclocal
+autoheader
+automake --force-missing --add-missing
+autoconf
+./configure --disable-shared
