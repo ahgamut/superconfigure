@@ -27,10 +27,10 @@ apelinkpls () {
 apelinkpls "$RESULTS"/bin/file.com "$COSMOS_X86_64"/bin/file "$COSMOS_AARCH64"/bin/file
 cd "$RESULTS"
 
-mkdir -p file/share/misc && cd file
-cp "$COSMOS_X86_64"/bin/magic.mgc share/misc/magic.mgc
+mkdir -p file/usr/share/misc && cd file
+cp "$COSMOS_X86_64"/bin/magic.mgc usr/share/misc/magic.mgc
 
-zip -qr "$RESULTS"/bin/file.com share/misc
+zip -qr "$RESULTS"/bin/file.com usr/share/misc
 
 cd "$BASELOC"
 rm -rf "$RESULTS"/file
