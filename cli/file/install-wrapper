@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+cp ./src/file $(COSMOS)/bin
+cp ./magic/magic.mgc $(COSMOS)/bin
