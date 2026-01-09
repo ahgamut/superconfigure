@@ -8,4 +8,4 @@ aclocal
 autoheader
 automake --force-missing --add-missing
 autoconf
-./configure --disable-shared --prefix="/zip/usr/"
+./configure --disable-shared --prefix="/zip/"
