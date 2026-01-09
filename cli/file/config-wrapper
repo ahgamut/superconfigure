@@ -1,3 +1,0 @@
-#!/bin/sh
-set -e
-"$BASELOC"/o/cli/file/file-*/configure --disable-shared --prefix="$COSMOS"
