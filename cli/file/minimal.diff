@@ -1,0 +1,10 @@
+--- file-FILE5_46/magic/Makefile.in	2026-01-09 19:13:27.876935366 +0000
+--- file-FILE5_46/magic/Makefile.am	2024-11-27 15:37:46.000000000 +0000
++++ -	2026-01-09 19:31:41.529621699 +0000
+@@ -386,5 +386,5 @@
+ 		exit 1; \
+ 	    fi; \
+ 	  fi)
+-	$(FILE_COMPILE) -C -m magic
++	-$(FILE_COMPILE) -C -m magic
+ 	@rm -fr magic
