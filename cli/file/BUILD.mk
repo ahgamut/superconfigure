@@ -10,5 +10,5 @@ o/cli/file/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/cli/file/config-wrapp
 o/cli/file/installed.x86_64: INSTALL_COMMAND = $(BASELOC)/cli/file/install-wrapper
 o/cli/file/installed.aarch64: INSTALL_COMMAND = $(BASELOC)/cli/file/install-wrapper
 
-o/cli/file/built.fat: FATTEN_COMMAND = $(BASELOC)/cli/file/fatten
-
+o/cli/file/built.fat: FATTEN_COMMAND = $(BASELOC)/config/apelink_folder.sh
+o/cli/file/built.fat: BINS = file share/misc

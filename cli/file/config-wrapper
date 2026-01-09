@@ -11,4 +11,4 @@ automake --force-missing --add-missing
 autoconf
 
 cd $old
-"$BASELOC"/o/cli/file/file-*/configure --disable-shared --prefix="/zip/"
+"$BASELOC"/o/cli/file/file-*/configure --disable-shared --prefix="$COSMOS"
