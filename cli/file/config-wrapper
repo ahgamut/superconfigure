@@ -1,11 +1,3 @@
 #!/bin/sh
 set -e
-
-old=$(pwd)
-cd "$BASELOC"/o/cli/file/file-*/
-
-autoreconf --install --force
-autoconf
-
-cd $old
 "$BASELOC"/o/cli/file/file-*/configure --disable-shared --prefix="$COSMOS"
