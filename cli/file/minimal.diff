@@ -1,7 +1,5 @@
-diff --git a/magic/Makefile.am b/magic/Makefile.am
-index e0f9034..421fcbb 100644
---- a/magic/Makefile.am
-+++ b/magic/Makefile.am
+--- file-FILE5_46/magic/Makefile.am
++++ file-FILE5_46/magic/Makefile.am
 @@ -31,7 +31,6 @@ $(MAGIC_FRAGMENT_DIR)/apt \
  $(MAGIC_FRAGMENT_DIR)/archive \
  $(MAGIC_FRAGMENT_DIR)/aria \
