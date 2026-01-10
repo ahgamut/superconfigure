@@ -1,10 +1,10 @@
---- file-FILE5_46/magic/Makefile.in	2026-01-09 19:13:27.876935366 +0000
---- file-FILE5_46/magic/Makefile.am	2024-11-27 15:37:46.000000000 +0000
-+++ -	2026-01-09 19:31:41.529621699 +0000
-@@ -386,5 +386,5 @@
- 		exit 1; \
- 	    fi; \
- 	  fi)
--	$(FILE_COMPILE) -C -m magic
-+	-$(FILE_COMPILE) -C -m magic
- 	@rm -fr magic
+--- file-FILE5_46/magic/Makefile.am
++++ file-FILE5_46/magic/Makefile.am
+@@ -31,7 +31,6 @@ $(MAGIC_FRAGMENT_DIR)/apt \
+ $(MAGIC_FRAGMENT_DIR)/archive \
+ $(MAGIC_FRAGMENT_DIR)/aria \
+ $(MAGIC_FRAGMENT_DIR)/arm \
+-$(MAGIC_FRAGMENT_DIR)/asf \
+ $(MAGIC_FRAGMENT_DIR)/assembler \
+ $(MAGIC_FRAGMENT_DIR)/asterix \
+ $(MAGIC_FRAGMENT_DIR)/att3b \
