@@ -1,6 +1,9 @@
+
 FILE_SRC := https://github.com/file/file/archive/refs/tags/FILE5_46.tar.gz
+FILE_DEPS := cosmo-repo/compress
 
 $(eval $(call DOWNLOAD_SOURCE,cli/file,$(FILE_SRC)))
+$(eval $(call SPECIFY_DEPS,cli/file,$(FILE_DEPS)))
 
 o/cli/file/setup: o/cli/file/patched
 	cd $(BASELOC)/o/cli/file/file-* && autoreconf -fi $(ERRLOG) && autoconf $(ERRLOG)

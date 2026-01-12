@@ -19,6 +19,7 @@ cd "$COSMOS"
 
 cp "$COSMO"/o/"$MODE"/third_party/zstd/zstd.a ./lib/libzstd.a
 echo '#include "third_party/zstd/zstd.h"' > ./include/zstd.h
+echo '#include "third_party/zstd/zstd_errors.h"' > ./include/zstd_errors.h
 
 cp "$COSMO"/o/"$MODE"/third_party/bzip2/bzip2.a ./lib/libbz2.a
 echo '#include "third_party/bzip2/bzlib.h"' > ./include/bzlib.h
