@@ -73,6 +73,9 @@ zip -qr "$RESULTS"/bin/python.com Lib/ \
 	\*turtledemo/\* \*_pydecimal.py\* \
 	\*ensurepip/\*
 
+zip -qr "$RESULTS"/bin/python.com \
+    $(find Lib/site-packages/pip -name '*.py')
+
 cd "$RESULTS"
 rm -rf "$RESULTS/py-tmp"
 cd "$BASELOC"
