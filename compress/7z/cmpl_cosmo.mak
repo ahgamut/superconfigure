@@ -15,6 +15,7 @@ CXX=$(COSMO)/cosmocc/bin/$(ARCH)-unknown-cosmo-c++
 
 # include ../../warn_gcc.mak
 CFLAGS_WARN_GCC_4_8 = \
+  -fno-stack-protector \
   -Waddress \
   -Waggressive-loop-optimizations \
   -Wattributes \
