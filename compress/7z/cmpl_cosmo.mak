@@ -2,7 +2,7 @@ DISABLE_RAR=1
 DISABLE_RAR_COMPRESS=1
 
 # include ../../var_gcc.mak
-PLATFORM=cosmo
+PLATFORM=
 O=b/g
 IS_X64=
 IS_X86=
@@ -22,7 +22,6 @@ CFLAGS_WARN_GCC_4_8 = \
   -Wcast-align \
   -Wcomment \
   -Wdiv-by-zero \
-  -Wformat-contains-nul \
   -Winit-self
 
 CFLAGS_WARN_GCC_5 = $(CFLAGS_WARN_GCC_4_8)\
