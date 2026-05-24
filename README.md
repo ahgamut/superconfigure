@@ -2,7 +2,7 @@
 
 `superconfigure` is a collection of programs ported to run as fat binaries using
 [Cosmopolitan Libc][cosmo]. This repository includes build scripts for popular
-software such as `bash`, `lua`, `emacs`, GNU Coreutils, `sed`, `gcc-12`, `curl`,
+software such as `bash`, `lua`, `emacs`, GNU Coreutils, `sed`, `gcc-14`, `curl`,
 and others. For each of these, the source code is downloaded from the upstream
 sources, compiled for `x86_64` and `aarch64`, and finally combined into a fat
 binary using Cosmopolitan Libc's `apelink` program.
@@ -19,12 +19,8 @@ contains `vim`, `nano`, and `emacs`.
 contains the `gcc-14.1` and `binutils-2.42` tools targeting (x86-64-linux-cosmo).  
 **aarch64-gcc.zip**  
 contains the `gcc-14.1` and `binutils-2.42` tools targeting (aarch64-linux-cosmo).  
-**datasette.zip**  
-contains `datasette` a build of CPython 3.11 with the datasette library.  
-**pypack1.zip**  
-contains `python`, a build of CPython 3.11 with a bunch of cli libraries like `black`, `cookiecutter`.  
 **lang.zip**  
-contains languages [`berry`](https://berry-lang.github.io/), [`janet`](https://janet-lang.org/), [`lua`](https://www.lua.org/), [`php`](https://www.php.net/), and Python 3.12.
+contains languages [`janet`](https://janet-lang.org/), [`lua`](https://www.lua.org/), [`php`](https://www.php.net/), and Python 3.12.
 
 # Where can I download the built software?
 
