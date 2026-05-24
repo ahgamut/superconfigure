@@ -1,6 +1,6 @@
 
 cosmos: \
-	cli lang compress datasette pypack1 editor \
+	cli lang compress editor \
 	o/web/rsync/built.fat \
 	o/web/links/built.fat \
 	o/web/wget/built.fat \
