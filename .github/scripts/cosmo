@@ -5,6 +5,7 @@ echo "Initial Setup"
 export BASELOC="$PWD"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
 export RESULTS="${RESULTS:-$BASELOC/results}"
+export HOSTARCH="${HOSTARCH:-$(uname -m)}"
 
 # create the COSMOS and related folders
 cd "$BASELOC"
@@ -40,7 +41,7 @@ rm -rf o/aarch64-tiny/ o/aarch64-dbg/ o/aarch64-optlinux/ \
     o/x86_64-tiny/ o/x86_64-dbg o/x86_64-optlinux/
 
 cd "$COSMO"
-make -j$numproc o//tool/build
+make m=$HOSTARCH -j$numproc o/$HOSTARCH/tool/build
 
 make m=x86_64 V=0 -s -j$numproc \
     o/x86_64/third_party/bzip2\

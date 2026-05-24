@@ -8,6 +8,7 @@ echo "Initial Setup"
 export BASELOC="$PWD"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
 export RESULTS="${RESULTS:-$BASELOC/results}"
+export HOSTARCH="${HOSTARCH:-$(uname -m)}"
 
 # create the COSMOS and related folders
 cd "$BASELOC"
@@ -34,7 +35,7 @@ fi
 
 cd "$COSMO"
 # make calls download-cosmocc.sh, which writes to .cosmocc
-make V=0 -s -j$numproc o//tool/build
+make m=$HOSTARCH V=0 -s -j$numproc o/$HOSTARCH/tool/build
 make m=x86_64 V=0 -s -j$numproc o/x86_64/ape
 make m=aarch64 V=0 -s -j$numproc o/aarch64/ape
 

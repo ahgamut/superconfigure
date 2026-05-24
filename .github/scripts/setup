@@ -17,7 +17,12 @@ cd "$GITHUB_WORKSPACE" || exit
 # cosmo
 git clone https://github.com/jart/cosmopolitan --depth=1
 
-sudo cp cosmopolitan/build/bootstrap/ape.elf /usr/bin/ape
+if [ "$(uname -m)" = "aarch64" ]; then
+  APE_EXT=aarch64
+else
+  APE_EXT=elf
+fi
+sudo cp cosmopolitan/build/bootstrap/ape.$APE_EXT /usr/bin/ape
 sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
 
 ls /proc/sys/fs/binfmt_misc/
