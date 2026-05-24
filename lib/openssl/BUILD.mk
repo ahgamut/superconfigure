@@ -1,10 +1,10 @@
 
 
-OPENSSL_SRC := https://github.com/openssl/openssl/archive/refs/tags/openssl-3.6.2.tar.gz 
+OPENSSL_SRC := https://github.com/openssl/openssl/archive/refs/tags/openssl-3.6.2.tar.gz
 
 # no $$ here because we're not calling the AUTOTOOLS_BUILD function
 
-OPENSSL_CONFIG_ARGS = no-shared \
+OPENSSL_CONFIG_ARGS = no-shared no-asm \
     no-dso no-dynamic-engine no-engine no-pic\
 	no-async no-secure-memory\
     --with-rand-seed=getrandom\
