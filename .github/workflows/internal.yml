@@ -1,10 +1,5 @@
 on:
   workflow_dispatch:
-    inputs:
-      commit_sha:
-        description: 'The full commit SHA to run the workflow on'
-        required: true
-        type: string
 
 name: Release internal
 jobs:
@@ -18,8 +13,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master
-        with:
-          ref: ${{ github.event.inputs.commit_sha }}
       - name: support ape bins and SSL things
         run: bash ./.github/scripts/setup
       - name: build Cosmo
