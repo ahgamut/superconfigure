@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+cd ./CPP/7zip/Bundles/Alone2
+make -f ../../cmpl_cosmo.mak -j$MAXPROC

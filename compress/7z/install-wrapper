@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+
+cp ./CPP/7zip/Bundles/Alone2/b/g/7zz "$COSMOS"/bin/7z

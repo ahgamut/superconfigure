@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+cp -r "$BASELOC"/o/compress/7z/7z-src/* .
+cp -r "$BASELOC"/compress/7z/cmpl_cosmo.mak ./CPP/7zip/

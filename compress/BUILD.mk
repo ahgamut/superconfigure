@@ -1,4 +1,5 @@
 
+include compress/7z/BUILD.mk
 include compress/bzip3/BUILD.mk
 include compress/brotli/BUILD.mk
 include compress/gzip/BUILD.mk

@@ -1,0 +1,673 @@
+diff -urN old/C/7zip_gcc_c.mak 7z-src/C/7zip_gcc_c.mak
+--- old/C/7zip_gcc_c.mak	2025-10-23 07:00:00.000000000 +0000
++++ 7z-src/C/7zip_gcc_c.mak	2026-05-24 08:28:02.475516446 +0000
+@@ -64,8 +64,8 @@
+ LDFLAGS = -shared -DEF $(DEF_FILE) $(LDFLAGS_STATIC)
+ else
+ SHARED_EXT=.so
+-LDFLAGS = -shared -fPIC  $(LDFLAGS_STATIC)
+-CC_SHARED=-fPIC
++LDFLAGS = -shared $(LDFLAGS_STATIC)
++CC_SHARED=
+ endif
+ 
+ 
+diff -urN old/CPP/7zip/7zip_gcc.mak 7z-src/CPP/7zip/7zip_gcc.mak
+--- old/CPP/7zip/7zip_gcc.mak	2025-11-05 08:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/7zip_gcc.mak	2026-05-24 08:28:02.475516446 +0000
+@@ -45,14 +45,13 @@
+ else
+ CFLAGS_DEBUG = -DNDEBUG
+ ifneq ($(CC), $(CROSS_COMPILE)clang)
+-LFLAGS_STRIP = -s
++LFLAGS_STRIP =
+ endif
+ endif
+ 
+ # CFLAGS_BASE_LIST = -S
+ CFLAGS_BASE = -O2 $(CFLAGS_BASE_LIST) $(CFLAGS_WARN_WALL) $(CFLAGS_WARN) \
+- $(CFLAGS_DEBUG) -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+- -fPIC
++ $(CFLAGS_DEBUG) -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+ 
+ FLAGS_FLTO = -ffunction-sections
+ FLAGS_FLTO = -flto
+@@ -104,8 +103,8 @@
+ LDFLAGS = -shared -DEF $(DEF_FILE) $(LDFLAGS_STATIC)
+ else
+ SHARED_EXT=.so
+-LDFLAGS = -shared -fPIC $(LDFLAGS_STATIC)
+-CC_SHARED=-fPIC
++LDFLAGS = -shared $(LDFLAGS_STATIC)
++CC_SHARED=
+ endif
+ 
+ 
+diff -urN old/CPP/7zip/Bundles/SFXSetup/SfxSetup.cpp 7z-src/CPP/7zip/Bundles/SFXSetup/SfxSetup.cpp
+--- old/CPP/7zip/Bundles/SFXSetup/SfxSetup.cpp	2026-02-25 09:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/Bundles/SFXSetup/SfxSetup.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -109,7 +109,7 @@
+ 
+ static void ShowErrorMessageSpec(const UString &name)
+ {
+-  UString message = NError::MyFormatMessage(::GetLastError());
++  UString message = NError::MyFormatMessage(GetLastError());
+   const int pos = message.Find(L"%1");
+   if (pos >= 0)
+   {
+diff -urN old/CPP/7zip/Common/FileStreams.cpp 7z-src/CPP/7zip/Common/FileStreams.cpp
+--- old/CPP/7zip/Common/FileStreams.cpp	2025-08-21 06:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/Common/FileStreams.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -47,7 +47,7 @@
+ 
+ static inline HRESULT GetLastError_HRESULT()
+ {
+-  DWORD lastError = ::GetLastError();
++  DWORD lastError = GetLastError();
+   if (lastError == 0)
+     return E_FAIL;
+   return HRESULT_FROM_WIN32(lastError);
+@@ -218,7 +218,7 @@
+   #endif // Z7_FILE_STREAMS_USE_WIN_FILE
+ 
+   {
+-    const DWORD error = ::GetLastError();
++    const DWORD error = GetLastError();
+ #if 0
+     if (File.IsStdStream && error == ERROR_BROKEN_PIPE)
+       return S_OK; // end of stream
+diff -urN old/CPP/7zip/Common/OutMemStream.cpp 7z-src/CPP/7zip/Common/OutMemStream.cpp
+--- old/CPP/7zip/Common/OutMemStream.cpp	2023-04-05 14:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/Common/OutMemStream.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -103,7 +103,7 @@
+       {
+         if (waitResult == WAIT_FAILED)
+         {
+-          const DWORD res = ::GetLastError();
++          const DWORD res = GetLastError();
+           if (res != 0)
+             return HRESULT_FROM_WIN32(res);
+         }
+diff -urN old/CPP/7zip/UI/Client7z/Client7z.cpp 7z-src/CPP/7zip/UI/Client7z/Client7z.cpp
+--- old/CPP/7zip/UI/Client7z/Client7z.cpp	2024-03-13 06:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Client7z/Client7z.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -740,7 +740,7 @@
+     FString path = DirPrefix + dirItem.FullPath;
+     if (!inStreamSpec->Open(path))
+     {
+-      const DWORD sysError = ::GetLastError();
++      const DWORD sysError = GetLastError();
+       FailedCodes.Add(HRESULT_FROM_WIN32(sysError));
+       FailedFiles.Add(path);
+       // if (systemError == ERROR_SHARING_VIOLATION)
+diff -urN old/CPP/7zip/UI/Common/ArchiveExtractCallback.cpp 7z-src/CPP/7zip/UI/Common/ArchiveExtractCallback.cpp
+--- old/CPP/7zip/UI/Common/ArchiveExtractCallback.cpp	2025-08-02 18:42:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Common/ArchiveExtractCallback.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -1465,7 +1465,7 @@
+   
+   if (!_outFileStreamSpec->Create_ALWAYS_or_Open_ALWAYS(fullProcessedPath, !_isSplit))
+   {
+-    // if (::GetLastError() != ERROR_FILE_EXISTS || !isSplit)
++    // if (GetLastError() != ERROR_FILE_EXISTS || !isSplit)
+     {
+       RINOK(SendMessageError_with_LastError(kCantOpenOutFile, fullProcessedPath))
+       return S_OK;
+diff -urN old/CPP/7zip/UI/Common/EnumDirItems.cpp 7z-src/CPP/7zip/UI/Common/EnumDirItems.cpp
+--- old/CPP/7zip/UI/Common/EnumDirItems.cpp	2025-06-20 10:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Common/EnumDirItems.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -105,7 +105,7 @@
+ 
+ HRESULT CDirItems::AddError(const FString &path)
+ {
+-  return AddError(path, ::GetLastError());
++  return AddError(path, GetLastError());
+ }
+ 
+ static const unsigned kScanProgressStepMask = (1 << 12) - 1;
+@@ -589,7 +589,7 @@
+     return S_OK;
+   }
+ 
+-  DWORD res = ::GetLastError();
++  DWORD res = GetLastError();
+   buf.Free();
+   return AddError(path, res);
+ }
+diff -urN old/CPP/7zip/UI/Common/HashCalc.cpp 7z-src/CPP/7zip/UI/Common/HashCalc.cpp
+--- old/CPP/7zip/UI/Common/HashCalc.cpp	2025-06-16 07:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Common/HashCalc.cpp	2026-05-24 08:28:02.475516446 +0000
+@@ -551,7 +551,7 @@
+ #else
+       if (!CreateStdInStream(inStream))
+       {
+-        const DWORD lastError = ::GetLastError();
++        const DWORD lastError = GetLastError();
+         const HRESULT res = callback->OpenFileError(FString("stdin"), lastError);
+         hb.NumErrors++;
+         if (res != S_FALSE && res != S_OK)
+@@ -588,7 +588,7 @@
+           const FString phyPath = dirItems.GetPhyPath(i);
+           if (!inStreamSpec->OpenShared(phyPath, options.OpenShareForWrite))
+           {
+-            const HRESULT res = callback->OpenFileError(phyPath, ::GetLastError());
++            const HRESULT res = callback->OpenFileError(phyPath, GetLastError());
+             hb.NumErrors++;
+             if (res != S_FALSE)
+               return res;
+diff -urN old/CPP/7zip/UI/Common/Update.cpp 7z-src/CPP/7zip/UI/Common/Update.cpp
+--- old/CPP/7zip/UI/Common/Update.cpp	2024-12-30 13:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Common/Update.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -51,7 +51,7 @@
+ 
+ void CUpdateErrorInfo::SetFromLastError(const char *message)
+ {
+-  SystemError = ::GetLastError();
++  SystemError = GetLastError();
+   Message = message;
+ }
+ 
+@@ -710,7 +710,7 @@
+           isOK = true;
+           break;
+         }
+-        if (::GetLastError() != ERROR_FILE_EXISTS)
++        if (GetLastError() != ERROR_FILE_EXISTS)
+           break;
+         if (!archivePath.Temp)
+           break;
+@@ -1652,7 +1652,7 @@
+ 
+       if (!MyMoveFile_with_Progress(tempPath, us2fs(arcPath), &prox))
+       {
+-        errorInfo.SystemError = ::GetLastError();
++        errorInfo.SystemError = GetLastError();
+         errorInfo.Message = "cannot move the file";
+         if (errorInfo.SystemError == ERROR_INVALID_PARAMETER)
+         {
+diff -urN old/CPP/7zip/UI/Common/UpdateCallback.cpp 7z-src/CPP/7zip/UI/Common/UpdateCallback.cpp
+--- old/CPP/7zip/UI/Common/UpdateCallback.cpp	2025-06-18 12:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Common/UpdateCallback.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -651,7 +651,7 @@
+       // we still need DeviceIoControlOut() instead of Read
+       if (!inStreamSpec->File.OpenReparse(path))
+       {
+-        return Callback->OpenFileError(path, ::GetLastError());
++        return Callback->OpenFileError(path, GetLastError());
+       }
+       */
+       // 20.03: we use Reparse Data instead of real data
+@@ -721,7 +721,7 @@
+       }
+       if (!isOpen)
+       {
+-        const DWORD error = ::GetLastError();
++        const DWORD error = GetLastError();
+         const HRESULT hres = Callback->OpenFileError(path, error);
+         if (hres == S_OK || hres == S_FALSE)
+         if (StopAfterOpenError ||
+diff -urN old/CPP/7zip/UI/Explorer/ContextMenu.cpp 7z-src/CPP/7zip/UI/Explorer/ContextMenu.cpp
+--- old/CPP/7zip/UI/Explorer/ContextMenu.cpp	2024-11-26 11:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Explorer/ContextMenu.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -564,7 +564,7 @@
+ 
+ static HRESULT RETURN_WIN32_LastError_AS_HRESULT()
+ {
+-  DWORD lastError = ::GetLastError();
++  DWORD lastError = GetLastError();
+   if (lastError == 0)
+     return E_FAIL;
+   return HRESULT_FROM_WIN32(lastError);
+diff -urN old/CPP/7zip/UI/Explorer/MyMessages.cpp 7z-src/CPP/7zip/UI/Explorer/MyMessages.cpp
+--- old/CPP/7zip/UI/Explorer/MyMessages.cpp	2024-03-10 09:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Explorer/MyMessages.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -39,5 +39,5 @@
+ 
+ void ShowLastErrorMessage(HWND window)
+ {
+-  ShowErrorMessageDWORD(window, ::GetLastError());
++  ShowErrorMessageDWORD(window, GetLastError());
+ }
+diff -urN old/CPP/7zip/UI/Far/FarUtils.cpp 7z-src/CPP/7zip/UI/Far/FarUtils.cpp
+--- old/CPP/7zip/UI/Far/FarUtils.cpp	2024-11-04 16:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/Far/FarUtils.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -480,7 +480,7 @@
+ 
+ int ShowLastErrorMessage()
+ {
+-  return ShowSysErrorMessage(::GetLastError());
++  return ShowSysErrorMessage(GetLastError());
+ }
+ 
+ int ShowSysErrorMessage(DWORD errorCode, const wchar_t *name)
+diff -urN old/CPP/7zip/UI/FileManager/AltStreamsFolder.cpp 7z-src/CPP/7zip/UI/FileManager/AltStreamsFolder.cpp
+--- old/CPP/7zip/UI/FileManager/AltStreamsFolder.cpp	2024-07-09 09:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/FileManager/AltStreamsFolder.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -890,7 +890,7 @@
+ 
+     CFileInfo fi;
+     if (!fi.Find(path))
+-      return ::GetLastError();
++      return GetLastError();
+     if (fi.IsDir())
+       return E_NOTIMPL;
+     totalSize += fi.Size;
+diff -urN old/CPP/7zip/UI/FileManager/FSFolder.cpp 7z-src/CPP/7zip/UI/FileManager/FSFolder.cpp
+--- old/CPP/7zip/UI/FileManager/FSFolder.cpp	2025-08-08 05:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/FileManager/FSFolder.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -170,7 +170,7 @@
+   IF_USE_MAIN_PATH
+   {
+     lowPart = ::GetCompressedFileSizeW(fs2us(path), &highPart);
+-    if (lowPart != INVALID_FILE_SIZE || ::GetLastError() == NO_ERROR)
++    if (lowPart != INVALID_FILE_SIZE || GetLastError() == NO_ERROR)
+     {
+       size = ((UInt64)highPart << 32) | lowPart;
+       return true;
+@@ -183,7 +183,7 @@
+     if (GetSuperPath(path, superPath, USE_MAIN_PATH))
+     {
+       lowPart = ::GetCompressedFileSizeW(superPath, &highPart);
+-      if (lowPart != INVALID_FILE_SIZE || ::GetLastError() == NO_ERROR)
++      if (lowPart != INVALID_FILE_SIZE || GetLastError() == NO_ERROR)
+       {
+         size = ((UInt64)highPart << 32) | lowPart;
+         return true;
+@@ -1064,7 +1064,7 @@
+   GetAbsPath(name, absPath);
+   if (CreateDir(absPath))
+     return S_OK;
+-  if (::GetLastError() != ERROR_ALREADY_EXISTS)
++  if (GetLastError() != ERROR_ALREADY_EXISTS)
+     if (CreateComplexDir(absPath))
+       return S_OK;
+   return GetLastError_noZero_HRESULT();
+diff -urN old/CPP/7zip/UI/FileManager/FSFolderCopy.cpp 7z-src/CPP/7zip/UI/FileManager/FSFolderCopy.cpp
+--- old/CPP/7zip/UI/FileManager/FSFolderCopy.cpp	2024-07-16 17:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/FileManager/FSFolderCopy.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -337,7 +337,7 @@
+           (fs2fas(oldFile), fs2fas(newFile),
+           CopyProgressRoutine, &ProgressInfo, &cancelFlag, COPY_FILE_FAIL_IF_EXISTS))
+         return true;
+-      if (::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++      if (GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+         return false;
+     }
+     return BOOLToBool(::CopyFile(fs2fas(oldFile), fs2fas(newFile), TRUE));
+@@ -388,7 +388,7 @@
+           return true;
+       }
+       #ifdef Z7_LONG_PATH
+-      if ((!(USE_MAIN_PATH_2) || ::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED) && USE_SUPER_PATH_2)
++      if ((!(USE_MAIN_PATH_2) || GetLastError() != ERROR_CALL_NOT_IMPLEMENTED) && USE_SUPER_PATH_2)
+       {
+         if (IsCallbackProgressError())
+           return false;
+@@ -406,7 +406,7 @@
+           return true;
+       }
+       #endif
+-      if (::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++      if (GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+         return false;
+     }
+   // }
+diff -urN old/CPP/7zip/UI/FileManager/VerCtrl.cpp 7z-src/CPP/7zip/UI/FileManager/VerCtrl.cpp
+--- old/CPP/7zip/UI/FileManager/VerCtrl.cpp	2024-07-05 05:00:00.000000000 +0000
++++ 7z-src/CPP/7zip/UI/FileManager/VerCtrl.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -343,7 +343,7 @@
+           {
+             panel.MessageBox_LastError();
+             return;
+-            // if (::GetLastError() != ERROR_SUCCESS)
++            // if (GetLastError() != ERROR_SUCCESS)
+             // throw "open error";
+           }
+           else
+diff -urN old/CPP/Common/ListFileUtils.cpp 7z-src/CPP/Common/ListFileUtils.cpp
+--- old/CPP/Common/ListFileUtils.cpp	2024-02-19 10:00:00.000000000 +0000
++++ 7z-src/CPP/Common/ListFileUtils.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -12,7 +12,7 @@
+ #include "../Windows/FileIO.h"
+ 
+ #define CSysInFile NWindows::NFile::NIO::CInFile
+-#define MY_GET_LAST_ERROR ::GetLastError()
++#define MY_GET_LAST_ERROR GetLastError()
+ 
+ 
+ #define kQuoteChar '\"'
+diff -urN old/CPP/Common/MyString.cpp 7z-src/CPP/Common/MyString.cpp
+--- old/CPP/Common/MyString.cpp	2025-06-15 08:00:00.000000000 +0000
++++ 7z-src/CPP/Common/MyString.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -121,7 +121,7 @@
+ wchar_t MyCharUpper_WIN(wchar_t c) throw()
+ {
+   wchar_t *res = CharUpperW((LPWSTR)(UINT_PTR)(unsigned)c);
+-  if (res != 0 || ::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++  if (res != 0 || GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+     return (wchar_t)(unsigned)(UINT_PTR)res;
+   const int kBufSize = 4;
+   char s[kBufSize + 1];
+@@ -138,7 +138,7 @@
+ wchar_t MyCharLower_WIN(wchar_t c)
+ {
+   wchar_t *res = CharLowerW((LPWSTR)(UINT_PTR)(unsigned)c);
+-  if (res != 0 || ::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++  if (res != 0 || GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+     return (wchar_t)(unsigned)(UINT_PTR)res;
+   const int kBufSize = 4;
+   char s[kBufSize + 1];
+@@ -158,7 +158,7 @@
+   if (s == 0)
+     return 0;
+   wchar_t *res = CharUpperW(s);
+-  if (res != 0 || ::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++  if (res != 0 || GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+     return res;
+   AString a = UnicodeStringToMultiByte(s);
+   a.MakeUpper();
+@@ -173,7 +173,7 @@
+   if (s == 0)
+     return 0;
+   wchar_t *res = CharLowerW(s);
+-  if (res != 0 || ::GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
++  if (res != 0 || GetLastError() != ERROR_CALL_NOT_IMPLEMENTED)
+     return res;
+   AString a = UnicodeStringToMultiByte(s);
+   a.MakeLower();
+diff -urN old/CPP/Common/MyWindows.cpp 7z-src/CPP/Common/MyWindows.cpp
+--- old/CPP/Common/MyWindows.cpp	2024-02-15 07:00:00.000000000 +0000
++++ 7z-src/CPP/Common/MyWindows.cpp	2026-05-24 08:28:02.479516441 +0000
+@@ -141,17 +141,6 @@
+   return 0;
+ }
+ 
+-DWORD GetLastError()
+-{
+-  return (DWORD)errno;
+-}
+-
+-void SetLastError(DWORD dw)
+-{
+-  errno = (int)dw;
+-}
+-
+-
+ static LONG TIME_GetBias()
+ {
+   time_t utc = time(NULL);
+diff -urN old/CPP/Common/MyWindows.h 7z-src/CPP/Common/MyWindows.h
+--- old/CPP/Common/MyWindows.h	2023-09-14 11:00:00.000000000 +0000
++++ 7z-src/CPP/Common/MyWindows.h	2026-05-24 08:28:02.483516436 +0000
+@@ -270,8 +270,8 @@
+ EXTERN_C UINT SysStringByteLen(BSTR bstr);
+ EXTERN_C UINT SysStringLen(BSTR bstr);
+ 
+-EXTERN_C DWORD GetLastError();
+-EXTERN_C void SetLastError(DWORD dwCode);
++#define GetLastError() (DWORD)(errno)
++#define SetLastError(dwCode) errno = ((DWORD)(dwCode));
+ EXTERN_C LONG CompareFileTime(const FILETIME* ft1, const FILETIME* ft2);
+ 
+ EXTERN_C DWORD GetCurrentThreadId();
+diff -urN old/CPP/Windows/FileDir.cpp 7z-src/CPP/Windows/FileDir.cpp
+--- old/CPP/Windows/FileDir.cpp	2025-07-24 13:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/FileDir.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -295,7 +295,7 @@
+       if (::MoveFileWithProgressW(fs2us(oldFile), fs2us(newFile),
+           CopyProgressRoutine_to_ICopyFileProgress, progress, MOVEFILE_COPY_ALLOWED))
+         return true;
+-      if (::GetLastError() == ERROR_REQUEST_ABORTED)
++      if (GetLastError() == ERROR_REQUEST_ABORTED)
+         return false;
+     }
+     #ifdef Z7_LONG_PATH
+@@ -414,7 +414,7 @@
+       if (::CreateDirectoryW(fs2us(path), NULL))
+         return true;
+     #ifdef Z7_LONG_PATH
+-    if ((!USE_MAIN_PATH || ::GetLastError() != ERROR_ALREADY_EXISTS) && USE_SUPER_PATH)
++    if ((!USE_MAIN_PATH || GetLastError() != ERROR_ALREADY_EXISTS) && USE_SUPER_PATH)
+     {
+       UString superPath;
+       if (GetSuperPath(path, superPath, USE_MAIN_PATH))
+@@ -449,14 +449,14 @@
+       if (::CreateDirectoryW(fs2us(path), NULL))
+         return true;
+     #ifdef Z7_LONG_PATH
+-    if ((!USE_MAIN_PATH || ::GetLastError() != ERROR_ALREADY_EXISTS) && USE_SUPER_PATH)
++    if ((!USE_MAIN_PATH || GetLastError() != ERROR_ALREADY_EXISTS) && USE_SUPER_PATH)
+     {
+       UString superPath;
+       if (GetSuperPath(path, superPath, USE_MAIN_PATH))
+       {
+         if (::CreateDirectoryW(superPath, NULL))
+           return true;
+-        if (::GetLastError() != ERROR_ALREADY_EXISTS)
++        if (GetLastError() != ERROR_ALREADY_EXISTS)
+           return false;
+         NFind::CFileInfo fi;
+         if (!fi.Find(us2fs(superPath)))
+@@ -466,7 +466,7 @@
+     }
+     #endif
+   }
+-  if (::GetLastError() != ERROR_ALREADY_EXISTS)
++  if (GetLastError() != ERROR_ALREADY_EXISTS)
+     return false;
+   NFind::CFileInfo fi;
+   if (!fi.Find(path))
+@@ -526,7 +526,7 @@
+   {
+     if (CreateDir2(path))
+       break;
+-    if (::GetLastError() == ERROR_ALREADY_EXISTS)
++    if (GetLastError() == ERROR_ALREADY_EXISTS)
+       return false;
+     pos = path.ReverseFind_PathSepar();
+     if (pos < 0 || pos == 0)
+diff -urN old/CPP/Windows/FileFind.cpp 7z-src/CPP/Windows/FileFind.cpp
+--- old/CPP/Windows/FileFind.cpp	2025-08-21 10:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/FileFind.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -435,7 +435,7 @@
+       _handle = MY_FindFirstStreamW(fs2us(path), My_FindStreamInfoStandard, &sd, 0);
+     if (_handle == INVALID_HANDLE_VALUE)
+     {
+-      if (::GetLastError() == ERROR_HANDLE_EOF)
++      if (GetLastError() == ERROR_HANDLE_EOF)
+         return false;
+       // long name can be tricky for path like ".\dirName".
+       #ifdef Z7_LONG_PATH
+@@ -485,7 +485,7 @@
+     return true;
+   }
+   found = false;
+-  return (::GetLastError() == ERROR_HANDLE_EOF);
++  return (GetLastError() == ERROR_HANDLE_EOF);
+ }
+ 
+ #endif
+@@ -919,7 +919,7 @@
+   }
+ 
+   found = false;
+-  DWORD lastError = ::GetLastError();
++  DWORD lastError = GetLastError();
+   if (_findFile.IsHandleAllocated())
+     return (lastError == ERROR_NO_MORE_FILES);
+   // we support the case for empty root folder: FindFirstFile("c:\\*") returns ERROR_FILE_NOT_FOUND
+diff -urN old/CPP/Windows/FileIO.cpp 7z-src/CPP/Windows/FileIO.cpp
+--- old/CPP/Windows/FileIO.cpp	2024-02-12 10:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/FileIO.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -21,7 +21,7 @@
+ 
+ HRESULT GetLastError_noZero_HRESULT()
+ {
+-  const DWORD res = ::GetLastError();
++  const DWORD res = GetLastError();
+   if (res == 0)
+     return E_FAIL;
+   return HRESULT_FROM_WIN32(res);
+@@ -169,7 +169,7 @@
+   DWORD high = 0;
+   const DWORD low = ::GetFileSize(_handle, &high);
+   if (low == INVALID_FILE_SIZE)
+-    if (::GetLastError() != NO_ERROR)
++    if (GetLastError() != NO_ERROR)
+       return false;
+   length = (((UInt64)high) << 32) + low;
+   return true;
+@@ -240,7 +240,7 @@
+   const DWORD low = ::SetFilePointer(_handle, (LONG)(distanceToMove & 0xFFFFFFFF), &high, moveMethod);
+   if (low == INVALID_SET_FILE_POINTER)
+   {
+-    const DWORD lastError = ::GetLastError();
++    const DWORD lastError = GetLastError();
+     if (lastError != NO_ERROR)
+     {
+       // 21.07: we set (newPosition) to real position even after error.
+diff -urN old/CPP/Windows/FileMapping.h 7z-src/CPP/Windows/FileMapping.h
+--- old/CPP/Windows/FileMapping.h	2023-01-10 17:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/FileMapping.h	2026-05-24 08:28:02.483516436 +0000
+@@ -15,7 +15,7 @@
+   WRes Create(DWORD protect, UInt64 maxSize, LPCTSTR name)
+   {
+     _handle = ::CreateFileMapping(INVALID_HANDLE_VALUE, NULL, protect, (DWORD)(maxSize >> 32), (DWORD)maxSize, name);
+-    return ::GetLastError();
++    return GetLastError();
+   }
+ 
+   WRes Open(DWORD
+@@ -36,7 +36,7 @@
+     _handle = ::OpenFileMapping(desiredAccess, FALSE, name);
+     if (_handle != NULL)
+       return 0;
+-    return ::GetLastError();
++    return GetLastError();
+     #endif
+   }
+ 
+diff -urN old/CPP/Windows/ProcessUtils.cpp 7z-src/CPP/Windows/ProcessUtils.cpp
+--- old/CPP/Windows/ProcessUtils.cpp	2023-12-11 11:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/ProcessUtils.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -87,7 +87,7 @@
+         NULL, NULL, FALSE, 0, NULL, curDir, &si, &pi);
+   }
+   if (result == 0)
+-    return ::GetLastError();
++    return GetLastError();
+   ::CloseHandle(pi.hThread);
+   _handle = pi.hProcess;
+   return 0;
+diff -urN old/CPP/Windows/SecurityUtils.cpp 7z-src/CPP/Windows/SecurityUtils.cpp
+--- old/CPP/Windows/SecurityUtils.cpp	2023-03-18 09:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/SecurityUtils.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -17,7 +17,7 @@
+       accountName.GetBuf(0), &accountNameSize,
+       domainName.GetBuf(0), &domainNameSize, sidNameUse))
+   {
+-    if (::GetLastError() != ERROR_INSUFFICIENT_BUFFER)
++    if (GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+       return false;
+   }
+   DWORD accountNameSize2 = accountNameSize, domainNameSize2 = domainNameSize;
+@@ -90,7 +90,7 @@
+     #endif
+         (NULL, accountName, NULL, &sidLen, NULL, &domainLen, &sidNameUse))
+   {
+-    if (::GetLastError() == ERROR_INSUFFICIENT_BUFFER)
++    if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
+     {
+       const PSID pSid = ::HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sidLen);
+       LPWSTR domainName = (LPWSTR)::HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, (domainLen + 1) * sizeof(WCHAR));
+diff -urN old/CPP/Windows/Synchronization.h 7z-src/CPP/Windows/Synchronization.h
+--- old/CPP/Windows/Synchronization.h	2024-03-03 09:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/Synchronization.h	2026-05-24 08:28:02.483516436 +0000
+@@ -34,14 +34,14 @@
+     _object = ::CreateEvent(sa, BoolToBOOL(manualReset), BoolToBOOL(initiallyOwn), name);
+     if (name == NULL && _object != NULL)
+       return 0;
+-    return ::GetLastError();
++    return GetLastError();
+   }
+   WRes Open(DWORD desiredAccess, bool inheritHandle, LPCTSTR name)
+   {
+     _object = ::OpenEvent(desiredAccess, BoolToBOOL(inheritHandle), name);
+     if (_object != NULL)
+       return 0;
+-    return ::GetLastError();
++    return GetLastError();
+   }
+   #endif
+ 
+@@ -95,7 +95,7 @@
+ {
+ public:
+   WRes Lock(DWORD timeoutInterval = INFINITE)
+-    { return (::WaitForSingleObject(_handle, timeoutInterval) == WAIT_OBJECT_0 ? 0 : ::GetLastError()); }
++    { return (::WaitForSingleObject(_handle, timeoutInterval) == WAIT_OBJECT_0 ? 0 : GetLastError()); }
+ };
+ 
+ class CMutex: public CObject
+@@ -106,7 +106,7 @@
+     _handle = ::CreateMutex(sa, BoolToBOOL(initiallyOwn), name);
+     if (name == NULL && _handle != 0)
+       return 0;
+-    return ::GetLastError();
++    return GetLastError();
+   }
+   #ifndef UNDER_CE
+   WRes Open(DWORD desiredAccess, bool inheritHandle, LPCTSTR name)
+@@ -114,12 +114,12 @@
+     _handle = ::OpenMutex(desiredAccess, BoolToBOOL(inheritHandle), name);
+     if (_handle != 0)
+       return 0;
+-    return ::GetLastError();
++    return GetLastError();
+   }
+   #endif
+   WRes Release()
+   {
+-    return ::ReleaseMutex(_handle) ? 0 : ::GetLastError();
++    return ::ReleaseMutex(_handle) ? 0 : GetLastError();
+   }
+ };
+ 
+diff -urN old/CPP/Windows/Window.cpp 7z-src/CPP/Windows/Window.cpp
+--- old/CPP/Windows/Window.cpp	2023-01-01 08:00:00.000000000 +0000
++++ 7z-src/CPP/Windows/Window.cpp	2026-05-24 08:28:02.483516436 +0000
+@@ -116,7 +116,7 @@
+   s.Empty();
+   unsigned len = (unsigned)GetTextLength();
+   if (len == 0)
+-    return (::GetLastError() == ERROR_SUCCESS);
++    return (GetLastError() == ERROR_SUCCESS);
+   TCHAR *p = s.GetBuf(len);
+   {
+     const unsigned len2 = (unsigned)GetText(p, (int)(len + 1));
+@@ -125,7 +125,7 @@
+   }
+   s.ReleaseBuf_CalcLen(len);
+   if (len == 0)
+-    return (::GetLastError() == ERROR_SUCCESS);
++    return (GetLastError() == ERROR_SUCCESS);
+   return true;
+ }
+ 
+@@ -137,7 +137,7 @@
+     s.Empty();
+     unsigned len = (unsigned)GetWindowTextLengthW(_window);
+     if (len == 0)
+-      return (::GetLastError() == ERROR_SUCCESS);
++      return (GetLastError() == ERROR_SUCCESS);
+     wchar_t *p = s.GetBuf(len);
+     {
+       const unsigned len2 = (unsigned)GetWindowTextW(_window, p, (int)(len + 1));
+@@ -146,7 +146,7 @@
+     }
+     s.ReleaseBuf_CalcLen(len);
+     if (len == 0)
+-      return (::GetLastError() == ERROR_SUCCESS);
++      return (GetLastError() == ERROR_SUCCESS);
+     return true;
+   }
+   CSysString sysString;
