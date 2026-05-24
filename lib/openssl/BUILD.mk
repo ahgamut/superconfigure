@@ -1,15 +1,16 @@
 
 
-OPENSSL_SRC := https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1u.tar.gz 
+OPENSSL_SRC := https://github.com/openssl/openssl/archive/refs/tags/openssl-3.6.2.tar.gz 
 
 # no $$ here because we're not calling the AUTOTOOLS_BUILD function
 
-OPENSSL_CONFIG_ARGS = no-shared no-asm\
+OPENSSL_CONFIG_ARGS = no-shared \
     no-dso no-dynamic-engine no-engine no-pic\
-    no-autoalginit no-autoerrinit\
+	no-async no-secure-memory\
     --with-rand-seed=getrandom\
     --openssldir=$(COSMOS)/share/ssl\
     CFLAGS="-Os"\
+	--libdir=$(COSMOS)/lib\
     --prefix=$(COSMOS) linux-$(ARCH)
 
 $(eval $(call DOWNLOAD_SOURCE,lib/openssl,$(OPENSSL_SRC)))

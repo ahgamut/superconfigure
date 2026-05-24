@@ -1,15 +1,27 @@
-diff -r --unified openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c
---- openssl-OpenSSL_1_1_1ua/crypto/rand/rand_unix.c	2023-05-30 12:42:39.000000000 +0000
-+++ openssl-OpenSSL_1_1_1u/crypto/rand/rand_unix.c	2023-12-05 02:26:27.205077467 +0000
-@@ -401,8 +401,9 @@
- #  endif
+diff -urN openssl-openssl-3.6.2/providers/implementations/rands/seeding/rand_unix.c other/providers/implementations/rands/seeding/rand_unix.c
+--- openssl-openssl-3.6.2/providers/implementations/rands/seeding/rand_unix.c	2026-04-07 12:17:57.000000000 +0000
++++ -	2026-05-24 01:41:01.483677818 +0000
+@@ -46,6 +46,10 @@
+ #endif
+ #endif
  
-     /* Linux supports this since version 3.17 */
--#  if defined(__linux) && defined(__NR_getrandom)
--    return syscall(__NR_getrandom, buf, buflen, 0);
-+#  if 1 || defined(__linux) && defined(__NR_getrandom)
-+#pragma message "using getrandom function"
++#if defined(__COSMOPOLITAN__)
++#include "libc/calls/calls.h"
++#endif
++
+ #if (defined(OPENSSL_SYS_UNIX) && !defined(OPENSSL_SYS_VXWORKS)) \
+     || defined(__DJGPP__)
+ #include <sys/types.h>
+@@ -387,8 +391,11 @@
+ #endif
+ #endif /* !__DragonFly__ && !__NetBSD__ && !__FreeBSD__ */
+ 
++#if defined(__COSMOPOLITAN__)
++#pragma message "using cosmo getrandom"
 +    return getrandom(buf, buflen, 0);
- #  elif (defined(__FreeBSD__) || defined(__NetBSD__)) && defined(KERN_ARND)
-     return sysctl_random(buf, buflen);
- #  else
+     /* Linux supports this since version 3.17 */
+-#if defined(__linux) && defined(__NR_getrandom)
++#elif defined(__linux) && defined(__NR_getrandom)
+     return syscall(__NR_getrandom, buf, buflen, 0);
+ #elif (defined(__DragonFly__) && __DragonFly_version >= 500700) \
+     || (defined(__NetBSD__) && __NetBSD_Version >= 1000000000)  \
