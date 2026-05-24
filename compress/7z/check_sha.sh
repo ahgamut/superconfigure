@@ -12,9 +12,13 @@ case "$SRC_FILE" in
         cd 7z-src
         tar xf ../sources.tar.xz
         chmod 666 $(find . -name '*.c')
+        dos2unix $(find . -name '*.c')
         chmod 666 $(find . -name '*.cpp')
+        dos2unix $(find . -name '*.cpp')
         chmod 666 $(find . -name '*.h')
+        dos2unix $(find . -name '*.h')
         chmod 666 $(find . -name '*.mak')
+        dos2unix $(find . -name '*.mak')
         ;;
     * )
         echo "unable to extract files"
