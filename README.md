@@ -60,8 +60,6 @@ bash ./.github/scripts/cosmo
 
 * to build `bash`, `less`, `find`, `tree`, and GNU coreutils run `make -j4 cli`
 * to build `vim`, `emacs`, and `nano` run `make -j4 editor`
-* to build CPython3.11.4 with [`datasette` 1.0.0a6][datasette] run `make -j4
-  datasette`
 * to build the GCC collection for `x86_64` run `make -j4 x86_64-gcc`
 
 you can run `./.github/scripts/collectzip` to store all build results in a
