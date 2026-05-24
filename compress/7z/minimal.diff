@@ -1,3 +1,40 @@
+--- 7z-src/CPP/Build.mak	2026-05-24 08:43:36.098286119 +0000
++++ -	2026-05-24 09:10:14.272408170 +0000
+@@ -74,11 +74,9 @@
+ !IF "$(CC)" == "clang-cl"
+ 
+ CFLAGS = $(CFLAGS) \
+-  -Werror \
+   -Wall \
+   -Wextra \
+-  -Weverything \
+-  -Wfatal-errors \
++  -Weverything
+ 
+ !ENDIF
+ 
+--- 7z-src/CPP/7zip/7zip_gcc.mak	2026-05-24 08:43:36.110286103 +0000
++++ -	2026-05-24 09:10:42.307582718 +0000
+@@ -24,7 +24,7 @@
+ 
+ 
+ ifneq ($(CC), xlc)
+-CFLAGS_WARN_WALL = -Werror -Wall -Wextra
++CFLAGS_WARN_WALL =
+ endif
+ 
+ # for object file
+--- 7z-src/C/7zip_gcc_c.mak	2026-05-24 08:43:36.110286103 +0000
++++ -	2026-05-24 09:10:50.905192895 +0000
+@@ -14,7 +14,7 @@
+ PROGPATH_STATIC = $(O)/$(PROG)s
+ 
+ ifneq ($(CC), xlc)
+-CFLAGS_WARN_WALL = -Wall -Werror -Wextra
++CFLAGS_WARN_WALL =
+ endif
+ 
+ # for object file
 diff -urN old/C/7zip_gcc_c.mak 7z-src/C/7zip_gcc_c.mak
 --- old/C/7zip_gcc_c.mak	2025-10-23 07:00:00.000000000 +0000
 +++ 7z-src/C/7zip_gcc_c.mak	2026-05-24 08:28:02.475516446 +0000
