@@ -8,7 +8,8 @@ sudo apt-get install -y ca-certificates libssl-dev\
     qemu-user-static\
     texinfo groff libtool\
     cmake ninja-build bison flex zip lzip\
-    pkg-config build-essential autoconf re2c
+    pkg-config build-essential autoconf re2c\
+    dos2unix patch
 
 # github workspace can be the build folder,
 # now that /zip stuff is not needed to run
