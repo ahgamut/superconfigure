@@ -37,7 +37,6 @@ CFLAGS_WARN_GCC_7 = $(CFLAGS_WARN_GCC_6)\
   -Wdangling-else \
   -Wduplicated-branches \
   -Wimplicit-fallthrough=5 \
-  -Wint-in-bool-context \
   -Wmisleading-indentation
 
 CFLAGS_WARN_GCC_8 = $(CFLAGS_WARN_GCC_7)\
