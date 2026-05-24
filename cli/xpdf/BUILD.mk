@@ -2,6 +2,7 @@ XPDF_SRC := https://dl.xpdfreader.com/old/xpdf-4.05.tar.gz
 XPDF_DEPS := lib/libpng lib/freetype
 
 XPDF_CONFIG_ARGS = -DCMAKE_BUILD_SHARED=OFF\
+	-DCMAKE_POLICY_MINIMUM_VERSION=3.5\
     -DCMAKE_BUILD_STATIC=ON\
 	-DCMAKE_CXX_FLAGS="-std=c++20"\
 	-DC_INCLUDE_DIRS="$$(COSMOS)/include"\
