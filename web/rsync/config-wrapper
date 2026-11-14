@@ -12,4 +12,4 @@ export OPENSSL_LIBS="-lssl -lcrypto"
     --disable-acl-support --disable-xattr-support\
     --disable-locale --disable-md2man\
     --disable-roll-simd --disable-md5-asm --disable-roll-asm\
-    CFLAGS="-Os"
+    CFLAGS="-Os -std=gnu17"

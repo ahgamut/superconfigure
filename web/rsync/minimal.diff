@@ -1,6 +1,56 @@
-diff -r --unified rsync-3.2.7a/io.c rsync-3.2.7/io.c
---- rsync-3.2.7a/io.c	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/io.c	2023-12-05 00:01:38.733038239 +0000
+diff -r --unified rsync-3.2.7/hlink.c rsync-3.2.7a/hlink.c
+--- rsync-3.2.7/hlink.c	2022-10-21 08:57:22.000000000 +0800
++++ rsync-3.2.7a/hlink.c	2026-11-14 22:33:56.769559690 +0800
+@@ -97,17 +97,19 @@
+ 	hashtable_destroy(dev_tbl);
+ }
+ 
+-static int hlink_compare_gnum(int *int1, int *int2)
++static int hlink_compare_gnum(const void *p1, const void *p2)
+ {
+-	struct file_struct *f1 = hlink_flist->sorted[*int1];
+-	struct file_struct *f2 = hlink_flist->sorted[*int2];
++	const int32 int1 = *(const int32 *)p1;
++	const int32 int2 = *(const int32 *)p2;
++	struct file_struct *f1 = hlink_flist->sorted[int1];
++	struct file_struct *f2 = hlink_flist->sorted[int2];
+ 	int32 gnum1 = F_HL_GNUM(f1);
+ 	int32 gnum2 = F_HL_GNUM(f2);
+ 
+ 	if (gnum1 != gnum2)
+ 		return gnum1 > gnum2 ? 1 : -1;
+ 
+-	return *int1 > *int2 ? 1 : -1;
++	return int1 > int2 ? 1 : int1 < int2 ? -1 : 0;
+ }
+ 
+ static void match_gnums(int32 *ndx_list, int ndx_count)
+@@ -117,7 +119,7 @@
+ 	struct ht_int32_node *node = NULL;
+ 	int32 gnum, gnum_next;
+ 
+-	qsort(ndx_list, ndx_count, sizeof ndx_list[0], (int (*)()) hlink_compare_gnum);
++	qsort(ndx_list, ndx_count, sizeof ndx_list[0], hlink_compare_gnum);
+ 
+ 	for (from = 0; from < ndx_count; from++) {
+ 		file = hlink_flist->sorted[ndx_list[from]];
+diff -r --unified rsync-3.2.7/io.c rsync-3.2.7a/io.c
+--- rsync-3.2.7/io.c	2022-10-21 08:57:22.000000000 +0800
++++ rsync-3.2.7a/io.c	2026-11-14 22:13:39.727719197 +0800
+@@ -314,12 +314,12 @@
+ 
+ 	assert(fd != iobuf.out_fd);
+ 
++	write_failed:
+ 	n = write(fd, buf, len);
+ 	if ((size_t)n == len)
+ 		return;
+ 	if (n < 0) {
+ 		if (errno != EINTR && errno != EWOULDBLOCK && errno != EAGAIN) {
+-		  write_failed:
+ 			rsyserr(FERROR, errno,
+ 				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
+ 				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
 @@ -965,7 +965,7 @@
  {
  	char *hdr;
@@ -19,9 +69,9 @@ diff -r --unified rsync-3.2.7a/io.c rsync-3.2.7/io.c
  	case MSG_ERROR:
  	case MSG_ERROR_XFER:
  	case MSG_WARNING:
-diff -r --unified rsync-3.2.7a/log.c rsync-3.2.7/log.c
---- rsync-3.2.7a/log.c	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/log.c	2023-12-05 00:01:38.733038239 +0000
+diff -r --unified rsync-3.2.7/log.c rsync-3.2.7a/log.c
+--- rsync-3.2.7/log.c	2022-10-21 08:57:22.000000000 +0800
++++ rsync-3.2.7a/log.c	2026-11-14 22:13:55.339426716 +0800
 @@ -333,7 +333,7 @@
  			if (msg == MSG_ERROR)
  				msg = MSG_ERROR_XFER;
@@ -31,9 +81,9 @@ diff -r --unified rsync-3.2.7a/log.c rsync-3.2.7/log.c
  		}
  		/* Pass the message to the non-server side. */
  		if (send_msg(msg, buf, len, !is_utf8))
-diff -r --unified rsync-3.2.7a/rsync.h rsync-3.2.7/rsync.h
---- rsync-3.2.7a/rsync.h	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/rsync.h	2023-12-05 00:01:38.733038239 +0000
+diff -r --unified rsync-3.2.7/rsync.h rsync-3.2.7a/rsync.h
+--- rsync-3.2.7/rsync.h	2022-10-21 08:57:22.000000000 +0800
++++ rsync-3.2.7a/rsync.h	2026-11-14 22:14:09.170980654 +0800
 @@ -261,7 +261,7 @@
   * values must all be present here with identical numbers. */
  enum msgcode {
@@ -43,19 +93,15 @@ diff -r --unified rsync-3.2.7a/rsync.h rsync-3.2.7/rsync.h
  	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
  	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
  	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */
---- rsync-3.2.7/io.c	2024-09-19 09:39:41.860270653 +0000
-+++ -	2024-09-19 09:41:40.411142872 +0000
-@@ -314,12 +314,12 @@
- 
- 	assert(fd != iobuf.out_fd);
- 
-+   write_failed:
- 	n = write(fd, buf, len);
- 	if ((size_t)n == len)
- 		return;
- 	if (n < 0) {
- 		if (errno != EINTR && errno != EWOULDBLOCK && errno != EAGAIN) {
--		  write_failed:
- 			rsyserr(FERROR, errno,
- 				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
- 				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
+diff -r --unified rsync-3.2.7/syscall.c rsync-3.2.7a/syscall.c
+--- rsync-3.2.7/syscall.c	2022-10-21 08:57:22.000000000 +0800
++++ rsync-3.2.7a/syscall.c	2026-11-14 22:14:24.311742921 +0800
+@@ -391,7 +391,7 @@
+ #if !SIZEOF_OFF64_T
+ 	OFF_T lseek64();
+ #else
+-	off64_t lseek64();
++	off64_t lseek64(int, off64_t, int);
+ #endif
+ 	return lseek64(fd, offset, whence);
+ #else
