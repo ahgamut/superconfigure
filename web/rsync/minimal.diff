@@ -1,6 +1,6 @@
-diff -r --unified rsync-3.3.0/hlink.c rsync-3.3.0a/hlink.c
---- rsync-3.3.0/hlink.c	2024-04-07 00:30:21.000000000 +0800
-+++ rsync-3.3.0a/hlink.c	2026-11-14 23:09:32.000000000 +0800
+diff -r --unified rsync-3.4.4/hlink.c rsync-3.4.4a/hlink.c
+--- rsync-3.4.4/hlink.c	2026-05-20 08:01:22.000000000 +0800
++++ rsync-3.4.4a/hlink.c	2026-11-14 23:16:11.000000000 +0800
 @@ -97,17 +97,19 @@
  	hashtable_destroy(dev_tbl);
  }
@@ -29,15 +29,15 @@ diff -r --unified rsync-3.3.0/hlink.c rsync-3.3.0a/hlink.c
  	struct ht_int32_node *node = NULL;
  	int32 gnum, gnum_next;
  
--	qsort(ndx_list, ndx_count, sizeof ndx_list[0], (int (*)()) hlink_compare_gnum);
+-	qsort(ndx_list, ndx_count, sizeof ndx_list[0], (int (*)(const void*, const void*))hlink_compare_gnum);
 +	qsort(ndx_list, ndx_count, sizeof ndx_list[0], hlink_compare_gnum);
  
  	for (from = 0; from < ndx_count; from++) {
  		file = hlink_flist->sorted[ndx_list[from]];
-diff -r --unified rsync-3.3.0/io.c rsync-3.3.0a/io.c
---- rsync-3.3.0/io.c	2024-04-07 00:30:21.000000000 +0800
-+++ rsync-3.3.0a/io.c	2026-11-14 23:09:55.000000000 +0800
-@@ -314,12 +314,12 @@
+diff -r --unified rsync-3.4.4/io.c rsync-3.4.4a/io.c
+--- rsync-3.4.4/io.c	2026-06-06 13:13:04.000000000 +0800
++++ rsync-3.4.4a/io.c	2026-11-14 23:17:10.000000000 +0800
+@@ -315,12 +315,12 @@
  
  	assert(fd != iobuf.out_fd);
  
@@ -51,7 +51,7 @@ diff -r --unified rsync-3.3.0/io.c rsync-3.3.0a/io.c
  			rsyserr(FERROR, errno,
  				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
  				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
-@@ -965,7 +965,7 @@
+@@ -966,7 +966,7 @@
  {
  	char *hdr;
  	size_t needed, pos;
@@ -60,7 +60,7 @@ diff -r --unified rsync-3.3.0/io.c rsync-3.3.0a/io.c
  
  	if (!OUT_MULTIPLEXED)
  		return 0;
-@@ -1633,7 +1633,7 @@
+@@ -1655,7 +1655,7 @@
  		if (tag == MSG_ERROR_SOCKET)
  			msgs2stderr = 1;
  		/* FALL THROUGH */
@@ -69,9 +69,9 @@ diff -r --unified rsync-3.3.0/io.c rsync-3.3.0a/io.c
  	case MSG_ERROR:
  	case MSG_ERROR_XFER:
  	case MSG_WARNING:
-diff -r --unified rsync-3.3.0/log.c rsync-3.3.0a/log.c
---- rsync-3.3.0/log.c	2024-04-07 00:30:21.000000000 +0800
-+++ rsync-3.3.0a/log.c	2026-11-14 23:10:05.000000000 +0800
+diff -r --unified rsync-3.4.4/log.c rsync-3.4.4a/log.c
+--- rsync-3.4.4/log.c	2026-05-20 08:01:22.000000000 +0800
++++ rsync-3.4.4a/log.c	2026-11-14 23:17:23.000000000 +0800
 @@ -333,7 +333,7 @@
  			if (msg == MSG_ERROR)
  				msg = MSG_ERROR_XFER;
@@ -81,10 +81,10 @@ diff -r --unified rsync-3.3.0/log.c rsync-3.3.0a/log.c
  		}
  		/* Pass the message to the non-server side. */
  		if (send_msg(msg, buf, len, !is_utf8))
-diff -r --unified rsync-3.3.0/rsync.h rsync-3.3.0a/rsync.h
---- rsync-3.3.0/rsync.h	2024-04-07 00:30:21.000000000 +0800
-+++ rsync-3.3.0a/rsync.h	2026-11-14 23:10:14.000000000 +0800
-@@ -261,7 +261,7 @@
+diff -r --unified rsync-3.4.4/rsync.h rsync-3.4.4a/rsync.h
+--- rsync-3.4.4/rsync.h	2026-05-20 08:01:22.000000000 +0800
++++ rsync-3.4.4a/rsync.h	2026-11-14 23:17:44.000000000 +0800
+@@ -285,7 +285,7 @@
   * values must all be present here with identical numbers. */
  enum msgcode {
  	MSG_DATA=0,	/* raw data on the multiplexed stream */
@@ -93,15 +93,3 @@ diff -r --unified rsync-3.3.0/rsync.h rsync-3.3.0a/rsync.h
  	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
  	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
  	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */
-diff -r --unified rsync-3.3.0/syscall.c rsync-3.3.0a/syscall.c
---- rsync-3.3.0/syscall.c	2024-04-07 00:30:21.000000000 +0800
-+++ rsync-3.3.0a/syscall.c	2026-11-14 23:10:23.000000000 +0800
-@@ -391,7 +391,7 @@
- #if !SIZEOF_OFF64_T
- 	OFF_T lseek64();
- #else
--	off64_t lseek64();
-+	off64_t lseek64(int, off64_t, int);
- #endif
- 	return lseek64(fd, offset, whence);
- #else

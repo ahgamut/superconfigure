@@ -1,5 +1,5 @@
 
-RSYNC_SRC := https://github.com/RsyncProject/rsync/archive/refs/tags/v3.3.0.tar.gz
+RSYNC_SRC := https://github.com/RsyncProject/rsync/releases/download/v3.4.4/rsync-3.4.4.tar.gz
 RSYNC_DEPS := lib/openssl cosmo-repo/base cosmo-repo/compress
 
 $(eval $(call DOWNLOAD_SOURCE,web/rsync,$(RSYNC_SRC)))
