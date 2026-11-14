@@ -1,45 +1,9 @@
-diff -r --unified rsync-3.4.4/hlink.c rsync-3.4.4a/hlink.c
---- rsync-3.4.4/hlink.c	2026-05-20 08:01:22.000000000 +0800
-+++ rsync-3.4.4a/hlink.c	2026-11-14 23:16:11.000000000 +0800
-@@ -97,17 +97,19 @@
- 	hashtable_destroy(dev_tbl);
- }
- 
--static int hlink_compare_gnum(int *int1, int *int2)
-+static int hlink_compare_gnum(const void *p1, const void *p2)
- {
--	struct file_struct *f1 = hlink_flist->sorted[*int1];
--	struct file_struct *f2 = hlink_flist->sorted[*int2];
-+	const int32 int1 = *(const int32 *)p1;
-+	const int32 int2 = *(const int32 *)p2;
-+	struct file_struct *f1 = hlink_flist->sorted[int1];
-+	struct file_struct *f2 = hlink_flist->sorted[int2];
- 	int32 gnum1 = F_HL_GNUM(f1);
- 	int32 gnum2 = F_HL_GNUM(f2);
- 
- 	if (gnum1 != gnum2)
- 		return gnum1 > gnum2 ? 1 : -1;
- 
--	return *int1 > *int2 ? 1 : -1;
-+	return int1 > int2 ? 1 : int1 < int2 ? -1 : 0;
- }
- 
- static void match_gnums(int32 *ndx_list, int ndx_count)
-@@ -117,7 +119,7 @@
- 	struct ht_int32_node *node = NULL;
- 	int32 gnum, gnum_next;
- 
--	qsort(ndx_list, ndx_count, sizeof ndx_list[0], (int (*)(const void*, const void*))hlink_compare_gnum);
-+	qsort(ndx_list, ndx_count, sizeof ndx_list[0], hlink_compare_gnum);
- 
- 	for (from = 0; from < ndx_count; from++) {
- 		file = hlink_flist->sorted[ndx_list[from]];
-diff -r --unified rsync-3.4.4/io.c rsync-3.4.4a/io.c
---- rsync-3.4.4/io.c	2026-06-06 13:13:04.000000000 +0800
-+++ rsync-3.4.4a/io.c	2026-11-14 23:17:10.000000000 +0800
-@@ -315,12 +315,12 @@
- 
- 	assert(fd != iobuf.out_fd);
+diff -r --unified rsync-3.5.2/io.c rsync-3.5.2a/io.c
+--- rsync-3.5.2/io.c	2026-10-15 08:59:02.000000000 +0800
++++ rsync-3.5.2a/io.c	2026-11-14 23:33:16.000000000 +0800
+@@ -393,12 +393,12 @@
+ 	if (got_sigusr2)	/* receiver told to wrap up before this (batch) write */
+ 		receive_sigusr2();
  
 +	write_failed:
  	n = write(fd, buf, len);
@@ -51,8 +15,8 @@ diff -r --unified rsync-3.4.4/io.c rsync-3.4.4a/io.c
  			rsyserr(FERROR, errno,
  				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
  				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
-@@ -966,7 +966,7 @@
- {
+@@ -1090,7 +1090,7 @@
+ 	static int growing_msg_buffer;
  	char *hdr;
  	size_t needed, pos;
 -	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO);
@@ -60,7 +24,7 @@ diff -r --unified rsync-3.4.4/io.c rsync-3.4.4a/io.c
  
  	if (!OUT_MULTIPLEXED)
  		return 0;
-@@ -1655,7 +1655,7 @@
+@@ -1870,7 +1870,7 @@
  		if (tag == MSG_ERROR_SOCKET)
  			msgs2stderr = 1;
  		/* FALL THROUGH */
@@ -69,10 +33,10 @@ diff -r --unified rsync-3.4.4/io.c rsync-3.4.4a/io.c
  	case MSG_ERROR:
  	case MSG_ERROR_XFER:
  	case MSG_WARNING:
-diff -r --unified rsync-3.4.4/log.c rsync-3.4.4a/log.c
---- rsync-3.4.4/log.c	2026-05-20 08:01:22.000000000 +0800
-+++ rsync-3.4.4a/log.c	2026-11-14 23:17:23.000000000 +0800
-@@ -333,7 +333,7 @@
+diff -r --unified rsync-3.5.2/log.c rsync-3.5.2a/log.c
+--- rsync-3.5.2/log.c	2026-10-15 08:59:02.000000000 +0800
++++ rsync-3.5.2a/log.c	2026-11-14 23:33:29.000000000 +0800
+@@ -440,7 +440,7 @@
  			if (msg == MSG_ERROR)
  				msg = MSG_ERROR_XFER;
  			else if (msg == MSG_WARNING)
@@ -81,10 +45,10 @@ diff -r --unified rsync-3.4.4/log.c rsync-3.4.4a/log.c
  		}
  		/* Pass the message to the non-server side. */
  		if (send_msg(msg, buf, len, !is_utf8))
-diff -r --unified rsync-3.4.4/rsync.h rsync-3.4.4a/rsync.h
---- rsync-3.4.4/rsync.h	2026-05-20 08:01:22.000000000 +0800
-+++ rsync-3.4.4a/rsync.h	2026-11-14 23:17:44.000000000 +0800
-@@ -285,7 +285,7 @@
+diff -r --unified rsync-3.5.2/rsync.h rsync-3.5.2a/rsync.h
+--- rsync-3.5.2/rsync.h	2026-11-03 16:11:59.000000000 +0800
++++ rsync-3.5.2a/rsync.h	2026-11-14 23:33:41.000000000 +0800
+@@ -293,7 +293,7 @@
   * values must all be present here with identical numbers. */
  enum msgcode {
  	MSG_DATA=0,	/* raw data on the multiplexed stream */
