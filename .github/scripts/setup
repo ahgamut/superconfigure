@@ -1,29 +1,83 @@
 #!/usr/bin/env bash
 
-# update?
-sudo apt update
+install_dep(){
+    # Void
+    if command -v xbps-uhelper &>/dev/null; then
+        # sudo xbps-install -Su
+        sudo xbps-install -S libssl3 base-devel\
+            qemu-user\
+            cmake ninja zip re2c\
+            dos2unix patch\
+            binfmt-support
+        sudo update-binfmts --enable # enable required kernel module
+    # Alpine, place this first as BusyBox grep does not support "--extended-regexp"
+    elif [[ -f /etc/alpine-release ]]; then
+        # doas apk update
+        doas apk add --upgrade bash build-base gcompat libssl3 libstdc++\
+            qemu-aarch64 qemu-x86_64 qemu-openrc openrc\
+            cmake ninja-build zip re2c\
+            dos2unix patch
+        doas rc-update add binfmt
+        doas rc-update add procfs boot
+        doas rc-service procfs start
+        doas rc-service binfmt start
+    # Debian/Devuan/Ubuntu
+    elif grep --quiet --ignore-case --extended-regexp "debian|devuan|ubuntu" /etc/os-release; then
+        # sudo apt update
+        sudo apt install -y build-essential ca-certificates libssl-dev\
+            qemu-user-static\
+            texinfo groff libtool\
+            cmake ninja-build bison flex zip lzip\
+            pkg-config autoconf re2c\
+            dos2unix patch
+    # RHEL/CentOS/Fedora/Rocky/Alma
+    elif grep --quiet --ignore-case --extended-regexp "rhel|centos|fedora|rocky|alma" /etc/os-release; then
+        # sudo dnf update
+        sudo dnf install binutils ca-certificates make openssl\
+            qemu-kvm\
+            texinfo groff libtool\
+            cmake ninja-build bison flex zip lzip\
+            pkgconf pkgconf-pkg-config autoconf re2c\
+            dos2unix patch
+        sudo mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
+    # Arch/Artix/Cachy/Manjaro, keep this in the end to avoid mismatch with keywords like "architecture"
+    elif grep --quiet --ignore-case --extended-regexp "arch|artix|cachy|manjaro" /etc/os-release; then
+        # sudo pacman -Su
+        sudo pacman -S --needed --noconfirm base-devel openssl openssl-3\
+            qemu-user-static qemu-user-static-binfmt\
+            texinfo groff libtool\
+            cmake ninja bison flex zip lzip\
+            pkgconf autoconf re2c\
+            dos2unix patch
+        sudo mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
+    else
+        echo "Unsupported distro."
+        exit 1
+    fi
+    echo "Dependencies installed."
+}
 
-# ssl certs
-sudo apt-get install -y ca-certificates libssl-dev\
-    qemu-user-static\
-    texinfo groff libtool\
-    cmake ninja-build bison flex zip lzip\
-    pkg-config build-essential autoconf re2c\
-    dos2unix patch
+install_dep
 
 # github workspace can be the build folder,
 # now that /zip stuff is not needed to run
-cd "$GITHUB_WORKSPACE" || exit
+if [ -n "${GITHUB_ACTIONS:-}" ]; then
+    cd "$GITHUB_WORKSPACE" || exit
+fi
 
 # cosmo
-git clone https://github.com/jart/cosmopolitan --depth=1
+if [ ! -d cosmopolitan ]; then
+    git clone https://github.com/jart/cosmopolitan --depth=1
+fi
 
 if [ "$(uname -m)" = "aarch64" ]; then
   APE_EXT=aarch64
 else
   APE_EXT=elf
 fi
-sudo cp cosmopolitan/build/bootstrap/ape.$APE_EXT /usr/bin/ape
-sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+sudo install cosmopolitan/build/bootstrap/ape.${APE_EXT} /usr/bin/ape
+# this requires binfmt_misc kmod
+echo ':APE:M::MZqFpD::/usr/bin/ape:' | sudo tee -a "/proc/sys/fs/binfmt_misc/register"
 
+# should have "APE" in output
 ls /proc/sys/fs/binfmt_misc/
