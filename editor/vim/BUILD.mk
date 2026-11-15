@@ -1,5 +1,5 @@
 
-VIM_SRC := https://github.com/vim/vim/archive/refs/tags/v9.0.1670.tar.gz 
+VIM_SRC := https://github.com/vim/vim/archive/refs/tags/v9.2.1345.tar.gz
 
 $(eval $(call DOWNLOAD_SOURCE,editor/vim,$(VIM_SRC)))
 $(eval $(call SPECIFY_DEPS,editor/vim,lib/ncurses lib/readline))
