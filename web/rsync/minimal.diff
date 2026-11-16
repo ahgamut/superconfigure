@@ -1,55 +1,11 @@
-diff -r --unified rsync-3.2.7a/io.c rsync-3.2.7/io.c
---- rsync-3.2.7a/io.c	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/io.c	2023-12-05 00:01:38.733038239 +0000
-@@ -965,7 +965,7 @@
- {
- 	char *hdr;
- 	size_t needed, pos;
--	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO);
-+	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO2);
+diff -r --unified rsync-3.5.2/io.c rsync-3.5.2a/io.c
+--- rsync-3.5.2/io.c	2026-10-15 08:59:02.000000000 +0800
++++ rsync-3.5.2a/io.c	2026-11-14 23:33:16.000000000 +0800
+@@ -393,12 +393,12 @@
+ 	if (got_sigusr2)	/* receiver told to wrap up before this (batch) write */
+ 		receive_sigusr2();
  
- 	if (!OUT_MULTIPLEXED)
- 		return 0;
-@@ -1633,7 +1633,7 @@
- 		if (tag == MSG_ERROR_SOCKET)
- 			msgs2stderr = 1;
- 		/* FALL THROUGH */
--	case MSG_INFO:
-+	case MSG_INFO2:
- 	case MSG_ERROR:
- 	case MSG_ERROR_XFER:
- 	case MSG_WARNING:
-diff -r --unified rsync-3.2.7a/log.c rsync-3.2.7/log.c
---- rsync-3.2.7a/log.c	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/log.c	2023-12-05 00:01:38.733038239 +0000
-@@ -333,7 +333,7 @@
- 			if (msg == MSG_ERROR)
- 				msg = MSG_ERROR_XFER;
- 			else if (msg == MSG_WARNING)
--				msg = MSG_INFO;
-+				msg = MSG_INFO2;
- 		}
- 		/* Pass the message to the non-server side. */
- 		if (send_msg(msg, buf, len, !is_utf8))
-diff -r --unified rsync-3.2.7a/rsync.h rsync-3.2.7/rsync.h
---- rsync-3.2.7a/rsync.h	2022-10-21 00:57:22.000000000 +0000
-+++ rsync-3.2.7/rsync.h	2023-12-05 00:01:38.733038239 +0000
-@@ -261,7 +261,7 @@
-  * values must all be present here with identical numbers. */
- enum msgcode {
- 	MSG_DATA=0,	/* raw data on the multiplexed stream */
--	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO=FINFO, /* remote logging */
-+	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO2=FINFO, /* remote logging */
- 	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
- 	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
- 	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */
---- rsync-3.2.7/io.c	2024-09-19 09:39:41.860270653 +0000
-+++ -	2024-09-19 09:41:40.411142872 +0000
-@@ -314,12 +314,12 @@
- 
- 	assert(fd != iobuf.out_fd);
- 
-+   write_failed:
++	write_failed:
  	n = write(fd, buf, len);
  	if ((size_t)n == len)
  		return;
@@ -59,3 +15,45 @@ diff -r --unified rsync-3.2.7a/rsync.h rsync-3.2.7/rsync.h
  			rsyserr(FERROR, errno,
  				"safe_write failed to write %" SIZE_T_FMT_MOD "d bytes to %s",
  				(SIZE_T_FMT_CAST)len, what_fd_is(fd));
+@@ -1090,7 +1090,7 @@
+ 	static int growing_msg_buffer;
+ 	char *hdr;
+ 	size_t needed, pos;
+-	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO);
++	BOOL want_debug = DEBUG_GTE(IO, 1) && convert >= 0 && (msgs2stderr == 1 || code != MSG_INFO2);
+ 
+ 	if (!OUT_MULTIPLEXED)
+ 		return 0;
+@@ -1870,7 +1870,7 @@
+ 		if (tag == MSG_ERROR_SOCKET)
+ 			msgs2stderr = 1;
+ 		/* FALL THROUGH */
+-	case MSG_INFO:
++	case MSG_INFO2:
+ 	case MSG_ERROR:
+ 	case MSG_ERROR_XFER:
+ 	case MSG_WARNING:
+diff -r --unified rsync-3.5.2/log.c rsync-3.5.2a/log.c
+--- rsync-3.5.2/log.c	2026-10-15 08:59:02.000000000 +0800
++++ rsync-3.5.2a/log.c	2026-11-14 23:33:29.000000000 +0800
+@@ -440,7 +440,7 @@
+ 			if (msg == MSG_ERROR)
+ 				msg = MSG_ERROR_XFER;
+ 			else if (msg == MSG_WARNING)
+-				msg = MSG_INFO;
++				msg = MSG_INFO2;
+ 		}
+ 		/* Pass the message to the non-server side. */
+ 		if (send_msg(msg, buf, len, !is_utf8))
+diff -r --unified rsync-3.5.2/rsync.h rsync-3.5.2a/rsync.h
+--- rsync-3.5.2/rsync.h	2026-11-03 16:11:59.000000000 +0800
++++ rsync-3.5.2a/rsync.h	2026-11-14 23:33:41.000000000 +0800
+@@ -293,7 +293,7 @@
+  * values must all be present here with identical numbers. */
+ enum msgcode {
+ 	MSG_DATA=0,	/* raw data on the multiplexed stream */
+-	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO=FINFO, /* remote logging */
++	MSG_ERROR_XFER=FERROR_XFER, MSG_INFO2=FINFO, /* remote logging */
+ 	MSG_ERROR=FERROR, MSG_WARNING=FWARNING, /* protocol-30 remote logging */
+ 	MSG_ERROR_SOCKET=FERROR_SOCKET, /* sibling logging */
+ 	MSG_ERROR_UTF8=FERROR_UTF8, /* sibling logging */
