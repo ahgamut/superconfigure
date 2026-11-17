@@ -1,0 +1,167 @@
+--- a/tool/cosmocc/package.sh
++++ b/tool/cosmocc/package.sh
+@@ -97,19 +97,6 @@ $MAKE -j$NPROC m=$AMD64 \
+   o/$AMD64/third_party/make/make.dbg \
+   o/$AMD64/third_party/ctags/ctags.dbg
+ 
+-$MAKE -j$NPROC m=$AMD64-tiny \
+-  o/cosmocc.h.txt \
+-  o/$AMD64-tiny/ape/ape.lds \
+-  o/$AMD64-tiny/libc/crt/crt.o \
+-  o/$AMD64-tiny/libc/crt/crtfastmath.o \
+-  o/$AMD64-tiny/ape/ape.elf \
+-  o/$AMD64-tiny/ape/ape.macho \
+-  o/$AMD64-tiny/ape/ape.o \
+-  o/$AMD64-tiny/ape/ape-copy-self.o \
+-  o/$AMD64-tiny/ape/ape-no-modify-self.o \
+-  o/$AMD64-tiny/cosmopolitan.a \
+-  o/$AMD64-tiny/third_party/libcxx/libcxx.a \
+-
+ $MAKE -j$NPROC m=$AMD64-sysv \
+   o/cosmocc.h.txt \
+   o/$AMD64-sysv/ape/ape.lds \
+@@ -123,32 +110,6 @@ $MAKE -j$NPROC m=$AMD64-sysv \
+   o/$AMD64-sysv/cosmopolitan.a \
+   o/$AMD64-sysv/third_party/libcxx/libcxx.a \
+ 
+-$MAKE -j$NPROC m=$AMD64-dbg \
+-  o/cosmocc.h.txt \
+-  o/$AMD64-dbg/ape/ape.lds \
+-  o/$AMD64-dbg/libc/crt/crt.o \
+-  o/$AMD64-dbg/libc/crt/crtfastmath.o \
+-  o/$AMD64-dbg/ape/ape.elf \
+-  o/$AMD64-dbg/ape/ape.macho \
+-  o/$AMD64-dbg/ape/ape.o \
+-  o/$AMD64-dbg/ape/ape-copy-self.o \
+-  o/$AMD64-dbg/ape/ape-no-modify-self.o \
+-  o/$AMD64-dbg/cosmopolitan.a \
+-  o/$AMD64-dbg/third_party/libcxx/libcxx.a \
+-
+-$MAKE CONFIG_TARGET_ARCH= -j$NPROC m=$AMD64-optlinux \
+-  o/cosmocc.h.txt \
+-  o/$AMD64-optlinux/ape/ape.lds \
+-  o/$AMD64-optlinux/libc/crt/crt.o \
+-  o/$AMD64-optlinux/libc/crt/crtfastmath.o \
+-  o/$AMD64-optlinux/ape/ape.elf \
+-  o/$AMD64-optlinux/ape/ape.macho \
+-  o/$AMD64-optlinux/ape/ape.o \
+-  o/$AMD64-optlinux/ape/ape-copy-self.o \
+-  o/$AMD64-optlinux/ape/ape-no-modify-self.o \
+-  o/$AMD64-optlinux/cosmopolitan.a \
+-  o/$AMD64-optlinux/third_party/libcxx/libcxx.a \
+-
+ $MAKE CONFIG_TARGET_ARCH= -j$NPROC m=$AMD64-tinylinux \
+   o/cosmocc.h.txt \
+   o/$AMD64-tinylinux/ape/ape.lds \
+@@ -196,14 +157,6 @@ $MAKE -j$NPROC m=$ARM64 \
+   o/$ARM64/third_party/make/make.dbg \
+   o/$ARM64/third_party/ctags/ctags.dbg
+ 
+-$MAKE -j$NPROC m=$ARM64-tiny \
+-  o/$ARM64-tiny/ape/ape.elf \
+-  o/$ARM64-tiny/ape/aarch64.lds \
+-  o/$ARM64-tiny/libc/crt/crt.o \
+-  o/$ARM64-tiny/libc/crt/crtfastmath.o \
+-  o/$ARM64-tiny/cosmopolitan.a \
+-  o/$ARM64-tiny/third_party/libcxx/libcxx.a \
+-
+ $MAKE -j$NPROC m=$ARM64-sysv \
+   o/$ARM64-sysv/ape/ape.elf \
+   o/$ARM64-sysv/ape/aarch64.lds \
+@@ -212,22 +165,6 @@ $MAKE -j$NPROC m=$ARM64-sysv \
+   o/$ARM64-sysv/cosmopolitan.a \
+   o/$ARM64-sysv/third_party/libcxx/libcxx.a \
+ 
+-$MAKE -j$NPROC m=$ARM64-dbg \
+-  o/$ARM64-dbg/ape/ape.elf \
+-  o/$ARM64-dbg/ape/aarch64.lds \
+-  o/$ARM64-dbg/libc/crt/crt.o \
+-  o/$ARM64-dbg/libc/crt/crtfastmath.o \
+-  o/$ARM64-dbg/cosmopolitan.a \
+-  o/$ARM64-dbg/third_party/libcxx/libcxx.a \
+-
+-$MAKE -j$NPROC m=$ARM64-optlinux \
+-  o/$ARM64-optlinux/ape/ape.elf \
+-  o/$ARM64-optlinux/ape/aarch64.lds \
+-  o/$ARM64-optlinux/libc/crt/crt.o \
+-  o/$ARM64-optlinux/libc/crt/crtfastmath.o \
+-  o/$ARM64-optlinux/cosmopolitan.a \
+-  o/$ARM64-optlinux/third_party/libcxx/libcxx.a \
+-
+ $MAKE -j$NPROC m=$ARM64-tinylinux \
+   o/$ARM64-tinylinux/ape/ape.elf \
+   o/$ARM64-tinylinux/ape/aarch64.lds \
+@@ -305,38 +242,23 @@ $DEDUPE -s "$OUTDIR/"
+ 
+ for arch in $AMD64 $ARM64; do
+   mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/"
+-  mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/dbg"
+-  mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/tiny"
+   mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/sysv"
+-  mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/optlinux"
+   mkdir -p "$OUTDIR/$arch-linux-cosmo/lib/tinylinux"
+ 
+   cp -f o/$arch/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/"
+-  cp -f o/$arch-dbg/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/dbg/"
+-  cp -f o/$arch-tiny/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/tiny/"
+   cp -f o/$arch-sysv/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/sysv/"
+-  cp -f o/$arch-optlinux/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/optlinux/"
+   cp -f o/$arch-tinylinux/libc/crt/crt.o "$OUTDIR/$arch-linux-cosmo/lib/tinylinux/"
+ 
+   cp -f o/$arch/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/"
+-  cp -f o/$arch-dbg/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/dbg/"
+-  cp -f o/$arch-tiny/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/tiny/"
+   cp -f o/$arch-sysv/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/sysv/"
+-  cp -f o/$arch-optlinux/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/optlinux/"
+   cp -f o/$arch-tinylinux/libc/crt/crtfastmath.o "$OUTDIR/$arch-linux-cosmo/lib/tinylinux/"
+ 
+   cp -f o/$arch/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/libcosmo.a"
+-  cp -f o/$arch-dbg/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/dbg/libcosmo.a"
+-  cp -f o/$arch-tiny/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/tiny/libcosmo.a"
+   cp -f o/$arch-sysv/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/sysv/libcosmo.a"
+-  cp -f o/$arch-optlinux/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/optlinux/libcosmo.a"
+   cp -f o/$arch-tinylinux/cosmopolitan.a "$OUTDIR/$arch-linux-cosmo/lib/tinylinux/libcosmo.a"
+ 
+   cp -f o/$arch/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/"
+-  cp -f o/$arch-dbg/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/dbg/"
+-  cp -f o/$arch-tiny/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/tiny/"
+   cp -f o/$arch-sysv/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/sysv/"
+-  cp -f o/$arch-optlinux/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/optlinux/"
+   cp -f o/$arch-tinylinux/third_party/libcxx/libcxx.a "$OUTDIR/$arch-linux-cosmo/lib/tinylinux/"
+ 
+   for lib in c dl gcc_s m crypt pthread resolv rt dl unwind gomp stdc++; do
+@@ -347,31 +269,19 @@ for arch in $AMD64 $ARM64; do
+ done
+ 
+ cp -f o/$AMD64/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/"
+-cp -f o/$AMD64-dbg/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/dbg/"
+-cp -f o/$AMD64-tiny/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/tiny/"
+ cp -f o/$AMD64-sysv/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/sysv/"
+-cp -f o/$AMD64-optlinux/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/optlinux/"
+ cp -f o/$AMD64-tinylinux/ape/ape.o "$OUTDIR/x86_64-linux-cosmo/lib/tinylinux/"
+ 
+ cp -f o/$AMD64/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/"
+-cp -f o/$AMD64-dbg/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/dbg/"
+-cp -f o/$AMD64-tiny/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/tiny/"
+ cp -f o/$AMD64-sysv/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/sysv/"
+-cp -f o/$AMD64-optlinux/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/optlinux/"
+ cp -f o/$AMD64-tinylinux/ape/ape.lds "$OUTDIR/x86_64-linux-cosmo/lib/tinylinux/"
+ 
+ cp -f o/$ARM64/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/"
+-cp -f o/$ARM64-dbg/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/dbg/"
+-cp -f o/$ARM64-tiny/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/tiny/"
+ cp -f o/$ARM64-sysv/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/sysv/"
+-cp -f o/$ARM64-optlinux/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/optlinux/"
+ cp -f o/$ARM64-tinylinux/ape/aarch64.lds "$OUTDIR/aarch64-linux-cosmo/lib/tinylinux/"
+ 
+ cp -f o/$AMD64/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/"
+-cp -f o/$AMD64-dbg/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/dbg/"
+-cp -f o/$AMD64-tiny/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/tiny/"
+ cp -f o/$AMD64-sysv/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/sysv/"
+-cp -f o/$AMD64-optlinux/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/optlinux/"
+ cp -f o/$AMD64-tinylinux/ape/ape-no-modify-self.o "$OUTDIR/x86_64-linux-cosmo/lib/tinylinux/"
+ 
+ cp -f ape/ape-m1.c "$OUTDIR/bin/"
+-- 
+2.55.0
+

@@ -6,6 +6,7 @@ export BASELOC="$PWD"
 export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
 export RESULTS="${RESULTS:-$BASELOC/results}"
 export HOSTARCH="${HOSTARCH:-$(uname -m)}"
+PATCH="$BASELOC/.github/patches/package.patch"
 
 # create the COSMOS and related folders
 cd "$BASELOC"
@@ -18,14 +19,14 @@ for arch in x86_64 aarch64; do
 done
 cd "$BASELOC"
 
-if [ -z ${GITHUB_ACTIONS+x} ]; then 
+if [ -z ${GITHUB_ACTIONS+x} ]; then
     # we are not on GA
-    if [ $(nproc) -gt 2 ]; then
+    if [ "$(nproc)" -gt 2 ]; then
         numproc=$(($(nproc) - 2))
     else
         numproc=1
     fi
-else 
+else
     # we are on GA
     numproc=2
 fi
@@ -33,10 +34,18 @@ fi
 echo "updating compiler binaries"
 # don't need to download gcc binaries because package.sh does it
 cd "$COSMO"
-bash tool/cosmocc/package.sh cosmocc
-
 # package.sh builds a bunch of MODEs, we only need x86_64 and aarch64
-cd "$COSMO"
+if git apply --check "$PATCH"; then
+    git apply "$PATCH"
+elif git apply --reverse --check "$PATCH"; then
+    echo "patch already applied"
+else
+    echo "cannot patch package.sh, update needed"
+    # do not exit so the CI still works
+    # exit 1
+fi
+bash tool/cosmocc/package.sh cosmocc
+# failsafe of defunct patch
 rm -rf o/aarch64-tiny/ o/aarch64-dbg/ o/aarch64-optlinux/ \
     o/x86_64-tiny/ o/x86_64-dbg o/x86_64-optlinux/
 
