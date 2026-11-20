@@ -12,6 +12,8 @@ cli/berry-lang/berry
 python/cpy311-datasette/datasette
 python/cpy311-pypack1/pypack1
 python/cpy311-pypack2/pypack2
+*.patch
+*.zip
 
 # Prerequisites
 *.d
@@ -66,3 +68,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+

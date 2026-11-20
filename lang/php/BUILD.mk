@@ -1,6 +1,6 @@
 
 o/lang/php/downloaded: \
-	DL_COMMAND = rm -rf php && git clone --quiet --depth=1 --branch=php-8.3.6 https://github.com/php/php-src php
+	DL_COMMAND = rm -rf php && git clone --quiet --depth=1 --branch=php-8.4.27 https://github.com/php/php-src php
 
 o/lang/php/checked: CHECK_COMMAND = $(DUMMYLINK0)
 o/lang/php/patched: PATCH_COMMAND = $(DUMMYLINK0)

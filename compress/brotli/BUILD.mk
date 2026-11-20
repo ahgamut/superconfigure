@@ -1,5 +1,5 @@
 
-BROTLI_SRC := https://github.com/google/brotli/archive/refs/tags/v1.1.0.tar.gz 
+BROTLI_SRC := https://github.com/google/brotli/archive/refs/tags/v1.2.1.tar.gz
 BROTLI_CONFIG_ARGS = -DCMAKE_INSTALL_PREFIX=$$(COSMOS)\
     -DBUILD_SHARED_LIBS=OFF\
     -DCMAKE_C_FLAGS="-Os"
